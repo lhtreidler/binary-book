@@ -16,7 +16,7 @@ model User {
   firstName        String?
   lastName         String?
   email            String            @unique
-  username         String?
+  username         String?           @unique
   passwordHash     String
   rankings         Ranking[]
   rankingSessions  RankingSession[]
@@ -24,7 +24,9 @@ model User {
 
 model Book {
   id               String            @id @default(uuid()) @db.Uuid
-  googleId         String?
+  googleId         String?           @unique
+  title            String?
+  authors          String[]
   rankings         Ranking[]
   rankingSessions  RankingSession[]
 }
@@ -48,6 +50,7 @@ model RankingSession {
   bookId           String            @db.Uuid
   low              Int?
   high             Int?
+  level            Int
   user             User              @relation(fields: [userId], references: [id])
   book             Book              @relation(fields: [bookId], references: [id])
 

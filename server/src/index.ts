@@ -1,8 +1,7 @@
 import "dotenv/config";
 import express from "express";
 import cors from "cors";
-import authRoutes from "./routes/auth.js";
-import { authenticateToken } from "./middleware/auth.js";
+import { authRoutes, rankingRoutes } from "./routes";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -13,14 +12,7 @@ app.use(express.json());
 
 // Routes
 app.use("/auth", authRoutes);
-
-// Protected route example
-app.get("/protected", authenticateToken, (req, res) => {
-  res.json({
-    message: "This is a protected route",
-    user: req.user,
-  });
-});
+app.use("/ranking", rankingRoutes);
 
 // Health check
 app.get("/health", (_req, res) => {

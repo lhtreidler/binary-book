@@ -8,6 +8,7 @@ import {
 } from "../utils/schemas";
 import { authenticateToken } from "../middleware/auth";
 import { prisma } from "../lib/prisma";
+import { convertRawScoreToScore } from "../utils/score";
 
 const router = Router();
 router.use(authenticateToken);
@@ -45,8 +46,10 @@ const handleRankingSearch = async ({
       where: { id: rankingSessionId },
     });
 
+    const convertedScore = await convertRawScoreToScore(userId, score, level);
+
     // Return the final score and no further comparisons needed
-    return { score };
+    return { score: convertedScore };
   }
 
   const skip = Math.floor((low + high) / 2);
@@ -106,7 +109,7 @@ router.post("start", validateBody(startRankingSchema), async (req, res) => {
       const rankingSession = await prisma.rankingSession.create({
         data: {
           userId,
-          // level: rankingLevel,
+          level: rankingLevel,
           bookId,
         },
       });
@@ -131,52 +134,56 @@ router.post(
   "/continue",
   validateBody(continueRankingSchema),
   async (req, res) => {
-    const { userId } = req.user || {};
+    try {
+      const { userId } = req.user || {};
 
-    if (!userId) {
-      res.status(401).json({ error: "Unauthorized" });
-      return;
+      if (!userId) {
+        res.status(401).json({ error: "Unauthorized" });
+        return;
+      }
+
+      const { sessionId: rankingSessionId, choseNew } =
+        req.body as ContinueRankingInput;
+
+      const rankingSession = await prisma.rankingSession.findUnique({
+        where: { id: rankingSessionId },
+      });
+
+      if (!rankingSession) {
+        res.status(404).json({ error: "Ranking session not found" });
+        return;
+      }
+
+      const { low, high } = rankingSession;
+
+      if (low === null || high === null) {
+        res.status(400).json({ error: "Invalid ranking session state" });
+        return;
+      }
+
+      if (rankingSession.userId !== userId) {
+        res.status(403).json({ error: "Forbidden" });
+        return;
+      }
+
+      const avg = Math.floor((low + high) / 2);
+
+      const newLow = choseNew ? avg : low;
+      const newHigh = choseNew ? high : avg;
+
+      const result = await handleRankingSearch({
+        userId,
+        rankingSessionId,
+        bookId: rankingSession.bookId,
+        low: newLow,
+        high: newHigh,
+        level: 0,
+      });
+
+      res.send(result);
+    } catch (err) {
+      res.status(500).json({ error: "Internal server error" });
     }
-
-    const { sessionId: rankingSessionId, choseNew } =
-      req.body as ContinueRankingInput;
-
-    const rankingSession = await prisma.rankingSession.findUnique({
-      where: { id: rankingSessionId },
-    });
-
-    if (!rankingSession) {
-      res.status(404).json({ error: "Ranking session not found" });
-      return;
-    }
-
-    const { low, high } = rankingSession;
-
-    if (low === null || high === null) {
-      res.status(400).json({ error: "Invalid ranking session state" });
-      return;
-    }
-
-    if (rankingSession.userId !== userId) {
-      res.status(403).json({ error: "Forbidden" });
-      return;
-    }
-
-    const avg = Math.floor((low + high) / 2);
-
-    const newLow = choseNew ? avg : low;
-    const newHigh = choseNew ? high : avg;
-
-    const result = await handleRankingSearch({
-      userId,
-      rankingSessionId,
-      bookId: rankingSession.bookId,
-      low: newLow,
-      high: newHigh,
-      level: 0,
-    });
-
-    res.send(result);
   },
 );
 

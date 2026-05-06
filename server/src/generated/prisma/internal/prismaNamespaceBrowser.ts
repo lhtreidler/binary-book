@@ -85,7 +85,9 @@ export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof User
 
 export const BookScalarFieldEnum = {
   id: 'id',
-  googleId: 'googleId'
+  googleId: 'googleId',
+  title: 'title',
+  authors: 'authors'
 } as const
 
 export type BookScalarFieldEnum = (typeof BookScalarFieldEnum)[keyof typeof BookScalarFieldEnum]
@@ -107,7 +109,8 @@ export const RankingSessionScalarFieldEnum = {
   userId: 'userId',
   bookId: 'bookId',
   low: 'low',
-  high: 'high'
+  high: 'high',
+  level: 'level'
 } as const
 
 export type RankingSessionScalarFieldEnum = (typeof RankingSessionScalarFieldEnum)[keyof typeof RankingSessionScalarFieldEnum]

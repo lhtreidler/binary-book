@@ -27,16 +27,20 @@ export type AggregateBook = {
 export type BookMinAggregateOutputType = {
   id: string | null
   googleId: string | null
+  title: string | null
 }
 
 export type BookMaxAggregateOutputType = {
   id: string | null
   googleId: string | null
+  title: string | null
 }
 
 export type BookCountAggregateOutputType = {
   id: number
   googleId: number
+  title: number
+  authors: number
   _all: number
 }
 
@@ -44,16 +48,20 @@ export type BookCountAggregateOutputType = {
 export type BookMinAggregateInputType = {
   id?: true
   googleId?: true
+  title?: true
 }
 
 export type BookMaxAggregateInputType = {
   id?: true
   googleId?: true
+  title?: true
 }
 
 export type BookCountAggregateInputType = {
   id?: true
   googleId?: true
+  title?: true
+  authors?: true
   _all?: true
 }
 
@@ -132,6 +140,8 @@ export type BookGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 export type BookGroupByOutputType = {
   id: string
   googleId: string | null
+  title: string | null
+  authors: string[]
   _count: BookCountAggregateOutputType | null
   _min: BookMinAggregateOutputType | null
   _max: BookMaxAggregateOutputType | null
@@ -158,6 +168,8 @@ export type BookWhereInput = {
   NOT?: Prisma.BookWhereInput | Prisma.BookWhereInput[]
   id?: Prisma.UuidFilter<"Book"> | string
   googleId?: Prisma.StringNullableFilter<"Book"> | string | null
+  title?: Prisma.StringNullableFilter<"Book"> | string | null
+  authors?: Prisma.StringNullableListFilter<"Book">
   rankings?: Prisma.RankingListRelationFilter
   rankingSessions?: Prisma.RankingSessionListRelationFilter
 }
@@ -165,23 +177,29 @@ export type BookWhereInput = {
 export type BookOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   googleId?: Prisma.SortOrderInput | Prisma.SortOrder
+  title?: Prisma.SortOrderInput | Prisma.SortOrder
+  authors?: Prisma.SortOrder
   rankings?: Prisma.RankingOrderByRelationAggregateInput
   rankingSessions?: Prisma.RankingSessionOrderByRelationAggregateInput
 }
 
 export type BookWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  googleId?: string
   AND?: Prisma.BookWhereInput | Prisma.BookWhereInput[]
   OR?: Prisma.BookWhereInput[]
   NOT?: Prisma.BookWhereInput | Prisma.BookWhereInput[]
-  googleId?: Prisma.StringNullableFilter<"Book"> | string | null
+  title?: Prisma.StringNullableFilter<"Book"> | string | null
+  authors?: Prisma.StringNullableListFilter<"Book">
   rankings?: Prisma.RankingListRelationFilter
   rankingSessions?: Prisma.RankingSessionListRelationFilter
-}, "id">
+}, "id" | "googleId">
 
 export type BookOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   googleId?: Prisma.SortOrderInput | Prisma.SortOrder
+  title?: Prisma.SortOrderInput | Prisma.SortOrder
+  authors?: Prisma.SortOrder
   _count?: Prisma.BookCountOrderByAggregateInput
   _max?: Prisma.BookMaxOrderByAggregateInput
   _min?: Prisma.BookMinOrderByAggregateInput
@@ -193,11 +211,15 @@ export type BookScalarWhereWithAggregatesInput = {
   NOT?: Prisma.BookScalarWhereWithAggregatesInput | Prisma.BookScalarWhereWithAggregatesInput[]
   id?: Prisma.UuidWithAggregatesFilter<"Book"> | string
   googleId?: Prisma.StringNullableWithAggregatesFilter<"Book"> | string | null
+  title?: Prisma.StringNullableWithAggregatesFilter<"Book"> | string | null
+  authors?: Prisma.StringNullableListFilter<"Book">
 }
 
 export type BookCreateInput = {
   id?: string
   googleId?: string | null
+  title?: string | null
+  authors?: Prisma.BookCreateauthorsInput | string[]
   rankings?: Prisma.RankingCreateNestedManyWithoutBookInput
   rankingSessions?: Prisma.RankingSessionCreateNestedManyWithoutBookInput
 }
@@ -205,6 +227,8 @@ export type BookCreateInput = {
 export type BookUncheckedCreateInput = {
   id?: string
   googleId?: string | null
+  title?: string | null
+  authors?: Prisma.BookCreateauthorsInput | string[]
   rankings?: Prisma.RankingUncheckedCreateNestedManyWithoutBookInput
   rankingSessions?: Prisma.RankingSessionUncheckedCreateNestedManyWithoutBookInput
 }
@@ -212,6 +236,8 @@ export type BookUncheckedCreateInput = {
 export type BookUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authors?: Prisma.BookUpdateauthorsInput | string[]
   rankings?: Prisma.RankingUpdateManyWithoutBookNestedInput
   rankingSessions?: Prisma.RankingSessionUpdateManyWithoutBookNestedInput
 }
@@ -219,6 +245,8 @@ export type BookUpdateInput = {
 export type BookUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authors?: Prisma.BookUpdateauthorsInput | string[]
   rankings?: Prisma.RankingUncheckedUpdateManyWithoutBookNestedInput
   rankingSessions?: Prisma.RankingSessionUncheckedUpdateManyWithoutBookNestedInput
 }
@@ -226,36 +254,63 @@ export type BookUncheckedUpdateInput = {
 export type BookCreateManyInput = {
   id?: string
   googleId?: string | null
+  title?: string | null
+  authors?: Prisma.BookCreateauthorsInput | string[]
 }
 
 export type BookUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authors?: Prisma.BookUpdateauthorsInput | string[]
 }
 
 export type BookUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authors?: Prisma.BookUpdateauthorsInput | string[]
+}
+
+export type StringNullableListFilter<$PrismaModel = never> = {
+  equals?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel> | null
+  has?: string | Prisma.StringFieldRefInput<$PrismaModel> | null
+  hasEvery?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
+  hasSome?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
+  isEmpty?: boolean
 }
 
 export type BookCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   googleId?: Prisma.SortOrder
+  title?: Prisma.SortOrder
+  authors?: Prisma.SortOrder
 }
 
 export type BookMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   googleId?: Prisma.SortOrder
+  title?: Prisma.SortOrder
 }
 
 export type BookMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   googleId?: Prisma.SortOrder
+  title?: Prisma.SortOrder
 }
 
 export type BookScalarRelationFilter = {
   is?: Prisma.BookWhereInput
   isNot?: Prisma.BookWhereInput
+}
+
+export type BookCreateauthorsInput = {
+  set: string[]
+}
+
+export type BookUpdateauthorsInput = {
+  set?: string[]
+  push?: string | string[]
 }
 
 export type BookCreateNestedOneWithoutRankingsInput = {
@@ -289,12 +344,16 @@ export type BookUpdateOneRequiredWithoutRankingSessionsNestedInput = {
 export type BookCreateWithoutRankingsInput = {
   id?: string
   googleId?: string | null
+  title?: string | null
+  authors?: Prisma.BookCreateauthorsInput | string[]
   rankingSessions?: Prisma.RankingSessionCreateNestedManyWithoutBookInput
 }
 
 export type BookUncheckedCreateWithoutRankingsInput = {
   id?: string
   googleId?: string | null
+  title?: string | null
+  authors?: Prisma.BookCreateauthorsInput | string[]
   rankingSessions?: Prisma.RankingSessionUncheckedCreateNestedManyWithoutBookInput
 }
 
@@ -317,24 +376,32 @@ export type BookUpdateToOneWithWhereWithoutRankingsInput = {
 export type BookUpdateWithoutRankingsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authors?: Prisma.BookUpdateauthorsInput | string[]
   rankingSessions?: Prisma.RankingSessionUpdateManyWithoutBookNestedInput
 }
 
 export type BookUncheckedUpdateWithoutRankingsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authors?: Prisma.BookUpdateauthorsInput | string[]
   rankingSessions?: Prisma.RankingSessionUncheckedUpdateManyWithoutBookNestedInput
 }
 
 export type BookCreateWithoutRankingSessionsInput = {
   id?: string
   googleId?: string | null
+  title?: string | null
+  authors?: Prisma.BookCreateauthorsInput | string[]
   rankings?: Prisma.RankingCreateNestedManyWithoutBookInput
 }
 
 export type BookUncheckedCreateWithoutRankingSessionsInput = {
   id?: string
   googleId?: string | null
+  title?: string | null
+  authors?: Prisma.BookCreateauthorsInput | string[]
   rankings?: Prisma.RankingUncheckedCreateNestedManyWithoutBookInput
 }
 
@@ -357,12 +424,16 @@ export type BookUpdateToOneWithWhereWithoutRankingSessionsInput = {
 export type BookUpdateWithoutRankingSessionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authors?: Prisma.BookUpdateauthorsInput | string[]
   rankings?: Prisma.RankingUpdateManyWithoutBookNestedInput
 }
 
 export type BookUncheckedUpdateWithoutRankingSessionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authors?: Prisma.BookUpdateauthorsInput | string[]
   rankings?: Prisma.RankingUncheckedUpdateManyWithoutBookNestedInput
 }
 
@@ -409,6 +480,8 @@ export type BookCountOutputTypeCountRankingSessionsArgs<ExtArgs extends runtime.
 export type BookSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   googleId?: boolean
+  title?: boolean
+  authors?: boolean
   rankings?: boolean | Prisma.Book$rankingsArgs<ExtArgs>
   rankingSessions?: boolean | Prisma.Book$rankingSessionsArgs<ExtArgs>
   _count?: boolean | Prisma.BookCountOutputTypeDefaultArgs<ExtArgs>
@@ -417,19 +490,25 @@ export type BookSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
 export type BookSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   googleId?: boolean
+  title?: boolean
+  authors?: boolean
 }, ExtArgs["result"]["book"]>
 
 export type BookSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   googleId?: boolean
+  title?: boolean
+  authors?: boolean
 }, ExtArgs["result"]["book"]>
 
 export type BookSelectScalar = {
   id?: boolean
   googleId?: boolean
+  title?: boolean
+  authors?: boolean
 }
 
-export type BookOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "googleId", ExtArgs["result"]["book"]>
+export type BookOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "googleId" | "title" | "authors", ExtArgs["result"]["book"]>
 export type BookInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   rankings?: boolean | Prisma.Book$rankingsArgs<ExtArgs>
   rankingSessions?: boolean | Prisma.Book$rankingSessionsArgs<ExtArgs>
@@ -447,6 +526,8 @@ export type $BookPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     googleId: string | null
+    title: string | null
+    authors: string[]
   }, ExtArgs["result"]["book"]>
   composites: {}
 }
@@ -874,6 +955,8 @@ export interface Prisma__BookClient<T, Null = never, ExtArgs extends runtime.Typ
 export interface BookFieldRefs {
   readonly id: Prisma.FieldRef<"Book", 'String'>
   readonly googleId: Prisma.FieldRef<"Book", 'String'>
+  readonly title: Prisma.FieldRef<"Book", 'String'>
+  readonly authors: Prisma.FieldRef<"Book", 'String[]'>
 }
     
 

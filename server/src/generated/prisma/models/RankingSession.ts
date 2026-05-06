@@ -29,11 +29,13 @@ export type AggregateRankingSession = {
 export type RankingSessionAvgAggregateOutputType = {
   low: number | null
   high: number | null
+  level: number | null
 }
 
 export type RankingSessionSumAggregateOutputType = {
   low: number | null
   high: number | null
+  level: number | null
 }
 
 export type RankingSessionMinAggregateOutputType = {
@@ -42,6 +44,7 @@ export type RankingSessionMinAggregateOutputType = {
   bookId: string | null
   low: number | null
   high: number | null
+  level: number | null
 }
 
 export type RankingSessionMaxAggregateOutputType = {
@@ -50,6 +53,7 @@ export type RankingSessionMaxAggregateOutputType = {
   bookId: string | null
   low: number | null
   high: number | null
+  level: number | null
 }
 
 export type RankingSessionCountAggregateOutputType = {
@@ -58,6 +62,7 @@ export type RankingSessionCountAggregateOutputType = {
   bookId: number
   low: number
   high: number
+  level: number
   _all: number
 }
 
@@ -65,11 +70,13 @@ export type RankingSessionCountAggregateOutputType = {
 export type RankingSessionAvgAggregateInputType = {
   low?: true
   high?: true
+  level?: true
 }
 
 export type RankingSessionSumAggregateInputType = {
   low?: true
   high?: true
+  level?: true
 }
 
 export type RankingSessionMinAggregateInputType = {
@@ -78,6 +85,7 @@ export type RankingSessionMinAggregateInputType = {
   bookId?: true
   low?: true
   high?: true
+  level?: true
 }
 
 export type RankingSessionMaxAggregateInputType = {
@@ -86,6 +94,7 @@ export type RankingSessionMaxAggregateInputType = {
   bookId?: true
   low?: true
   high?: true
+  level?: true
 }
 
 export type RankingSessionCountAggregateInputType = {
@@ -94,6 +103,7 @@ export type RankingSessionCountAggregateInputType = {
   bookId?: true
   low?: true
   high?: true
+  level?: true
   _all?: true
 }
 
@@ -189,6 +199,7 @@ export type RankingSessionGroupByOutputType = {
   bookId: string
   low: number | null
   high: number | null
+  level: number
   _count: RankingSessionCountAggregateOutputType | null
   _avg: RankingSessionAvgAggregateOutputType | null
   _sum: RankingSessionSumAggregateOutputType | null
@@ -220,6 +231,7 @@ export type RankingSessionWhereInput = {
   bookId?: Prisma.UuidFilter<"RankingSession"> | string
   low?: Prisma.IntNullableFilter<"RankingSession"> | number | null
   high?: Prisma.IntNullableFilter<"RankingSession"> | number | null
+  level?: Prisma.IntFilter<"RankingSession"> | number
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   book?: Prisma.XOR<Prisma.BookScalarRelationFilter, Prisma.BookWhereInput>
 }
@@ -230,6 +242,7 @@ export type RankingSessionOrderByWithRelationInput = {
   bookId?: Prisma.SortOrder
   low?: Prisma.SortOrderInput | Prisma.SortOrder
   high?: Prisma.SortOrderInput | Prisma.SortOrder
+  level?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
   book?: Prisma.BookOrderByWithRelationInput
 }
@@ -243,6 +256,7 @@ export type RankingSessionWhereUniqueInput = Prisma.AtLeast<{
   bookId?: Prisma.UuidFilter<"RankingSession"> | string
   low?: Prisma.IntNullableFilter<"RankingSession"> | number | null
   high?: Prisma.IntNullableFilter<"RankingSession"> | number | null
+  level?: Prisma.IntFilter<"RankingSession"> | number
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   book?: Prisma.XOR<Prisma.BookScalarRelationFilter, Prisma.BookWhereInput>
 }, "id">
@@ -253,6 +267,7 @@ export type RankingSessionOrderByWithAggregationInput = {
   bookId?: Prisma.SortOrder
   low?: Prisma.SortOrderInput | Prisma.SortOrder
   high?: Prisma.SortOrderInput | Prisma.SortOrder
+  level?: Prisma.SortOrder
   _count?: Prisma.RankingSessionCountOrderByAggregateInput
   _avg?: Prisma.RankingSessionAvgOrderByAggregateInput
   _max?: Prisma.RankingSessionMaxOrderByAggregateInput
@@ -269,12 +284,14 @@ export type RankingSessionScalarWhereWithAggregatesInput = {
   bookId?: Prisma.UuidWithAggregatesFilter<"RankingSession"> | string
   low?: Prisma.IntNullableWithAggregatesFilter<"RankingSession"> | number | null
   high?: Prisma.IntNullableWithAggregatesFilter<"RankingSession"> | number | null
+  level?: Prisma.IntWithAggregatesFilter<"RankingSession"> | number
 }
 
 export type RankingSessionCreateInput = {
   id?: string
   low?: number | null
   high?: number | null
+  level: number
   user: Prisma.UserCreateNestedOneWithoutRankingSessionsInput
   book: Prisma.BookCreateNestedOneWithoutRankingSessionsInput
 }
@@ -285,12 +302,14 @@ export type RankingSessionUncheckedCreateInput = {
   bookId: string
   low?: number | null
   high?: number | null
+  level: number
 }
 
 export type RankingSessionUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   low?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   high?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  level?: Prisma.IntFieldUpdateOperationsInput | number
   user?: Prisma.UserUpdateOneRequiredWithoutRankingSessionsNestedInput
   book?: Prisma.BookUpdateOneRequiredWithoutRankingSessionsNestedInput
 }
@@ -301,6 +320,7 @@ export type RankingSessionUncheckedUpdateInput = {
   bookId?: Prisma.StringFieldUpdateOperationsInput | string
   low?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   high?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  level?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type RankingSessionCreateManyInput = {
@@ -309,12 +329,14 @@ export type RankingSessionCreateManyInput = {
   bookId: string
   low?: number | null
   high?: number | null
+  level: number
 }
 
 export type RankingSessionUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   low?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   high?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  level?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type RankingSessionUncheckedUpdateManyInput = {
@@ -323,6 +345,7 @@ export type RankingSessionUncheckedUpdateManyInput = {
   bookId?: Prisma.StringFieldUpdateOperationsInput | string
   low?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   high?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  level?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type RankingSessionListRelationFilter = {
@@ -341,11 +364,13 @@ export type RankingSessionCountOrderByAggregateInput = {
   bookId?: Prisma.SortOrder
   low?: Prisma.SortOrder
   high?: Prisma.SortOrder
+  level?: Prisma.SortOrder
 }
 
 export type RankingSessionAvgOrderByAggregateInput = {
   low?: Prisma.SortOrder
   high?: Prisma.SortOrder
+  level?: Prisma.SortOrder
 }
 
 export type RankingSessionMaxOrderByAggregateInput = {
@@ -354,6 +379,7 @@ export type RankingSessionMaxOrderByAggregateInput = {
   bookId?: Prisma.SortOrder
   low?: Prisma.SortOrder
   high?: Prisma.SortOrder
+  level?: Prisma.SortOrder
 }
 
 export type RankingSessionMinOrderByAggregateInput = {
@@ -362,11 +388,13 @@ export type RankingSessionMinOrderByAggregateInput = {
   bookId?: Prisma.SortOrder
   low?: Prisma.SortOrder
   high?: Prisma.SortOrder
+  level?: Prisma.SortOrder
 }
 
 export type RankingSessionSumOrderByAggregateInput = {
   low?: Prisma.SortOrder
   high?: Prisma.SortOrder
+  level?: Prisma.SortOrder
 }
 
 export type RankingSessionCreateNestedManyWithoutUserInput = {
@@ -453,10 +481,19 @@ export type RankingSessionUncheckedUpdateManyWithoutBookNestedInput = {
   deleteMany?: Prisma.RankingSessionScalarWhereInput | Prisma.RankingSessionScalarWhereInput[]
 }
 
+export type IntFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
 export type RankingSessionCreateWithoutUserInput = {
   id?: string
   low?: number | null
   high?: number | null
+  level: number
   book: Prisma.BookCreateNestedOneWithoutRankingSessionsInput
 }
 
@@ -465,6 +502,7 @@ export type RankingSessionUncheckedCreateWithoutUserInput = {
   bookId: string
   low?: number | null
   high?: number | null
+  level: number
 }
 
 export type RankingSessionCreateOrConnectWithoutUserInput = {
@@ -502,12 +540,14 @@ export type RankingSessionScalarWhereInput = {
   bookId?: Prisma.UuidFilter<"RankingSession"> | string
   low?: Prisma.IntNullableFilter<"RankingSession"> | number | null
   high?: Prisma.IntNullableFilter<"RankingSession"> | number | null
+  level?: Prisma.IntFilter<"RankingSession"> | number
 }
 
 export type RankingSessionCreateWithoutBookInput = {
   id?: string
   low?: number | null
   high?: number | null
+  level: number
   user: Prisma.UserCreateNestedOneWithoutRankingSessionsInput
 }
 
@@ -516,6 +556,7 @@ export type RankingSessionUncheckedCreateWithoutBookInput = {
   userId: string
   low?: number | null
   high?: number | null
+  level: number
 }
 
 export type RankingSessionCreateOrConnectWithoutBookInput = {
@@ -549,12 +590,14 @@ export type RankingSessionCreateManyUserInput = {
   bookId: string
   low?: number | null
   high?: number | null
+  level: number
 }
 
 export type RankingSessionUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   low?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   high?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  level?: Prisma.IntFieldUpdateOperationsInput | number
   book?: Prisma.BookUpdateOneRequiredWithoutRankingSessionsNestedInput
 }
 
@@ -563,6 +606,7 @@ export type RankingSessionUncheckedUpdateWithoutUserInput = {
   bookId?: Prisma.StringFieldUpdateOperationsInput | string
   low?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   high?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  level?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type RankingSessionUncheckedUpdateManyWithoutUserInput = {
@@ -570,6 +614,7 @@ export type RankingSessionUncheckedUpdateManyWithoutUserInput = {
   bookId?: Prisma.StringFieldUpdateOperationsInput | string
   low?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   high?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  level?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type RankingSessionCreateManyBookInput = {
@@ -577,12 +622,14 @@ export type RankingSessionCreateManyBookInput = {
   userId: string
   low?: number | null
   high?: number | null
+  level: number
 }
 
 export type RankingSessionUpdateWithoutBookInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   low?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   high?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  level?: Prisma.IntFieldUpdateOperationsInput | number
   user?: Prisma.UserUpdateOneRequiredWithoutRankingSessionsNestedInput
 }
 
@@ -591,6 +638,7 @@ export type RankingSessionUncheckedUpdateWithoutBookInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   low?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   high?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  level?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type RankingSessionUncheckedUpdateManyWithoutBookInput = {
@@ -598,6 +646,7 @@ export type RankingSessionUncheckedUpdateManyWithoutBookInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   low?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   high?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  level?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 
@@ -608,6 +657,7 @@ export type RankingSessionSelect<ExtArgs extends runtime.Types.Extensions.Intern
   bookId?: boolean
   low?: boolean
   high?: boolean
+  level?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   book?: boolean | Prisma.BookDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["rankingSession"]>
@@ -618,6 +668,7 @@ export type RankingSessionSelectCreateManyAndReturn<ExtArgs extends runtime.Type
   bookId?: boolean
   low?: boolean
   high?: boolean
+  level?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   book?: boolean | Prisma.BookDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["rankingSession"]>
@@ -628,6 +679,7 @@ export type RankingSessionSelectUpdateManyAndReturn<ExtArgs extends runtime.Type
   bookId?: boolean
   low?: boolean
   high?: boolean
+  level?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   book?: boolean | Prisma.BookDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["rankingSession"]>
@@ -638,9 +690,10 @@ export type RankingSessionSelectScalar = {
   bookId?: boolean
   low?: boolean
   high?: boolean
+  level?: boolean
 }
 
-export type RankingSessionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "bookId" | "low" | "high", ExtArgs["result"]["rankingSession"]>
+export type RankingSessionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "bookId" | "low" | "high" | "level", ExtArgs["result"]["rankingSession"]>
 export type RankingSessionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   book?: boolean | Prisma.BookDefaultArgs<ExtArgs>
@@ -666,6 +719,7 @@ export type $RankingSessionPayload<ExtArgs extends runtime.Types.Extensions.Inte
     bookId: string
     low: number | null
     high: number | null
+    level: number
   }, ExtArgs["result"]["rankingSession"]>
   composites: {}
 }
@@ -1096,6 +1150,7 @@ export interface RankingSessionFieldRefs {
   readonly bookId: Prisma.FieldRef<"RankingSession", 'String'>
   readonly low: Prisma.FieldRef<"RankingSession", 'Int'>
   readonly high: Prisma.FieldRef<"RankingSession", 'Int'>
+  readonly level: Prisma.FieldRef<"RankingSession", 'Int'>
 }
     
 
