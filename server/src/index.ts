@@ -28,17 +28,10 @@ app.get("/health", (_req, res) => {
 });
 
 // Error handling middleware
-app.use(
-  (
-    err: any,
-    _req: express.Request,
-    res: express.Response,
-    next: express.NextFunction,
-  ) => {
-    console.error(err.stack);
-    res.status(500).json({ error: "Internal server error" });
-  },
-);
+app.use((err: any, _req: express.Request, res: express.Response) => {
+  console.error(err.stack);
+  res.status(500).json({ error: "Internal server error" });
+});
 
 // Start server
 app.listen(PORT, () => {

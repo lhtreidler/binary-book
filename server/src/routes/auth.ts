@@ -2,118 +2,118 @@ import { Router, Request, Response } from "express";
 import bcrypt from "bcrypt";
 import { prisma } from "../lib/prisma.js";
 import { generateToken } from "../utils/jwt.js";
+import { loginSchema, signupSchema } from "../utils/schemas.js";
+import { validateBody } from "../middleware/validation.js";
+import { ZodS } from "../utils/type-utils.js";
 
 const router = Router();
 
 // Signup route
-router.post("/signup", async (req: Request, res: Response): Promise<void> => {
-  try {
-    const { email, password, firstName, lastName, username } = req.body;
+router.post(
+  "/signup",
+  validateBody(signupSchema),
+  async (req: Request, res: Response): Promise<void> => {
+    try {
+      const { email, password, firstName, lastName, username } =
+        req.body as ZodS<typeof signupSchema>;
 
-    // Validate input
-    if (!email || !password) {
-      res.status(400).json({ error: "Email and password are required" });
-      return;
-    }
+      // Check if user already exists
+      const existingUser = await prisma.user.findUnique({
+        where: { email },
+      });
 
-    // Check if user already exists
-    const existingUser = await prisma.user.findUnique({
-      where: { email },
-    });
+      if (existingUser) {
+        res.status(400).json({ error: "User already exists" });
+        return;
+      }
 
-    if (existingUser) {
-      res.status(400).json({ error: "User already exists" });
-      return;
-    }
+      // Hash password
+      const passwordHash = await bcrypt.hash(password, 10);
 
-    // Hash password
-    const passwordHash = await bcrypt.hash(password, 10);
+      // Create user
+      const user = await prisma.user.create({
+        data: {
+          email,
+          passwordHash,
+          firstName: firstName || null,
+          lastName: lastName || null,
+          username: username || null,
+        },
+      });
 
-    // Create user
-    const user = await prisma.user.create({
-      data: {
-        email,
-        passwordHash,
-        firstName: firstName || null,
-        lastName: lastName || null,
-        username: username || null,
-      },
-    });
-
-    // Generate token
-    const token = generateToken({
-      userId: user.id,
-      email: user.email,
-    });
-
-    res.status(201).json({
-      message: "User created successfully",
-      user: {
-        id: user.id,
+      // Generate token
+      const token = generateToken({
+        userId: user.id,
         email: user.email,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        username: user.username,
-      },
-      token,
-    });
-  } catch (error) {
-    console.error("Signup error:", error);
-    res.status(500).json({ error: "Internal server error" });
-  }
-});
+      });
+
+      res.status(201).json({
+        message: "User created successfully",
+        user: {
+          id: user.id,
+          email: user.email,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          username: user.username,
+        },
+        token,
+      });
+    } catch (error) {
+      console.error("Signup error:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  },
+);
 
 // Login route
-router.post("/login", async (req: Request, res: Response): Promise<void> => {
-  try {
-    const { email, password } = req.body;
+router.post(
+  "/login",
+  validateBody(loginSchema),
+  async (req: Request, res: Response): Promise<void> => {
+    try {
+      const { email, password } = req.body as ZodS<typeof loginSchema>;
 
-    // Validate input
-    if (!email || !password) {
-      res.status(400).json({ error: "Email and password are required" });
-      return;
-    }
+      // Find user
+      const user = await prisma.user.findUnique({
+        where: { email },
+      });
 
-    // Find user
-    const user = await prisma.user.findUnique({
-      where: { email },
-    });
+      if (!user) {
+        res.status(401).json({ error: "Invalid email or password" });
+        return;
+      }
 
-    if (!user) {
-      res.status(401).json({ error: "Invalid email or password" });
-      return;
-    }
+      // Verify password
+      const isPasswordValid = await bcrypt.compare(password, user.passwordHash);
 
-    // Verify password
-    const isPasswordValid = await bcrypt.compare(password, user.passwordHash);
+      if (!isPasswordValid) {
+        res.status(401).json({ error: "Invalid email or password" });
+        return;
+      }
 
-    if (!isPasswordValid) {
-      res.status(401).json({ error: "Invalid email or password" });
-      return;
-    }
-
-    // Generate token
-    const token = generateToken({
-      userId: user.id,
-      email: user.email,
-    });
-
-    res.json({
-      message: "Logged in successfully",
-      user: {
-        id: user.id,
+      // Generate token
+      const token = generateToken({
+        userId: user.id,
         email: user.email,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        username: user.username,
-      },
-      token,
-    });
-  } catch (error) {
-    console.error("Login error:", error);
-    res.status(500).json({ error: "Internal server error" });
-  }
-});
+      });
+
+      res.json({
+        message: "Logged in successfully",
+        user: {
+          id: user.id,
+          email: user.email,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          username: user.username,
+        },
+        token,
+      });
+    } catch (error) {
+      console.error("Login error:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  },
+);
 
 // Logout route (client-side token removal recommended)
 router.post("/logout", (req: Request, res: Response): void => {
