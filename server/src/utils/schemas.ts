@@ -28,3 +28,17 @@ export const loginSchema = z.object({
 // Type inference
 export type SignupInput = z.infer<typeof signupSchema>;
 export type LoginInput = z.infer<typeof loginSchema>;
+
+// RANKING SCHEMAS
+
+export const startRankingSchema = z.object({
+  gId: z.string().min(1),
+  rankingLevel: z.int().min(0).max(2),
+});
+export const continueRankingSchema = z.object({
+  sessionId: z.string().min(1),
+  choseNew: z.boolean(),
+});
+
+export type StartRankingInput = z.infer<typeof startRankingSchema>;
+export type ContinueRankingInput = z.infer<typeof continueRankingSchema>;

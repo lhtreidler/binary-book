@@ -2,9 +2,13 @@ import { Router, Request, Response } from "express";
 import bcrypt from "bcrypt";
 import { prisma } from "../lib/prisma.js";
 import { generateToken } from "../utils/jwt.js";
-import { loginSchema, signupSchema } from "../utils/schemas.js";
+import {
+  LoginInput,
+  loginSchema,
+  SignupInput,
+  signupSchema,
+} from "../utils/schemas.js";
 import { validateBody } from "../middleware/validation.js";
-import { ZodS } from "../utils/type-utils.js";
 
 const router = Router();
 
@@ -15,7 +19,7 @@ router.post(
   async (req: Request, res: Response): Promise<void> => {
     try {
       const { email, password, firstName, lastName, username } =
-        req.body as ZodS<typeof signupSchema>;
+        req.body as SignupInput;
 
       // Check if user already exists
       const existingUser = await prisma.user.findUnique({
@@ -71,7 +75,7 @@ router.post(
   validateBody(loginSchema),
   async (req: Request, res: Response): Promise<void> => {
     try {
-      const { email, password } = req.body as ZodS<typeof loginSchema>;
+      const { email, password } = req.body as LoginInput;
 
       // Find user
       const user = await prisma.user.findUnique({
@@ -114,11 +118,6 @@ router.post(
     }
   },
 );
-
-// Logout route (client-side token removal recommended)
-router.post("/logout", (req: Request, res: Response): void => {
-  res.json({ message: "Logged out successfully" });
-});
 
 // Get current user
 router.get("/me", (req: Request, res: Response): void => {

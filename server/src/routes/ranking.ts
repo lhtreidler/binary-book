@@ -1,0 +1,183 @@
+import { Router } from "express";
+import { validateBody } from "../middleware/validation";
+import {
+  ContinueRankingInput,
+  continueRankingSchema,
+  StartRankingInput,
+  startRankingSchema,
+} from "../utils/schemas";
+import { authenticateToken } from "../middleware/auth";
+import { prisma } from "../lib/prisma";
+
+const router = Router();
+router.use(authenticateToken);
+
+const handleRankingSearch = async ({
+  userId,
+  rankingSessionId,
+  bookId,
+  low,
+  high,
+  level,
+}: {
+  userId: string;
+  rankingSessionId: string;
+  bookId: string;
+  low: number;
+  high: number;
+  level: 0;
+}) => {
+  // If low and high are adjacent, we have found the score
+  if (low >= high - 1) {
+    // Create final ranking entry with the determined score
+    const score = Math.floor((low + high) / 2);
+    await prisma.ranking.create({
+      data: {
+        userId,
+        rawScore: score,
+        bookId,
+        level,
+      },
+    });
+
+    // Clean up the ranking session
+    await prisma.rankingSession.delete({
+      where: { id: rankingSessionId },
+    });
+
+    // Return the final score and no further comparisons needed
+    return { score };
+  }
+
+  const skip = Math.floor((low + high) / 2);
+
+  const rankingToCompare = await prisma.ranking.findFirst({
+    where: { userId },
+    orderBy: { rawScore: "asc" },
+    skip,
+    take: 1,
+  });
+
+  if (!rankingToCompare) {
+    throw new Error("Ranking not found");
+  }
+
+  // Update the ranking session with the new low and high values for the next comparison
+  await prisma.rankingSession.update({
+    where: { id: rankingSessionId },
+    data: {
+      low,
+      high,
+    },
+  });
+
+  return { rankingToCompare };
+};
+
+router.post("start", validateBody(startRankingSchema), async (req, res) => {
+  try {
+    const { userId } = req.user || {};
+
+    if (!userId) {
+      res.status(401).json({ error: "Unauthorized" });
+      return;
+    }
+
+    const { rankingLevel, gId } = req.body as StartRankingInput;
+
+    const existingBook = await prisma.book.findFirst({
+      where: { googleId: gId },
+    });
+
+    let bookId = existingBook?.id as string;
+
+    if (!existingBook) {
+      const newBook = await prisma.book.create({
+        data: {
+          googleId: gId,
+        },
+      });
+      bookId = newBook.id;
+    }
+
+    const rankingCount = await prisma.ranking.count({ where: { userId } });
+
+    if (rankingCount > 0) {
+      const rankingSession = await prisma.rankingSession.create({
+        data: {
+          userId,
+          // level: rankingLevel,
+          bookId,
+        },
+      });
+
+      const result = await handleRankingSearch({
+        userId,
+        rankingSessionId: rankingSession.id,
+        bookId,
+        low: 0,
+        high: rankingCount,
+        level: 0,
+      });
+
+      res.send(result);
+    }
+  } catch (err) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+router.post(
+  "/continue",
+  validateBody(continueRankingSchema),
+  async (req, res) => {
+    const { userId } = req.user || {};
+
+    if (!userId) {
+      res.status(401).json({ error: "Unauthorized" });
+      return;
+    }
+
+    const { sessionId: rankingSessionId, choseNew } =
+      req.body as ContinueRankingInput;
+
+    const rankingSession = await prisma.rankingSession.findUnique({
+      where: { id: rankingSessionId },
+    });
+
+    if (!rankingSession) {
+      res.status(404).json({ error: "Ranking session not found" });
+      return;
+    }
+
+    const { low, high } = rankingSession;
+
+    if (low === null || high === null) {
+      res.status(400).json({ error: "Invalid ranking session state" });
+      return;
+    }
+
+    if (rankingSession.userId !== userId) {
+      res.status(403).json({ error: "Forbidden" });
+      return;
+    }
+
+    const avg = Math.floor((low + high) / 2);
+
+    const newLow = choseNew ? avg : low;
+    const newHigh = choseNew ? high : avg;
+
+    const result = await handleRankingSearch({
+      userId,
+      rankingSessionId,
+      bookId: rankingSession.bookId,
+      low: newLow,
+      high: newHigh,
+      level: 0,
+    });
+
+    res.send(result);
+  },
+);
+
+export default router;
