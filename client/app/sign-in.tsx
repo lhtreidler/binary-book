@@ -2,8 +2,11 @@ import { router } from "expo-router";
 import { View } from "react-native";
 import { z } from "zod";
 
-import { useSession } from "@/session/ctx";
-import { Form, FormProps, Question } from "@/components/form";
+import { Form, FormData, FormProps, Question } from "@/components/form";
+import { LoginInput, useLogin, useSignup } from "@/lib/api";
+import { useState } from "react";
+import { Text } from "@/components/ui/text";
+import { Box } from "@/components/ui/box";
 
 const questions: Question[] = [
   {
@@ -26,35 +29,46 @@ const zodSchema = z.object({
 });
 
 export default function SignIn() {
-  const { signIn } = useSession();
+  const loginMutation = useLogin();
+  const signupMutation = useSignup();
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const onSubmit = (formData: FormData, isSignUp: boolean) => {
-    const { email, password } = formData as unknown as {
-      email: string;
-      password: string;
-    };
-    if (!email || !password) {
-      return;
+  const onSubmit = async (isLogIn: boolean, formData: FormData) => {
+    setIsLoading(true);
+    setError(null);
+    const data = formData as unknown as LoginInput;
+    try {
+      if (isLogIn) {
+        await loginMutation.mutateAsync(data);
+      } else {
+        await signupMutation.mutateAsync(data);
+      }
+    } catch (err) {
+      const message =
+        (err as any)?.response?.data?.message ||
+        (isLogIn
+          ? "Login failed. Please check your credentials and try again."
+          : "Signup failed. Please try again later.");
+      setError(message);
+      setIsLoading(false);
     }
   };
 
   const formProps: FormProps = {
     questions,
     zodSchema,
+    isLoading,
     onChange: console.log,
     button: [
       {
         label: "Log In",
-        onPress: () => {
-          signIn();
-          // Navigate after signing in. You may want to tweak this to ensure sign-in is successful before navigating.
-          router.replace("/");
-        },
+        onPress: (formData) => onSubmit(true, formData),
       },
       {
         label: "Sign Up",
         action: "secondary",
-        onPress: console.log,
+        onPress: (formData) => onSubmit(false, formData),
       },
     ],
   };
@@ -62,6 +76,16 @@ export default function SignIn() {
   return (
     <View>
       <Form {...formProps} />
+      {error ? (
+        <Box style={{ padding: 10 }}>
+          <Text
+            className="text-error-400 px-3 py-1"
+            style={{ textAlign: "center" }}
+          >
+            {error}
+          </Text>
+        </Box>
+      ) : null}
     </View>
   );
 }

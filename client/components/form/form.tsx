@@ -8,7 +8,7 @@ import {
   FormControlLabel,
   FormControlLabelText,
 } from "../ui/form-control";
-import { Button } from "../ui/button";
+import { Button, ButtonSpinner, ButtonText } from "../ui/button";
 import { HStack } from "../ui/hstack";
 import { VStack } from "../ui/vstack";
 import type { FormData, FormProps } from "./types";
@@ -18,14 +18,17 @@ import { Box } from "../ui/box";
 export const Form = ({
   questions,
   onChange = () => {},
-  isFormDisabled,
+  isFormDisabled: isDisabled,
   button,
   containerProps = {},
+  isLoading = false,
   zodSchema,
 }: FormProps) => {
   const [formData, setFormData] = useState<FormData>({});
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isTouched, setIsTouched] = useState(false);
+
+  const isFormDisabled = isDisabled || isLoading;
 
   const handleValidation = (data: FormData) => {
     if (zodSchema) {
@@ -73,9 +76,11 @@ export const Form = ({
         <HStack space="lg">
           {buttons.map(({ label, onPress, ...buttonProps }, index) => (
             <Button
+              isDisabled={isFormDisabled}
               key={index}
-              label={label}
               onPress={() => onSubmit(onPress)}
+              isLoading={isLoading}
+              label={label}
               {...buttonProps}
             />
           ))}

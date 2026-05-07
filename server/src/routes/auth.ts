@@ -52,14 +52,6 @@ router.post(
       });
 
       res.status(201).json({
-        message: "User created successfully",
-        user: {
-          id: user.id,
-          email: user.email,
-          firstName: user.firstName,
-          lastName: user.lastName,
-          username: user.username,
-        },
         token,
       });
     } catch (error) {
@@ -83,7 +75,10 @@ router.post(
       });
 
       if (!user) {
-        res.status(401).json({ error: "Invalid email or password" });
+        res.status(401).json({
+          message:
+            "Invalid email or password. Please check your credentials and try again.",
+        });
         return;
       }
 
@@ -91,7 +86,10 @@ router.post(
       const isPasswordValid = await bcrypt.compare(password, user.passwordHash);
 
       if (!isPasswordValid) {
-        res.status(401).json({ error: "Invalid email or password" });
+        res.status(401).json({
+          message:
+            "Invalid email or password. Please check your credentials and try again.",
+        });
         return;
       }
 
@@ -102,19 +100,13 @@ router.post(
       });
 
       res.json({
-        message: "Logged in successfully",
-        user: {
-          id: user.id,
-          email: user.email,
-          firstName: user.firstName,
-          lastName: user.lastName,
-          username: user.username,
-        },
         token,
       });
     } catch (error) {
       console.error("Login error:", error);
-      res.status(500).json({ error: "Internal server error" });
+      res
+        .status(500)
+        .json({ message: "Login failed. Please try again later." });
     }
   },
 );
@@ -122,7 +114,7 @@ router.post(
 // Get current user
 router.get("/me", (req: Request, res: Response): void => {
   if (!req.user) {
-    res.status(401).json({ error: "Not authenticated" });
+    res.status(401).json({ message: "Not authenticated" });
     return;
   }
   res.json({ user: req.user });

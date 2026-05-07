@@ -11,7 +11,6 @@ export type Question = {
   helperText?: string;
   inputProps?: React.ComponentProps<typeof Input>;
   fieldProps?: React.ComponentProps<typeof InputField>;
-  zodSchema?: z.ZodType;
 };
 
 export type FormData = Record<string, string>;
@@ -23,9 +22,10 @@ export type ButtonProps = {
 
 export type FormProps = {
   questions: Question[];
-  errors?: Record<string, string>;
   onChange?: (key: string, value: string, formData: FormData) => void;
   isFormDisabled?: boolean;
   button?: ButtonProps | ButtonProps[];
   containerProps?: React.ComponentProps<typeof VStack>;
+  zodSchema?: z.ZodObject<Record<string, z.ZodTypeAny>>;
+  isLoading?: boolean;
 };

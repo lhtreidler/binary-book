@@ -282,7 +282,11 @@ type IButtonProps = Omit<
   React.ComponentPropsWithoutRef<typeof UIButton>,
   "context"
 > &
-  VariantProps<typeof buttonStyle> & { className?: string; label?: string };
+  VariantProps<typeof buttonStyle> & {
+    className?: string;
+    label?: string;
+    isLoading?: boolean;
+  };
 
 const Button = React.forwardRef<
   React.ElementRef<typeof UIButton>,
@@ -295,6 +299,7 @@ const Button = React.forwardRef<
       size = "md",
       action = "primary",
       label,
+      isLoading,
       ...props
     },
     ref,
@@ -306,7 +311,7 @@ const Button = React.forwardRef<
         className={buttonStyle({ variant, size, action, class: className })}
         context={{ variant, size, action }}
       >
-        {label ? <ButtonText>{label}</ButtonText> : null}
+        {isLoading ? <ButtonSpinner /> : <ButtonText>{label}</ButtonText>}
       </UIButton>
     );
   },
