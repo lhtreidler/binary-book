@@ -17,18 +17,46 @@ import { Box } from "../ui/box";
 
 export const Form = ({
   questions,
-  errors = {},
   onChange = () => {},
   isFormDisabled,
   button,
   containerProps = {},
+  zodSchema,
 }: FormProps) => {
   const [formData, setFormData] = useState<FormData>({});
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [isTouched, setIsTouched] = useState(false);
+
+  const handleValidation = (data: FormData) => {
+    if (zodSchema) {
+      const parseResult = zodSchema.safeParse(data);
+      if (!parseResult.success) {
+        const fieldErrors = parseResult.error.flatten().fieldErrors;
+        const errors: Record<string, string> = {};
+        for (const key in fieldErrors) {
+          if (fieldErrors[key] && fieldErrors[key].length > 0) {
+            errors[key] = fieldErrors[key][0];
+          }
+        }
+        setErrors(errors);
+        return false;
+      }
+    }
+    return true;
+  };
 
   const onChangeHandler = (key: string, value: string) => {
     const updatedFormData = { ...formData, [key]: value };
+    if (isTouched) handleValidation(updatedFormData);
     setFormData(updatedFormData);
     onChange(key, value, updatedFormData);
+  };
+
+  const onSubmit = (buttonOnPress: (formData: FormData) => void) => {
+    setIsTouched(true);
+    if (handleValidation(formData)) {
+      buttonOnPress(formData);
+    }
   };
 
   const getButtons = () => {
@@ -47,7 +75,7 @@ export const Form = ({
             <Button
               key={index}
               label={label}
-              onPress={() => onPress(formData)}
+              onPress={() => onSubmit(onPress)}
               {...buttonProps}
             />
           ))}
@@ -71,7 +99,11 @@ export const Form = ({
           const { key, label, helperText } = q;
           const error = errors[key];
           return (
-            <FormControl key={key}>
+            <FormControl
+              key={key}
+              isInvalid={!!error}
+              isDisabled={isFormDisabled}
+            >
               {label ? (
                 <FormControlLabel>
                   <FormControlLabelText>{label}</FormControlLabelText>
@@ -87,13 +119,11 @@ export const Form = ({
                   <FormControlHelperText>{helperText}</FormControlHelperText>
                 </FormControlHelper>
               ) : null}
-              {error && (
-                <FormControlError>
-                  <FormControlErrorText className="text-red-500">
-                    {error}
-                  </FormControlErrorText>
-                </FormControlError>
-              )}
+              <FormControlError>
+                <FormControlErrorText className="text-red-500">
+                  {error}
+                </FormControlErrorText>
+              </FormControlError>
             </FormControl>
           );
         })}

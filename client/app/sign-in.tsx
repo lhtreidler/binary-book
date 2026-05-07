@@ -1,17 +1,15 @@
 import { router } from "expo-router";
-import { StyleSheet, Text, TextInput, View } from "react-native";
+import { View } from "react-native";
+import { z } from "zod";
 
 import { useSession } from "@/session/ctx";
-import { Button, ButtonText } from "@/components/ui/button";
-import { HStack } from "@/components/ui/hstack";
-import { Input, InputField } from "@/components/ui/input";
 import { Form, FormProps, Question } from "@/components/form";
 
 const questions: Question[] = [
   {
-    key: "usernameOrEmail",
-    label: "Username or Email",
-    fieldProps: { placeholder: "Enter your username or email" },
+    key: "email",
+    label: "Email",
+    fieldProps: { placeholder: "Enter your email" },
   },
   {
     key: "password",
@@ -20,11 +18,29 @@ const questions: Question[] = [
   },
 ];
 
+const zodSchema = z.object({
+  email: z.email("Please enter a valid email address"),
+  password: z
+    .string("Enter a valid password")
+    .min(8, "Password must be at least 8 characters long"),
+});
+
 export default function SignIn() {
   const { signIn } = useSession();
 
+  const onSubmit = (formData: FormData, isSignUp: boolean) => {
+    const { email, password } = formData as unknown as {
+      email: string;
+      password: string;
+    };
+    if (!email || !password) {
+      return;
+    }
+  };
+
   const formProps: FormProps = {
     questions,
+    zodSchema,
     onChange: console.log,
     button: [
       {

@@ -2,6 +2,7 @@ import { Input, InputField } from "../ui/input";
 import { Button } from "../ui/button";
 import React from "react";
 import { VStack } from "../ui/vstack";
+import { z } from "zod";
 
 export type Question = {
   type?: "text" | "password";
@@ -10,6 +11,7 @@ export type Question = {
   helperText?: string;
   inputProps?: React.ComponentProps<typeof Input>;
   fieldProps?: React.ComponentProps<typeof InputField>;
+  zodSchema?: z.ZodType;
 };
 
 export type FormData = Record<string, string>;
