@@ -1,23 +1,23 @@
 import { use, createContext, type PropsWithChildren } from "react";
 
-import { useStorageState } from "./useStorageState";
+import { setStorageItemAsync, useStorageState } from "./useStorageState";
 
 const AuthContext = createContext<{
-  signIn: () => void;
+  signIn: (token: string) => void;
   signOut: () => void;
   session?: string | null;
-  isLoading: boolean;
+  isLoading?: boolean;
 }>({
-  signIn: () => null,
-  signOut: () => null,
+  signIn: () => {},
+  signOut: () => setStorageItemAsync("session", null),
   session: null,
-  isLoading: false,
+  isLoading: true,
 });
 
 export function useIsLoggedIn() {
   const value = use(AuthContext);
   if (!value) {
-    throw new Error("useSession must be wrapped in a <SessionProvider />");
+    throw new Error("useIsLoggedIn must be wrapped in a <SessionProvider />");
   }
 
   return !!value.session;
@@ -39,9 +39,8 @@ export function SessionProvider({ children }: PropsWithChildren) {
   return (
     <AuthContext.Provider
       value={{
-        signIn: () => {
-          // Perform sign-in logic here
-          setSession("xxx");
+        signIn: (token: string) => {
+          setSession(token);
         },
         signOut: () => {
           setSession(null);

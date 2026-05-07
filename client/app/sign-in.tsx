@@ -1,38 +1,103 @@
 import { router } from "expo-router";
-import { StyleSheet, Text, TextInput, View } from "react-native";
+import { View } from "react-native";
+import { z } from "zod";
+import { useEffect, useState } from "react";
 
-import { useSession } from "@/session/ctx";
-import { Button } from "@react-navigation/elements";
+import { Form, FormData, FormProps, Question } from "@/components/form";
+import { LoginInput, useLogin, useSignup } from "@/lib/api";
+import { Text } from "@/components/ui/text";
+import { Box } from "@/components/ui/box";
+import { useIsLoggedIn } from "@/session/ctx";
+import { Center } from "@/components/ui/center";
+
+const questions: Question[] = [
+  {
+    key: "email",
+    label: "Email",
+    fieldProps: { placeholder: "Enter your email" },
+  },
+  {
+    key: "password",
+    label: "Password",
+    fieldProps: { placeholder: "Enter your password", secureTextEntry: true },
+  },
+];
+
+const zodSchema = z.object({
+  email: z.email("Please enter a valid email address"),
+  password: z
+    .string("Enter a valid password")
+    .min(8, "Password must be at least 8 characters long"),
+});
 
 export default function SignIn() {
-  const { signIn } = useSession();
+  const loginMutation = useLogin();
+  const signupMutation = useSignup();
+  const isLoggedIn = useIsLoggedIn();
+  const [error, setError] = useState<string | null>(null);
+
+  // Redirect to home when logged in
+  useEffect(() => {
+    if (isLoggedIn) {
+      router.replace("/(app)");
+    }
+  }, [isLoggedIn]);
+
+  const onSubmit = async (isLogIn: boolean, formData: FormData) => {
+    setError(null);
+    const data = formData as unknown as LoginInput;
+    try {
+      if (isLogIn) {
+        await loginMutation.mutateAsync(data);
+      } else {
+        await signupMutation.mutateAsync(data);
+      }
+    } catch (err) {
+      const message =
+        (err as any)?.response?.data?.message ||
+        (isLogIn
+          ? "Login failed. Please check your credentials and try again."
+          : "Signup failed. Please try again later.");
+      setError(message);
+    }
+  };
+
+  const isLoading = loginMutation.isPending || signupMutation.isPending;
+
+  const formProps: FormProps = {
+    questions,
+    zodSchema,
+    isLoading,
+    onChange: console.log,
+    button: [
+      {
+        label: "Log In",
+        onPress: (formData) => onSubmit(true, formData),
+      },
+      {
+        label: "Sign Up",
+        action: "secondary",
+        onPress: (formData) => onSubmit(false, formData),
+      },
+    ],
+  };
+
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text
-        onPress={() => {
-          signIn();
-          // Navigate after signing in. You may want to tweak this to ensure sign-in is successful before navigating.
-          router.replace("/");
-        }}
-      >
-        Sign In
-      </Text>
-      <Text>Username</Text>
-      <TextInput style={styles.input} />
-      <Text>Password</Text>
-      <TextInput style={styles.input} />
-      <Button>Log In</Button>
-      <Button>Sign Up</Button>
+    <View>
+      <Center>
+        <Text className="align-middle text-2xl">Welcome to Book Tracker</Text>
+        <Form {...formProps} />
+        {error ? (
+          <Box style={{ padding: 10 }}>
+            <Text
+              className="text-error-400 px-3 py-1"
+              style={{ textAlign: "center" }}
+            >
+              {error}
+            </Text>
+          </Box>
+        ) : null}
+      </Center>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
-    width: "90%",
-  },
-});

@@ -36,6 +36,15 @@ export async function setStorageItemAsync(key: string, value: string | null) {
   }
 }
 
+export async function getStorageItemAsync(key: string) {
+  if (Platform.OS === "web") {
+    return localStorage.getItem(key);
+  } else {
+    const val = await SecureStore.getItemAsync(key);
+    return val;
+  }
+}
+
 export function useStorageState(key: string): UseStateHook<string> {
   // Public
   const [state, setState] = useAsyncState<string>();
@@ -55,7 +64,7 @@ export function useStorageState(key: string): UseStateHook<string> {
         setState(value);
       });
     }
-  }, [key]);
+  }, [key, setState]);
 
   // Set
   const setValue = useCallback(
@@ -63,7 +72,7 @@ export function useStorageState(key: string): UseStateHook<string> {
       setState(value);
       setStorageItemAsync(key, value);
     },
-    [key],
+    [key, setState],
   );
 
   return [state, setValue];
