@@ -8,6 +8,7 @@ import { LoginInput, useLogin, useSignup } from "@/lib/api";
 import { Text } from "@/components/ui/text";
 import { Box } from "@/components/ui/box";
 import { useIsLoggedIn } from "@/session/ctx";
+import { Center } from "@/components/ui/center";
 
 const questions: Question[] = [
   {
@@ -83,17 +84,20 @@ export default function SignIn() {
 
   return (
     <View>
-      <Form {...formProps} />
-      {error ? (
-        <Box style={{ padding: 10 }}>
-          <Text
-            className="text-error-400 px-3 py-1"
-            style={{ textAlign: "center" }}
-          >
-            {error}
-          </Text>
-        </Box>
-      ) : null}
+      <Center>
+        <Text className="align-middle text-2xl">Welcome to Book Tracker</Text>
+        <Form {...formProps} />
+        {error ? (
+          <Box style={{ padding: 10 }}>
+            <Text
+              className="text-error-400 px-3 py-1"
+              style={{ textAlign: "center" }}
+            >
+              {error}
+            </Text>
+          </Box>
+        ) : null}
+      </Center>
     </View>
   );
 }
