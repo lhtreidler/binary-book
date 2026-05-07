@@ -2,37 +2,50 @@ import { router } from "expo-router";
 import { StyleSheet, Text, TextInput, View } from "react-native";
 
 import { useSession } from "@/session/ctx";
-import { Button } from "@react-navigation/elements";
+import { Button, ButtonText } from "@/components/ui/button";
+import { HStack } from "@/components/ui/hstack";
+import { Input, InputField } from "@/components/ui/input";
+import { Form, FormProps, Question } from "@/components/form";
+
+const questions: Question[] = [
+  {
+    key: "usernameOrEmail",
+    label: "Username or Email",
+    fieldProps: { placeholder: "Enter your username or email" },
+  },
+  {
+    key: "password",
+    label: "Password",
+    fieldProps: { placeholder: "Enter your password", secureTextEntry: true },
+  },
+];
 
 export default function SignIn() {
   const { signIn } = useSession();
-  return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text
-        onPress={() => {
+
+  const formProps: FormProps = {
+    questions,
+    onChange: console.log,
+    button: [
+      {
+        label: "Log In",
+        onPress: () => {
           signIn();
           // Navigate after signing in. You may want to tweak this to ensure sign-in is successful before navigating.
           router.replace("/");
-        }}
-      >
-        Sign In
-      </Text>
-      <Text>Username</Text>
-      <TextInput style={styles.input} />
-      <Text>Password</Text>
-      <TextInput style={styles.input} />
-      <Button>Log In</Button>
-      <Button>Sign Up</Button>
+        },
+      },
+      {
+        label: "Sign Up",
+        action: "secondary",
+        onPress: console.log,
+      },
+    ],
+  };
+
+  return (
+    <View>
+      <Form {...formProps} />
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
-    width: "90%",
-  },
-});

@@ -3,13 +3,18 @@ import { Stack } from "expo-router";
 import { SessionProvider, useIsLoggedIn } from "@/session/ctx";
 import { SplashScreenController } from "@/components/splash";
 
+import { GluestackUIProvider } from "@/components/ui/gluestack-ui-provider";
+import "@/global.css";
+
 export default function Root() {
   // Set up the auth context and render your layout inside of it.
   return (
-    <SessionProvider>
-      <SplashScreenController />
-      <RootNavigator />
-    </SessionProvider>
+    <GluestackUIProvider mode="light">
+      <SessionProvider>
+        <SplashScreenController />
+        <RootNavigator />
+      </SessionProvider>
+    </GluestackUIProvider>
   );
 }
 
