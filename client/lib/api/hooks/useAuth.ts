@@ -10,7 +10,7 @@ import {
 } from "@tanstack/react-query";
 import { getApiClient } from "../client";
 import { AuthResponse, MeResponse, User, ApiError } from "../types";
-import { setStorageItemAsync } from "@/session/useStorageState";
+import { useSession } from "@/session/ctx";
 
 export interface LoginInput {
   email: string;
@@ -47,6 +47,8 @@ export function useLogin(): UseMutationResult<
   ApiError,
   LoginInput
 > {
+  const { signIn } = useSession();
+
   return useMutation({
     mutationFn: async (input: LoginInput) => {
       const client = await getApiClient();
@@ -54,8 +56,8 @@ export function useLogin(): UseMutationResult<
       return data;
     },
     onSuccess: async (data) => {
-      // The session provider will handle storing the token
-      await setStorageItemAsync("session", data.token);
+      // Update session context which will sync to storage
+      signIn(data.token);
     },
   });
 }
@@ -68,6 +70,8 @@ export function useSignup(): UseMutationResult<
   ApiError,
   SignupInput
 > {
+  const { signIn } = useSession();
+
   return useMutation({
     mutationFn: async (input: SignupInput) => {
       const client = await getApiClient();
@@ -75,8 +79,8 @@ export function useSignup(): UseMutationResult<
       return data;
     },
     onSuccess: async (data) => {
-      console.log(data);
-      await setStorageItemAsync("session", data.token);
+      // Update session context which will sync to storage
+      signIn(data.token);
     },
   });
 }

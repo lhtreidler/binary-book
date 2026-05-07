@@ -1,12 +1,13 @@
 import { router } from "expo-router";
 import { View } from "react-native";
 import { z } from "zod";
+import { useEffect, useState } from "react";
 
 import { Form, FormData, FormProps, Question } from "@/components/form";
 import { LoginInput, useLogin, useSignup } from "@/lib/api";
-import { useState } from "react";
 import { Text } from "@/components/ui/text";
 import { Box } from "@/components/ui/box";
+import { useIsLoggedIn } from "@/session/ctx";
 
 const questions: Question[] = [
   {
@@ -31,11 +32,17 @@ const zodSchema = z.object({
 export default function SignIn() {
   const loginMutation = useLogin();
   const signupMutation = useSignup();
-  const [isLoading, setIsLoading] = useState(false);
+  const isLoggedIn = useIsLoggedIn();
   const [error, setError] = useState<string | null>(null);
 
+  // Redirect to home when logged in
+  useEffect(() => {
+    if (isLoggedIn) {
+      router.replace("/(app)");
+    }
+  }, [isLoggedIn]);
+
   const onSubmit = async (isLogIn: boolean, formData: FormData) => {
-    setIsLoading(true);
     setError(null);
     const data = formData as unknown as LoginInput;
     try {
@@ -51,9 +58,10 @@ export default function SignIn() {
           ? "Login failed. Please check your credentials and try again."
           : "Signup failed. Please try again later.");
       setError(message);
-      setIsLoading(false);
     }
   };
+
+  const isLoading = loginMutation.isPending || signupMutation.isPending;
 
   const formProps: FormProps = {
     questions,

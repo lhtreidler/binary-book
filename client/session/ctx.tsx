@@ -6,16 +6,18 @@ const AuthContext = createContext<{
   signIn: (token: string) => void;
   signOut: () => void;
   session?: string | null;
+  isLoading?: boolean;
 }>({
   signIn: () => {},
   signOut: () => setStorageItemAsync("session", null),
   session: null,
+  isLoading: true,
 });
 
 export function useIsLoggedIn() {
   const value = use(AuthContext);
   if (!value) {
-    throw new Error("useSession must be wrapped in a <SessionProvider />");
+    throw new Error("useIsLoggedIn must be wrapped in a <SessionProvider />");
   }
 
   return !!value.session;
