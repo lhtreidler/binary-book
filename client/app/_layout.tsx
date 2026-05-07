@@ -2,7 +2,7 @@ import { Stack } from "expo-router";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useEffect } from "react";
 
-import { SessionProvider, useIsLoggedIn } from "@/session/ctx";
+import { SessionProvider, useSession } from "@/session/ctx";
 import { SplashScreenController } from "@/components/splash";
 import { initializeApiClient } from "@/lib/api";
 
@@ -33,16 +33,22 @@ export default function Root() {
 }
 
 function RootNavigator() {
-  const isLoggedIn = useIsLoggedIn();
-  console.log("User logged in:", isLoggedIn);
+  const { session, isLoading } = useSession();
+
+  if (isLoading) {
+    return null;
+  }
+
+  const isLoggedIn = !!session;
+  console.log("User is logged in:", isLoggedIn);
 
   return (
-    <Stack>
+    <Stack screenOptions={{ headerShown: false }}>
+      <Stack.Protected guard={!isLoggedIn}>
+        <Stack.Screen name="signin" />
+      </Stack.Protected>
       <Stack.Protected guard={isLoggedIn}>
         <Stack.Screen name="(app)" />
-      </Stack.Protected>
-      <Stack.Protected guard={!isLoggedIn}>
-        <Stack.Screen name="sign-in" />
       </Stack.Protected>
     </Stack>
   );

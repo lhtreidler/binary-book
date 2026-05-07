@@ -1,13 +1,11 @@
-import { router } from "expo-router";
 import { View } from "react-native";
 import { z } from "zod";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { Form, FormData, FormProps, Question } from "@/components/form";
 import { LoginInput, useLogin, useSignup } from "@/lib/api";
 import { Text } from "@/components/ui/text";
 import { Box } from "@/components/ui/box";
-import { useIsLoggedIn } from "@/session/ctx";
 import { Center } from "@/components/ui/center";
 
 const questions: Question[] = [
@@ -33,15 +31,7 @@ const zodSchema = z.object({
 export default function SignIn() {
   const loginMutation = useLogin();
   const signupMutation = useSignup();
-  const isLoggedIn = useIsLoggedIn();
   const [error, setError] = useState<string | null>(null);
-
-  // Redirect to home when logged in
-  useEffect(() => {
-    if (isLoggedIn) {
-      router.replace("/(app)");
-    }
-  }, [isLoggedIn]);
 
   const onSubmit = async (isLogIn: boolean, formData: FormData) => {
     setError(null);
@@ -68,7 +58,6 @@ export default function SignIn() {
     questions,
     zodSchema,
     isLoading,
-    onChange: console.log,
     button: [
       {
         label: "Log In",
@@ -84,7 +73,7 @@ export default function SignIn() {
 
   return (
     <View>
-      <Center>
+      <Center className="h-3/4 px-2">
         <Text className="align-middle text-2xl">Welcome to Book Tracker</Text>
         <Form {...formProps} />
         {error ? (

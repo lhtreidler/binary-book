@@ -18,8 +18,15 @@ router.post(
   validateBody(signupSchema),
   async (req: Request, res: Response): Promise<void> => {
     try {
-      const { email, password, firstName, lastName, username } =
-        req.body as SignupInput;
+      const {
+        email: unformattedEmail,
+        password,
+        firstName,
+        lastName,
+        username,
+      } = req.body as SignupInput;
+
+      const email = unformattedEmail.toLowerCase().trim();
 
       // Check if user already exists
       const existingUser = await prisma.user.findUnique({
