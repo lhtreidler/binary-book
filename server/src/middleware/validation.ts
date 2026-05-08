@@ -28,6 +28,7 @@ export function validateBody<T extends ZodSchema>(schema: T) {
           error: "Validation failed",
           details: formattedErrors,
         });
+
         return;
       }
       console.error("Unexpected validation error:", error);

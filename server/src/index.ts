@@ -10,6 +10,11 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
+// app.use((req: express.Request, _res: express.Response, next) => {
+//   console.log(req.method, req.path, req.body);
+//   next();
+// });
+
 // Routes
 app.use("/auth", authRoutes);
 app.use("/ranking", rankingRoutes);
@@ -20,11 +25,10 @@ app.get("/health", (_req, res) => {
   res.json({ status: "ok" });
 });
 
-// Error handling middleware
-app.use((err: any, _req: express.Request, res: express.Response) => {
-  console.error(err.stack);
-  res.status(500).json({ error: "Internal server error" });
-});
+// // Error handling middleware
+// app.use((err: any, _req: express.Request, res: express.Response) => {
+//   console.error(err.stack);
+// });
 
 // Start server
 app.listen(PORT, () => {

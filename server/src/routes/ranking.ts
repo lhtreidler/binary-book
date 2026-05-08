@@ -60,26 +60,28 @@ const handleRankingSearch = async ({
     orderBy: { rawScore: "asc" },
     skip,
     take: 1,
+    include: { book: true },
   });
 
   if (!rankingToCompare) {
     throw new Error("Ranking not found");
   }
 
-  // Update the ranking session with the new low and high values for the next comparison
   await prisma.rankingSession.update({
     where: { id: rankingSessionId },
-    data: {
-      low,
-      high,
-    },
+    data: { low, high },
   });
 
-  return { rankingToCompare };
+  const { book, ...rest } = rankingToCompare;
+  return {
+    rankingToCompare: rest,
+    compareBook: { title: book.title, authors: book.authors },
+  };
 };
 
-router.post("start", validateBody(startRankingSchema), async (req, res) => {
+router.post("/start", validateBody(startRankingSchema), async (req, res) => {
   try {
+    console.log("start");
     const { userId } = req.user || {};
 
     if (!userId) {
@@ -87,46 +89,49 @@ router.post("start", validateBody(startRankingSchema), async (req, res) => {
       return;
     }
 
-    const { rankingLevel, gId } = req.body as StartRankingInput;
+    const { rankingLevel, gId, title, authors } = req.body as StartRankingInput;
 
-    const existingBook = await prisma.book.findFirst({
+    let bookRecord = await prisma.book.findFirst({
       where: { googleId: gId },
     });
 
-    let bookId = existingBook?.id as string;
-
-    if (!existingBook) {
-      const book = await getGoogleBook(gId);
-      const newBook = await prisma.book.create({
+    if (!bookRecord) {
+      bookRecord = await prisma.book.create({
         data: {
-          ...book,
+          googleId: gId,
+          title,
+          authors,
         },
       });
-      bookId = newBook.id;
     }
+
+    const bookId = bookRecord.id;
 
     const rankingCount = await prisma.ranking.count({ where: { userId } });
 
-    if (rankingCount > 0) {
-      const rankingSession = await prisma.rankingSession.create({
-        data: {
-          userId,
-          level: rankingLevel,
-          bookId,
-        },
+    if (rankingCount === 0) {
+      await prisma.ranking.create({
+        data: { userId, rawScore: 0, bookId, level: rankingLevel },
       });
-
-      const result = await handleRankingSearch({
-        userId,
-        rankingSessionId: rankingSession.id,
-        bookId,
-        low: 0,
-        high: rankingCount,
-        level: 0,
-      });
-
-      res.send(result);
+      const score = await convertRawScoreToScore(userId, 0, rankingLevel);
+      res.send({ score });
+      return;
     }
+
+    const rankingSession = await prisma.rankingSession.create({
+      data: { userId, level: rankingLevel, bookId },
+    });
+
+    const result = await handleRankingSearch({
+      userId,
+      rankingSessionId: rankingSession.id,
+      bookId,
+      low: 0,
+      high: rankingCount,
+      level: 0,
+    });
+
+    res.send({ ...result, sessionId: rankingSession.id });
   } catch (err) {
     res.status(500).json({ error: "Internal server error" });
   }
