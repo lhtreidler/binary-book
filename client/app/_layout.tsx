@@ -8,6 +8,8 @@ import { initializeApiClient } from "@/lib/api";
 
 import { GluestackUIProvider } from "@/components/ui/gluestack-ui-provider";
 import "@/global.css";
+import { Center } from "@/components/ui/center";
+import { Spinner } from "@/components/ui/spinner";
 
 const queryClient = new QueryClient();
 
@@ -36,11 +38,14 @@ function RootNavigator() {
   const { session, isLoading } = useSession();
 
   if (isLoading) {
-    return null;
+    return (
+      <Center className="h-3/4 px-2">
+        <Spinner />
+      </Center>
+    );
   }
 
   const isLoggedIn = !!session;
-  console.log("User is logged in:", isLoggedIn);
 
   return (
     <Stack screenOptions={{ headerShown: false }}>

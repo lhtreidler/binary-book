@@ -24,6 +24,17 @@ export interface Book {
   // Add other book fields as needed
 }
 
+export interface BookSearchItem {
+  key: string;
+  title: string;
+  authors: string[];
+  thumbnail: string;
+}
+
+export interface BookSearchResponse {
+  items: BookSearchItem[];
+}
+
 export interface Ranking {
   id: string;
   userId: string;

@@ -20,6 +20,7 @@ model User {
   passwordHash     String
   rankings         Ranking[]
   rankingSessions  RankingSession[]
+  createdAt        DateTime          @default(now())
 }
 
 model Book {
@@ -39,6 +40,7 @@ model Ranking {
   level            Int?              // only 1, 2, or 3
   book             Book              @relation(fields: [bookId], references: [id])
   user             User              @relation(fields: [userId], references: [id])
+  createdAt        DateTime          @default(now())
 
   @@index([bookId])
   @@index([userId])
@@ -51,9 +53,17 @@ model RankingSession {
   low              Int?
   high             Int?
   level            Int
+  createdAt        DateTime          @default(now())
   user             User              @relation(fields: [userId], references: [id])
   book             Book              @relation(fields: [bookId], references: [id])
 
   @@index([userId])
   @@index([bookId])
+}
+
+model SearchCache {
+  id               String            @id @default(uuid()) @db.Uuid
+  query            String            @unique
+  jsonResult       String
+  cachedAt         DateTime          @default(now())
 }

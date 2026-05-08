@@ -14,6 +14,15 @@ export default function Index() {
         }}
       />
       <Tabs.Screen
+        name="add"
+        options={{
+          title: "Add Book",
+          tabBarIcon: ({ color }) => (
+            <FontAwesome name="plus" size={24} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
         name="settings"
         options={{
           title: "Settings",

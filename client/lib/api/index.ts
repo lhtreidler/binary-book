@@ -9,6 +9,8 @@ export type {
   AuthResponse,
   MeResponse,
   Book,
+  BookSearchItem,
+  BookSearchResponse,
   Ranking,
   RankingSession,
   StartRankingResponse,

@@ -393,7 +393,8 @@ export const ModelName = {
   User: 'User',
   Book: 'Book',
   Ranking: 'Ranking',
-  RankingSession: 'RankingSession'
+  RankingSession: 'RankingSession',
+  SearchCache: 'SearchCache'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -409,7 +410,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "book" | "ranking" | "rankingSession"
+    modelProps: "user" | "book" | "ranking" | "rankingSession" | "searchCache"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -709,6 +710,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    SearchCache: {
+      payload: Prisma.$SearchCachePayload<ExtArgs>
+      fields: Prisma.SearchCacheFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SearchCacheFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SearchCachePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SearchCacheFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SearchCachePayload>
+        }
+        findFirst: {
+          args: Prisma.SearchCacheFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SearchCachePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SearchCacheFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SearchCachePayload>
+        }
+        findMany: {
+          args: Prisma.SearchCacheFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SearchCachePayload>[]
+        }
+        create: {
+          args: Prisma.SearchCacheCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SearchCachePayload>
+        }
+        createMany: {
+          args: Prisma.SearchCacheCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SearchCacheCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SearchCachePayload>[]
+        }
+        delete: {
+          args: Prisma.SearchCacheDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SearchCachePayload>
+        }
+        update: {
+          args: Prisma.SearchCacheUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SearchCachePayload>
+        }
+        deleteMany: {
+          args: Prisma.SearchCacheDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SearchCacheUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SearchCacheUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SearchCachePayload>[]
+        }
+        upsert: {
+          args: Prisma.SearchCacheUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SearchCachePayload>
+        }
+        aggregate: {
+          args: Prisma.SearchCacheAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSearchCache>
+        }
+        groupBy: {
+          args: Prisma.SearchCacheGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SearchCacheGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SearchCacheCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SearchCacheCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -754,7 +829,8 @@ export const UserScalarFieldEnum = {
   lastName: 'lastName',
   email: 'email',
   username: 'username',
-  passwordHash: 'passwordHash'
+  passwordHash: 'passwordHash',
+  createdAt: 'createdAt'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -775,7 +851,8 @@ export const RankingScalarFieldEnum = {
   bookId: 'bookId',
   userId: 'userId',
   rawScore: 'rawScore',
-  level: 'level'
+  level: 'level',
+  createdAt: 'createdAt'
 } as const
 
 export type RankingScalarFieldEnum = (typeof RankingScalarFieldEnum)[keyof typeof RankingScalarFieldEnum]
@@ -787,10 +864,21 @@ export const RankingSessionScalarFieldEnum = {
   bookId: 'bookId',
   low: 'low',
   high: 'high',
-  level: 'level'
+  level: 'level',
+  createdAt: 'createdAt'
 } as const
 
 export type RankingSessionScalarFieldEnum = (typeof RankingSessionScalarFieldEnum)[keyof typeof RankingSessionScalarFieldEnum]
+
+
+export const SearchCacheScalarFieldEnum = {
+  id: 'id',
+  query: 'query',
+  jsonResult: 'jsonResult',
+  cachedAt: 'cachedAt'
+} as const
+
+export type SearchCacheScalarFieldEnum = (typeof SearchCacheScalarFieldEnum)[keyof typeof SearchCacheScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -834,6 +922,20 @@ export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 
  * Reference to a field of type 'String[]'
  */
 export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String[]'>
+    
+
+
+/**
+ * Reference to a field of type 'DateTime'
+ */
+export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
+    
+
+
+/**
+ * Reference to a field of type 'DateTime[]'
+ */
+export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
     
 
 
@@ -955,6 +1057,7 @@ export type GlobalOmitConfig = {
   book?: Prisma.BookOmit
   ranking?: Prisma.RankingOmit
   rankingSession?: Prisma.RankingSessionOmit
+  searchCache?: Prisma.SearchCacheOmit
 }
 
 /* Types for Logging */
