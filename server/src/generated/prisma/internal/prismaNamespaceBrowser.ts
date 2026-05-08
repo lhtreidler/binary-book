@@ -79,7 +79,8 @@ export const UserScalarFieldEnum = {
   email: 'email',
   username: 'username',
   passwordHash: 'passwordHash',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -101,7 +102,8 @@ export const RankingScalarFieldEnum = {
   userId: 'userId',
   rawScore: 'rawScore',
   level: 'level',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type RankingScalarFieldEnum = (typeof RankingScalarFieldEnum)[keyof typeof RankingScalarFieldEnum]
@@ -114,7 +116,8 @@ export const RankingSessionScalarFieldEnum = {
   low: 'low',
   high: 'high',
   level: 'level',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type RankingSessionScalarFieldEnum = (typeof RankingSessionScalarFieldEnum)[keyof typeof RankingSessionScalarFieldEnum]
@@ -122,6 +125,7 @@ export type RankingSessionScalarFieldEnum = (typeof RankingSessionScalarFieldEnu
 
 export const SearchCacheScalarFieldEnum = {
   id: 'id',
+  type: 'type',
   query: 'query',
   jsonResult: 'jsonResult',
   cachedAt: 'cachedAt'

@@ -26,6 +26,7 @@ export type AggregateSearchCache = {
 
 export type SearchCacheMinAggregateOutputType = {
   id: string | null
+  type: $Enums.CacheType | null
   query: string | null
   jsonResult: string | null
   cachedAt: Date | null
@@ -33,6 +34,7 @@ export type SearchCacheMinAggregateOutputType = {
 
 export type SearchCacheMaxAggregateOutputType = {
   id: string | null
+  type: $Enums.CacheType | null
   query: string | null
   jsonResult: string | null
   cachedAt: Date | null
@@ -40,6 +42,7 @@ export type SearchCacheMaxAggregateOutputType = {
 
 export type SearchCacheCountAggregateOutputType = {
   id: number
+  type: number
   query: number
   jsonResult: number
   cachedAt: number
@@ -49,6 +52,7 @@ export type SearchCacheCountAggregateOutputType = {
 
 export type SearchCacheMinAggregateInputType = {
   id?: true
+  type?: true
   query?: true
   jsonResult?: true
   cachedAt?: true
@@ -56,6 +60,7 @@ export type SearchCacheMinAggregateInputType = {
 
 export type SearchCacheMaxAggregateInputType = {
   id?: true
+  type?: true
   query?: true
   jsonResult?: true
   cachedAt?: true
@@ -63,6 +68,7 @@ export type SearchCacheMaxAggregateInputType = {
 
 export type SearchCacheCountAggregateInputType = {
   id?: true
+  type?: true
   query?: true
   jsonResult?: true
   cachedAt?: true
@@ -143,6 +149,7 @@ export type SearchCacheGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inte
 
 export type SearchCacheGroupByOutputType = {
   id: string
+  type: $Enums.CacheType
   query: string
   jsonResult: string
   cachedAt: Date
@@ -171,6 +178,7 @@ export type SearchCacheWhereInput = {
   OR?: Prisma.SearchCacheWhereInput[]
   NOT?: Prisma.SearchCacheWhereInput | Prisma.SearchCacheWhereInput[]
   id?: Prisma.UuidFilter<"SearchCache"> | string
+  type?: Prisma.EnumCacheTypeFilter<"SearchCache"> | $Enums.CacheType
   query?: Prisma.StringFilter<"SearchCache"> | string
   jsonResult?: Prisma.StringFilter<"SearchCache"> | string
   cachedAt?: Prisma.DateTimeFilter<"SearchCache"> | Date | string
@@ -178,6 +186,7 @@ export type SearchCacheWhereInput = {
 
 export type SearchCacheOrderByWithRelationInput = {
   id?: Prisma.SortOrder
+  type?: Prisma.SortOrder
   query?: Prisma.SortOrder
   jsonResult?: Prisma.SortOrder
   cachedAt?: Prisma.SortOrder
@@ -189,12 +198,14 @@ export type SearchCacheWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.SearchCacheWhereInput | Prisma.SearchCacheWhereInput[]
   OR?: Prisma.SearchCacheWhereInput[]
   NOT?: Prisma.SearchCacheWhereInput | Prisma.SearchCacheWhereInput[]
+  type?: Prisma.EnumCacheTypeFilter<"SearchCache"> | $Enums.CacheType
   jsonResult?: Prisma.StringFilter<"SearchCache"> | string
   cachedAt?: Prisma.DateTimeFilter<"SearchCache"> | Date | string
 }, "id" | "query">
 
 export type SearchCacheOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
+  type?: Prisma.SortOrder
   query?: Prisma.SortOrder
   jsonResult?: Prisma.SortOrder
   cachedAt?: Prisma.SortOrder
@@ -208,6 +219,7 @@ export type SearchCacheScalarWhereWithAggregatesInput = {
   OR?: Prisma.SearchCacheScalarWhereWithAggregatesInput[]
   NOT?: Prisma.SearchCacheScalarWhereWithAggregatesInput | Prisma.SearchCacheScalarWhereWithAggregatesInput[]
   id?: Prisma.UuidWithAggregatesFilter<"SearchCache"> | string
+  type?: Prisma.EnumCacheTypeWithAggregatesFilter<"SearchCache"> | $Enums.CacheType
   query?: Prisma.StringWithAggregatesFilter<"SearchCache"> | string
   jsonResult?: Prisma.StringWithAggregatesFilter<"SearchCache"> | string
   cachedAt?: Prisma.DateTimeWithAggregatesFilter<"SearchCache"> | Date | string
@@ -215,6 +227,7 @@ export type SearchCacheScalarWhereWithAggregatesInput = {
 
 export type SearchCacheCreateInput = {
   id?: string
+  type: $Enums.CacheType
   query: string
   jsonResult: string
   cachedAt?: Date | string
@@ -222,6 +235,7 @@ export type SearchCacheCreateInput = {
 
 export type SearchCacheUncheckedCreateInput = {
   id?: string
+  type: $Enums.CacheType
   query: string
   jsonResult: string
   cachedAt?: Date | string
@@ -229,6 +243,7 @@ export type SearchCacheUncheckedCreateInput = {
 
 export type SearchCacheUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumCacheTypeFieldUpdateOperationsInput | $Enums.CacheType
   query?: Prisma.StringFieldUpdateOperationsInput | string
   jsonResult?: Prisma.StringFieldUpdateOperationsInput | string
   cachedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -236,6 +251,7 @@ export type SearchCacheUpdateInput = {
 
 export type SearchCacheUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumCacheTypeFieldUpdateOperationsInput | $Enums.CacheType
   query?: Prisma.StringFieldUpdateOperationsInput | string
   jsonResult?: Prisma.StringFieldUpdateOperationsInput | string
   cachedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -243,6 +259,7 @@ export type SearchCacheUncheckedUpdateInput = {
 
 export type SearchCacheCreateManyInput = {
   id?: string
+  type: $Enums.CacheType
   query: string
   jsonResult: string
   cachedAt?: Date | string
@@ -250,6 +267,7 @@ export type SearchCacheCreateManyInput = {
 
 export type SearchCacheUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumCacheTypeFieldUpdateOperationsInput | $Enums.CacheType
   query?: Prisma.StringFieldUpdateOperationsInput | string
   jsonResult?: Prisma.StringFieldUpdateOperationsInput | string
   cachedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -257,6 +275,7 @@ export type SearchCacheUpdateManyMutationInput = {
 
 export type SearchCacheUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumCacheTypeFieldUpdateOperationsInput | $Enums.CacheType
   query?: Prisma.StringFieldUpdateOperationsInput | string
   jsonResult?: Prisma.StringFieldUpdateOperationsInput | string
   cachedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -264,6 +283,7 @@ export type SearchCacheUncheckedUpdateManyInput = {
 
 export type SearchCacheCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  type?: Prisma.SortOrder
   query?: Prisma.SortOrder
   jsonResult?: Prisma.SortOrder
   cachedAt?: Prisma.SortOrder
@@ -271,6 +291,7 @@ export type SearchCacheCountOrderByAggregateInput = {
 
 export type SearchCacheMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  type?: Prisma.SortOrder
   query?: Prisma.SortOrder
   jsonResult?: Prisma.SortOrder
   cachedAt?: Prisma.SortOrder
@@ -278,15 +299,21 @@ export type SearchCacheMaxOrderByAggregateInput = {
 
 export type SearchCacheMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  type?: Prisma.SortOrder
   query?: Prisma.SortOrder
   jsonResult?: Prisma.SortOrder
   cachedAt?: Prisma.SortOrder
+}
+
+export type EnumCacheTypeFieldUpdateOperationsInput = {
+  set?: $Enums.CacheType
 }
 
 
 
 export type SearchCacheSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  type?: boolean
   query?: boolean
   jsonResult?: boolean
   cachedAt?: boolean
@@ -294,6 +321,7 @@ export type SearchCacheSelect<ExtArgs extends runtime.Types.Extensions.InternalA
 
 export type SearchCacheSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  type?: boolean
   query?: boolean
   jsonResult?: boolean
   cachedAt?: boolean
@@ -301,6 +329,7 @@ export type SearchCacheSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
 
 export type SearchCacheSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  type?: boolean
   query?: boolean
   jsonResult?: boolean
   cachedAt?: boolean
@@ -308,18 +337,20 @@ export type SearchCacheSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
 
 export type SearchCacheSelectScalar = {
   id?: boolean
+  type?: boolean
   query?: boolean
   jsonResult?: boolean
   cachedAt?: boolean
 }
 
-export type SearchCacheOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "query" | "jsonResult" | "cachedAt", ExtArgs["result"]["searchCache"]>
+export type SearchCacheOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "type" | "query" | "jsonResult" | "cachedAt", ExtArgs["result"]["searchCache"]>
 
 export type $SearchCachePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "SearchCache"
   objects: {}
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
+    type: $Enums.CacheType
     query: string
     jsonResult: string
     cachedAt: Date
@@ -747,6 +778,7 @@ export interface Prisma__SearchCacheClient<T, Null = never, ExtArgs extends runt
  */
 export interface SearchCacheFieldRefs {
   readonly id: Prisma.FieldRef<"SearchCache", 'String'>
+  readonly type: Prisma.FieldRef<"SearchCache", 'CacheType'>
   readonly query: Prisma.FieldRef<"SearchCache", 'String'>
   readonly jsonResult: Prisma.FieldRef<"SearchCache", 'String'>
   readonly cachedAt: Prisma.FieldRef<"SearchCache", 'DateTime'>

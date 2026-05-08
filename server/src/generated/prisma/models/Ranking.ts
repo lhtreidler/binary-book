@@ -43,6 +43,7 @@ export type RankingMinAggregateOutputType = {
   rawScore: number | null
   level: number | null
   createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type RankingMaxAggregateOutputType = {
@@ -52,6 +53,7 @@ export type RankingMaxAggregateOutputType = {
   rawScore: number | null
   level: number | null
   createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type RankingCountAggregateOutputType = {
@@ -61,6 +63,7 @@ export type RankingCountAggregateOutputType = {
   rawScore: number
   level: number
   createdAt: number
+  updatedAt: number
   _all: number
 }
 
@@ -82,6 +85,7 @@ export type RankingMinAggregateInputType = {
   rawScore?: true
   level?: true
   createdAt?: true
+  updatedAt?: true
 }
 
 export type RankingMaxAggregateInputType = {
@@ -91,6 +95,7 @@ export type RankingMaxAggregateInputType = {
   rawScore?: true
   level?: true
   createdAt?: true
+  updatedAt?: true
 }
 
 export type RankingCountAggregateInputType = {
@@ -100,6 +105,7 @@ export type RankingCountAggregateInputType = {
   rawScore?: true
   level?: true
   createdAt?: true
+  updatedAt?: true
   _all?: true
 }
 
@@ -196,6 +202,7 @@ export type RankingGroupByOutputType = {
   rawScore: number | null
   level: number | null
   createdAt: Date
+  updatedAt: Date
   _count: RankingCountAggregateOutputType | null
   _avg: RankingAvgAggregateOutputType | null
   _sum: RankingSumAggregateOutputType | null
@@ -228,6 +235,7 @@ export type RankingWhereInput = {
   rawScore?: Prisma.FloatNullableFilter<"Ranking"> | number | null
   level?: Prisma.IntNullableFilter<"Ranking"> | number | null
   createdAt?: Prisma.DateTimeFilter<"Ranking"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Ranking"> | Date | string
   book?: Prisma.XOR<Prisma.BookScalarRelationFilter, Prisma.BookWhereInput>
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
@@ -239,6 +247,7 @@ export type RankingOrderByWithRelationInput = {
   rawScore?: Prisma.SortOrderInput | Prisma.SortOrder
   level?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   book?: Prisma.BookOrderByWithRelationInput
   user?: Prisma.UserOrderByWithRelationInput
 }
@@ -253,6 +262,7 @@ export type RankingWhereUniqueInput = Prisma.AtLeast<{
   rawScore?: Prisma.FloatNullableFilter<"Ranking"> | number | null
   level?: Prisma.IntNullableFilter<"Ranking"> | number | null
   createdAt?: Prisma.DateTimeFilter<"Ranking"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Ranking"> | Date | string
   book?: Prisma.XOR<Prisma.BookScalarRelationFilter, Prisma.BookWhereInput>
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "id">
@@ -264,6 +274,7 @@ export type RankingOrderByWithAggregationInput = {
   rawScore?: Prisma.SortOrderInput | Prisma.SortOrder
   level?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   _count?: Prisma.RankingCountOrderByAggregateInput
   _avg?: Prisma.RankingAvgOrderByAggregateInput
   _max?: Prisma.RankingMaxOrderByAggregateInput
@@ -281,6 +292,7 @@ export type RankingScalarWhereWithAggregatesInput = {
   rawScore?: Prisma.FloatNullableWithAggregatesFilter<"Ranking"> | number | null
   level?: Prisma.IntNullableWithAggregatesFilter<"Ranking"> | number | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Ranking"> | Date | string
+  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Ranking"> | Date | string
 }
 
 export type RankingCreateInput = {
@@ -288,6 +300,7 @@ export type RankingCreateInput = {
   rawScore?: number | null
   level?: number | null
   createdAt?: Date | string
+  updatedAt?: Date | string
   book: Prisma.BookCreateNestedOneWithoutRankingsInput
   user: Prisma.UserCreateNestedOneWithoutRankingsInput
 }
@@ -299,6 +312,7 @@ export type RankingUncheckedCreateInput = {
   rawScore?: number | null
   level?: number | null
   createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type RankingUpdateInput = {
@@ -306,6 +320,7 @@ export type RankingUpdateInput = {
   rawScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   level?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   book?: Prisma.BookUpdateOneRequiredWithoutRankingsNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutRankingsNestedInput
 }
@@ -317,6 +332,7 @@ export type RankingUncheckedUpdateInput = {
   rawScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   level?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type RankingCreateManyInput = {
@@ -326,6 +342,7 @@ export type RankingCreateManyInput = {
   rawScore?: number | null
   level?: number | null
   createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type RankingUpdateManyMutationInput = {
@@ -333,6 +350,7 @@ export type RankingUpdateManyMutationInput = {
   rawScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   level?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type RankingUncheckedUpdateManyInput = {
@@ -342,6 +360,7 @@ export type RankingUncheckedUpdateManyInput = {
   rawScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   level?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type RankingListRelationFilter = {
@@ -361,6 +380,7 @@ export type RankingCountOrderByAggregateInput = {
   rawScore?: Prisma.SortOrder
   level?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type RankingAvgOrderByAggregateInput = {
@@ -375,6 +395,7 @@ export type RankingMaxOrderByAggregateInput = {
   rawScore?: Prisma.SortOrder
   level?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type RankingMinOrderByAggregateInput = {
@@ -384,6 +405,7 @@ export type RankingMinOrderByAggregateInput = {
   rawScore?: Prisma.SortOrder
   level?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type RankingSumOrderByAggregateInput = {
@@ -496,6 +518,7 @@ export type RankingCreateWithoutUserInput = {
   rawScore?: number | null
   level?: number | null
   createdAt?: Date | string
+  updatedAt?: Date | string
   book: Prisma.BookCreateNestedOneWithoutRankingsInput
 }
 
@@ -505,6 +528,7 @@ export type RankingUncheckedCreateWithoutUserInput = {
   rawScore?: number | null
   level?: number | null
   createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type RankingCreateOrConnectWithoutUserInput = {
@@ -543,6 +567,7 @@ export type RankingScalarWhereInput = {
   rawScore?: Prisma.FloatNullableFilter<"Ranking"> | number | null
   level?: Prisma.IntNullableFilter<"Ranking"> | number | null
   createdAt?: Prisma.DateTimeFilter<"Ranking"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Ranking"> | Date | string
 }
 
 export type RankingCreateWithoutBookInput = {
@@ -550,6 +575,7 @@ export type RankingCreateWithoutBookInput = {
   rawScore?: number | null
   level?: number | null
   createdAt?: Date | string
+  updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutRankingsInput
 }
 
@@ -559,6 +585,7 @@ export type RankingUncheckedCreateWithoutBookInput = {
   rawScore?: number | null
   level?: number | null
   createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type RankingCreateOrConnectWithoutBookInput = {
@@ -593,6 +620,7 @@ export type RankingCreateManyUserInput = {
   rawScore?: number | null
   level?: number | null
   createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type RankingUpdateWithoutUserInput = {
@@ -600,6 +628,7 @@ export type RankingUpdateWithoutUserInput = {
   rawScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   level?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   book?: Prisma.BookUpdateOneRequiredWithoutRankingsNestedInput
 }
 
@@ -609,6 +638,7 @@ export type RankingUncheckedUpdateWithoutUserInput = {
   rawScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   level?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type RankingUncheckedUpdateManyWithoutUserInput = {
@@ -617,6 +647,7 @@ export type RankingUncheckedUpdateManyWithoutUserInput = {
   rawScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   level?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type RankingCreateManyBookInput = {
@@ -625,6 +656,7 @@ export type RankingCreateManyBookInput = {
   rawScore?: number | null
   level?: number | null
   createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type RankingUpdateWithoutBookInput = {
@@ -632,6 +664,7 @@ export type RankingUpdateWithoutBookInput = {
   rawScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   level?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutRankingsNestedInput
 }
 
@@ -641,6 +674,7 @@ export type RankingUncheckedUpdateWithoutBookInput = {
   rawScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   level?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type RankingUncheckedUpdateManyWithoutBookInput = {
@@ -649,6 +683,7 @@ export type RankingUncheckedUpdateManyWithoutBookInput = {
   rawScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   level?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -660,6 +695,7 @@ export type RankingSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   rawScore?: boolean
   level?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
   book?: boolean | Prisma.BookDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["ranking"]>
@@ -671,6 +707,7 @@ export type RankingSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   rawScore?: boolean
   level?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
   book?: boolean | Prisma.BookDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["ranking"]>
@@ -682,6 +719,7 @@ export type RankingSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   rawScore?: boolean
   level?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
   book?: boolean | Prisma.BookDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["ranking"]>
@@ -693,9 +731,10 @@ export type RankingSelectScalar = {
   rawScore?: boolean
   level?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
 }
 
-export type RankingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "bookId" | "userId" | "rawScore" | "level" | "createdAt", ExtArgs["result"]["ranking"]>
+export type RankingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "bookId" | "userId" | "rawScore" | "level" | "createdAt" | "updatedAt", ExtArgs["result"]["ranking"]>
 export type RankingInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   book?: boolean | Prisma.BookDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -722,6 +761,7 @@ export type $RankingPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     rawScore: number | null
     level: number | null
     createdAt: Date
+    updatedAt: Date
   }, ExtArgs["result"]["ranking"]>
   composites: {}
 }
@@ -1153,6 +1193,7 @@ export interface RankingFieldRefs {
   readonly rawScore: Prisma.FieldRef<"Ranking", 'Float'>
   readonly level: Prisma.FieldRef<"Ranking", 'Int'>
   readonly createdAt: Prisma.FieldRef<"Ranking", 'DateTime'>
+  readonly updatedAt: Prisma.FieldRef<"Ranking", 'DateTime'>
 }
     
 
