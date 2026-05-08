@@ -3,6 +3,8 @@ import { validateBody } from "../middleware/validation";
 import {
   ContinueRankingInput,
   continueRankingSchema,
+  QuitRankingInput,
+  quitRankingSchema,
   StartRankingInput,
   startRankingSchema,
 } from "../utils/schemas";
@@ -93,7 +95,7 @@ router.post(
         req.body as ContinueRankingInput;
 
       const rankingSession = await prisma.rankingSession.findUnique({
-        where: { id: rankingSessionId },
+        where: { id: rankingSessionId, userId },
       });
 
       if (!rankingSession) {
@@ -133,5 +135,26 @@ router.post(
     }
   },
 );
+
+router.post("/quit", validateBody(quitRankingSchema), async (req, res) => {
+  try {
+    const { userId } = req.user || {};
+
+    if (!userId) {
+      res.status(401).json({ error: "Unauthorized" });
+      return;
+    }
+
+    const { sessionId } = req.body as QuitRankingInput;
+
+    const rankingSession = await prisma.rankingSession.delete({
+      where: { id: sessionId, userId },
+    });
+
+    res.send();
+  } catch (err) {
+    res.send();
+  }
+});
 
 export default router;

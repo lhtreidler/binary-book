@@ -79,10 +79,10 @@ export const Form = ({
               isDisabled={isFormDisabled}
               key={index}
               onPress={() => onSubmit(onPress)}
-              isLoading={isLoading}
-              label={label}
               {...buttonProps}
-            />
+            >
+              {isLoading ? <ButtonSpinner /> : <ButtonText>{label}</ButtonText>}
+            </Button>
           ))}
         </HStack>
       </Box>

@@ -33,8 +33,9 @@ export const formatResult = ({ items }: GoogleBooksSearchResponse) => {
 };
 
 export const queryGoogleBooks = async (q: string) => {
-  const cachedResult = await prisma.searchCache.findUnique({
-    where: { query: q.toLowerCase() },
+  const formattedQuery = JSON.stringify(q).toLowerCase();
+  const cachedResult = await prisma.searchCache.findFirst({
+    where: { query: formattedQuery },
   });
 
   if (cachedResult?.jsonResult) {
@@ -45,6 +46,17 @@ export const queryGoogleBooks = async (q: string) => {
   const books = (await fetch(createQueryUrl(q)).then((response) =>
     response.json(),
   )) as GoogleBooksSearchResponse;
+
+  try {
+    await prisma.searchCache.create({
+      data: {
+        query: formattedQuery,
+        jsonResult: JSON.stringify({ items: books.items }),
+      },
+    });
+  } catch (err) {
+    console.error(err);
+  }
 
   return formatResult(books);
 };

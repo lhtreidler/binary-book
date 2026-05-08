@@ -28,7 +28,8 @@ export const Autocomplete = ({
       return <Text>No results found</Text>;
     }
 
-    return options.map(({ key, label, thumbnail }) => {
+    return options.map((option) => {
+      const { key, label, thumbnail, hideAction } = option;
       return (
         <Box
           key={key}
@@ -47,7 +48,7 @@ export const Autocomplete = ({
               />
             </Box>
           ) : null}
-          {rightActions && (
+          {rightActions && !hideAction && (
             <HStack className="ml-2">
               {rightActions.map(({ icon, handler }, i) => (
                 <Button

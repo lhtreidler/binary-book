@@ -6,8 +6,15 @@ export const nameToIcon = {
   add: AddIcon,
 } as const;
 
+type Option = {
+  key: string;
+  label: string;
+  thumbnail?: string;
+  hideAction?: boolean;
+};
+
 export type AutocompleteProps = {
-  options: { key: string; label: string; thumbnail?: string }[];
+  options: Option[];
   isLoading?: boolean;
   inputProps?: React.ComponentProps<typeof Input>;
   fieldProps?: React.ComponentProps<typeof InputField>;

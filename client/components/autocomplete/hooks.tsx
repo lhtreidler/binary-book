@@ -2,23 +2,19 @@ import { useDebounce } from "@/lib/utils";
 import { useState } from "react";
 import { AutocompleteProps } from "./types";
 
-export const useAutocomplete = (
-  requestFunc: (input: string) => Promise<AutocompleteProps["options"]>,
-): AutocompleteProps => {
+export const useAutocomplete = ({
+  onChange,
+  isLoading,
+  options,
+}: {
+  onChange: (input: string) => void;
+  isLoading: boolean;
+  options: AutocompleteProps["options"];
+}): AutocompleteProps => {
   const [search, setSearch] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [options, setOptions] = useState<AutocompleteProps["options"]>([]);
 
   const onSearchChange = async (input: string) => {
-    if (input) {
-      setIsLoading(true);
-      try {
-        const options = await requestFunc(input);
-        setOptions(options);
-      } finally {
-        setIsLoading(false);
-      }
-    }
+    onChange(input);
   };
 
   useDebounce({

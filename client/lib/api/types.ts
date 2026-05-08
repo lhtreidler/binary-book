@@ -29,6 +29,7 @@ export interface BookSearchItem {
   title: string;
   authors: string[];
   thumbnail: string;
+  isRanked: boolean;
 }
 
 export interface BookSearchResponse {
@@ -53,18 +54,27 @@ export interface RankingSession {
   // Add other session fields as needed
 }
 
-export interface StartRankingResponse {
-  sessionId: string;
-  bookId: string;
-  rankingToCompare: Ranking;
-  // Add other fields as needed
+export interface RankingBookInfo {
+  title: string | null;
+  authors: string[];
 }
 
-export interface ContinueRankingResponse {
-  score?: number;
-  rankingToCompare?: Ranking;
-  // Add other fields as needed
-}
+export type FinishedRankingResponse = { score: number };
+
+export type StartRankingResponse =
+  | {
+      sessionId: string;
+      compareBook: RankingBookInfo;
+    }
+  | FinishedRankingResponse;
+
+export type ContinueRankingResponse =
+  | {
+      compareBook: RankingBookInfo;
+    }
+  | FinishedRankingResponse;
+
+export type QuitRankingResponse = void;
 
 export interface ApiError {
   error: string;

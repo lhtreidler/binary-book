@@ -57,17 +57,6 @@ router.get("/", async (req: Request, res: Response): Promise<void> => {
       .status(500)
       .json({ message: "Failed to fetch books. Please try again later." });
   }
-
-  try {
-    await prisma.searchCache.create({
-      data: {
-        query: JSON.stringify(q).toLowerCase(),
-        jsonResult: JSON.stringify({ items }),
-      },
-    });
-  } catch (err) {
-    console.error(err);
-  }
 });
 
 export default router;

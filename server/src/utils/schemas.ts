@@ -39,6 +39,10 @@ export const continueRankingSchema = z.object({
   sessionId: z.string().min(1),
   choseNew: z.boolean(),
 });
+export const quitRankingSchema = z.object({
+  sessionId: z.string().min(1),
+});
 
 export type StartRankingInput = z.infer<typeof startRankingSchema>;
 export type ContinueRankingInput = z.infer<typeof continueRankingSchema>;
+export type QuitRankingInput = z.infer<typeof quitRankingSchema>;
