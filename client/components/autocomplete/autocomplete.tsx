@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Box } from "../ui/box";
 import { Button, ButtonIcon } from "../ui/button";
 import { HStack } from "../ui/hstack";
@@ -16,55 +17,67 @@ export const Autocomplete = ({
   onChange = () => {},
   rightActions = [],
 }: AutocompleteProps) => {
+  const [isChanged, setIsChanged] = useState(false);
+
+  useEffect(() => {
+    if (options) setIsChanged(true);
+  }, [options]);
+
+  const getOptions = () => {
+    if (!options && !isLoading && isChanged) {
+      return <Text>No results found</Text>;
+    }
+
+    return options.map(({ key, label, thumbnail }) => {
+      return (
+        <Box
+          key={key}
+          className="bg-slate-50 border-gray-700 py-2 px-4 border-b-hairline flex flex-row items-center w-full gap-3"
+        >
+          <Box className="flex-1">
+            <Text>{label}</Text>
+          </Box>
+          {thumbnail ? (
+            <Box className="w-1/4 aspect-[2/3]" style={{ width: 70 }}>
+              <Image
+                size="xs"
+                source={{ uri: thumbnail }}
+                alt={label}
+                className="w-full h-full"
+              />
+            </Box>
+          ) : null}
+          {rightActions && (
+            <HStack className="ml-2">
+              {rightActions.map(({ icon, handler }, i) => (
+                <Button
+                  size="sm"
+                  className="rounded-full"
+                  variant="outline"
+                  key={i}
+                  onPress={() => handler(key)}
+                >
+                  <ButtonIcon
+                    className="py-2 px-0"
+                    size="sm"
+                    as={nameToIcon[icon]}
+                  />
+                </Button>
+              ))}
+            </HStack>
+          )}
+        </Box>
+      );
+    });
+  };
+
   return (
     <VStack>
       <Input {...inputProps}>
         <InputField onChangeText={onChange} {...fieldProps} />
       </Input>
-      {options
-        ? options.map(({ key, label, thumbnail }) => {
-            return (
-              <Box
-                key={key}
-                className="bg-slate-50 border-gray-700 py-2 px-4 border-b-hairline flex flex-row items-center w-full gap-3"
-              >
-                <Box className="flex-1">
-                  <Text>{label}</Text>
-                </Box>
-                {thumbnail ? (
-                  <Box className="w-1/4 aspect-[2/3]" style={{ width: 70 }}>
-                    <Image
-                      size="xs"
-                      source={{ uri: thumbnail }}
-                      alt={label}
-                      className="w-full h-full"
-                    />
-                  </Box>
-                ) : null}
-                {rightActions && (
-                  <HStack className="ml-3">
-                    {rightActions.map(({ icon, handler }, i) => (
-                      <Button
-                        size="sm"
-                        className="rounded-full py-1"
-                        variant="outline"
-                        key={i}
-                        onPress={() => handler(key)}
-                      >
-                        <ButtonIcon
-                          className="py-2"
-                          size="sm"
-                          as={nameToIcon[icon]}
-                        />
-                      </Button>
-                    ))}
-                  </HStack>
-                )}
-              </Box>
-            );
-          })
-        : null}
-      {isLoading ? <Spinner /> : null}
+      {getOptions()}
+      {isLoading ? <Spinner className="mt-2" /> : null}
     </VStack>
   );
 };
