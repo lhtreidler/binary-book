@@ -4,7 +4,8 @@ import { Box } from "@/components/ui/box";
 import { BookSearchItem } from "@/lib/api";
 import { useSearchBooks } from "@/lib/api/hooks/useBooks";
 import { useQueryClient } from "@tanstack/react-query";
-import { useMemo, useState } from "react";
+import { useRouter } from "expo-router";
+import { useEffect, useMemo, useState } from "react";
 import { ScrollView } from "react-native";
 
 export default function Add() {
@@ -13,8 +14,10 @@ export default function Add() {
 
   const queryClient = useQueryClient();
   const { isLoading, data } = useSearchBooks({ query });
+  const router = useRouter();
 
   const options = useMemo(() => {
+    console.log({ data });
     if (!data) return [];
     return data.items.map(({ key, title, authors, isRanked }) => {
       const authorStr = authors.length ? authors.join(", ") : "Unknown Author";
@@ -27,8 +30,6 @@ export default function Add() {
     });
   }, [data]);
 
-  console.log({ options });
-
   const props = useAutocomplete({
     onChange: (q: string) => setQuery(q),
     options,
@@ -40,11 +41,19 @@ export default function Add() {
     if (book) setSelectedBook(book);
   };
 
-  const onCloseModal = () => {
+  const onCloseModal = (bookId?: string) => {
     queryClient.invalidateQueries({ queryKey: ["books", query] });
     queryClient.invalidateQueries({ queryKey: ["books", "list"] });
     setSelectedBook(null);
+
+    if (bookId) {
+      router.push(`/book/${bookId}`);
+    }
   };
+
+  useEffect(() => {
+    console.log(query);
+  }, [query]);
 
   return (
     <Box>

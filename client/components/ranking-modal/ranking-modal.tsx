@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { Box } from "../ui/box";
 import { Button, ButtonText } from "../ui/button";
@@ -28,6 +28,7 @@ import { FinishedRankingResponse } from "@/lib/api/types";
 import { useQuitRanking } from "@/lib/api/hooks/useRanking";
 import { sliceJoinArray, sliceString } from "@/lib/format-utils";
 import { TierButtons, Phase, phaseToHeader } from "./constants";
+import { useRouter } from "expo-router";
 
 const formatAuthors = (authors: string[]) =>
   authors.length ? authors.join(", ") : "Unknown Author";
@@ -45,37 +46,33 @@ export const RankingModal = ({
 }: {
   book: BookSearchItem | null;
   isOpen: boolean;
-  onClose: () => void;
+  onClose: (bookId?: string) => void;
 }) => {
-  const [phase, setPhase] = useState<Phase>("tier");
   const [sessionId, setSessionId] = useState<string | null>(null);
-  const [compareBook, setCompareBook] = useState<RankingBookInfo | null>(null);
-  const [score, setScore] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [compareBook, setCompareBook] = useState<RankingBookInfo | null>(null);
+  const [result, setResult] = useState<FinishedRankingResponse | null>(null);
+
+  const phase: Phase = useMemo(() => {
+    if (result) return "score";
+    if (compareBook) return "comparing";
+    return "tier";
+  }, [result, compareBook]);
 
   const startMutation = useStartRanking();
   const continueMutation = useContinueRanking();
   const quitRanking = useQuitRanking();
+  const router = useRouter();
 
-  useEffect(() => {
-    if (isOpen) {
-      setPhase("tier");
-      setSessionId(null);
-      setCompareBook(null);
-      setScore(null);
-      setError(null);
+  const applyResult = (res: StartRankingResponse | ContinueRankingResponse) => {
+    if ("sessionId" in res) {
+      setSessionId(res.sessionId);
     }
-  }, [isOpen, book?.key]);
 
-  const applyResult = (
-    result: StartRankingResponse | ContinueRankingResponse,
-  ) => {
-    if (getIsFinishedRankingResponse(result)) {
-      setScore(result.score);
-      setPhase("score");
+    if (getIsFinishedRankingResponse(res)) {
+      setResult(res);
     } else {
-      setCompareBook(result.compareBook);
-      setPhase("comparing");
+      setCompareBook(res.compareBook);
     }
   };
 
@@ -87,10 +84,6 @@ export const RankingModal = ({
         rankingLevel: level,
         gId: book.key,
       });
-
-      if (!getIsFinishedRankingResponse(result)) {
-        setSessionId(result.sessionId);
-      }
 
       applyResult(result);
     } catch {
@@ -112,14 +105,92 @@ export const RankingModal = ({
     }
   };
 
+  console.log(result, compareBook, sessionId, error);
+
   const onCloseModal = () => {
-    onClose();
-    if (sessionId && score === null) {
+    setResult(null);
+    setCompareBook(null);
+    setSessionId(null);
+    setError(null);
+    if (result) {
+      onClose(result.bookId);
+    } else if (sessionId) {
       quitRanking.mutate({ sessionId });
     }
   };
 
   const isLoading = startMutation.isPending || continueMutation.isPending;
+
+  const getContent = () => {
+    if (phase === "tier" && !result && book) {
+      return (
+        <>
+          <Text className="mb-1 text-lg font-semibold text-center">
+            {book.title}
+          </Text>
+          <Text className="text-center mb-4">
+            by {formatAuthors(book.authors)}
+          </Text>
+          <VStack space="sm">
+            {TierButtons.map((tier) => (
+              <Button
+                key={tier.value}
+                onPress={() => handleTierPick(tier.value)}
+                isDisabled={isLoading}
+                className={tier.className}
+              >
+                <ButtonText>{tier.label}</ButtonText>
+              </Button>
+            ))}
+          </VStack>
+        </>
+      );
+    }
+
+    if (phase === "comparing" && compareBook) {
+      return (
+        <>
+          <HStack space="md" className="items-center justify-center">
+            {[
+              { ...book, isNew: true },
+              { ...compareBook, isNew: false },
+            ].map(({ title, authors = [], isNew }, i) => (
+              <>
+                <Pressable
+                  key={title}
+                  onPress={() => handleChoice(isNew)}
+                  disabled={isLoading}
+                  className="flex-1"
+                >
+                  <Box className="h-full p-2 border border-gray-300 rounded-md justify-center items-center bg-slate-50">
+                    <Text className="font-bold text-center">
+                      {formatTitle(title || "")}
+                    </Text>
+                    {authors.length > 0 && (
+                      <Text className="mt-2 text-sm text-center">
+                        {sliceJoinArray(authors, 30)}
+                      </Text>
+                    )}
+                  </Box>
+                </Pressable>
+                {i === 0 && <Text className="font-bold">OR</Text>}
+              </>
+            ))}
+          </HStack>
+        </>
+      );
+    }
+
+    if (phase === "score" && result) {
+      return (
+        <>
+          <Text className="text-5xl text-center font-bold">
+            {result.score.toFixed(1)}
+          </Text>
+        </>
+      );
+    }
+  };
 
   return (
     <Modal isOpen={isOpen} onClose={onCloseModal}>
@@ -136,75 +207,14 @@ export const RankingModal = ({
           </Text>
         </ModalHeader>
         <ModalBody>
-          {phase === "tier" && book && (
-            <>
-              <Text className="mb-1 text-lg font-semibold text-center">
-                {book.title}
-              </Text>
-              <Text className="text-center mb-4">
-                by {formatAuthors(book.authors)}
-              </Text>
-              <VStack space="sm">
-                {TierButtons.map((tier) => (
-                  <Button
-                    key={tier.value}
-                    onPress={() => handleTierPick(tier.value)}
-                    isDisabled={isLoading}
-                    className={tier.className}
-                  >
-                    <ButtonText>{tier.label}</ButtonText>
-                  </Button>
-                ))}
-              </VStack>
-            </>
-          )}
-
-          {phase === "comparing" && book && compareBook && (
-            <>
-              <HStack space="md" className="items-center justify-center">
-                {[
-                  { ...book, isNew: true },
-                  { ...compareBook, isNew: false },
-                ].map(({ title, authors, isNew }, i) => (
-                  <>
-                    <Pressable
-                      key={title}
-                      onPress={() => handleChoice(isNew)}
-                      disabled={isLoading}
-                      className="flex-1"
-                    >
-                      <Box className="h-full p-2 border border-gray-300 rounded-md justify-center items-center bg-slate-50">
-                        <Text className="font-bold text-center">
-                          {formatTitle(title || "")}
-                        </Text>
-                        {authors.length > 0 && (
-                          <Text className="mt-2 text-sm text-center">
-                            {sliceJoinArray(authors, 30)}
-                          </Text>
-                        )}
-                      </Box>
-                    </Pressable>
-                    {i === 0 && <Text className="font-bold">OR</Text>}
-                  </>
-                ))}
-              </HStack>
-            </>
-          )}
-
-          {phase === "score" && score !== null && (
-            <>
-              <Text className="text-5xl text-center font-bold">
-                {score.toFixed(1)}
-              </Text>
-            </>
-          )}
+          {getContent()}
           {error && (
             <Text className="text-error-400 text-center mt-2">{error}</Text>
           )}
         </ModalBody>
         {phase === "score" && (
           <ModalFooter>
-            <Button onPress={onClose}>
+            <Button onPress={onCloseModal}>
               <ButtonText>Done</ButtonText>
             </Button>
           </ModalFooter>

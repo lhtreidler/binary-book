@@ -5,6 +5,7 @@ import { getVolumeDetails, queryGoogleBooks } from "../lib/thirdParty.js";
 import {
   calculateScore,
   getHighestLowestScores,
+  getScoreFromRanking,
 } from "../utils/rankingHelpers.js";
 import { createBookComparisonStr } from "../utils/dedupe.js";
 
@@ -130,12 +131,12 @@ router.get("/list", async (req: Request, res: Response) => {
     );
 
     const formattedList = rankings
-      .map(({ book: { title, authors, googleId }, level, rawScore }) => {
+      .map(({ book: { title, authors, id: bookId }, level, rawScore }) => {
         const minMax = levelMinMax.find((m) => m.level === level);
-        if (!minMax || rawScore === null || !googleId) return null;
+        if (!minMax || rawScore === null || !bookId) return null;
 
         return {
-          googleId,
+          bookId,
           title,
           authors,
           score: calculateScore({ rawScore, ...minMax }),
@@ -155,7 +156,7 @@ router.get("/list", async (req: Request, res: Response) => {
 });
 
 router.get(
-  "/details/:googleId",
+  "/details/:bookId",
   async (req: Request, res: Response): Promise<void> => {
     if (!req.user || !req.user.userId) {
       res.status(401).json({ message: "Unauthorized" });
@@ -163,31 +164,37 @@ router.get(
     }
 
     const { userId } = req.user;
-    const { googleId } = req.params;
+    const { bookId } = req.params;
 
-    if (!googleId) {
-      res.status(400).json({ message: "Missing googleId" });
+    if (!bookId) {
+      res.status(400).json({ message: "Missing bookId" });
       return;
     }
 
     try {
-      const details = await getVolumeDetails(googleId);
-
-      const ranking = await prisma.ranking.findFirst({
+      const book = await prisma.book.findFirst({
         where: {
-          userId,
-          book: { googleId },
+          id: bookId,
+        },
+        include: {
+          rankings: {
+            where: {
+              userId,
+            },
+          },
         },
       });
 
+      if (!book) {
+        res.status(404).json({ message: "Book not found" });
+        return;
+      }
+
+      const details = await getVolumeDetails(book.googleId);
+
       let userScore: number | null = null;
-      if (ranking && ranking.rawScore !== null && ranking.level !== null) {
-        const minMax = await getHighestLowestScores(userId, ranking.level);
-        userScore = calculateScore({
-          rawScore: ranking.rawScore,
-          level: ranking.level,
-          ...minMax,
-        });
+      if (book.rankings.length) {
+        userScore = await getScoreFromRanking(book.rankings[0]);
       }
 
       res.json({ ...details, userScore });

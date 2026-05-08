@@ -19,9 +19,7 @@ export const dedupeBooks = (books: GoogleBooksVolume[]) => {
       book.volumeInfo.title,
       book.volumeInfo.authors,
     );
-    console.log({ compareStr, bookSet });
     if (bookSet.has(compareStr) || idSet.has(book.id)) return null;
-    console.log("Unique!", compareStr);
     idSet.add(book.id);
     bookSet.add(compareStr);
     return book;
@@ -30,8 +28,6 @@ export const dedupeBooks = (books: GoogleBooksVolume[]) => {
   const toReturn = dedupedBooks
     .sort((a, b) => a.bookIndex - b.bookIndex)
     .map(({ bookIndex: _i, ...rest }) => rest);
-
-  console.log("Starting", sortedWithIndex.length, "Ending", toReturn.length);
 
   return toReturn;
 };

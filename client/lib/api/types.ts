@@ -37,7 +37,7 @@ export interface BookSearchResponse {
 }
 
 export interface BookListItem {
-  googleId: string;
+  bookId: string;
   title: string;
   authors: string[];
   score: number;
@@ -83,7 +83,7 @@ export interface RankingBookInfo {
   authors: string[];
 }
 
-export type FinishedRankingResponse = { score: number };
+export type FinishedRankingResponse = { score: number; bookId: string };
 
 export type StartRankingResponse =
   | {

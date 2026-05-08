@@ -22,7 +22,7 @@ const Row = ({ item }: { item: BookListItem }) => {
     : "Unknown Author";
 
   return (
-    <Pressable onPress={() => router.push(`/book/${item.googleId}`)}>
+    <Pressable onPress={() => router.push(`/book/${item.bookId}`)}>
       <HStack className="items-center justify-between border-b border-outline-200 px-4 py-3">
         <VStack className="flex-1 pr-3">
           <Text className="font-semibold" numberOfLines={2}>
@@ -52,10 +52,7 @@ export default function List() {
     isRefetching,
   } = useBookList();
 
-  const items = useMemo(
-    () => data?.pages.flatMap((p) => p.list) ?? [],
-    [data],
-  );
+  const items = useMemo(() => data?.pages.flatMap((p) => p.list) ?? [], [data]);
 
   const renderItem: ListRenderItem<BookListItem> = ({ item }) => (
     <Row item={item} />
