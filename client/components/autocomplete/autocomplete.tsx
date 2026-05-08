@@ -24,7 +24,6 @@ export const Autocomplete = ({
   }, [options, isLoading]);
 
   const getOptions = () => {
-    console.log(options, isLoading, isChanged);
     if (!options.length && !isLoading && isChanged) {
       return (
         <Box className="p-2 w-full">
