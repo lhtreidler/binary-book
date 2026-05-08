@@ -36,16 +36,21 @@ router.post("/start", validateBody(startRankingSchema), async (req, res) => {
     const rankingCount = await prisma.ranking.count({ where: { userId } });
 
     if (rankingCount === 0) {
+      const rawScore = STARTING_RAW_SCORE;
       await prisma.ranking.create({
         data: {
           userId,
-          rawScore: STARTING_RAW_SCORE,
+          rawScore,
           bookId,
           level: rankingLevel,
         },
       });
 
-      const score = await convertRawScoreToScore(userId, 0, rankingLevel);
+      const score = await convertRawScoreToScore(
+        userId,
+        rawScore,
+        rankingLevel,
+      );
 
       res.send({ score });
       return;

@@ -25,6 +25,8 @@ export const getHighestLowestScores = async (userId: string, level: number) => {
   return { maxRaw, minRaw };
 };
 
+const toOneDecimal = (num: number) => Number(num.toFixed(1));
+
 export const convertRawScoreToScore = async (
   userId: string,
   rawScore: number,
@@ -34,11 +36,13 @@ export const convertRawScoreToScore = async (
 
   const levelAdd = level * LEVEL_SIZE;
 
-  if (maxRaw === null || minRaw === null) {
-    return levelAdd + LEVEL_SIZE;
-  }
+  const useBaseScore = maxRaw === null || minRaw === null || maxRaw === minRaw;
 
-  return levelAdd + (rawScore - minRaw) / (maxRaw - minRaw);
+  const score = useBaseScore
+    ? levelAdd + LEVEL_SIZE
+    : levelAdd + (rawScore - minRaw) / (maxRaw - minRaw);
+
+  return toOneDecimal(score);
 };
 
 const getBookByOffset = async ({
