@@ -41,6 +41,70 @@ export const convertRawScoreToScore = async (
   return levelAdd + (rawScore - minRaw) / (maxRaw - minRaw);
 };
 
+const getBookByOffset = async ({
+  skip,
+  userId,
+  includeBook,
+}: {
+  skip: number;
+  userId: string;
+  includeBook: boolean;
+}) => {
+  const book = await prisma.ranking.findFirst({
+    where: { userId },
+    orderBy: { rawScore: "asc" },
+    skip,
+    take: 1,
+    include: { book: includeBook },
+  });
+
+  return book;
+};
+
+const createFinalRankingAndReturnScore = async ({
+  low,
+  high,
+  userId,
+  level,
+  bookId,
+}: {
+  low: number;
+  high: number;
+  userId: string;
+  level: number;
+  bookId: string;
+}) => {
+  // Create final ranking entry with the determined score
+  const [lowRanking, highRanking] = await Promise.all(
+    [low, high].map(
+      async (skip) =>
+        await getBookByOffset({ skip, userId, includeBook: false }),
+    ),
+  );
+
+  if (
+    !lowRanking ||
+    lowRanking.rawScore === null ||
+    !highRanking ||
+    highRanking.rawScore === null
+  ) {
+    throw new Error("Could not find rankings");
+  }
+
+  const rawScore = (lowRanking.rawScore + highRanking.rawScore) / 2;
+
+  await prisma.ranking.create({
+    data: {
+      userId,
+      rawScore,
+      bookId,
+      level,
+    },
+  });
+
+  return convertRawScoreToScore(userId, rawScore, level);
+};
+
 export const handleRankingSearch = async ({
   userId,
   rankingSessionId,
@@ -54,65 +118,32 @@ export const handleRankingSearch = async ({
   bookId: string;
   low: number;
   high: number;
-  level: 0;
+  level: number;
 }) => {
   // If low and high are adjacent, we have found the score
   if (low >= high - 1) {
-    // Create final ranking entry with the determined score
-
-    const [lowRanking, highRanking] = await Promise.all(
-      [low, high].map(
-        async (skip) =>
-          await prisma.ranking.findFirst({
-            where: { userId },
-            skip,
-          }),
-      ),
-    );
-
-    if (
-      !lowRanking ||
-      lowRanking.rawScore === null ||
-      !highRanking ||
-      highRanking.rawScore === null
-    ) {
-      throw new Error("Could not find rankings");
-    }
-
-    const rawScore = (lowRanking.rawScore + highRanking.rawScore) / 2;
-
-    await prisma.ranking.create({
-      data: {
-        userId,
-        rawScore: rawScore,
-        bookId,
-        level,
-      },
+    const score = await createFinalRankingAndReturnScore({
+      low,
+      high,
+      userId,
+      level,
+      bookId,
     });
-
     // Clean up the ranking session
     await prisma.rankingSession.delete({
       where: { id: rankingSessionId },
     });
 
-    const convertedScore = await convertRawScoreToScore(
-      userId,
-      rawScore,
-      level,
-    );
-
     // Return the final score and no further comparisons needed
-    return { score: convertedScore };
+    return { score };
   }
 
   const skip = Math.floor((low + high) / 2);
 
-  const rankingToCompare = await prisma.ranking.findFirst({
-    where: { userId },
-    orderBy: { rawScore: "asc" },
+  const rankingToCompare = await getBookByOffset({
     skip,
-    take: 1,
-    include: { book: true },
+    userId,
+    includeBook: true,
   });
 
   if (!rankingToCompare) {
@@ -125,8 +156,8 @@ export const handleRankingSearch = async ({
   });
 
   const { book, ...rest } = rankingToCompare;
+
   return {
-    rankingToCompare: rest,
     compareBook: { title: book.title, authors: book.authors },
   };
 };
