@@ -1,6 +1,6 @@
 import { Ranking } from "../generated/prisma/client";
 import { prisma } from "../lib/prisma";
-import { rankingService } from "../services";
+import { rankingService, rankingSessionService } from "../services";
 
 const MAX_SCORE = 10;
 const LEVEL_COUNT = 3;
@@ -163,9 +163,7 @@ export const handleRankingSearch = async ({
       bookId,
     });
     // Clean up the ranking session
-    await prisma.rankingSession.delete({
-      where: { id: rankingSessionId },
-    });
+    await rankingSessionService.delete({ id: rankingSessionId, userId });
 
     // Return the final score and no further comparisons needed
     return { score, bookId };
@@ -184,10 +182,7 @@ export const handleRankingSearch = async ({
     throw new Error("Ranking not found");
   }
 
-  await prisma.rankingSession.update({
-    where: { id: rankingSessionId },
-    data: { low, high },
-  });
+  await rankingSessionService.update({ high, low, id: rankingSessionId });
 
   const { book } = rankingToCompare;
 

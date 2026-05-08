@@ -15,7 +15,11 @@ import {
   handleRankingSearch,
   STARTING_RAW_SCORE,
 } from "../utils/rankingHelpers";
-import { googleBooksService, rankingService } from "../services";
+import {
+  googleBooksService,
+  rankingService,
+  rankingSessionService,
+} from "../services";
 
 const router = Router();
 router.use(authenticateToken);
@@ -69,8 +73,10 @@ router.post("/start", validateBody(startRankingSchema), async (req, res) => {
       return;
     }
 
-    const rankingSession = await prisma.rankingSession.create({
-      data: { userId, level: rankingLevel, bookId },
+    const rankingSession = await rankingSessionService.create({
+      userId,
+      level: rankingLevel,
+      bookId,
     });
 
     const result = await handleRankingSearch({
@@ -103,8 +109,9 @@ router.post(
       const { sessionId: rankingSessionId, choseNew } =
         req.body as ContinueRankingInput;
 
-      const rankingSession = await prisma.rankingSession.findUnique({
-        where: { id: rankingSessionId, userId },
+      const rankingSession = await rankingSessionService.getById({
+        id: rankingSessionId,
+        userId,
       });
 
       if (!rankingSession) {
@@ -156,9 +163,7 @@ router.post("/quit", validateBody(quitRankingSchema), async (req, res) => {
 
     const { sessionId } = req.body as QuitRankingInput;
 
-    await prisma.rankingSession.delete({
-      where: { id: sessionId, userId },
-    });
+    await rankingSessionService.delete({ id: sessionId, userId });
 
     res.send();
   } catch (err) {
