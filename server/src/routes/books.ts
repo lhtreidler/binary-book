@@ -1,7 +1,7 @@
 import { Router, Request, Response } from "express";
 import { prisma } from "../lib/prisma.js";
 import { authenticateToken } from "../middleware/auth.js";
-import { getVolumeDetails, queryGoogleBooks } from "../lib/thirdParty.js";
+import { googleBookService } from "../services";
 import {
   calculateScore,
   getHighestLowestScores,
@@ -30,7 +30,7 @@ router.get("/", async (req: Request, res: Response): Promise<void> => {
   }
 
   try {
-    const items = await queryGoogleBooks(q);
+    const items = await googleBookService.queryGoogleBooks(q);
 
     // get matching books from user's shelf by google id
 
@@ -190,7 +190,7 @@ router.get(
         return;
       }
 
-      const details = await getVolumeDetails(book.googleId);
+      const details = await googleBookService.getVolumeDetails(book.googleId);
 
       let userScore: number | null = null;
       if (book.rankings.length) {

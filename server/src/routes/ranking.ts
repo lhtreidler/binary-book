@@ -15,7 +15,7 @@ import {
   handleRankingSearch,
   STARTING_RAW_SCORE,
 } from "../utils/rankingHelpers";
-import { getOrCreateBook } from "../lib/thirdParty";
+import { googleBookService } from "../services";
 
 const router = Router();
 router.use(authenticateToken);
@@ -31,7 +31,7 @@ router.post("/start", validateBody(startRankingSchema), async (req, res) => {
 
     const { rankingLevel, gId } = req.body as StartRankingInput;
 
-    const book = await getOrCreateBook(gId);
+    const book = await googleBookService.getOrCreateBook(gId);
 
     const { id: bookId } = book;
 
@@ -159,7 +159,7 @@ router.post("/quit", validateBody(quitRankingSchema), async (req, res) => {
 
     const { sessionId } = req.body as QuitRankingInput;
 
-    const rankingSession = await prisma.rankingSession.delete({
+    await prisma.rankingSession.delete({
       where: { id: sessionId, userId },
     });
 

@@ -5,7 +5,7 @@ import {
 } from "../types/googleApi";
 import { createBookComparisonStr, dedupeBooks } from "../utils/dedupe";
 import { stripHtml } from "../utils/html";
-import { prisma } from "./prisma";
+import { prisma } from "../lib/prisma";
 
 const baseUrl = "https://www.googleapis.com/books/v1/volumes";
 
@@ -15,7 +15,7 @@ const createQueryUrl = (q: string) =>
 const createVolumeUrl = (id: string) =>
   `${baseUrl}/${id}?key=${process.env.GOOGLE_BOOKS_API_KEY}`;
 
-export const formatResult = (res: GoogleBooksSearchResponse) => {
+const formatResult = (res: GoogleBooksSearchResponse) => {
   if (!res.items) return [];
 
   return dedupeBooks(res.items).reduce<FormattedBookItem>((acc, item) => {
@@ -28,7 +28,7 @@ export const formatResult = (res: GoogleBooksSearchResponse) => {
   }, []);
 };
 
-export const queryGoogleBooks = async (q: string) => {
+const queryGoogleBooks = async (q: string) => {
   const formattedQuery = JSON.stringify(q).toLowerCase();
   const cachedResult = await prisma.searchCache.findFirst({
     where: { query: formattedQuery },
@@ -60,7 +60,7 @@ export const queryGoogleBooks = async (q: string) => {
   return formattedResult;
 };
 
-export const getOrCreateBook = async (volumeId: string) => {
+const getOrCreateBook = async (volumeId: string) => {
   const existingBook = await prisma.book.findFirst({
     where: { googleId: volumeId },
   });
@@ -105,9 +105,7 @@ export type VolumeDetails = {
   categories: string[];
 };
 
-export const getVolumeDetails = async (
-  volumeId: string,
-): Promise<VolumeDetails> => {
+const getVolumeDetails = async (volumeId: string): Promise<VolumeDetails> => {
   const volume = (await fetch(createVolumeUrl(volumeId)).then((response) =>
     response.json(),
   )) as GoogleBooksVolume;
@@ -134,4 +132,10 @@ export const getVolumeDetails = async (
       typeof volumeInfo?.pageCount === "number" ? volumeInfo.pageCount : null,
     categories: volumeInfo?.categories ?? [],
   };
+};
+
+export const googleBookService = {
+  queryGoogleBooks,
+  getOrCreateBook,
+  getVolumeDetails,
 };
