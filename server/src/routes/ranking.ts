@@ -9,6 +9,7 @@ import {
 import { authenticateToken } from "../middleware/auth";
 import { prisma } from "../lib/prisma";
 import { convertRawScoreToScore } from "../utils/score";
+import { getGoogleBook } from "../lib/thirdParty";
 
 const router = Router();
 router.use(authenticateToken);
@@ -95,9 +96,10 @@ router.post("start", validateBody(startRankingSchema), async (req, res) => {
     let bookId = existingBook?.id as string;
 
     if (!existingBook) {
+      const book = await getGoogleBook(gId);
       const newBook = await prisma.book.create({
         data: {
-          googleId: gId,
+          ...book,
         },
       });
       bookId = newBook.id;

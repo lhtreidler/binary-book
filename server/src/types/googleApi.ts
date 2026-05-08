@@ -1,4 +1,4 @@
-type Volume = {
+export type GoogleBooksVolume = {
   kind: string;
   id: string;
   etag: string;
@@ -63,8 +63,15 @@ type Volume = {
   };
 };
 
-export type GoogleBookSearchResponse = {
+export type GoogleBooksSearchResponse = {
   kind: string;
   totalItems: number;
-  items: Volume[];
+  items: GoogleBooksVolume[];
 };
+
+export type FormattedBookItem = {
+  key: string;
+  title: string;
+  authors: string[];
+  thumbnail: string;
+}[];
