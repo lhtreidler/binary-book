@@ -28,8 +28,14 @@ const formatResult = (res: GoogleBooksSearchResponse) => {
   }, []);
 };
 
-const queryGoogleBooks = async (q: string) => {
-  const formattedQuery = JSON.stringify(q).toLowerCase();
+const queryGoogleBooks = async ({
+  userId,
+  query,
+}: {
+  userId: string;
+  query: string;
+}) => {
+  const formattedQuery = JSON.stringify(query).toLowerCase();
   const cachedResult = await prisma.searchCache.findFirst({
     where: { query: formattedQuery },
   });
@@ -40,7 +46,7 @@ const queryGoogleBooks = async (q: string) => {
     );
   }
 
-  const books = (await fetch(createQueryUrl(q)).then((response) =>
+  const books = (await fetch(createQueryUrl(query)).then((response) =>
     response.json(),
   )) as GoogleBooksSearchResponse;
 
@@ -57,19 +63,56 @@ const queryGoogleBooks = async (q: string) => {
     console.error(err);
   }
 
-  return formattedResult;
+  // get matching books from user's shelf by google id
+  let googleIds: string[] = [];
+  let comparisonStrings: string[] = [];
+
+  formattedResult.forEach(({ key, title, authors }) => {
+    googleIds.push(key);
+    comparisonStrings.push(createBookComparisonStr(title, authors));
+  });
+
+  // find books the user has ranked with the same comparison string or googleId
+  const rankedBooks = await prisma.book.findMany({
+    where: {
+      rankings: {
+        some: {
+          userId,
+        },
+      },
+      OR: [
+        {
+          googleId: {
+            in: googleIds,
+          },
+        },
+        {
+          compareStr: {
+            in: comparisonStrings,
+          },
+        },
+      ],
+    },
+  });
+
+  return formattedResult.map((item) => {
+    return {
+      ...item,
+      isRanked: rankedBooks.some(({ googleId }) => googleId === item.key),
+    };
+  });
 };
 
-const getOrCreateBook = async (volumeId: string) => {
+const getOrCreateBookByGoogleId = async (googleId: string) => {
   const existingBook = await prisma.book.findFirst({
-    where: { googleId: volumeId },
+    where: { googleId: googleId },
   });
 
   if (existingBook) {
     return existingBook;
   }
 
-  const book = (await fetch(createVolumeUrl(volumeId)).then((response) =>
+  const book = (await fetch(createVolumeUrl(googleId)).then((response) =>
     response.json(),
   )) as GoogleBooksVolume;
 
@@ -82,9 +125,17 @@ const getOrCreateBook = async (volumeId: string) => {
     volumeInfo: { title, authors = [] },
   } = book;
 
+  const matching = await prisma.book.findFirst({
+    where: { compareStr: createBookComparisonStr(title, authors) },
+  });
+
+  if (matching) {
+    return matching;
+  }
+
   const createdBook = await prisma.book.create({
     data: {
-      googleId: volumeId,
+      googleId: googleId,
       title,
       authors,
       compareStr: createBookComparisonStr(title, authors),
@@ -134,8 +185,8 @@ const getVolumeDetails = async (volumeId: string): Promise<VolumeDetails> => {
   };
 };
 
-export const googleBookService = {
+export const googleBooksService = {
   queryGoogleBooks,
-  getOrCreateBook,
+  getOrCreateBookByGoogleId,
   getVolumeDetails,
 };

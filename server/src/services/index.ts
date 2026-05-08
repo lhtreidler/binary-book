@@ -1,1 +1,1 @@
-export * from "./googleBooks";
+export * from "./googleBooksService";

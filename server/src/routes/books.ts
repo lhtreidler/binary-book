@@ -1,13 +1,12 @@
 import { Router, Request, Response } from "express";
 import { prisma } from "../lib/prisma.js";
 import { authenticateToken } from "../middleware/auth.js";
-import { googleBookService } from "../services";
+import { googleBooksService } from "../services";
 import {
   calculateScore,
   getHighestLowestScores,
-  getScoreFromRanking,
 } from "../utils/rankingHelpers.js";
-import { createBookComparisonStr } from "../utils/dedupe.js";
+import { bookService } from "../services/bookService.js";
 
 const router = Router();
 router.use(authenticateToken);
@@ -30,49 +29,12 @@ router.get("/", async (req: Request, res: Response): Promise<void> => {
   }
 
   try {
-    const items = await googleBookService.queryGoogleBooks(q);
-
-    // get matching books from user's shelf by google id
-
-    let googleIds: string[] = [];
-    let comparisonStrings: string[] = [];
-
-    items.forEach(({ key, title, authors }) => {
-      googleIds.push(key);
-      comparisonStrings.push(createBookComparisonStr(title, authors));
+    const items = await googleBooksService.queryGoogleBooks({
+      query: q,
+      userId,
     });
 
-    // find books the user has ranked with the same comparison string or googleId
-    const rankedBooks = await prisma.book.findMany({
-      where: {
-        rankings: {
-          some: {
-            userId,
-          },
-        },
-        OR: [
-          {
-            googleId: {
-              in: googleIds,
-            },
-          },
-          {
-            compareStr: {
-              in: comparisonStrings,
-            },
-          },
-        ],
-      },
-    });
-
-    const formattedItems = items.map((item) => {
-      return {
-        ...item,
-        isRanked: rankedBooks.some(({ googleId }) => googleId === item.key),
-      };
-    });
-
-    res.json({ items: formattedItems });
+    res.json({ items });
   } catch (err) {
     res
       .status(500)
@@ -172,32 +134,9 @@ router.get(
     }
 
     try {
-      const book = await prisma.book.findFirst({
-        where: {
-          id: bookId,
-        },
-        include: {
-          rankings: {
-            where: {
-              userId,
-            },
-          },
-        },
-      });
+      const details = await bookService.getBookDetails({ userId, bookId });
 
-      if (!book) {
-        res.status(404).json({ message: "Book not found" });
-        return;
-      }
-
-      const details = await googleBookService.getVolumeDetails(book.googleId);
-
-      let userScore: number | null = null;
-      if (book.rankings.length) {
-        userScore = await getScoreFromRanking(book.rankings[0]);
-      }
-
-      res.json({ ...details, userScore });
+      res.json(details);
     } catch (err) {
       res.status(500).json({ message: "Failed to fetch book details." });
     }

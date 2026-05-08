@@ -15,7 +15,7 @@ import {
   handleRankingSearch,
   STARTING_RAW_SCORE,
 } from "../utils/rankingHelpers";
-import { googleBookService } from "../services";
+import { googleBooksService } from "../services";
 
 const router = Router();
 router.use(authenticateToken);
@@ -31,7 +31,7 @@ router.post("/start", validateBody(startRankingSchema), async (req, res) => {
 
     const { rankingLevel, gId } = req.body as StartRankingInput;
 
-    const book = await googleBookService.getOrCreateBook(gId);
+    const book = await googleBooksService.getOrCreateBookByGoogleId(gId);
 
     const { id: bookId } = book;
 
