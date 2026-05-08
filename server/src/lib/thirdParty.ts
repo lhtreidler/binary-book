@@ -6,8 +6,10 @@ import {
 import { prisma } from "./prisma";
 
 const baseUrl = "https://www.googleapis.com/books/v1/volumes";
+
 const createQueryUrl = (q: string) =>
   `${baseUrl}?q=${encodeURIComponent(q)}&key=${process.env.GOOGLE_BOOKS_API_KEY}`;
+
 const createVolumeUrl = (id: string) =>
   `${baseUrl}/${id}?key=${process.env.GOOGLE_BOOKS_API_KEY}`;
 

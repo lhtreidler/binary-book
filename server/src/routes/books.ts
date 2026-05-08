@@ -13,6 +13,13 @@ router.get("/", async (req: Request, res: Response): Promise<void> => {
     query: { q },
   } = req;
 
+  if (!req.user || !req.user.userId) {
+    res.status(401).json({ message: "Unauthorized" });
+    return;
+  }
+
+  const { userId } = req.user;
+
   if (!q || typeof q !== "string") {
     res.status(400).json({ message: "Missing query parameters" });
     return;
@@ -21,7 +28,30 @@ router.get("/", async (req: Request, res: Response): Promise<void> => {
   try {
     const items = await queryGoogleBooks(q);
 
-    res.json({ items });
+    // get matching books from user's shelf by google id
+    const googleIds = items.map(({ key }) => key);
+
+    const rankedBooks = await prisma.book.findMany({
+      where: {
+        rankings: {
+          some: {
+            userId,
+          },
+        },
+        googleId: {
+          in: googleIds,
+        },
+      },
+    });
+
+    const formattedItems = items.map((item) => {
+      return {
+        ...item,
+        isRanked: rankedBooks.some(({ googleId }) => googleId === item.key),
+      };
+    });
+
+    res.json({ items: formattedItems });
   } catch (err) {
     res
       .status(500)
