@@ -2,13 +2,9 @@ import { useDebounce } from "@/lib/utils";
 import { useState } from "react";
 import { AutocompleteProps } from "./types";
 
-export const useAutocomplete = ({
-  requestFunc,
-  onSelect,
-}: {
-  requestFunc: (input: string) => Promise<AutocompleteProps["options"]>;
-  onSelect: AutocompleteProps["onSelect"];
-}): AutocompleteProps => {
+export const useAutocomplete = (
+  requestFunc: (input: string) => Promise<AutocompleteProps["options"]>,
+): AutocompleteProps => {
   const [search, setSearch] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [options, setOptions] = useState<AutocompleteProps["options"]>([]);
@@ -36,6 +32,5 @@ export const useAutocomplete = ({
     },
     options,
     isLoading,
-    onSelect,
   };
 };

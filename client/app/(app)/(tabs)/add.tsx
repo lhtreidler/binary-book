@@ -1,9 +1,5 @@
 import { Autocomplete, useAutocomplete } from "@/components/autocomplete";
 import { Box } from "@/components/ui/box";
-import { Button, ButtonIcon } from "@/components/ui/button";
-import { Center } from "@/components/ui/center";
-import { HStack } from "@/components/ui/hstack";
-import { AddIcon } from "@/components/ui/icon";
 import { searchBooks } from "@/lib/api";
 
 export default function Add() {
@@ -24,25 +20,14 @@ export default function Add() {
       return [];
     }
   };
-
-  const RightAction = () => {
-    return (
-      <HStack className="ml-3">
-        <Button size="sm" className="rounded-full py-1" variant="outline">
-          <ButtonIcon className="py-2" size="sm" as={AddIcon} />
-        </Button>
-      </HStack>
-    );
-  };
-
-  const props = useAutocomplete({
-    requestFunc,
-    onSelect: console.log,
-  });
+  const props = useAutocomplete(requestFunc);
 
   return (
     <Box>
-      <Autocomplete {...props} rightAction={<RightAction />} />
+      <Autocomplete
+        {...props}
+        rightActions={[{ icon: "add", handler: console.log }]}
+      />
     </Box>
   );
 }
