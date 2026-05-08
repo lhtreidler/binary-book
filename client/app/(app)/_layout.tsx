@@ -4,7 +4,7 @@ export default function App() {
   return (
     <Stack>
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-      <Stack.Screen name="book/[googleId]" options={{ title: "" }} />
+      <Stack.Screen name="book/[bookId]" options={{ title: "" }} />
     </Stack>
   );
 }

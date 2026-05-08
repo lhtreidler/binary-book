@@ -5,7 +5,7 @@ import { BookSearchItem } from "@/lib/api";
 import { useSearchBooks } from "@/lib/api/hooks/useBooks";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "expo-router";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { ScrollView } from "react-native";
 
 export default function Add() {
@@ -17,7 +17,6 @@ export default function Add() {
   const router = useRouter();
 
   const options = useMemo(() => {
-    console.log({ data });
     if (!data) return [];
     return data.items.map(({ key, title, authors, isRanked }) => {
       const authorStr = authors.length ? authors.join(", ") : "Unknown Author";
@@ -50,10 +49,6 @@ export default function Add() {
       router.push(`/book/${bookId}`);
     }
   };
-
-  useEffect(() => {
-    console.log(query);
-  }, [query]);
 
   return (
     <Box>
