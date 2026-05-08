@@ -1,12 +1,8 @@
 import { Router, Request, Response } from "express";
 import { prisma } from "../lib/prisma.js";
 import { authenticateToken } from "../middleware/auth.js";
-import { googleBooksService } from "../services";
-import {
-  calculateScore,
-  getHighestLowestScores,
-} from "../utils/rankingHelpers.js";
-import { bookService } from "../services/bookService.js";
+import { googleBooksService, rankingService } from "../services";
+import { bookService } from "../services";
 
 const router = Router();
 router.use(authenticateToken);
@@ -57,59 +53,12 @@ router.get("/list", async (req: Request, res: Response) => {
       return;
     }
 
-    const userId = req.user.userId;
-
-    const PAGE_SIZE = 5;
-
-    const skip = (page - 1) * PAGE_SIZE;
-
-    const rankingsPlusOne = await prisma.ranking.findMany({
-      where: {
-        userId,
-      },
-      include: {
-        book: true,
-      },
-      skip,
-      take: PAGE_SIZE + 1,
-      orderBy: [{ level: "desc" }, { rawScore: "desc" }],
+    const result = await rankingService.getPaginatedRankingsByUser({
+      userId: req.user.userId,
+      page,
     });
 
-    const rankings = rankingsPlusOne.slice(0, PAGE_SIZE);
-    const hasNextPage = rankingsPlusOne.length > PAGE_SIZE;
-
-    const levelsToGet = Array.from(
-      new Set(rankings.map(({ level }) => level)),
-    ).filter((level) => level !== null);
-
-    const levelMinMax = await Promise.all(
-      levelsToGet.map(async (level) => {
-        const minMax = await getHighestLowestScores(userId, level);
-        return {
-          level,
-          ...minMax,
-        };
-      }),
-    );
-
-    const formattedList = rankings
-      .map(({ book: { title, authors, id: bookId }, level, rawScore }) => {
-        const minMax = levelMinMax.find((m) => m.level === level);
-        if (!minMax || rawScore === null || !bookId) return null;
-
-        return {
-          bookId,
-          title,
-          authors,
-          score: calculateScore({ rawScore, ...minMax }),
-        };
-      })
-      .filter((b) => !!b);
-
-    res.json({
-      list: formattedList,
-      nextPage: hasNextPage ? page + 1 : null,
-    });
+    res.json(result);
   } catch (err) {
     res
       .status(500)

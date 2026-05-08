@@ -1,5 +1,6 @@
 import { Ranking } from "../generated/prisma/client";
 import { prisma } from "../lib/prisma";
+import { rankingService } from "../services";
 
 const MAX_SCORE = 10;
 const LEVEL_COUNT = 3;
@@ -8,16 +9,10 @@ const LEVEL_SIZE = MAX_SCORE / LEVEL_COUNT;
 export const STARTING_RAW_SCORE = 10_000;
 
 export const getHighestLowestScores = async (userId: string, level: number) => {
-  const where = { userId, level };
+  const data = { userId, level };
   const [highest, lowest] = await Promise.all([
-    prisma.ranking.findFirst({
-      where,
-      orderBy: { rawScore: "desc" },
-    }),
-    prisma.ranking.findFirst({
-      where,
-      orderBy: { rawScore: "asc" },
-    }),
+    rankingService.getHighestRanking(data),
+    rankingService.getLowestRanking(data),
   ]);
 
   const maxRaw = highest?.rawScore ?? null;
@@ -67,28 +62,6 @@ export const getScoreFromRanking = async ({
   return convertRawScoreToScore(userId, rawScore, level);
 };
 
-const getBookByOffset = async ({
-  skip,
-  userId,
-  includeBook,
-  level,
-}: {
-  skip: number;
-  userId: string;
-  includeBook: boolean;
-  level: number;
-}) => {
-  const book = await prisma.ranking.findFirst({
-    where: { userId, level },
-    orderBy: { rawScore: "asc" },
-    skip,
-    take: 1,
-    include: { book: includeBook },
-  });
-
-  return book;
-};
-
 const createFinalRankingAndReturnScore = async ({
   insertionIndex,
   userId,
@@ -100,13 +73,20 @@ const createFinalRankingAndReturnScore = async ({
   level: number;
   bookId: string;
 }) => {
-  const totalCount = await prisma.ranking.count({ where: { userId, level } });
+  const totalCount = await rankingService.getRankingCountByLevel({
+    userId,
+    level,
+  });
 
   let rawScore: number;
 
-  const getBook = async (skip: number) => {
-    return getBookByOffset({ skip, userId, includeBook: false, level });
-  };
+  const getBook = async (skip: number) =>
+    rankingService.getBookByOffset({
+      skip,
+      userId,
+      includeBook: false,
+      level,
+    });
 
   if (insertionIndex === 0) {
     const [lowest, secondLowest] = await Promise.all([
@@ -150,13 +130,11 @@ const createFinalRankingAndReturnScore = async ({
     rawScore = (lowRanking.rawScore + highRanking.rawScore) / 2;
   }
 
-  await prisma.ranking.create({
-    data: {
-      userId,
-      rawScore,
-      bookId,
-      level,
-    },
+  await rankingService.createRanking({
+    userId,
+    rawScore,
+    bookId,
+    level,
   });
 
   return convertRawScoreToScore(userId, rawScore, level);
@@ -195,7 +173,7 @@ export const handleRankingSearch = async ({
 
   const skip = Math.floor((low + high) / 2);
 
-  const rankingToCompare = await getBookByOffset({
+  const rankingToCompare = await rankingService.getBookByOffset({
     skip,
     userId,
     includeBook: true,

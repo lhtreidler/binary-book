@@ -15,7 +15,7 @@ import {
   handleRankingSearch,
   STARTING_RAW_SCORE,
 } from "../utils/rankingHelpers";
-import { googleBooksService } from "../services";
+import { googleBooksService, rankingService } from "../services";
 
 const router = Router();
 router.use(authenticateToken);
@@ -35,11 +35,9 @@ router.post("/start", validateBody(startRankingSchema), async (req, res) => {
 
     const { id: bookId } = book;
 
-    const existingRanking = await prisma.ranking.findFirst({
-      where: {
-        userId,
-        bookId,
-      },
+    const existingRanking = await rankingService.getRankingByBook({
+      userId,
+      bookId,
     });
 
     if (existingRanking) {
@@ -47,19 +45,18 @@ router.post("/start", validateBody(startRankingSchema), async (req, res) => {
       return;
     }
 
-    const rankingCount = await prisma.ranking.count({
-      where: { userId, level: rankingLevel },
+    const rankingCount = await rankingService.getRankingCountByLevel({
+      userId,
+      level: rankingLevel,
     });
 
     if (rankingCount === 0) {
       const rawScore = STARTING_RAW_SCORE;
-      await prisma.ranking.create({
-        data: {
-          userId,
-          rawScore,
-          bookId,
-          level: rankingLevel,
-        },
+      await rankingService.createRanking({
+        userId,
+        rawScore,
+        bookId,
+        level: rankingLevel,
       });
 
       const score = await convertRawScoreToScore(
