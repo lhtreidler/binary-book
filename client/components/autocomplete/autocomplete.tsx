@@ -82,7 +82,11 @@ export const Autocomplete = ({
   return (
     <VStack>
       <Input {...inputProps}>
-        <InputField onChangeText={onChange} {...fieldProps} />
+        <InputField
+          variant="underlined"
+          onChangeText={onChange}
+          {...fieldProps}
+        />
       </Input>
       {getOptions()}
       {isLoading ? <Spinner className="mt-2" /> : null}

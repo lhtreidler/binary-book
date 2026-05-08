@@ -168,7 +168,7 @@ export const RankingModal = ({
                 ].map(({ title, authors, isNew }, i) => (
                   <>
                     <Pressable
-                      key={i}
+                      key={title}
                       onPress={() => handleChoice(isNew)}
                       disabled={isLoading}
                       className="flex-1"
