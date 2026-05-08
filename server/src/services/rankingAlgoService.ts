@@ -75,7 +75,7 @@ const createFinalRankingAndReturnScore = async ({
     level,
   });
 
-  return { score };
+  return score;
 };
 
 const handleRankingSearch = async ({
