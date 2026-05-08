@@ -33,7 +33,9 @@ router.post("/start", validateBody(startRankingSchema), async (req, res) => {
 
     const { id: bookId } = book;
 
-    const rankingCount = await prisma.ranking.count({ where: { userId } });
+    const rankingCount = await prisma.ranking.count({
+      where: { userId, level: rankingLevel },
+    });
 
     if (rankingCount === 0) {
       const rawScore = STARTING_RAW_SCORE;
@@ -66,7 +68,7 @@ router.post("/start", validateBody(startRankingSchema), async (req, res) => {
       bookId,
       low: 0,
       high: rankingCount,
-      level: 0,
+      level: rankingSession.level,
     });
 
     res.send({ ...result, sessionId: rankingSession.id });
@@ -113,7 +115,7 @@ router.post(
 
       const avg = Math.floor((low + high) / 2);
 
-      const newLow = choseNew ? avg : low;
+      const newLow = choseNew ? avg + 1 : low;
       const newHigh = choseNew ? high : avg;
 
       const result = await handleRankingSearch({
@@ -122,7 +124,7 @@ router.post(
         bookId: rankingSession.bookId,
         low: newLow,
         high: newHigh,
-        level: 0,
+        level: rankingSession.level,
       });
 
       res.send(result);

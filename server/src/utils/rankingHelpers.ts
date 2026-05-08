@@ -36,26 +36,29 @@ export const convertRawScoreToScore = async (
 
   const levelAdd = level * LEVEL_SIZE;
 
-  const useBaseScore = maxRaw === null || minRaw === null || maxRaw === minRaw;
+  let add = 0;
+  if (maxRaw === null || minRaw === null || maxRaw === minRaw) {
+    add = 1;
+  } else {
+    add = (rawScore - minRaw) / (maxRaw - minRaw);
+  }
 
-  const score = useBaseScore
-    ? levelAdd + LEVEL_SIZE
-    : levelAdd + (rawScore - minRaw) / (maxRaw - minRaw);
-
-  return toOneDecimal(score);
+  return toOneDecimal((add + level) * LEVEL_SIZE);
 };
 
 const getBookByOffset = async ({
   skip,
   userId,
   includeBook,
+  level,
 }: {
   skip: number;
   userId: string;
   includeBook: boolean;
+  level: number;
 }) => {
   const book = await prisma.ranking.findFirst({
-    where: { userId },
+    where: { userId, level },
     orderBy: { rawScore: "asc" },
     skip,
     take: 1,
@@ -66,36 +69,88 @@ const getBookByOffset = async ({
 };
 
 const createFinalRankingAndReturnScore = async ({
-  low,
-  high,
+  insertionIndex,
   userId,
   level,
   bookId,
 }: {
-  low: number;
-  high: number;
+  insertionIndex: number;
   userId: string;
   level: number;
   bookId: string;
 }) => {
-  // Create final ranking entry with the determined score
-  const [lowRanking, highRanking] = await Promise.all(
-    [low, high].map(
-      async (skip) =>
-        await getBookByOffset({ skip, userId, includeBook: false }),
-    ),
-  );
+  const totalCount = await prisma.ranking.count({ where: { userId } });
 
-  if (
-    !lowRanking ||
-    lowRanking.rawScore === null ||
-    !highRanking ||
-    highRanking.rawScore === null
-  ) {
-    throw new Error("Could not find rankings");
+  let rawScore: number;
+
+  if (insertionIndex === 0) {
+    const lowest = await getBookByOffset({
+      skip: 0,
+      userId,
+      includeBook: false,
+      level,
+    });
+    const secondLowest =
+      totalCount > 1
+        ? await getBookByOffset({ skip: 1, userId, includeBook: false, level })
+        : null;
+    if (!lowest || lowest.rawScore === null) {
+      throw new Error("Could not find rankings");
+    }
+    const gap =
+      secondLowest?.rawScore != null
+        ? secondLowest.rawScore - lowest.rawScore
+        : STARTING_RAW_SCORE;
+    rawScore = lowest.rawScore - gap;
+  } else if (insertionIndex === totalCount) {
+    const highest = await getBookByOffset({
+      skip: totalCount - 1,
+      userId,
+      includeBook: false,
+      level,
+    });
+    const secondHighest =
+      totalCount > 1
+        ? await getBookByOffset({
+            skip: totalCount - 2,
+            userId,
+            includeBook: false,
+            level,
+          })
+        : null;
+    if (!highest || highest.rawScore === null) {
+      throw new Error("Could not find rankings");
+    }
+    const gap =
+      secondHighest?.rawScore != null
+        ? highest.rawScore - secondHighest.rawScore
+        : STARTING_RAW_SCORE;
+    rawScore = highest.rawScore + gap;
+  } else {
+    const [lowRanking, highRanking] = await Promise.all([
+      getBookByOffset({
+        skip: insertionIndex - 1,
+        userId,
+        includeBook: false,
+        level,
+      }),
+      getBookByOffset({
+        skip: insertionIndex,
+        userId,
+        includeBook: false,
+        level,
+      }),
+    ]);
+    if (
+      !lowRanking ||
+      lowRanking.rawScore === null ||
+      !highRanking ||
+      highRanking.rawScore === null
+    ) {
+      throw new Error("Could not find rankings");
+    }
+    rawScore = (lowRanking.rawScore + highRanking.rawScore) / 2;
   }
-
-  const rawScore = (lowRanking.rawScore + highRanking.rawScore) / 2;
 
   await prisma.ranking.create({
     data: {
@@ -124,11 +179,9 @@ export const handleRankingSearch = async ({
   high: number;
   level: number;
 }) => {
-  // If low and high are adjacent, we have found the score
-  if (low >= high - 1) {
+  if (low >= high) {
     const score = await createFinalRankingAndReturnScore({
-      low,
-      high,
+      insertionIndex: low,
       userId,
       level,
       bookId,
@@ -148,6 +201,7 @@ export const handleRankingSearch = async ({
     skip,
     userId,
     includeBook: true,
+    level,
   });
 
   if (!rankingToCompare) {
@@ -159,7 +213,7 @@ export const handleRankingSearch = async ({
     data: { low, high },
   });
 
-  const { book, ...rest } = rankingToCompare;
+  const { book } = rankingToCompare;
 
   return {
     compareBook: { title: book.title, authors: book.authors },
