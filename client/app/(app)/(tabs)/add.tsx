@@ -1,5 +1,5 @@
 import { Autocomplete, useAutocomplete } from "@/components/autocomplete";
-import { RankingModal } from "@/components/ranking-modal";
+import { RankingModal } from "@/components/ranking-modal/ranking-modal";
 import { Box } from "@/components/ui/box";
 import { BookSearchItem, BookSearchResponse } from "@/lib/api";
 import { useSearchBooks } from "@/lib/api/hooks/useBooks";

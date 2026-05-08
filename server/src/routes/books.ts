@@ -8,7 +8,6 @@ const router = Router();
 router.use(authenticateToken);
 
 router.get("/", async (req: Request, res: Response): Promise<void> => {
-  let items: FormattedBookItem = [];
   const {
     query: { q },
   } = req;

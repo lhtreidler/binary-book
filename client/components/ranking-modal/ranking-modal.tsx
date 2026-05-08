@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 
-import { Box } from "./ui/box";
-import { Button, ButtonText } from "./ui/button";
-import { HStack } from "./ui/hstack";
+import { Box } from "../ui/box";
+import { Button, ButtonText } from "../ui/button";
+import { HStack } from "../ui/hstack";
 import {
   Modal,
   ModalBackdrop,
@@ -10,11 +10,11 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
-} from "./ui/modal";
-import { Pressable } from "./ui/pressable";
-import { Spinner } from "./ui/spinner";
-import { Text } from "./ui/text";
-import { VStack } from "./ui/vstack";
+} from "../ui/modal";
+import { Pressable } from "../ui/pressable";
+import { Spinner } from "../ui/spinner";
+import { Text } from "../ui/text";
+import { VStack } from "../ui/vstack";
 
 import {
   BookSearchItem,
@@ -26,17 +26,13 @@ import {
 } from "@/lib/api";
 import { FinishedRankingResponse } from "@/lib/api/types";
 import { useQuitRanking } from "@/lib/api/hooks/useRanking";
-
-const TIERS = [
-  { value: 2, label: "Loved it" },
-  { value: 1, label: "Liked it" },
-  { value: 0, label: "It was ok" },
-];
-
-type Phase = "tier" | "comparing" | "score";
+import { sliceJoinArray, sliceString } from "@/lib/format-utils";
+import { TierButtons, Phase, phaseToHeader } from "./constants";
 
 const formatAuthors = (authors: string[]) =>
   authors.length ? authors.join(", ") : "Unknown Author";
+
+const formatTitle = (title: string) => sliceString(title, 100);
 
 const getIsFinishedRankingResponse = (
   res: any,
@@ -74,7 +70,6 @@ export const RankingModal = ({
   const applyResult = (
     result: StartRankingResponse | ContinueRankingResponse,
   ) => {
-    console.log(result);
     if (getIsFinishedRankingResponse(result)) {
       setScore(result.score);
       setPhase("score");
@@ -130,93 +125,89 @@ export const RankingModal = ({
     <Modal isOpen={isOpen} onClose={onCloseModal}>
       <ModalBackdrop />
       <ModalContent>
-        {phase === "tier" && book && (
-          <>
-            <ModalHeader>
-              <Text className="text-lg font-bold">
-                How did you feel about it?
+        {isLoading && (
+          <Box className="absolute inset-0 z-10 items-center justify-center bg-white/60 rounded-md">
+            <Spinner />
+          </Box>
+        )}
+        <ModalHeader className="w-full">
+          <Text className="text-center text-lg font-bold">
+            {phaseToHeader[phase]}
+          </Text>
+        </ModalHeader>
+        <ModalBody>
+          {phase === "tier" && book && (
+            <>
+              <Text className="mb-1 text-lg font-semibold text-center">
+                {book.title}
               </Text>
-            </ModalHeader>
-            <ModalBody>
-              <Text className="mb-4">
-                {book.title} by {formatAuthors(book.authors)}
+              <Text className="text-center mb-4">
+                by {formatAuthors(book.authors)}
               </Text>
               <VStack space="sm">
-                {TIERS.map((tier) => (
+                {TierButtons.map((tier) => (
                   <Button
                     key={tier.value}
                     onPress={() => handleTierPick(tier.value)}
                     isDisabled={isLoading}
+                    className={tier.className}
                   >
                     <ButtonText>{tier.label}</ButtonText>
                   </Button>
                 ))}
               </VStack>
-              {isLoading && <Spinner className="mt-4" />}
-            </ModalBody>
-          </>
-        )}
+            </>
+          )}
 
-        {phase === "comparing" && book && compareBook && (
-          <>
-            <ModalHeader>
-              <Text className="text-lg font-bold">Which is better?</Text>
-            </ModalHeader>
-            <ModalBody>
+          {phase === "comparing" && book && compareBook && (
+            <>
               <HStack space="md" className="items-center justify-center">
-                <Pressable
-                  onPress={() => handleChoice(true)}
-                  disabled={isLoading}
-                  className="flex-1"
-                >
-                  <Box className="aspect-square p-3 border border-gray-300 rounded-md justify-center items-center bg-slate-50">
-                    <Text className="font-bold text-center">{book.title}</Text>
-                    <Text className="mt-2 text-sm text-center">
-                      {formatAuthors(book.authors)}
-                    </Text>
-                  </Box>
-                </Pressable>
-                <Text className="font-bold">OR</Text>
-                <Pressable
-                  onPress={() => handleChoice(false)}
-                  disabled={isLoading}
-                  className="flex-1"
-                >
-                  <Box className="aspect-square p-3 border border-gray-300 rounded-md justify-center items-center bg-slate-50">
-                    <Text className="font-bold text-center">
-                      {compareBook.title ?? "Untitled"}
-                    </Text>
-                    <Text className="mt-2 text-sm text-center">
-                      {formatAuthors(compareBook.authors)}
-                    </Text>
-                  </Box>
-                </Pressable>
+                {[
+                  { ...book, isNew: true },
+                  { ...compareBook, isNew: false },
+                ].map(({ title, authors, isNew }, i) => (
+                  <>
+                    <Pressable
+                      key={i}
+                      onPress={() => handleChoice(isNew)}
+                      disabled={isLoading}
+                      className="flex-1"
+                    >
+                      <Box className="h-full p-2 border border-gray-300 rounded-md justify-center items-center bg-slate-50">
+                        <Text className="font-bold text-center">
+                          {formatTitle(title || "")}
+                        </Text>
+                        {authors.length > 0 && (
+                          <Text className="mt-2 text-sm text-center">
+                            {sliceJoinArray(authors, 30)}
+                          </Text>
+                        )}
+                      </Box>
+                    </Pressable>
+                    {i === 0 && <Text className="font-bold">OR</Text>}
+                  </>
+                ))}
               </HStack>
-              {isLoading && <Spinner className="mt-4" />}
-            </ModalBody>
-          </>
-        )}
+            </>
+          )}
 
-        {phase === "score" && score !== null && (
-          <>
-            <ModalHeader>
-              <Text className="text-lg font-bold">Your score</Text>
-            </ModalHeader>
-            <ModalBody>
+          {phase === "score" && score !== null && (
+            <>
               <Text className="text-5xl text-center font-bold">
                 {score.toFixed(1)}
               </Text>
-            </ModalBody>
-            <ModalFooter>
-              <Button onPress={onClose}>
-                <ButtonText>Done</ButtonText>
-              </Button>
-            </ModalFooter>
-          </>
-        )}
-
-        {error && (
-          <Text className="text-error-400 text-center mt-2">{error}</Text>
+            </>
+          )}
+          {error && (
+            <Text className="text-error-400 text-center mt-2">{error}</Text>
+          )}
+        </ModalBody>
+        {phase === "score" && (
+          <ModalFooter>
+            <Button onPress={onClose}>
+              <ButtonText>Done</ButtonText>
+            </Button>
+          </ModalFooter>
         )}
       </ModalContent>
     </Modal>

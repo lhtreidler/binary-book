@@ -10,11 +10,6 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-// app.use((req: express.Request, _res: express.Response, next) => {
-//   console.log(req.method, req.path, req.body);
-//   next();
-// });
-
 // Routes
 app.use("/auth", authRoutes);
 app.use("/ranking", rankingRoutes);

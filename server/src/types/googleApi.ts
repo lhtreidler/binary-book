@@ -66,7 +66,7 @@ export type GoogleBooksVolume = {
 export type GoogleBooksSearchResponse = {
   kind: string;
   totalItems: number;
-  items: GoogleBooksVolume[];
+  items?: GoogleBooksVolume[];
 };
 
 export type FormattedBookItem = {

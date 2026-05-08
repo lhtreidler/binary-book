@@ -13,9 +13,11 @@ const createQueryUrl = (q: string) =>
 const createVolumeUrl = (id: string) =>
   `${baseUrl}/${id}?key=${process.env.GOOGLE_BOOKS_API_KEY}`;
 
-export const formatResult = ({ items }: GoogleBooksSearchResponse) => {
+export const formatResult = (res: GoogleBooksSearchResponse) => {
+  if (!res.items) return [];
+
   const keySet = new Set();
-  return items.reduce<FormattedBookItem>((acc, item) => {
+  return res.items.reduce<FormattedBookItem>((acc, item) => {
     const {
       id,
       volumeInfo: {
@@ -39,7 +41,6 @@ export const queryGoogleBooks = async (q: string) => {
   });
 
   if (cachedResult?.jsonResult) {
-    console.log("Found in cache!");
     return JSON.parse(cachedResult.jsonResult) as FormattedBookItem;
   }
 

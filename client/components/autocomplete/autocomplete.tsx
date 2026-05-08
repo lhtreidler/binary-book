@@ -20,12 +20,19 @@ export const Autocomplete = ({
   const [isChanged, setIsChanged] = useState(false);
 
   useEffect(() => {
-    if (options) setIsChanged(true);
-  }, [options]);
+    if (options || isLoading) setIsChanged(true);
+  }, [options, isLoading]);
 
   const getOptions = () => {
-    if (!options && !isLoading && isChanged) {
-      return <Text>No results found</Text>;
+    console.log(options, isLoading, isChanged);
+    if (!options.length && !isLoading && isChanged) {
+      return (
+        <Box className="p-2 w-full">
+          <Text className="text-center">
+            No results found. Please try a different search term.
+          </Text>
+        </Box>
+      );
     }
 
     return options.map((option) => {
