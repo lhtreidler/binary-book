@@ -83,17 +83,16 @@ const createFinalRankingAndReturnScore = async ({
 
   let rawScore: number;
 
+  const getBook = async (skip: number) => {
+    return getBookByOffset({ skip, userId, includeBook: false, level });
+  };
+
   if (insertionIndex === 0) {
-    const lowest = await getBookByOffset({
-      skip: 0,
-      userId,
-      includeBook: false,
-      level,
-    });
-    const secondLowest =
-      totalCount > 1
-        ? await getBookByOffset({ skip: 1, userId, includeBook: false, level })
-        : null;
+    const [lowest, secondLowest] = await Promise.all([
+      getBook(0),
+      totalCount > 1 ? getBook(1) : null,
+    ]);
+
     if (!lowest || lowest.rawScore === null) {
       throw new Error("Could not find rankings");
     }
@@ -103,21 +102,10 @@ const createFinalRankingAndReturnScore = async ({
         : STARTING_RAW_SCORE;
     rawScore = lowest.rawScore - gap;
   } else if (insertionIndex === totalCount) {
-    const highest = await getBookByOffset({
-      skip: totalCount - 1,
-      userId,
-      includeBook: false,
-      level,
-    });
-    const secondHighest =
-      totalCount > 1
-        ? await getBookByOffset({
-            skip: totalCount - 2,
-            userId,
-            includeBook: false,
-            level,
-          })
-        : null;
+    const [highest, secondHighest] = await Promise.all([
+      getBook(totalCount - 1),
+      totalCount > 1 ? getBook(totalCount - 2) : null,
+    ]);
     if (!highest || highest.rawScore === null) {
       throw new Error("Could not find rankings");
     }
@@ -127,20 +115,9 @@ const createFinalRankingAndReturnScore = async ({
         : STARTING_RAW_SCORE;
     rawScore = highest.rawScore + gap;
   } else {
-    const [lowRanking, highRanking] = await Promise.all([
-      getBookByOffset({
-        skip: insertionIndex - 1,
-        userId,
-        includeBook: false,
-        level,
-      }),
-      getBookByOffset({
-        skip: insertionIndex,
-        userId,
-        includeBook: false,
-        level,
-      }),
-    ]);
+    const [lowRanking, highRanking] = await Promise.all(
+      [insertionIndex - 1, insertionIndex].map(getBook),
+    );
     if (
       !lowRanking ||
       lowRanking.rawScore === null ||
