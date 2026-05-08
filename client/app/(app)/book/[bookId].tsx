@@ -15,8 +15,8 @@ const scoreColorClass = (score: number) => {
 };
 
 export default function BookDetail() {
-  const { googleId } = useLocalSearchParams<{ googleId: string }>();
-  const { data, isLoading, isError } = useBookDetail(googleId);
+  const { bookId } = useLocalSearchParams<{ bookId: string }>();
+  const { data, isLoading, isError } = useBookDetail(bookId);
 
   if (isLoading) {
     return (
@@ -63,11 +63,7 @@ export default function BookDetail() {
             </Text>
             <Text className="text-typography-500">{authorStr}</Text>
             {data.userScore !== null && (
-              <Text
-                bold
-                size="2xl"
-                className={scoreColorClass(data.userScore)}
-              >
+              <Text bold size="2xl" className={scoreColorClass(data.userScore)}>
                 {data.userScore.toFixed(1)}
               </Text>
             )}
@@ -92,10 +88,7 @@ export default function BookDetail() {
         {data.categories.length > 0 && (
           <HStack space="xs" className="flex-wrap">
             {data.categories.map((c) => (
-              <Box
-                key={c}
-                className="rounded-full bg-background-100 px-3 py-1"
-              >
+              <Box key={c} className="rounded-full bg-background-100 px-3 py-1">
                 <Text size="xs" className="text-typography-700">
                   {c}
                 </Text>
