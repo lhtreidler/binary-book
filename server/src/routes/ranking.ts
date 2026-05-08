@@ -9,16 +9,12 @@ import {
   startRankingSchema,
 } from "../utils/schemas";
 import { authenticateToken } from "../middleware/auth";
-import { prisma } from "../lib/prisma";
-import {
-  convertRawScoreToScore,
-  handleRankingSearch,
-  STARTING_RAW_SCORE,
-} from "../utils/rankingHelpers";
 import {
   googleBooksService,
   rankingService,
   rankingSessionService,
+  rankingAlgoService,
+  STARTING_RAW_SCORE,
 } from "../services";
 
 const router = Router();
@@ -55,19 +51,12 @@ router.post("/start", validateBody(startRankingSchema), async (req, res) => {
     });
 
     if (rankingCount === 0) {
-      const rawScore = STARTING_RAW_SCORE;
-      await rankingService.createRanking({
+      const score = await rankingService.createRankingAndGetScore({
         userId,
-        rawScore,
+        rawScore: STARTING_RAW_SCORE,
         bookId,
         level: rankingLevel,
       });
-
-      const score = await convertRawScoreToScore(
-        userId,
-        rawScore,
-        rankingLevel,
-      );
 
       res.send({ score });
       return;
@@ -79,7 +68,7 @@ router.post("/start", validateBody(startRankingSchema), async (req, res) => {
       bookId,
     });
 
-    const result = await handleRankingSearch({
+    const result = await rankingAlgoService.handleRankingSearch({
       userId,
       rankingSessionId: rankingSession.id,
       bookId,
@@ -136,7 +125,7 @@ router.post(
       const newLow = choseNew ? avg + 1 : low;
       const newHigh = choseNew ? high : avg;
 
-      const result = await handleRankingSearch({
+      const result = await rankingAlgoService.handleRankingSearch({
         userId,
         rankingSessionId,
         bookId: rankingSession.bookId,

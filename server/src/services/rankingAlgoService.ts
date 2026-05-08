@@ -1,66 +1,4 @@
-import { Ranking } from "../generated/prisma/client";
-import { prisma } from "../lib/prisma";
-import { rankingService, rankingSessionService } from "../services";
-
-const MAX_SCORE = 10;
-const LEVEL_COUNT = 3;
-const LEVEL_SIZE = MAX_SCORE / LEVEL_COUNT;
-
-export const STARTING_RAW_SCORE = 10_000;
-
-export const getHighestLowestScores = async (userId: string, level: number) => {
-  const data = { userId, level };
-  const [highest, lowest] = await Promise.all([
-    rankingService.getHighestRanking(data),
-    rankingService.getLowestRanking(data),
-  ]);
-
-  const maxRaw = highest?.rawScore ?? null;
-  const minRaw = lowest?.rawScore ?? null;
-
-  return { maxRaw, minRaw };
-};
-
-const toOneDecimal = (num: number) => Number(num.toFixed(1));
-
-export const calculateScore = ({
-  rawScore,
-  level,
-  minRaw,
-  maxRaw,
-}: {
-  rawScore: number;
-  level: number;
-  minRaw: number | null;
-  maxRaw: number | null;
-}) => {
-  let add = 0;
-  if (maxRaw === null || minRaw === null || maxRaw === minRaw) {
-    add = 1;
-  } else {
-    add = (rawScore - minRaw) / (maxRaw - minRaw);
-  }
-
-  return toOneDecimal((add + level) * LEVEL_SIZE);
-};
-
-export const convertRawScoreToScore = async (
-  userId: string,
-  rawScore: number,
-  level: number,
-) => {
-  const { maxRaw, minRaw } = await getHighestLowestScores(userId, level);
-
-  return calculateScore({ rawScore, level, minRaw, maxRaw });
-};
-
-export const getScoreFromRanking = async ({
-  userId,
-  rawScore,
-  level,
-}: Ranking) => {
-  return convertRawScoreToScore(userId, rawScore, level);
-};
+import { rankingService, rankingSessionService, STARTING_RAW_SCORE } from ".";
 
 const createFinalRankingAndReturnScore = async ({
   insertionIndex,
@@ -130,17 +68,17 @@ const createFinalRankingAndReturnScore = async ({
     rawScore = (lowRanking.rawScore + highRanking.rawScore) / 2;
   }
 
-  await rankingService.createRanking({
+  const score = await rankingService.createRankingAndGetScore({
     userId,
     rawScore,
     bookId,
     level,
   });
 
-  return convertRawScoreToScore(userId, rawScore, level);
+  return { score };
 };
 
-export const handleRankingSearch = async ({
+const handleRankingSearch = async ({
   userId,
   rankingSessionId,
   bookId,
@@ -189,4 +127,8 @@ export const handleRankingSearch = async ({
   return {
     compareBook: { title: book.title, authors: book.authors },
   };
+};
+
+export const rankingAlgoService = {
+  handleRankingSearch,
 };

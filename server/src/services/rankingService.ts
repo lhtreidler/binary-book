@@ -1,13 +1,88 @@
 import { Ranking } from "../generated/prisma/client";
 import { prisma } from "../lib/prisma";
 import { handlePaginatedRequest } from "../utils/pagination";
-import {
-  calculateScore,
-  getHighestLowestScores,
-} from "../utils/rankingHelpers";
 
 type MinMax = { minRaw: number | null; maxRaw: number | null };
 type BaseRanking = Omit<Ranking, "updatedAt" | "createdAt" | "id">;
+
+const MAX_SCORE = 10;
+const LEVEL_COUNT = 3;
+const LEVEL_SIZE = MAX_SCORE / LEVEL_COUNT;
+
+export const STARTING_RAW_SCORE = 10_000;
+
+const toOneDecimal = (num: number) => Number(num.toFixed(1));
+
+const calculateScore = ({
+  rawScore,
+  level,
+  minRaw,
+  maxRaw,
+}: {
+  rawScore: number;
+  level: number;
+  minRaw: number | null;
+  maxRaw: number | null;
+}) => {
+  let add = 0;
+  if (maxRaw === null || minRaw === null || maxRaw === minRaw) {
+    add = 1;
+  } else {
+    add = (rawScore - minRaw) / (maxRaw - minRaw);
+  }
+
+  return toOneDecimal((add + level) * LEVEL_SIZE);
+};
+
+const getRankingScore = async ({
+  userId,
+  rawScore,
+  level,
+}: {
+  userId: string;
+  rawScore: number;
+  level: number;
+}) => {
+  const { maxRaw, minRaw } = await rankingService.getHighestLowestRankingScores(
+    userId,
+    level,
+  );
+
+  return calculateScore({ rawScore, level, minRaw, maxRaw });
+};
+
+const getHighestRanking = async ({
+  userId,
+  level,
+}: Pick<BaseRanking, "userId" | "level">) => {
+  return prisma.ranking.findFirst({
+    where: { userId, level },
+    orderBy: { rawScore: "desc" },
+  });
+};
+
+const getLowestRanking = async ({
+  userId,
+  level,
+}: Pick<BaseRanking, "userId" | "level">) => {
+  return prisma.ranking.findFirst({
+    where: { userId, level },
+    orderBy: { rawScore: "asc" },
+  });
+};
+
+const getHighestLowestRankingScores = async (userId: string, level: number) => {
+  const data = { userId, level };
+  const [highest, lowest] = await Promise.all([
+    getHighestRanking(data),
+    getLowestRanking(data),
+  ]);
+
+  const maxRaw = highest?.rawScore ?? null;
+  const minRaw = lowest?.rawScore ?? null;
+
+  return { maxRaw, minRaw };
+};
 
 const getPaginatedRankingsByUser = async ({
   userId,
@@ -49,7 +124,7 @@ const getPaginatedRankingsByUser = async ({
 
   await Promise.all(
     levelsToGet.map(async (level) => {
-      const minMax = await getHighestLowestScores(userId, level);
+      const minMax = await getHighestLowestRankingScores(userId, level);
       levelToMinMax[level] = minMax;
     }),
   );
@@ -101,28 +176,10 @@ const getRankingCountByLevel = async ({
   });
 };
 
-const createRanking = async (data: BaseRanking) => {
-  return prisma.ranking.create({ data });
-};
+const createRankingAndGetScore = async (data: BaseRanking) => {
+  const ranking = await prisma.ranking.create({ data });
 
-const getHighestRanking = async ({
-  userId,
-  level,
-}: Pick<BaseRanking, "userId" | "level">) => {
-  return prisma.ranking.findFirst({
-    where: { userId, level },
-    orderBy: { rawScore: "desc" },
-  });
-};
-
-const getLowestRanking = async ({
-  userId,
-  level,
-}: Pick<BaseRanking, "userId" | "level">) => {
-  return prisma.ranking.findFirst({
-    where: { userId, level },
-    orderBy: { rawScore: "asc" },
-  });
+  return getRankingScore(ranking);
 };
 
 const getBookByOffset = async ({
@@ -151,8 +208,8 @@ export const rankingService = {
   getPaginatedRankingsByUser,
   getRankingByBook,
   getRankingCountByLevel,
-  createRanking,
-  getLowestRanking,
-  getHighestRanking,
+  createRankingAndGetScore,
   getBookByOffset,
+  getHighestLowestRankingScores,
+  getRankingScore,
 };

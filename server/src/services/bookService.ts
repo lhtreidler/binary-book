@@ -1,6 +1,6 @@
 import { prisma } from "../lib/prisma";
-import { getScoreFromRanking } from "../utils/rankingHelpers";
 import { googleBooksService } from "./googleBooksService";
+import { rankingService } from "./rankingService";
 
 const getBookDetails = async ({
   userId,
@@ -30,7 +30,7 @@ const getBookDetails = async ({
 
   let userScore: number | null = null;
   if (book.rankings.length) {
-    userScore = await getScoreFromRanking(book.rankings[0]);
+    userScore = await rankingService.getRankingScore(book.rankings[0]);
   }
 
   return { ...details, userScore };
