@@ -1,11 +1,12 @@
 import {
-  FormattedBookItem,
+  FormattedBookItems,
   GoogleBooksSearchResponse,
   GoogleBooksVolume,
 } from "../types/googleApi";
 import { createBookComparisonStr, dedupeBooks } from "../utils/dedupe";
 import { stripHtml } from "../utils/html";
 import { prisma } from "../lib/prisma";
+import { searchCacheService } from "./searchCacheService";
 
 const baseUrl = "https://www.googleapis.com/books/v1/volumes";
 
@@ -18,7 +19,7 @@ const createVolumeUrl = (id: string) =>
 const formatResult = (res: GoogleBooksSearchResponse) => {
   if (!res.items) return [];
 
-  return dedupeBooks(res.items).reduce<FormattedBookItem>((acc, item) => {
+  return dedupeBooks(res.items).reduce<FormattedBookItems>((acc, item) => {
     const {
       id,
       volumeInfo: { title, authors = [] },
@@ -35,10 +36,7 @@ const queryGoogleBooks = async ({
   userId: string;
   query: string;
 }) => {
-  const formattedQuery = JSON.stringify(query).toLowerCase();
-  const cachedResult = await prisma.searchCache.findFirst({
-    where: { query: formattedQuery },
-  });
+  const cachedResult = await searchCacheService.getByQuery({ query });
 
   if (cachedResult?.jsonResult) {
     return formatResult(
@@ -53,12 +51,7 @@ const queryGoogleBooks = async ({
   const formattedResult = formatResult(books);
 
   try {
-    await prisma.searchCache.create({
-      data: {
-        query: formattedQuery,
-        jsonResult: JSON.stringify(formattedResult),
-      },
-    });
+    await searchCacheService.create({ query, result: formattedResult });
   } catch (err) {
     console.error(err);
   }
