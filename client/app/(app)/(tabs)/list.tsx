@@ -60,7 +60,7 @@ export default function List() {
 
   if (isLoading) {
     return (
-      <Box className="flex-1 items-center justify-center">
+      <Box className="flex-1 items-center justify-center max-h-10">
         <Spinner />
       </Box>
     );

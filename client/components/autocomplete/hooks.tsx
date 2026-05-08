@@ -10,11 +10,15 @@ export const useAutocomplete = ({
   onChange: (input: string) => void;
   isLoading: boolean;
   options: AutocompleteProps["options"];
-}): AutocompleteProps => {
+}): AutocompleteProps & { reset: () => void } => {
   const [search, setSearch] = useState("");
 
   const onSearchChange = async (input: string) => {
     onChange(input);
+  };
+
+  const reset = () => {
+    setSearch("");
   };
 
   useDebounce({
@@ -28,5 +32,7 @@ export const useAutocomplete = ({
     },
     options,
     isLoading,
+    fieldProps: { value: search },
+    reset,
   };
 };
