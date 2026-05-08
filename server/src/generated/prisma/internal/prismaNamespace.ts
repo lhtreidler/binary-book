@@ -841,7 +841,8 @@ export const BookScalarFieldEnum = {
   id: 'id',
   googleId: 'googleId',
   title: 'title',
-  authors: 'authors'
+  authors: 'authors',
+  compareStr: 'compareStr'
 } as const
 
 export type BookScalarFieldEnum = (typeof BookScalarFieldEnum)[keyof typeof BookScalarFieldEnum]

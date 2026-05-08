@@ -525,8 +525,8 @@ export type RankingSessionUncheckedUpdateManyWithoutBookNestedInput = {
   deleteMany?: Prisma.RankingSessionScalarWhereInput | Prisma.RankingSessionScalarWhereInput[]
 }
 
-export type IntFieldUpdateOperationsInput = {
-  set?: number
+export type NullableIntFieldUpdateOperationsInput = {
+  set?: number | null
   increment?: number
   decrement?: number
   multiply?: number

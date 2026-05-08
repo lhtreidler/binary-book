@@ -6,6 +6,7 @@ import {
   calculateScore,
   getHighestLowestScores,
 } from "../utils/rankingHelpers.js";
+import { createBookComparisonStr } from "../utils/dedupe.js";
 
 const router = Router();
 router.use(authenticateToken);
@@ -31,8 +32,16 @@ router.get("/", async (req: Request, res: Response): Promise<void> => {
     const items = await queryGoogleBooks(q);
 
     // get matching books from user's shelf by google id
-    const googleIds = items.map(({ key }) => key);
 
+    let googleIds: string[] = [];
+    let comparisonStrings: string[] = [];
+
+    items.forEach(({ key, title, authors }) => {
+      googleIds.push(key);
+      comparisonStrings.push(createBookComparisonStr(title, authors));
+    });
+
+    // find books the user has ranked with the same comparison string or googleId
     const rankedBooks = await prisma.book.findMany({
       where: {
         rankings: {
@@ -40,9 +49,18 @@ router.get("/", async (req: Request, res: Response): Promise<void> => {
             userId,
           },
         },
-        googleId: {
-          in: googleIds,
-        },
+        OR: [
+          {
+            googleId: {
+              in: googleIds,
+            },
+          },
+          {
+            compareStr: {
+              in: comparisonStrings,
+            },
+          },
+        ],
       },
     });
 
@@ -159,8 +177,6 @@ router.get(
         where: {
           userId,
           book: { googleId },
-          rawScore: { not: null },
-          level: { not: null },
         },
       });
 
@@ -176,9 +192,7 @@ router.get(
 
       res.json({ ...details, userScore });
     } catch (err) {
-      res
-        .status(500)
-        .json({ message: "Failed to fetch book details." });
+      res.status(500).json({ message: "Failed to fetch book details." });
     }
   },
 );

@@ -3,6 +3,8 @@ import {
   GoogleBooksSearchResponse,
   GoogleBooksVolume,
 } from "../types/googleApi";
+import { createBookComparisonStr, dedupeBooks } from "../utils/dedupe";
+import { stripHtml } from "../utils/html";
 import { prisma } from "./prisma";
 
 const baseUrl = "https://www.googleapis.com/books/v1/volumes";
@@ -16,8 +18,7 @@ const createVolumeUrl = (id: string) =>
 export const formatResult = (res: GoogleBooksSearchResponse) => {
   if (!res.items) return [];
 
-  const keySet = new Set();
-  return res.items.reduce<FormattedBookItem>((acc, item) => {
+  return dedupeBooks(res.items).reduce<FormattedBookItem>((acc, item) => {
     const {
       id,
       volumeInfo: {
@@ -27,9 +28,6 @@ export const formatResult = (res: GoogleBooksSearchResponse) => {
       },
     } = item;
 
-    if (keySet.has(id)) return acc;
-
-    keySet.add(id);
     return [...acc, { key: id, title, authors, thumbnail }];
   }, []);
 };
@@ -50,18 +48,20 @@ export const queryGoogleBooks = async (q: string) => {
     response.json(),
   )) as GoogleBooksSearchResponse;
 
+  const formattedResult = formatResult(books);
+
   try {
     await prisma.searchCache.create({
       data: {
         query: formattedQuery,
-        jsonResult: JSON.stringify({ items: books.items }),
+        jsonResult: JSON.stringify(formattedResult),
       },
     });
   } catch (err) {
     console.error(err);
   }
 
-  return formatResult(books);
+  return formattedResult;
 };
 
 export const getOrCreateBook = async (volumeId: string) => {
@@ -91,6 +91,7 @@ export const getOrCreateBook = async (volumeId: string) => {
       googleId: volumeId,
       title,
       authors,
+      compareStr: createBookComparisonStr(title, authors),
     },
   });
 
@@ -130,12 +131,11 @@ export const getVolumeDetails = async (
     thumbnail: rawThumbnail ? rawThumbnail.replace(/^http:/, "https:") : null,
     description:
       typeof volumeInfo?.description === "string"
-        ? volumeInfo.description
+        ? stripHtml(volumeInfo.description)
         : null,
     publishedDate: volumeInfo?.publishedDate ?? null,
-    pageCount: typeof volumeInfo?.pageCount === "number"
-      ? volumeInfo.pageCount
-      : null,
+    pageCount:
+      typeof volumeInfo?.pageCount === "number" ? volumeInfo.pageCount : null,
     categories: volumeInfo?.categories ?? [],
   };
 };
