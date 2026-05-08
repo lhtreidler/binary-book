@@ -1,3 +1,4 @@
+import { Ranking } from "../generated/prisma/client";
 import { prisma } from "../lib/prisma";
 
 const MAX_SCORE = 10;
@@ -27,15 +28,17 @@ export const getHighestLowestScores = async (userId: string, level: number) => {
 
 const toOneDecimal = (num: number) => Number(num.toFixed(1));
 
-export const convertRawScoreToScore = async (
-  userId: string,
-  rawScore: number,
-  level: number,
-) => {
-  const { maxRaw, minRaw } = await getHighestLowestScores(userId, level);
-
-  const levelAdd = level * LEVEL_SIZE;
-
+export const calculateScore = ({
+  rawScore,
+  level,
+  minRaw,
+  maxRaw,
+}: {
+  rawScore: number;
+  level: number;
+  minRaw: number | null;
+  maxRaw: number | null;
+}) => {
   let add = 0;
   if (maxRaw === null || minRaw === null || maxRaw === minRaw) {
     add = 1;
@@ -44,6 +47,24 @@ export const convertRawScoreToScore = async (
   }
 
   return toOneDecimal((add + level) * LEVEL_SIZE);
+};
+
+export const convertRawScoreToScore = async (
+  userId: string,
+  rawScore: number,
+  level: number,
+) => {
+  const { maxRaw, minRaw } = await getHighestLowestScores(userId, level);
+
+  return calculateScore({ rawScore, level, minRaw, maxRaw });
+};
+
+export const getScoreFromRanking = async ({
+  userId,
+  rawScore,
+  level,
+}: Ranking) => {
+  return convertRawScoreToScore(userId, rawScore, level);
 };
 
 const getBookByOffset = async ({
@@ -79,7 +100,7 @@ const createFinalRankingAndReturnScore = async ({
   level: number;
   bookId: string;
 }) => {
-  const totalCount = await prisma.ranking.count({ where: { userId } });
+  const totalCount = await prisma.ranking.count({ where: { userId, level } });
 
   let rawScore: number;
 
@@ -169,7 +190,7 @@ export const handleRankingSearch = async ({
     });
 
     // Return the final score and no further comparisons needed
-    return { score };
+    return { score, bookId };
   }
 
   const skip = Math.floor((low + high) / 2);

@@ -1,25 +1,20 @@
 import { Autocomplete, useAutocomplete } from "@/components/autocomplete";
 import { RankingModal } from "@/components/ranking-modal/ranking-modal";
 import { Box } from "@/components/ui/box";
-import { BookSearchItem, BookSearchResponse } from "@/lib/api";
+import { BookSearchItem } from "@/lib/api";
 import { useSearchBooks } from "@/lib/api/hooks/useBooks";
 import { useQueryClient } from "@tanstack/react-query";
-import { useEffect, useMemo, useState } from "react";
+import { useRouter } from "expo-router";
+import { useMemo, useState } from "react";
 import { ScrollView } from "react-native";
 
 export default function Add() {
   const [selectedBook, setSelectedBook] = useState<BookSearchItem | null>(null);
   const [query, setQuery] = useState("");
-  const [data, setData] = useState<BookSearchResponse | undefined>(undefined);
 
   const queryClient = useQueryClient();
-  const { isLoading, data: queryData } = useSearchBooks({ query });
-
-  useEffect(() => {
-    if (queryData !== undefined) {
-      setData(queryData);
-    }
-  }, [queryData]);
+  const { isLoading, data } = useSearchBooks({ query });
+  const router = useRouter();
 
   const options = useMemo(() => {
     if (!data) return [];
@@ -45,9 +40,14 @@ export default function Add() {
     if (book) setSelectedBook(book);
   };
 
-  const onCloseModal = () => {
+  const onCloseModal = (bookId?: string) => {
     queryClient.invalidateQueries({ queryKey: ["books", query] });
+    queryClient.invalidateQueries({ queryKey: ["books", "list"] });
     setSelectedBook(null);
+
+    if (bookId) {
+      router.push(`/book/${bookId}`);
+    }
   };
 
   return (

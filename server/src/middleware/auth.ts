@@ -4,6 +4,7 @@ import {
   extractTokenFromHeader,
   TokenPayload,
 } from "../utils/jwt.js";
+import { prisma } from "../lib/prisma.js";
 
 declare global {
   namespace Express {

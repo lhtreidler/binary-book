@@ -26,9 +26,10 @@ model User {
 
 model Book {
   id               String            @id @default(uuid()) @db.Uuid
-  googleId         String?           @unique
-  title            String?
+  googleId         String            @unique
+  title            String
   authors          String[]
+  compareStr       String
   rankings         Ranking[]
   rankingSessions  RankingSession[]
 }
@@ -37,8 +38,8 @@ model Ranking {
   id               String            @id @default(uuid()) @db.Uuid
   bookId           String            @db.Uuid
   userId           String            @db.Uuid
-  rawScore         Float?
-  level            Int?              // only 1, 2, or 3
+  rawScore         Float
+  level            Int              
   book             Book              @relation(fields: [bookId], references: [id])
   user             User              @relation(fields: [userId], references: [id])
   createdAt        DateTime          @default(now())

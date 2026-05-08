@@ -36,6 +36,30 @@ export interface BookSearchResponse {
   items: BookSearchItem[];
 }
 
+export interface BookListItem {
+  bookId: string;
+  title: string;
+  authors: string[];
+  score: number;
+}
+
+export interface BookListResponse {
+  list: BookListItem[];
+  nextPage: number | null;
+}
+
+export interface BookDetailResponse {
+  googleId: string;
+  title: string | null;
+  authors: string[];
+  thumbnail: string | null;
+  description: string | null;
+  publishedDate: string | null;
+  pageCount: number | null;
+  categories: string[];
+  userScore: number | null;
+}
+
 export interface Ranking {
   id: string;
   userId: string;
@@ -59,7 +83,7 @@ export interface RankingBookInfo {
   authors: string[];
 }
 
-export type FinishedRankingResponse = { score: number };
+export type FinishedRankingResponse = { score: number; bookId: string };
 
 export type StartRankingResponse =
   | {

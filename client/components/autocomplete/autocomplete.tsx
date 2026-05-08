@@ -36,7 +36,7 @@ export const Autocomplete = ({
     }
 
     return options.map((option) => {
-      const { key, label, thumbnail, hideAction } = option;
+      const { key, label, thumbnail, hideAction = false } = option;
       return (
         <Box
           key={key}
@@ -82,7 +82,11 @@ export const Autocomplete = ({
   return (
     <VStack>
       <Input {...inputProps}>
-        <InputField onChangeText={onChange} {...fieldProps} />
+        <InputField
+          variant="underlined"
+          onChangeText={onChange}
+          {...fieldProps}
+        />
       </Input>
       {getOptions()}
       {isLoading ? <Spinner className="mt-2" /> : null}

@@ -3,6 +3,8 @@ import {
   GoogleBooksSearchResponse,
   GoogleBooksVolume,
 } from "../types/googleApi";
+import { createBookComparisonStr, dedupeBooks } from "../utils/dedupe";
+import { stripHtml } from "../utils/html";
 import { prisma } from "./prisma";
 
 const baseUrl = "https://www.googleapis.com/books/v1/volumes";
@@ -16,21 +18,13 @@ const createVolumeUrl = (id: string) =>
 export const formatResult = (res: GoogleBooksSearchResponse) => {
   if (!res.items) return [];
 
-  const keySet = new Set();
-  return res.items.reduce<FormattedBookItem>((acc, item) => {
+  return dedupeBooks(res.items).reduce<FormattedBookItem>((acc, item) => {
     const {
       id,
-      volumeInfo: {
-        title,
-        authors = [],
-        imageLinks: { thumbnail },
-      },
+      volumeInfo: { title, authors = [] },
     } = item;
 
-    if (keySet.has(id)) return acc;
-
-    keySet.add(id);
-    return [...acc, { key: id, title, authors, thumbnail }];
+    return [...acc, { key: id, title, authors }];
   }, []);
 };
 
@@ -41,25 +35,29 @@ export const queryGoogleBooks = async (q: string) => {
   });
 
   if (cachedResult?.jsonResult) {
-    return JSON.parse(cachedResult.jsonResult) as FormattedBookItem;
+    return formatResult(
+      JSON.parse(cachedResult.jsonResult) as GoogleBooksSearchResponse,
+    );
   }
 
   const books = (await fetch(createQueryUrl(q)).then((response) =>
     response.json(),
   )) as GoogleBooksSearchResponse;
 
+  const formattedResult = formatResult(books);
+
   try {
     await prisma.searchCache.create({
       data: {
         query: formattedQuery,
-        jsonResult: JSON.stringify({ items: books.items }),
+        jsonResult: JSON.stringify(formattedResult),
       },
     });
   } catch (err) {
     console.error(err);
   }
 
-  return formatResult(books);
+  return formattedResult;
 };
 
 export const getOrCreateBook = async (volumeId: string) => {
@@ -89,8 +87,51 @@ export const getOrCreateBook = async (volumeId: string) => {
       googleId: volumeId,
       title,
       authors,
+      compareStr: createBookComparisonStr(title, authors),
     },
   });
 
   return createdBook;
+};
+
+export type VolumeDetails = {
+  googleId: string;
+  title: string | null;
+  authors: string[];
+  thumbnail: string | null;
+  description: string | null;
+  publishedDate: string | null;
+  pageCount: number | null;
+  categories: string[];
+};
+
+export const getVolumeDetails = async (
+  volumeId: string,
+): Promise<VolumeDetails> => {
+  const volume = (await fetch(createVolumeUrl(volumeId)).then((response) =>
+    response.json(),
+  )) as GoogleBooksVolume;
+
+  if (!volume || !volume.id) {
+    throw new Error("Could not find book");
+  }
+
+  const { volumeInfo } = volume;
+
+  const rawThumbnail = volumeInfo?.imageLinks?.thumbnail ?? null;
+
+  return {
+    googleId: volume.id,
+    title: volumeInfo?.title ?? null,
+    authors: volumeInfo?.authors ?? [],
+    thumbnail: rawThumbnail ? rawThumbnail.replace(/^http:/, "https:") : null,
+    description:
+      typeof volumeInfo?.description === "string"
+        ? stripHtml(volumeInfo.description)
+        : null,
+    publishedDate: volumeInfo?.publishedDate ?? null,
+    pageCount:
+      typeof volumeInfo?.pageCount === "number" ? volumeInfo.pageCount : null,
+    categories: volumeInfo?.categories ?? [],
+  };
 };
