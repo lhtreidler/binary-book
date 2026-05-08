@@ -9,4 +9,4 @@ export type { LoginInput, SignupInput } from "./useAuth";
 export { useStartRanking, useContinueRanking } from "./useRanking";
 export type { StartRankingInput, ContinueRankingInput } from "./useRanking";
 
-export { searchBooks } from "./useBooks";
+export { searchBooks, useSearchBooks, useBookList } from "./useBooks";

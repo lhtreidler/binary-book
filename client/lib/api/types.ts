@@ -36,6 +36,17 @@ export interface BookSearchResponse {
   items: BookSearchItem[];
 }
 
+export interface BookListItem {
+  title: string;
+  authors: string[];
+  score: number;
+}
+
+export interface BookListResponse {
+  list: BookListItem[];
+  nextPage: number | null;
+}
+
 export interface Ranking {
   id: string;
   userId: string;

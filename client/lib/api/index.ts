@@ -11,6 +11,8 @@ export type {
   Book,
   BookSearchItem,
   BookSearchResponse,
+  BookListItem,
+  BookListResponse,
   Ranking,
   RankingBookInfo,
   RankingSession,

@@ -91,7 +91,7 @@ const createFinalRankingAndReturnScore = async ({
   level: number;
   bookId: string;
 }) => {
-  const totalCount = await prisma.ranking.count({ where: { userId } });
+  const totalCount = await prisma.ranking.count({ where: { userId, level } });
 
   let rawScore: number;
 

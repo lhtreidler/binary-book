@@ -36,7 +36,7 @@ export const Autocomplete = ({
     }
 
     return options.map((option) => {
-      const { key, label, thumbnail, hideAction } = option;
+      const { key, label, thumbnail, hideAction = false } = option;
       return (
         <Box
           key={key}

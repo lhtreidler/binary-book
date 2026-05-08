@@ -91,7 +91,7 @@ router.get("/list", async (req: Request, res: Response) => {
       },
       skip,
       take: PAGE_SIZE + 1,
-      orderBy: { rawScore: "desc" },
+      orderBy: [{ level: "desc" }, { rawScore: "desc" }],
     });
 
     const rankings = rankingsPlusOne.slice(0, PAGE_SIZE);

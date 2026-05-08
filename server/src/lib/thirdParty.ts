@@ -41,7 +41,9 @@ export const queryGoogleBooks = async (q: string) => {
   });
 
   if (cachedResult?.jsonResult) {
-    return JSON.parse(cachedResult.jsonResult) as FormattedBookItem;
+    return formatResult(
+      JSON.parse(cachedResult.jsonResult) as GoogleBooksSearchResponse,
+    );
   }
 
   const books = (await fetch(createQueryUrl(q)).then((response) =>
