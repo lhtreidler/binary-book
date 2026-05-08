@@ -96,3 +96,46 @@ export const getOrCreateBook = async (volumeId: string) => {
 
   return createdBook;
 };
+
+export type VolumeDetails = {
+  googleId: string;
+  title: string | null;
+  authors: string[];
+  thumbnail: string | null;
+  description: string | null;
+  publishedDate: string | null;
+  pageCount: number | null;
+  categories: string[];
+};
+
+export const getVolumeDetails = async (
+  volumeId: string,
+): Promise<VolumeDetails> => {
+  const volume = (await fetch(createVolumeUrl(volumeId)).then((response) =>
+    response.json(),
+  )) as GoogleBooksVolume;
+
+  if (!volume || !volume.id) {
+    throw new Error("Could not find book");
+  }
+
+  const { volumeInfo } = volume;
+
+  const rawThumbnail = volumeInfo?.imageLinks?.thumbnail ?? null;
+
+  return {
+    googleId: volume.id,
+    title: volumeInfo?.title ?? null,
+    authors: volumeInfo?.authors ?? [],
+    thumbnail: rawThumbnail ? rawThumbnail.replace(/^http:/, "https:") : null,
+    description:
+      typeof volumeInfo?.description === "string"
+        ? volumeInfo.description
+        : null,
+    publishedDate: volumeInfo?.publishedDate ?? null,
+    pageCount: typeof volumeInfo?.pageCount === "number"
+      ? volumeInfo.pageCount
+      : null,
+    categories: volumeInfo?.categories ?? [],
+  };
+};

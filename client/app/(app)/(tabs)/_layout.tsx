@@ -1,34 +1,41 @@
 import { Tabs } from "expo-router";
-import FontAwesome from "@expo/vector-icons/FontAwesome";
+import {
+  AddIcon,
+  Icon,
+  MenuIcon,
+  SettingsIcon,
+  StarIcon,
+} from "@/components/ui/icon";
+import { ComponentProps } from "react";
+
+type IconAs = ComponentProps<typeof Icon>["as"];
+
+const TabIcon = ({ as, color }: { as: IconAs; color: string }) => (
+  <Icon as={as} size="lg" style={{ color }} />
+);
 
 export default function Index() {
   return (
-    <Tabs screenOptions={{ tabBarActiveTintColor: "blue" }}>
+    <Tabs screenOptions={{ tabBarActiveTintColor: "#2563eb" }}>
       <Tabs.Screen
         name="index"
         options={{
           title: "Home",
-          tabBarIcon: ({ color }) => (
-            <FontAwesome name="home" size={24} color={color} />
-          ),
+          tabBarIcon: ({ color }) => <TabIcon as={StarIcon} color={color} />,
         }}
       />
       <Tabs.Screen
         name="list"
         options={{
           title: "List",
-          tabBarIcon: ({ color }) => (
-            <FontAwesome name="list" size={24} color={color} />
-          ),
+          tabBarIcon: ({ color }) => <TabIcon as={MenuIcon} color={color} />,
         }}
       />
       <Tabs.Screen
         name="add"
         options={{
           title: "Add Book",
-          tabBarIcon: ({ color }) => (
-            <FontAwesome name="plus" size={24} color={color} />
-          ),
+          tabBarIcon: ({ color }) => <TabIcon as={AddIcon} color={color} />,
         }}
       />
       <Tabs.Screen
@@ -36,7 +43,7 @@ export default function Index() {
         options={{
           title: "Settings",
           tabBarIcon: ({ color }) => (
-            <FontAwesome name="cog" size={24} color={color} />
+            <TabIcon as={SettingsIcon} color={color} />
           ),
         }}
       />

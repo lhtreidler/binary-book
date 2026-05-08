@@ -9,4 +9,9 @@ export type { LoginInput, SignupInput } from "./useAuth";
 export { useStartRanking, useContinueRanking } from "./useRanking";
 export type { StartRankingInput, ContinueRankingInput } from "./useRanking";
 
-export { searchBooks, useSearchBooks, useBookList } from "./useBooks";
+export {
+  searchBooks,
+  useSearchBooks,
+  useBookList,
+  useBookDetail,
+} from "./useBooks";

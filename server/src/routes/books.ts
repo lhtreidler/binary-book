@@ -1,7 +1,7 @@
 import { Router, Request, Response } from "express";
 import { prisma } from "../lib/prisma.js";
 import { authenticateToken } from "../middleware/auth.js";
-import { queryGoogleBooks } from "../lib/thirdParty.js";
+import { getVolumeDetails, queryGoogleBooks } from "../lib/thirdParty.js";
 import {
   calculateScore,
   getHighestLowestScores,
@@ -112,11 +112,12 @@ router.get("/list", async (req: Request, res: Response) => {
     );
 
     const formattedList = rankings
-      .map(({ book: { title, authors }, level, rawScore }) => {
+      .map(({ book: { title, authors, googleId }, level, rawScore }) => {
         const minMax = levelMinMax.find((m) => m.level === level);
-        if (!minMax || rawScore === null) return null;
+        if (!minMax || rawScore === null || !googleId) return null;
 
         return {
+          googleId,
           title,
           authors,
           score: calculateScore({ rawScore, ...minMax }),
@@ -134,5 +135,52 @@ router.get("/list", async (req: Request, res: Response) => {
       .json({ message: "Failed to fetch list. Please try again later." });
   }
 });
+
+router.get(
+  "/details/:googleId",
+  async (req: Request, res: Response): Promise<void> => {
+    if (!req.user || !req.user.userId) {
+      res.status(401).json({ message: "Unauthorized" });
+      return;
+    }
+
+    const { userId } = req.user;
+    const { googleId } = req.params;
+
+    if (!googleId) {
+      res.status(400).json({ message: "Missing googleId" });
+      return;
+    }
+
+    try {
+      const details = await getVolumeDetails(googleId);
+
+      const ranking = await prisma.ranking.findFirst({
+        where: {
+          userId,
+          book: { googleId },
+          rawScore: { not: null },
+          level: { not: null },
+        },
+      });
+
+      let userScore: number | null = null;
+      if (ranking && ranking.rawScore !== null && ranking.level !== null) {
+        const minMax = await getHighestLowestScores(userId, ranking.level);
+        userScore = calculateScore({
+          rawScore: ranking.rawScore,
+          level: ranking.level,
+          ...minMax,
+        });
+      }
+
+      res.json({ ...details, userScore });
+    } catch (err) {
+      res
+        .status(500)
+        .json({ message: "Failed to fetch book details." });
+    }
+  },
+);
 
 export default router;

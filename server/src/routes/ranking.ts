@@ -35,6 +35,18 @@ router.post("/start", validateBody(startRankingSchema), async (req, res) => {
 
     const { id: bookId } = book;
 
+    const existingRanking = await prisma.ranking.findFirst({
+      where: {
+        userId,
+        bookId,
+      },
+    });
+
+    if (existingRanking) {
+      res.status(401).json({ message: "Book has already been ranked" });
+      return;
+    }
+
     const rankingCount = await prisma.ranking.count({
       where: { userId, level: rankingLevel },
     });

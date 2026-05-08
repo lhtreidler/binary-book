@@ -13,6 +13,7 @@ export type {
   BookSearchResponse,
   BookListItem,
   BookListResponse,
+  BookDetailResponse,
   Ranking,
   RankingBookInfo,
   RankingSession,

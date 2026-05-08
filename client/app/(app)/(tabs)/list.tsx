@@ -1,10 +1,12 @@
 import { Box } from "@/components/ui/box";
 import { HStack } from "@/components/ui/hstack";
+import { Pressable } from "@/components/ui/pressable";
 import { Spinner } from "@/components/ui/spinner";
 import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
 import { BookListItem } from "@/lib/api";
 import { useBookList } from "@/lib/api/hooks/useBooks";
+import { router } from "expo-router";
 import { useMemo } from "react";
 import { FlatList, ListRenderItem } from "react-native";
 
@@ -20,19 +22,21 @@ const Row = ({ item }: { item: BookListItem }) => {
     : "Unknown Author";
 
   return (
-    <HStack className="items-center justify-between border-b border-outline-200 px-4 py-3">
-      <VStack className="flex-1 pr-3">
-        <Text className="font-semibold" numberOfLines={2}>
-          {item.title}
+    <Pressable onPress={() => router.push(`/book/${item.googleId}`)}>
+      <HStack className="items-center justify-between border-b border-outline-200 px-4 py-3">
+        <VStack className="flex-1 pr-3">
+          <Text className="font-semibold" numberOfLines={2}>
+            {item.title}
+          </Text>
+          <Text size="sm" className="text-typography-500" numberOfLines={1}>
+            {authorStr}
+          </Text>
+        </VStack>
+        <Text bold size="lg" className={scoreColorClass(item.score)}>
+          {item.score.toFixed(1)}
         </Text>
-        <Text size="sm" className="text-typography-500" numberOfLines={1}>
-          {authorStr}
-        </Text>
-      </VStack>
-      <Text bold size="lg" className={scoreColorClass(item.score)}>
-        {item.score.toFixed(1)}
-      </Text>
-    </HStack>
+      </HStack>
+    </Pressable>
   );
 };
 

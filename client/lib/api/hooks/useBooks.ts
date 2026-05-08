@@ -11,7 +11,12 @@ import {
   keepPreviousData,
 } from "@tanstack/react-query";
 import { getApiClient } from "../client";
-import { ApiError, BookListResponse, BookSearchResponse } from "../types";
+import {
+  ApiError,
+  BookDetailResponse,
+  BookListResponse,
+  BookSearchResponse,
+} from "../types";
 
 export const searchBooks = async (query: string) => {
   const client = await getApiClient();
@@ -53,5 +58,24 @@ export function useBookList(): UseInfiniteQueryResult<
     queryFn: ({ pageParam }) => fetchBookList(pageParam),
     initialPageParam: 1,
     getNextPageParam: (lastPage) => lastPage.nextPage,
+  });
+}
+
+export const fetchBookDetail = async (googleId: string) => {
+  const client = await getApiClient();
+  const { data } = await client.get<BookDetailResponse>(
+    `/books/details/${googleId}`,
+  );
+
+  return data;
+};
+
+export function useBookDetail(
+  googleId: string | undefined,
+): UseQueryResult<BookDetailResponse, ApiError> {
+  return useQuery({
+    queryKey: ["books", "detail", googleId],
+    queryFn: () => fetchBookDetail(googleId as string),
+    enabled: !!googleId,
   });
 }
