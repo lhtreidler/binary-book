@@ -66,13 +66,7 @@ model RankingSession {
 
 model SearchCache {
   id               String            @id @default(uuid()) @db.Uuid
-  type             CacheType        
   query            String            @unique
   jsonResult       String
   cachedAt         DateTime          @default(now())
-}
-
-enum CacheType {
-  QUERY
-  VOLUME
 }

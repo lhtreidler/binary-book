@@ -125,7 +125,6 @@ export type RankingSessionScalarFieldEnum = (typeof RankingSessionScalarFieldEnu
 
 export const SearchCacheScalarFieldEnum = {
   id: 'id',
-  type: 'type',
   query: 'query',
   jsonResult: 'jsonResult',
   cachedAt: 'cachedAt'

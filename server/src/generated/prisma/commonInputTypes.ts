@@ -218,23 +218,6 @@ export type IntWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedIntFilter<$PrismaModel>
 }
 
-export type EnumCacheTypeFilter<$PrismaModel = never> = {
-  equals?: $Enums.CacheType | Prisma.EnumCacheTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.CacheType[] | Prisma.ListEnumCacheTypeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.CacheType[] | Prisma.ListEnumCacheTypeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumCacheTypeFilter<$PrismaModel> | $Enums.CacheType
-}
-
-export type EnumCacheTypeWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.CacheType | Prisma.EnumCacheTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.CacheType[] | Prisma.ListEnumCacheTypeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.CacheType[] | Prisma.ListEnumCacheTypeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumCacheTypeWithAggregatesFilter<$PrismaModel> | $Enums.CacheType
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumCacheTypeFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumCacheTypeFilter<$PrismaModel>
-}
-
 export type NestedUuidFilter<$PrismaModel = never> = {
   equals?: string | Prisma.StringFieldRefInput<$PrismaModel>
   in?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
@@ -437,23 +420,6 @@ export type NestedFloatFilter<$PrismaModel = never> = {
   gt?: number | Prisma.FloatFieldRefInput<$PrismaModel>
   gte?: number | Prisma.FloatFieldRefInput<$PrismaModel>
   not?: Prisma.NestedFloatFilter<$PrismaModel> | number
-}
-
-export type NestedEnumCacheTypeFilter<$PrismaModel = never> = {
-  equals?: $Enums.CacheType | Prisma.EnumCacheTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.CacheType[] | Prisma.ListEnumCacheTypeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.CacheType[] | Prisma.ListEnumCacheTypeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumCacheTypeFilter<$PrismaModel> | $Enums.CacheType
-}
-
-export type NestedEnumCacheTypeWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.CacheType | Prisma.EnumCacheTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.CacheType[] | Prisma.ListEnumCacheTypeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.CacheType[] | Prisma.ListEnumCacheTypeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumCacheTypeWithAggregatesFilter<$PrismaModel> | $Enums.CacheType
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumCacheTypeFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumCacheTypeFilter<$PrismaModel>
 }
 
 

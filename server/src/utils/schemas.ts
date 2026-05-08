@@ -33,8 +33,6 @@ export type LoginInput = z.infer<typeof loginSchema>;
 
 export const startRankingSchema = z.object({
   gId: z.string().min(1),
-  title: z.string().min(1),
-  authors: z.array(z.string()).optional(),
   rankingLevel: z.int().min(0).max(2),
 });
 export const continueRankingSchema = z.object({

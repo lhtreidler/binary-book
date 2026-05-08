@@ -8,80 +8,18 @@ import {
 } from "../utils/schemas";
 import { authenticateToken } from "../middleware/auth";
 import { prisma } from "../lib/prisma";
-import { convertRawScoreToScore } from "../utils/score";
-import { getGoogleBook } from "../lib/thirdParty";
+import {
+  convertRawScoreToScore,
+  handleRankingSearch,
+  STARTING_RAW_SCORE,
+} from "../utils/rankingHelpers";
+import { getOrCreateBook } from "../lib/thirdParty";
 
 const router = Router();
 router.use(authenticateToken);
 
-const handleRankingSearch = async ({
-  userId,
-  rankingSessionId,
-  bookId,
-  low,
-  high,
-  level,
-}: {
-  userId: string;
-  rankingSessionId: string;
-  bookId: string;
-  low: number;
-  high: number;
-  level: 0;
-}) => {
-  // If low and high are adjacent, we have found the score
-  if (low >= high - 1) {
-    // Create final ranking entry with the determined score
-    const score = Math.floor((low + high) / 2);
-    await prisma.ranking.create({
-      data: {
-        userId,
-        rawScore: score,
-        bookId,
-        level,
-      },
-    });
-
-    // Clean up the ranking session
-    await prisma.rankingSession.delete({
-      where: { id: rankingSessionId },
-    });
-
-    const convertedScore = await convertRawScoreToScore(userId, score, level);
-
-    // Return the final score and no further comparisons needed
-    return { score: convertedScore };
-  }
-
-  const skip = Math.floor((low + high) / 2);
-
-  const rankingToCompare = await prisma.ranking.findFirst({
-    where: { userId },
-    orderBy: { rawScore: "asc" },
-    skip,
-    take: 1,
-    include: { book: true },
-  });
-
-  if (!rankingToCompare) {
-    throw new Error("Ranking not found");
-  }
-
-  await prisma.rankingSession.update({
-    where: { id: rankingSessionId },
-    data: { low, high },
-  });
-
-  const { book, ...rest } = rankingToCompare;
-  return {
-    rankingToCompare: rest,
-    compareBook: { title: book.title, authors: book.authors },
-  };
-};
-
 router.post("/start", validateBody(startRankingSchema), async (req, res) => {
   try {
-    console.log("start");
     const { userId } = req.user || {};
 
     if (!userId) {
@@ -89,31 +27,26 @@ router.post("/start", validateBody(startRankingSchema), async (req, res) => {
       return;
     }
 
-    const { rankingLevel, gId, title, authors } = req.body as StartRankingInput;
+    const { rankingLevel, gId } = req.body as StartRankingInput;
 
-    let bookRecord = await prisma.book.findFirst({
-      where: { googleId: gId },
-    });
+    const book = await getOrCreateBook(gId);
 
-    if (!bookRecord) {
-      bookRecord = await prisma.book.create({
-        data: {
-          googleId: gId,
-          title,
-          authors,
-        },
-      });
-    }
-
-    const bookId = bookRecord.id;
+    const { id: bookId } = book;
 
     const rankingCount = await prisma.ranking.count({ where: { userId } });
 
     if (rankingCount === 0) {
       await prisma.ranking.create({
-        data: { userId, rawScore: 0, bookId, level: rankingLevel },
+        data: {
+          userId,
+          rawScore: STARTING_RAW_SCORE,
+          bookId,
+          level: rankingLevel,
+        },
       });
+
       const score = await convertRawScoreToScore(userId, 0, rankingLevel);
+
       res.send({ score });
       return;
     }

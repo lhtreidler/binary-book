@@ -9,7 +9,7 @@ const baseUrl = "https://www.googleapis.com/books/v1/volumes";
 const createQueryUrl = (q: string) =>
   `${baseUrl}?q=${encodeURIComponent(q)}&key=${process.env.GOOGLE_BOOKS_API_KEY}`;
 const createVolumeUrl = (id: string) =>
-  `${baseUrl}/${id}&key=${process.env.GOOGLE_BOOKS_API_KEY}`;
+  `${baseUrl}/${id}?key=${process.env.GOOGLE_BOOKS_API_KEY}`;
 
 export const formatResult = ({ items }: GoogleBooksSearchResponse) => {
   const keySet = new Set();
@@ -47,7 +47,15 @@ export const queryGoogleBooks = async (q: string) => {
   return formatResult(books);
 };
 
-export const getGoogleBook = async (volumeId: string) => {
+export const getOrCreateBook = async (volumeId: string) => {
+  const existingBook = await prisma.book.findFirst({
+    where: { googleId: volumeId },
+  });
+
+  if (existingBook) {
+    return existingBook;
+  }
+
   const book = (await fetch(createVolumeUrl(volumeId)).then((response) =>
     response.json(),
   )) as GoogleBooksVolume;
@@ -61,9 +69,13 @@ export const getGoogleBook = async (volumeId: string) => {
     volumeInfo: { title, authors = [] },
   } = book;
 
-  return {
-    googleId: id,
-    title,
-    authors,
-  };
+  const createdBook = await prisma.book.create({
+    data: {
+      googleId: volumeId,
+      title,
+      authors,
+    },
+  });
+
+  return createdBook;
 };
