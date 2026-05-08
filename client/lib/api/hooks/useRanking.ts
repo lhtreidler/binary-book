@@ -8,6 +8,7 @@ import {
   StartRankingResponse,
   ContinueRankingResponse,
   ApiError,
+  QuitRankingResponse,
 } from "../types";
 
 export interface StartRankingInput {
@@ -18,6 +19,10 @@ export interface StartRankingInput {
 export interface ContinueRankingInput {
   sessionId: string;
   choseNew: boolean;
+}
+
+export interface QuitRankingInput {
+  sessionId: string;
 }
 
 /**
@@ -53,6 +58,26 @@ export function useContinueRanking(): UseMutationResult<
       const client = await getApiClient();
       const { data } = await client.post<ContinueRankingResponse>(
         "/ranking/continue",
+        input,
+      );
+      return data;
+    },
+  });
+}
+
+/**
+ * Quit a ranking session
+ */
+export function useQuitRanking(): UseMutationResult<
+  QuitRankingResponse,
+  ApiError,
+  QuitRankingInput
+> {
+  return useMutation({
+    mutationFn: async (input: QuitRankingInput) => {
+      const client = await getApiClient();
+      const { data } = await client.post<QuitRankingResponse>(
+        "/ranking/quit",
         input,
       );
       return data;

@@ -3,81 +3,24 @@ import { validateBody } from "../middleware/validation";
 import {
   ContinueRankingInput,
   continueRankingSchema,
+  QuitRankingInput,
+  quitRankingSchema,
   StartRankingInput,
   startRankingSchema,
 } from "../utils/schemas";
 import { authenticateToken } from "../middleware/auth";
 import { prisma } from "../lib/prisma";
-import { convertRawScoreToScore } from "../utils/score";
+import {
+  convertRawScoreToScore,
+  handleRankingSearch,
+  STARTING_RAW_SCORE,
+} from "../utils/rankingHelpers";
+import { getOrCreateBook } from "../lib/thirdParty";
 
 const router = Router();
 router.use(authenticateToken);
 
-const handleRankingSearch = async ({
-  userId,
-  rankingSessionId,
-  bookId,
-  low,
-  high,
-  level,
-}: {
-  userId: string;
-  rankingSessionId: string;
-  bookId: string;
-  low: number;
-  high: number;
-  level: 0;
-}) => {
-  // If low and high are adjacent, we have found the score
-  if (low >= high - 1) {
-    // Create final ranking entry with the determined score
-    const score = Math.floor((low + high) / 2);
-    await prisma.ranking.create({
-      data: {
-        userId,
-        rawScore: score,
-        bookId,
-        level,
-      },
-    });
-
-    // Clean up the ranking session
-    await prisma.rankingSession.delete({
-      where: { id: rankingSessionId },
-    });
-
-    const convertedScore = await convertRawScoreToScore(userId, score, level);
-
-    // Return the final score and no further comparisons needed
-    return { score: convertedScore };
-  }
-
-  const skip = Math.floor((low + high) / 2);
-
-  const rankingToCompare = await prisma.ranking.findFirst({
-    where: { userId },
-    orderBy: { rawScore: "asc" },
-    skip,
-    take: 1,
-  });
-
-  if (!rankingToCompare) {
-    throw new Error("Ranking not found");
-  }
-
-  // Update the ranking session with the new low and high values for the next comparison
-  await prisma.rankingSession.update({
-    where: { id: rankingSessionId },
-    data: {
-      low,
-      high,
-    },
-  });
-
-  return { rankingToCompare };
-};
-
-router.post("start", validateBody(startRankingSchema), async (req, res) => {
+router.post("/start", validateBody(startRankingSchema), async (req, res) => {
   try {
     const { userId } = req.user || {};
 
@@ -88,43 +31,49 @@ router.post("start", validateBody(startRankingSchema), async (req, res) => {
 
     const { rankingLevel, gId } = req.body as StartRankingInput;
 
-    const existingBook = await prisma.book.findFirst({
-      where: { googleId: gId },
+    const book = await getOrCreateBook(gId);
+
+    const { id: bookId } = book;
+
+    const rankingCount = await prisma.ranking.count({
+      where: { userId, level: rankingLevel },
     });
 
-    let bookId = existingBook?.id as string;
-
-    if (!existingBook) {
-      const newBook = await prisma.book.create({
-        data: {
-          googleId: gId,
-        },
-      });
-      bookId = newBook.id;
-    }
-
-    const rankingCount = await prisma.ranking.count({ where: { userId } });
-
-    if (rankingCount > 0) {
-      const rankingSession = await prisma.rankingSession.create({
+    if (rankingCount === 0) {
+      const rawScore = STARTING_RAW_SCORE;
+      await prisma.ranking.create({
         data: {
           userId,
-          level: rankingLevel,
+          rawScore,
           bookId,
+          level: rankingLevel,
         },
       });
 
-      const result = await handleRankingSearch({
+      const score = await convertRawScoreToScore(
         userId,
-        rankingSessionId: rankingSession.id,
-        bookId,
-        low: 0,
-        high: rankingCount,
-        level: 0,
-      });
+        rawScore,
+        rankingLevel,
+      );
 
-      res.send(result);
+      res.send({ score });
+      return;
     }
+
+    const rankingSession = await prisma.rankingSession.create({
+      data: { userId, level: rankingLevel, bookId },
+    });
+
+    const result = await handleRankingSearch({
+      userId,
+      rankingSessionId: rankingSession.id,
+      bookId,
+      low: 0,
+      high: rankingCount,
+      level: rankingSession.level,
+    });
+
+    res.send({ ...result, sessionId: rankingSession.id });
   } catch (err) {
     res.status(500).json({ error: "Internal server error" });
   }
@@ -146,7 +95,7 @@ router.post(
         req.body as ContinueRankingInput;
 
       const rankingSession = await prisma.rankingSession.findUnique({
-        where: { id: rankingSessionId },
+        where: { id: rankingSessionId, userId },
       });
 
       if (!rankingSession) {
@@ -168,7 +117,7 @@ router.post(
 
       const avg = Math.floor((low + high) / 2);
 
-      const newLow = choseNew ? avg : low;
+      const newLow = choseNew ? avg + 1 : low;
       const newHigh = choseNew ? high : avg;
 
       const result = await handleRankingSearch({
@@ -177,7 +126,7 @@ router.post(
         bookId: rankingSession.bookId,
         low: newLow,
         high: newHigh,
-        level: 0,
+        level: rankingSession.level,
       });
 
       res.send(result);
@@ -186,5 +135,26 @@ router.post(
     }
   },
 );
+
+router.post("/quit", validateBody(quitRankingSchema), async (req, res) => {
+  try {
+    const { userId } = req.user || {};
+
+    if (!userId) {
+      res.status(401).json({ error: "Unauthorized" });
+      return;
+    }
+
+    const { sessionId } = req.body as QuitRankingInput;
+
+    const rankingSession = await prisma.rankingSession.delete({
+      where: { id: sessionId, userId },
+    });
+
+    res.send();
+  } catch (err) {
+    res.send();
+  }
+});
 
 export default router;

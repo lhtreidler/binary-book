@@ -37,3 +37,8 @@ export type Ranking = Prisma.RankingModel
  * 
  */
 export type RankingSession = Prisma.RankingSessionModel
+/**
+ * Model SearchCache
+ * 
+ */
+export type SearchCache = Prisma.SearchCacheModel
