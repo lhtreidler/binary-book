@@ -16,7 +16,7 @@ model User {
   firstName        String?
   lastName         String?
   email            String            @unique
-  username         String?           @unique
+  username         String            @unique
   passwordHash     String
   rankings         Ranking[]
   rankingSessions  RankingSession[]

@@ -8,13 +8,13 @@ export const passwordSchema = z
 export const nameSchema = z.string().min(1, "Name is required").optional();
 export const usernameSchema = z
   .string()
-  .min(3, "Username must be at least 3 characters")
-  .optional();
+  .min(3, "Username must be at least 3 characters");
 
 // Auth schemas
 export const signupSchema = z.object({
   email: emailSchema,
   password: passwordSchema,
+  username: usernameSchema,
 });
 
 export const loginSchema = z.object({

@@ -11,7 +11,7 @@ import { searchCacheService } from "./searchCacheService";
 const baseUrl = "https://www.googleapis.com/books/v1/volumes";
 
 const createQueryUrl = (q: string) =>
-  `${baseUrl}?q=${encodeURIComponent(q)}&key=${process.env.GOOGLE_BOOKS_API_KEY}`;
+  `${baseUrl}?q=${encodeURIComponent(q)}&projection=lite&printType=books&key=${process.env.GOOGLE_BOOKS_API_KEY}`;
 
 const createVolumeUrl = (id: string) =>
   `${baseUrl}/${id}?key=${process.env.GOOGLE_BOOKS_API_KEY}`;
@@ -29,6 +29,14 @@ const formatResult = (res: GoogleBooksSearchResponse) => {
   }, []);
 };
 
+const fetchBooks = async (query: string) => {
+  const books = (await fetch(createQueryUrl(query)).then((response) =>
+    response.json(),
+  )) as GoogleBooksSearchResponse;
+
+  return formatResult(books);
+};
+
 const queryGoogleBooks = async ({
   userId,
   query,
@@ -44,11 +52,7 @@ const queryGoogleBooks = async ({
     );
   }
 
-  const books = (await fetch(createQueryUrl(query)).then((response) =>
-    response.json(),
-  )) as GoogleBooksSearchResponse;
-
-  const formattedResult = formatResult(books);
+  const formattedResult = await fetchBooks(query);
 
   try {
     await searchCacheService.create({ query, result: formattedResult });
@@ -182,4 +186,5 @@ export const googleBooksService = {
   queryGoogleBooks,
   getOrCreateBookByGoogleId,
   getVolumeDetails,
+  fetchBooks,
 };

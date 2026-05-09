@@ -1,7 +1,4 @@
 import { Router, Request, Response } from "express";
-import bcrypt from "bcrypt";
-import { prisma } from "../lib/prisma.js";
-import { generateToken } from "../utils/jwt.js";
 import {
   LoginInput,
   loginSchema,
@@ -10,6 +7,8 @@ import {
 } from "../utils/schemas.js";
 import { validateBody } from "../middleware/validation.js";
 import { userService } from "../services/userService.js";
+import { authService } from "../services/authService.js";
+import { formatEmail, formatUsername } from "../utils/format.js";
 
 const router = Router();
 
@@ -19,9 +18,14 @@ router.post(
   validateBody(signupSchema),
   async (req: Request, res: Response): Promise<void> => {
     try {
-      const { email: unformattedEmail, password } = req.body as SignupInput;
+      const {
+        email: unformattedEmail,
+        username: unformattedUsername,
+        password,
+      } = req.body as SignupInput;
 
-      const email = unformattedEmail.toLowerCase().trim();
+      const email = formatEmail(unformattedEmail);
+      const username = formatUsername(unformattedUsername);
 
       // Check if user already exists
       const existingUser = await userService.getByEmail({ email });
@@ -31,16 +35,10 @@ router.post(
         return;
       }
 
-      // Hash password
-      const passwordHash = await bcrypt.hash(password, 10);
-
-      // Create user
-      const user = await userService.create({ email, passwordHash });
-
-      // Generate token
-      const token = generateToken({
-        userId: user.id,
-        email: user.email,
+      const token = await authService.createUserAndReturnToken({
+        email,
+        password,
+        username,
       });
 
       res.status(201).json({
@@ -59,7 +57,9 @@ router.post(
   validateBody(loginSchema),
   async (req: Request, res: Response): Promise<void> => {
     try {
-      const { email, password } = req.body as LoginInput;
+      const { email: unformattedEmail, password } = req.body as LoginInput;
+
+      const email = formatEmail(unformattedEmail);
 
       // Find user
       const user = await userService.getByEmail({ email });
@@ -73,7 +73,10 @@ router.post(
       }
 
       // Verify password
-      const isPasswordValid = await bcrypt.compare(password, user.passwordHash);
+      const isPasswordValid = await authService.getIsValidPassword(
+        password,
+        user.passwordHash,
+      );
 
       if (!isPasswordValid) {
         res.status(401).json({
@@ -84,7 +87,7 @@ router.post(
       }
 
       // Generate token
-      const token = generateToken({
+      const token = authService.createToken({
         userId: user.id,
         email: user.email,
       });
