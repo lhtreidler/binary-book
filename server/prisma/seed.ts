@@ -42,7 +42,7 @@ const getRandom = (min: number, max: number) => faker.number.int({ min, max });
 const createRankings = (userId: string, booksIds: string[]) => {
   let booksRemaining = new Set(booksIds);
   const length = getRandom(RANKING_MIN, RANKING_MAX);
-  const gap = STARTING_RAW_SCORE / length;
+  const gap = 100;
 
   const levelToRankings = {
     0: [],
@@ -60,9 +60,8 @@ const createRankings = (userId: string, booksIds: string[]) => {
     const existingRankings = levelToRankings[level];
 
     let rawScore = STARTING_RAW_SCORE;
+    const rankingIndex = getRandom(0, Math.max(0, existingRankings.length - 1));
     if (existingRankings.length > 0) {
-      const rankingIndex = getRandom(0, existingRankings.length - 1);
-
       const higherScore = existingRankings[rankingIndex]?.rawScore;
       const lowerScore = existingRankings[rankingIndex - 1]?.rawScore;
 
@@ -75,7 +74,10 @@ const createRankings = (userId: string, booksIds: string[]) => {
       }
     }
 
-    levelToRankings[level].push({ bookId, rawScore });
+    const updatedLevel = [...levelToRankings[level]];
+    updatedLevel.splice(rankingIndex, 0, { bookId, rawScore });
+
+    levelToRankings[level] = updatedLevel;
   }
 
   return Object.entries(levelToRankings).flatMap(([level, rankings]) => {

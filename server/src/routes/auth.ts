@@ -57,7 +57,9 @@ router.post(
   validateBody(loginSchema),
   async (req: Request, res: Response): Promise<void> => {
     try {
-      const { email, password } = req.body as LoginInput;
+      const { email: unformattedEmail, password } = req.body as LoginInput;
+
+      const email = formatEmail(unformattedEmail);
 
       // Find user
       const user = await userService.getByEmail({ email });

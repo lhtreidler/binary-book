@@ -88622,4 +88622,248 @@ Waiting for the debugger to disconnect...
 🌱  The seed command has been executed.
 
 [?25h[1G[0K⠙[1G[0K[1m[7m%[27m[1m[0m                                                                                                               [0m[27m[24m[Jleahtreidler@Leahs-MacBook-Pro server % [K[?2004hg ccd ..[?2004l
-[1m[7m%[27m[1m[0m                                                                                                               [0m[27m[24m[Jleahtreidler@Leahs-MacBook-Pro binary-book % [K[?2004hggit co  add . &
+[1m[7m%[27m[1m[0m                                                                                                               [0m[27m[24m[Jleahtreidler@Leahs-MacBook-Pro binary-book % [K[?2004hggit co  add . && git commit -m "created seed script"[?2004l
+[f/userdata c3f30e7] created seed script
+ 18 files changed, 90225 insertions(+), 72 deletions(-)
+ create mode 100644 server/books.txt
+ create mode 100644 server/output.txt
+ create mode 100644 server/prisma/data.json
+ create mode 100644 server/prisma/seed.ts
+ create mode 100644 server/src/services/authService.ts
+ create mode 100644 server/src/utils/format.ts
+[1m[7m%[27m[1m[0m                                                                                                               [0m[27m[24m[Jleahtreidler@Leahs-MacBook-Pro binary-book % [K[?2004hgit add . && git commit -m "created seed script"[48Dcd ..                                           [43Dnpx prisma migrate reset
+[K[K[A[45C[1B[A[45C[1B[A[45C[1B[A[45C[1B[A[45C[?2004l[1B
+[1m[7m%[27m[1m[0m                                                                                                               [0m[27m[24m[Jleahtreidler@Leahs-MacBook-Pro binary-book % [K[?2004hnnpx prisma migrate reset[?2004l
+[1G[0K⠙[1G[0K⠹[1G[0K⠸[1G[0K⠼[1G[0K⠴[1G[0K[1G[0JNeed to install the following packages:
+prisma@6.19.3
+Ok to proceed? (y) [20Gy
+
+[1G[0K⠙[1G[0K⠹[1G[0K⠸[1G[0K⠼[1G[0K⠴[1G[0K⠦[1G[0K⠧[1G[0K⠇[1G[0K⠏[1G[0K⠋[1G[0K⠙^C
+[1m[7m%[27m[1m[0m                                                                                                               [0m[27m[24m[Jleahtreidler@Leahs-MacBook-Pro binary-book % [K[?2004hccd server[1m/[0m[0m [?2004l
+[1m[7m%[27m[1m[0m                                                                                                               [0m[27m[24m[Jleahtreidler@Leahs-MacBook-Pro server % [K[?2004hcd server[9Dnpx prisma migrate reset[?2004l
+[1G[0K⠙[1G[0K[2mLoaded Prisma config from prisma.config.ts.
+[22m
+Prisma config detected, skipping environment variable loading.
+[2mPrisma schema loaded from prisma/schema.prisma[22m
+[2mDatasource "db": PostgreSQL database "postgres", schema "public" at "db.prisma.io:5432"[22m
+
+[?25l[2K[1G[36m?[39m [1mAre you sure you want to reset your database? [31mAll data will be lost[39m.[22m [90m›[39m [90m(y/N)[39m[2K[G[2K[1G[32m✔[39m [1mAre you sure you want to reset your database? [31mAll data will be lost[39m.[22m [90m…[39m yes
+[?25h
+Applying migration `20260506040210_init`
+Applying migration `20260506040542_add_password`
+Applying migration `20260506053632_fix_schema`
+Applying migration `20260507223330_add_cache`
+Applying migration `20260508141507_cache_type`
+Applying migration `20260508141724_cache_type_rm`
+Applying migration `20260508202710_compare_string`
+
+[32mDatabase reset successful[39m
+
+The following migration(s) have been applied:
+
+migrations/
+  └─ 20260506040210_[36m[1minit[22m[39m/
+    └─ migration.sql
+  └─ 20260506040542_[36m[1madd_password[22m[39m/
+    └─ migration.sql
+  └─ 20260506053632_[36m[1mfix_schema[22m[39m/
+    └─ migration.sql
+  └─ 20260507223330_[36m[1madd_cache[22m[39m/
+    └─ migration.sql
+  └─ 20260508141507_[36m[1mcache_type[22m[39m/
+    └─ migration.sql
+  └─ 20260508141724_[36m[1mcache_type_rm[22m[39m/
+    └─ migration.sql
+  └─ 20260508202710_[36m[1mcompare_string[22m[39m/
+    └─ migration.sql
+
+[?25lRunning generate... [2m(Use --skip-generate to skip the generators)[22m
+[?25l[2K[1A[2K[GRunning generate... - Prisma Client
+[?25l[2K[1A[2K[G✔ Generated [1mPrisma Client[22m (6.19.3)[2m to ./src/generated/prisma[22m in 177ms
+
+Running seed command `[3mtsx prisma/seed.ts[23m` ...
+Debugger listening on ws://127.0.0.1:58340/f88a735c-4cd2-4131-ba9e-7bf2ed5f0903
+For help, see: https://nodejs.org/en/docs/inspector
+Debugger attached.
+Options: userCount = 10, bookCount = 200, useJsonData = true
+Created 200 books
+Created 10 users
+Created 580 rankings
+Success!
+Waiting for the debugger to disconnect...
+
+🌱  The seed command has been executed.
+
+[?25h[1G[0K⠙[1G[0K[1m[7m%[27m[1m[0m                                                                                                               [0m[27m[24m[Jleahtreidler@Leahs-MacBook-Pro server % [K[?2004hnpx prisma migrate reset[?2004l
+[1G[0K⠙[1G[0K[2mLoaded Prisma config from prisma.config.ts.
+[22m
+Prisma config detected, skipping environment variable loading.
+[2mPrisma schema loaded from prisma/schema.prisma[22m
+[2mDatasource "db": PostgreSQL database "postgres", schema "public" at "db.prisma.io:5432"[22m
+
+[?25l[2K[1G[36m?[39m [1mAre you sure you want to reset your database? [31mAll data will be lost[39m.[22m [90m›[39m [90m(y/N)[39m[2K[G[2K[1G[32m✔[39m [1mAre you sure you want to reset your database? [31mAll data will be lost[39m.[22m [90m…[39m yes
+[?25h
+Applying migration `20260506040210_init`
+Applying migration `20260506040542_add_password`
+Applying migration `20260506053632_fix_schema`
+Applying migration `20260507223330_add_cache`
+Applying migration `20260508141507_cache_type`
+Applying migration `20260508141724_cache_type_rm`
+Applying migration `20260508202710_compare_string`
+
+[32mDatabase reset successful[39m
+
+The following migration(s) have been applied:
+
+migrations/
+  └─ 20260506040210_[36m[1minit[22m[39m/
+    └─ migration.sql
+  └─ 20260506040542_[36m[1madd_password[22m[39m/
+    └─ migration.sql
+  └─ 20260506053632_[36m[1mfix_schema[22m[39m/
+    └─ migration.sql
+  └─ 20260507223330_[36m[1madd_cache[22m[39m/
+    └─ migration.sql
+  └─ 20260508141507_[36m[1mcache_type[22m[39m/
+    └─ migration.sql
+  └─ 20260508141724_[36m[1mcache_type_rm[22m[39m/
+    └─ migration.sql
+  └─ 20260508202710_[36m[1mcompare_string[22m[39m/
+    └─ migration.sql
+
+[?25lRunning generate... [2m(Use --skip-generate to skip the generators)[22m
+[?25l[2K[1A[2K[GRunning generate... - Prisma Client
+[?25l[2K[1A[2K[G✔ Generated [1mPrisma Client[22m (6.19.3)[2m to ./src/generated/prisma[22m in 150ms
+
+Running seed command `[3mtsx prisma/seed.ts[23m` ...
+Debugger listening on ws://127.0.0.1:61490/d9ca2dda-0bbe-4eca-aebe-f08d8d5edb61
+For help, see: https://nodejs.org/en/docs/inspector
+Debugger attached.
+Options: userCount = 10, bookCount = 200, useJsonData = true
+Created 200 books
+Created 10 users
+m [Error]: Max -1 should be greater than min 0.
+    at Z.int [90m(file:///Users/leahtreidler/dev/binary-book/server/[39mnode_modules/[4m@faker-js[24m/faker/dist/chunk-YQYVFZYE.js:8:11352[90m)[39m
+    at getRandom [90m(/Users/leahtreidler/dev/binary-book/server/[39mprisma/seed.ts:40:62[90m)[39m
+    at createRankings [90m(/Users/leahtreidler/dev/binary-book/server/[39mprisma/seed.ts:63:26[90m)[39m
+    at <anonymous> [90m(/Users/leahtreidler/dev/binary-book/server/[39mprisma/seed.ts:169:5[90m)[39m
+    at Array.flatMap (<anonymous>)
+    at main [90m(/Users/leahtreidler/dev/binary-book/server/[39mprisma/seed.ts:168:41[90m)[39m
+Waiting for the debugger to disconnect...
+[31m[1m[31m
+An error occurred while running the seed command:[39m[22m[39m
+[31m[31mError: Command failed with exit code 1: tsx prisma/seed.ts[39m[39m
+[?25h[1G[0K⠙[1G[0K[1m[7m%[27m[1m[0m                                                                                                               [0m[27m[24m[Jleahtreidler@Leahs-MacBook-Pro server % [K[?2004hnpx prisma migrate reset[?2004l
+[1G[0K⠙[1G[0K[2mLoaded Prisma config from prisma.config.ts.
+[22m
+Prisma config detected, skipping environment variable loading.
+[2mPrisma schema loaded from prisma/schema.prisma[22m
+[2mDatasource "db": PostgreSQL database "postgres", schema "public" at "db.prisma.io:5432"[22m
+
+[?25l[2K[1G[36m?[39m [1mAre you sure you want to reset your database? [31mAll data will be lost[39m.[22m [90m›[39m [90m(y/N)[39m[2K[G[2K[1G[32m✔[39m [1mAre you sure you want to reset your database? [31mAll data will be lost[39m.[22m [90m…[39m yes
+[?25h
+Applying migration `20260506040210_init`
+Applying migration `20260506040542_add_password`
+Applying migration `20260506053632_fix_schema`
+Applying migration `20260507223330_add_cache`
+Applying migration `20260508141507_cache_type`
+Applying migration `20260508141724_cache_type_rm`
+Applying migration `20260508202710_compare_string`
+
+[32mDatabase reset successful[39m
+
+The following migration(s) have been applied:
+
+migrations/
+  └─ 20260506040210_[36m[1minit[22m[39m/
+    └─ migration.sql
+  └─ 20260506040542_[36m[1madd_password[22m[39m/
+    └─ migration.sql
+  └─ 20260506053632_[36m[1mfix_schema[22m[39m/
+    └─ migration.sql
+  └─ 20260507223330_[36m[1madd_cache[22m[39m/
+    └─ migration.sql
+  └─ 20260508141507_[36m[1mcache_type[22m[39m/
+    └─ migration.sql
+  └─ 20260508141724_[36m[1mcache_type_rm[22m[39m/
+    └─ migration.sql
+  └─ 20260508202710_[36m[1mcompare_string[22m[39m/
+    └─ migration.sql
+
+[?25lRunning generate... [2m(Use --skip-generate to skip the generators)[22m
+[?25l[2K[1A[2K[GRunning generate... - Prisma Client
+[?25l[2K[1A[2K[G✔ Generated [1mPrisma Client[22m (6.19.3)[2m to ./src/generated/prisma[22m in 134ms
+
+Running seed command `[3mtsx prisma/seed.ts[23m` ...
+Debugger listening on ws://127.0.0.1:63172/3ba3cffe-1386-4d7a-a0f4-ee1f2da68870
+For help, see: https://nodejs.org/en/docs/inspector
+Debugger attached.
+Options: userCount = 10, bookCount = 200, useJsonData = true
+Created 200 books
+Created 10 users
+m [Error]: Max -1 should be greater than min 0.
+    at Z.int [90m(file:///Users/leahtreidler/dev/binary-book/server/[39mnode_modules/[4m@faker-js[24m/faker/dist/chunk-YQYVFZYE.js:8:11352[90m)[39m
+    at getRandom [90m(/Users/leahtreidler/dev/binary-book/server/[39mprisma/seed.ts:40:62[90m)[39m
+    at createRankings [90m(/Users/leahtreidler/dev/binary-book/server/[39mprisma/seed.ts:63:26[90m)[39m
+    at <anonymous> [90m(/Users/leahtreidler/dev/binary-book/server/[39mprisma/seed.ts:169:5[90m)[39m
+    at Array.flatMap (<anonymous>)
+    at main [90m(/Users/leahtreidler/dev/binary-book/server/[39mprisma/seed.ts:168:41[90m)[39m
+Waiting for the debugger to disconnect...
+[31m[1m[31m
+An error occurred while running the seed command:[39m[22m[39m
+[31m[31mError: Command failed with exit code 1: tsx prisma/seed.ts[39m[39m
+[?25h[1G[0K⠙[1G[0K[1m[7m%[27m[1m[0m                                                                                                               [0m[27m[24m[Jleahtreidler@Leahs-MacBook-Pro server % [K[?2004hnpx prisma migrate reset[?2004l
+[1G[0K⠙[1G[0K[2mLoaded Prisma config from prisma.config.ts.
+[22m
+Prisma config detected, skipping environment variable loading.
+[2mPrisma schema loaded from prisma/schema.prisma[22m
+[2mDatasource "db": PostgreSQL database "postgres", schema "public" at "db.prisma.io:5432"[22m
+
+[?25l[2K[1G[36m?[39m [1mAre you sure you want to reset your database? [31mAll data will be lost[39m.[22m [90m›[39m [90m(y/N)[39m[2K[G[2K[1G[32m✔[39m [1mAre you sure you want to reset your database? [31mAll data will be lost[39m.[22m [90m…[39m yes
+[?25h
+Applying migration `20260506040210_init`
+Applying migration `20260506040542_add_password`
+Applying migration `20260506053632_fix_schema`
+Applying migration `20260507223330_add_cache`
+Applying migration `20260508141507_cache_type`
+Applying migration `20260508141724_cache_type_rm`
+Applying migration `20260508202710_compare_string`
+
+[32mDatabase reset successful[39m
+
+The following migration(s) have been applied:
+
+migrations/
+  └─ 20260506040210_[36m[1minit[22m[39m/
+    └─ migration.sql
+  └─ 20260506040542_[36m[1madd_password[22m[39m/
+    └─ migration.sql
+  └─ 20260506053632_[36m[1mfix_schema[22m[39m/
+    └─ migration.sql
+  └─ 20260507223330_[36m[1madd_cache[22m[39m/
+    └─ migration.sql
+  └─ 20260508141507_[36m[1mcache_type[22m[39m/
+    └─ migration.sql
+  └─ 20260508141724_[36m[1mcache_type_rm[22m[39m/
+    └─ migration.sql
+  └─ 20260508202710_[36m[1mcompare_string[22m[39m/
+    └─ migration.sql
+
+[?25lRunning generate... [2m(Use --skip-generate to skip the generators)[22m
+[?25l[2K[1A[2K[GRunning generate... - Prisma Client
+[?25l[2K[1A[2K[G✔ Generated [1mPrisma Client[22m (6.19.3)[2m to ./src/generated/prisma[22m in 107ms
+
+Running seed command `[3mtsx prisma/seed.ts[23m` ...
+Debugger listening on ws://127.0.0.1:52820/214f710f-5f00-4917-bd23-7507c456a72d
+For help, see: https://nodejs.org/en/docs/inspector
+Debugger attached.
+Options: userCount = 10, bookCount = 200, useJsonData = true
+Created 200 books
+Created 10 users
+Created 482 rankings
+Success!
+Waiting for the debugger to disconnect...
+
+🌱  The seed command has been executed.
+
+[?25h[1G[0K⠙[1G[0K[1m[7m%[27m[1m[0m                                                                                                               [0m[27m[24m[Jleahtreidler@Leahs-MacBook-Pro server % [K[?2004h
