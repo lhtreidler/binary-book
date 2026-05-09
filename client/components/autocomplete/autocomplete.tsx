@@ -13,18 +13,18 @@ export const Autocomplete = ({
   options,
   isLoading,
   inputProps,
-  fieldProps,
+  fieldProps = {},
   onChange = () => {},
   rightActions = [],
 }: AutocompleteProps) => {
   const [isChanged, setIsChanged] = useState(false);
 
   useEffect(() => {
-    if (options || isLoading) setIsChanged(true);
-  }, [options, isLoading]);
+    if (options.length || isLoading) setIsChanged(true);
+    if (fieldProps.value === "") setIsChanged(false);
+  }, [options, isLoading, fieldProps.value]);
 
   const getOptions = () => {
-    console.log(options, isLoading, isChanged);
     if (!options.length && !isLoading && isChanged) {
       return (
         <Box className="p-2 w-full">

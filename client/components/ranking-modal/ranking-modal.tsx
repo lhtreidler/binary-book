@@ -105,8 +105,6 @@ export const RankingModal = ({
     }
   };
 
-  console.log(result, compareBook, sessionId, error);
-
   const onCloseModal = () => {
     setResult(null);
     setCompareBook(null);

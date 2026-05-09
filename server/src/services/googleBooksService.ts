@@ -1,11 +1,12 @@
 import {
-  FormattedBookItem,
+  FormattedBookItems,
   GoogleBooksSearchResponse,
   GoogleBooksVolume,
 } from "../types/googleApi";
 import { createBookComparisonStr, dedupeBooks } from "../utils/dedupe";
 import { stripHtml } from "../utils/html";
-import { prisma } from "./prisma";
+import { prisma } from "../lib/prisma";
+import { searchCacheService } from "./searchCacheService";
 
 const baseUrl = "https://www.googleapis.com/books/v1/volumes";
 
@@ -15,10 +16,10 @@ const createQueryUrl = (q: string) =>
 const createVolumeUrl = (id: string) =>
   `${baseUrl}/${id}?key=${process.env.GOOGLE_BOOKS_API_KEY}`;
 
-export const formatResult = (res: GoogleBooksSearchResponse) => {
+const formatResult = (res: GoogleBooksSearchResponse) => {
   if (!res.items) return [];
 
-  return dedupeBooks(res.items).reduce<FormattedBookItem>((acc, item) => {
+  return dedupeBooks(res.items).reduce<FormattedBookItems>((acc, item) => {
     const {
       id,
       volumeInfo: { title, authors = [] },
@@ -28,11 +29,14 @@ export const formatResult = (res: GoogleBooksSearchResponse) => {
   }, []);
 };
 
-export const queryGoogleBooks = async (q: string) => {
-  const formattedQuery = JSON.stringify(q).toLowerCase();
-  const cachedResult = await prisma.searchCache.findFirst({
-    where: { query: formattedQuery },
-  });
+const queryGoogleBooks = async ({
+  userId,
+  query,
+}: {
+  userId: string;
+  query: string;
+}) => {
+  const cachedResult = await searchCacheService.getByQuery({ query });
 
   if (cachedResult?.jsonResult) {
     return formatResult(
@@ -40,36 +44,68 @@ export const queryGoogleBooks = async (q: string) => {
     );
   }
 
-  const books = (await fetch(createQueryUrl(q)).then((response) =>
+  const books = (await fetch(createQueryUrl(query)).then((response) =>
     response.json(),
   )) as GoogleBooksSearchResponse;
 
   const formattedResult = formatResult(books);
 
   try {
-    await prisma.searchCache.create({
-      data: {
-        query: formattedQuery,
-        jsonResult: JSON.stringify(formattedResult),
-      },
-    });
+    await searchCacheService.create({ query, result: formattedResult });
   } catch (err) {
     console.error(err);
   }
 
-  return formattedResult;
+  // get matching books from user's shelf by google id
+  let googleIds: string[] = [];
+  let comparisonStrings: string[] = [];
+
+  formattedResult.forEach(({ key, title, authors }) => {
+    googleIds.push(key);
+    comparisonStrings.push(createBookComparisonStr(title, authors));
+  });
+
+  // find books the user has ranked with the same comparison string or googleId
+  const rankedBooks = await prisma.book.findMany({
+    where: {
+      rankings: {
+        some: {
+          userId,
+        },
+      },
+      OR: [
+        {
+          googleId: {
+            in: googleIds,
+          },
+        },
+        {
+          compareStr: {
+            in: comparisonStrings,
+          },
+        },
+      ],
+    },
+  });
+
+  return formattedResult.map((item) => {
+    return {
+      ...item,
+      isRanked: rankedBooks.some(({ googleId }) => googleId === item.key),
+    };
+  });
 };
 
-export const getOrCreateBook = async (volumeId: string) => {
+const getOrCreateBookByGoogleId = async (googleId: string) => {
   const existingBook = await prisma.book.findFirst({
-    where: { googleId: volumeId },
+    where: { googleId: googleId },
   });
 
   if (existingBook) {
     return existingBook;
   }
 
-  const book = (await fetch(createVolumeUrl(volumeId)).then((response) =>
+  const book = (await fetch(createVolumeUrl(googleId)).then((response) =>
     response.json(),
   )) as GoogleBooksVolume;
 
@@ -82,9 +118,17 @@ export const getOrCreateBook = async (volumeId: string) => {
     volumeInfo: { title, authors = [] },
   } = book;
 
+  const matching = await prisma.book.findFirst({
+    where: { compareStr: createBookComparisonStr(title, authors) },
+  });
+
+  if (matching) {
+    return matching;
+  }
+
   const createdBook = await prisma.book.create({
     data: {
-      googleId: volumeId,
+      googleId: googleId,
       title,
       authors,
       compareStr: createBookComparisonStr(title, authors),
@@ -105,9 +149,7 @@ export type VolumeDetails = {
   categories: string[];
 };
 
-export const getVolumeDetails = async (
-  volumeId: string,
-): Promise<VolumeDetails> => {
+const getVolumeDetails = async (volumeId: string): Promise<VolumeDetails> => {
   const volume = (await fetch(createVolumeUrl(volumeId)).then((response) =>
     response.json(),
   )) as GoogleBooksVolume;
@@ -134,4 +176,10 @@ export const getVolumeDetails = async (
       typeof volumeInfo?.pageCount === "number" ? volumeInfo.pageCount : null,
     categories: volumeInfo?.categories ?? [],
   };
+};
+
+export const googleBooksService = {
+  queryGoogleBooks,
+  getOrCreateBookByGoogleId,
+  getVolumeDetails,
 };

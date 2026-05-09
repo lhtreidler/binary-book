@@ -29,7 +29,7 @@ export default function Add() {
     });
   }, [data]);
 
-  const props = useAutocomplete({
+  const { reset, ...props } = useAutocomplete({
     onChange: (q: string) => setQuery(q),
     options,
     isLoading,
@@ -46,6 +46,7 @@ export default function Add() {
     setSelectedBook(null);
 
     if (bookId) {
+      reset();
       router.push(`/book/${bookId}`);
     }
   };

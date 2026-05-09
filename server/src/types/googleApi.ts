@@ -69,7 +69,7 @@ export type GoogleBooksSearchResponse = {
   items?: GoogleBooksVolume[];
 };
 
-export type FormattedBookItem = {
+export type FormattedBookItems = {
   key: string;
   title: string;
   authors: string[];

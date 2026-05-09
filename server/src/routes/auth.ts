@@ -9,6 +9,7 @@ import {
   signupSchema,
 } from "../utils/schemas.js";
 import { validateBody } from "../middleware/validation.js";
+import { userService } from "../services/userService.js";
 
 const router = Router();
 
@@ -18,20 +19,12 @@ router.post(
   validateBody(signupSchema),
   async (req: Request, res: Response): Promise<void> => {
     try {
-      const {
-        email: unformattedEmail,
-        password,
-        firstName,
-        lastName,
-        username,
-      } = req.body as SignupInput;
+      const { email: unformattedEmail, password } = req.body as SignupInput;
 
       const email = unformattedEmail.toLowerCase().trim();
 
       // Check if user already exists
-      const existingUser = await prisma.user.findUnique({
-        where: { email },
-      });
+      const existingUser = await userService.getByEmail({ email });
 
       if (existingUser) {
         res.status(400).json({ error: "User already exists" });
@@ -42,15 +35,7 @@ router.post(
       const passwordHash = await bcrypt.hash(password, 10);
 
       // Create user
-      const user = await prisma.user.create({
-        data: {
-          email,
-          passwordHash,
-          firstName: firstName || null,
-          lastName: lastName || null,
-          username: username || null,
-        },
-      });
+      const user = await userService.create({ email, passwordHash });
 
       // Generate token
       const token = generateToken({
@@ -77,9 +62,7 @@ router.post(
       const { email, password } = req.body as LoginInput;
 
       // Find user
-      const user = await prisma.user.findUnique({
-        where: { email },
-      });
+      const user = await userService.getByEmail({ email });
 
       if (!user) {
         res.status(401).json({
