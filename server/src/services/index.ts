@@ -5,3 +5,4 @@ export * from "./rankingSessionService";
 export * from "./userService";
 export * from "./searchCacheService";
 export * from "./rankingAlgoService";
+export * from "./authService";
