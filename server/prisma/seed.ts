@@ -16,7 +16,6 @@ import { createBookComparisonStr } from "../src/utils/dedupe";
 import { parseArgs } from "node:util";
 
 const RANKING_MIN = 10;
-const RANKING_MAX = 120;
 
 const options = {
   userCount: { type: "string", default: "10" },
@@ -31,8 +30,6 @@ const prisma = new PrismaClient({ adapter });
 
 const filePath = "./prisma/data.json";
 
-type BookType = Pick<Book, "authors" | "compareStr" | "googleId" | "title">;
-
 const createArray = <T>(length: number, callback: (i: number) => T) => {
   return Array.from({ length }).map((_, i) => callback(i));
 };
@@ -41,7 +38,8 @@ const getRandom = (min: number, max: number) => faker.number.int({ min, max });
 
 const createRankings = (userId: string, booksIds: string[]) => {
   let booksRemaining = new Set(booksIds);
-  const length = getRandom(RANKING_MIN, RANKING_MAX);
+  const length = getRandom(RANKING_MIN, booksIds.length - 1);
+  console.log(`Creating ${length} rankings for ${userId}`);
   const gap = 100;
 
   const levelToRankings = {
@@ -148,7 +146,7 @@ async function main() {
 
   const booksToCreate = useJsonData ? bookData : await fetchBooks(bookCount);
 
-  if (booksToCreate.length < RANKING_MAX) {
+  if (booksToCreate.length < RANKING_MIN) {
     throw new Error("Not enough books");
   }
 
