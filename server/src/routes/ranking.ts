@@ -105,11 +105,6 @@ router.post(
           userId,
         });
 
-      if (!rankingStep) {
-        res.status(404).json({ error: "Ranking session not found" });
-        return;
-      }
-
       const { low, high } = rankingStep;
 
       if (low === null || high === null) {

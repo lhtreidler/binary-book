@@ -75,13 +75,13 @@ const getById = (where: { id: string; userId: string }) => {
 
 const deleteSession = async (where: { id: string; userId: string }) => {
   await prisma.$transaction([
-    prisma.rankingSession.delete({
-      where,
-    }),
     prisma.rankingStep.deleteMany({
       where: {
         rankingSession: where,
       },
+    }),
+    prisma.rankingSession.delete({
+      where,
     }),
   ]);
 };

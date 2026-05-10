@@ -177,6 +177,13 @@ const getRankingCountByLevel = async ({
 };
 
 const createRankingAndGetScore = async (data: BaseRanking) => {
+  const findRanking = await prisma.ranking.findFirst({
+    where: {
+      userId: data.userId,
+      bookId: data.bookId,
+    },
+  });
+
   const ranking = await prisma.ranking.create({ data });
 
   const score = await getRankingScore(ranking);
@@ -184,7 +191,7 @@ const createRankingAndGetScore = async (data: BaseRanking) => {
   return { score, bookId: ranking.bookId };
 };
 
-const getBookByOffset = async ({
+const getRankingByOffset = async ({
   skip,
   userId,
   includeBook,
@@ -211,7 +218,7 @@ export const rankingService = {
   getRankingByBook,
   getRankingCountByLevel,
   createRankingAndGetScore,
-  getBookByOffset,
+  getRankingByOffset,
   getHighestLowestRankingScores,
   getRankingScore,
 };

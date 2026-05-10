@@ -49,20 +49,25 @@ export const RankingModal = ({
 }) => {
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [compareBook, setCompareBook] = useState<RankingBookInfo | null>(null);
+  const [comparisons, setComparisons] = useState<RankingBookInfo[]>([]);
   const [result, setResult] = useState<FinishedRankingResponse | null>(null);
+
+  const bookToCompare = comparisons[comparisons.length - 1];
 
   const phase: Phase = useMemo(() => {
     if (result) return "score";
-    if (compareBook) return "comparing";
+    if (comparisons.length) return "comparing";
     return "tier";
-  }, [result, compareBook]);
+  }, [result, comparisons]);
 
   const startMutation = useStartRanking();
   const continueMutation = useContinueRanking();
   const quitRanking = useQuitRanking();
 
+  console.log(error);
+
   const applyResult = (res: StartRankingResponse | ContinueRankingResponse) => {
+    console.log(res);
     if ("sessionId" in res) {
       setSessionId(res.sessionId);
     }
@@ -70,7 +75,7 @@ export const RankingModal = ({
     if (getIsFinishedRankingResponse(res)) {
       setResult(res);
     } else {
-      setCompareBook(res.compareBook);
+      setComparisons((prev) => [...prev, res.compareBook]);
     }
   };
 
@@ -96,7 +101,9 @@ export const RankingModal = ({
       const result = await continueMutation.mutateAsync({
         sessionId,
         choseNew,
+        seq: comparisons.length,
       });
+      console.log({ result });
       applyResult(result);
     } catch {
       setError("Could not continue ranking. Please try again.");
@@ -105,7 +112,7 @@ export const RankingModal = ({
 
   const onCloseModal = () => {
     setResult(null);
-    setCompareBook(null);
+    setComparisons([]);
     setSessionId(null);
     setError(null);
     if (sessionId && !result) {
@@ -143,13 +150,13 @@ export const RankingModal = ({
       );
     }
 
-    if (phase === "comparing" && compareBook) {
+    if (phase === "comparing" && bookToCompare) {
       return (
         <>
           <HStack space="md" className="items-center justify-center">
             {[
               { ...book, isNew: true },
-              { ...compareBook, isNew: false },
+              { ...bookToCompare, isNew: false },
             ].map(({ title, authors = [], isNew }, i) => (
               <>
                 <Pressable
@@ -191,7 +198,7 @@ export const RankingModal = ({
   return (
     <Modal isOpen={isOpen} onClose={onCloseModal}>
       <ModalBackdrop />
-      <ModalContent>
+      <ModalContent className="h-2/3">
         {isLoading && (
           <Box className="absolute inset-0 z-10 items-center justify-center bg-white/60 rounded-md">
             <Spinner />
@@ -202,11 +209,15 @@ export const RankingModal = ({
             {phaseToHeader[phase]}
           </Text>
         </ModalHeader>
-        <ModalBody>
-          {getContent()}
-          {error && (
-            <Text className="text-error-400 text-center mt-2">{error}</Text>
-          )}
+        <ModalBody className="h-fit">
+          <VStack>
+            {getContent()}
+            {error && (
+              <Box>
+                <Text className="text-error-400 text-center mt-2">{error}</Text>
+              </Box>
+            )}
+          </VStack>
         </ModalBody>
         {phase === "score" && (
           <ModalFooter>

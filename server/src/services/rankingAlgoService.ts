@@ -19,7 +19,7 @@ const createFinalRankingAndReturnScore = async ({
   let rawScore: number;
 
   const getBook = async (skip: number) =>
-    rankingService.getBookByOffset({
+    rankingService.getRankingByOffset({
       skip,
       userId,
       includeBook: false,
@@ -112,7 +112,7 @@ const handleRankingSearch = async ({
 
   const skip = Math.floor((low + high) / 2);
 
-  const rankingToCompare = await rankingService.getBookByOffset({
+  const rankingToCompare = await rankingService.getRankingByOffset({
     skip,
     userId,
     includeBook: true,
@@ -125,7 +125,7 @@ const handleRankingSearch = async ({
 
   const { book } = rankingToCompare;
 
-  const rankingStepData = { level, low, high, bookId: book.id };
+  const rankingStepData = { low, high, bookId: book.id };
 
   const compareBook = { title: book.title, authors: book.authors };
 
@@ -135,13 +135,14 @@ const handleRankingSearch = async ({
       rankingSession: { id },
     } = await rankingSessionService.createSessionAndFirstStep({
       userId,
+      level,
       ...rankingStepData,
     });
 
     return {
       compareBook,
       seq,
-      sessionId: rankingSessionId,
+      sessionId: id,
     };
   }
   const rankingStep = await rankingSessionService.createNextStep({

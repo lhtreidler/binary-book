@@ -47,6 +47,7 @@ model Ranking {
 
   @@index([bookId])
   @@index([userId])
+  @@unique([userId, bookId])
 }
 
 model RankingSession {

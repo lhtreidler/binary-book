@@ -254,6 +254,7 @@ export type RankingOrderByWithRelationInput = {
 
 export type RankingWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  userId_bookId?: Prisma.RankingUserIdBookIdCompoundUniqueInput
   AND?: Prisma.RankingWhereInput | Prisma.RankingWhereInput[]
   OR?: Prisma.RankingWhereInput[]
   NOT?: Prisma.RankingWhereInput | Prisma.RankingWhereInput[]
@@ -265,7 +266,7 @@ export type RankingWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"Ranking"> | Date | string
   book?: Prisma.XOR<Prisma.BookScalarRelationFilter, Prisma.BookWhereInput>
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-}, "id">
+}, "id" | "userId_bookId">
 
 export type RankingOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -371,6 +372,11 @@ export type RankingListRelationFilter = {
 
 export type RankingOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type RankingUserIdBookIdCompoundUniqueInput = {
+  userId: string
+  bookId: string
 }
 
 export type RankingCountOrderByAggregateInput = {
