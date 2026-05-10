@@ -5,6 +5,7 @@ import {
   continueRankingSchema,
   QuitRankingInput,
   quitRankingSchema,
+  rankingSelection,
   StartRankingInput,
   startRankingSchema,
 } from "../utils/schemas";
@@ -96,39 +97,13 @@ router.post(
         return;
       }
 
-      const { seq, sessionId, choseNew } = req.body as ContinueRankingInput;
+      const { seq, sessionId, selection } = req.body as ContinueRankingInput;
 
-      const { rankingSession, ...rankingStep } =
-        await rankingStepService.getStepAndDeleteNext({
-          seq,
-          rankingSessionId: sessionId,
-          userId,
-        });
-
-      const { low, high } = rankingStep;
-
-      if (low === null || high === null) {
-        res.status(400).json({ error: "Invalid ranking session state" });
-        return;
-      }
-
-      if (rankingSession.userId !== userId) {
-        res.status(403).json({ error: "Forbidden" });
-        return;
-      }
-
-      const avg = Math.floor((low + high) / 2);
-
-      const newLow = choseNew ? avg + 1 : low;
-      const newHigh = choseNew ? high : avg;
-
-      const result = await rankingAlgoService.handleRankingSearch({
+      const result = await rankingAlgoService.handleContinueRanking({
         userId,
         rankingSessionId: sessionId,
-        bookId: rankingSession.bookId,
-        low: newLow,
-        high: newHigh,
-        level: rankingSession.level,
+        seq,
+        selection,
       });
 
       res.send(result);

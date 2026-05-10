@@ -1,4 +1,10 @@
-import { rankingService, rankingSessionService, STARTING_RAW_SCORE } from ".";
+import {
+  rankingService,
+  rankingSessionService,
+  rankingStepService,
+  STARTING_RAW_SCORE,
+} from ".";
+import { rankingSelection, RankingSelection } from "../utils/schemas";
 
 const createFinalRankingAndReturnScore = async ({
   insertionIndex,
@@ -78,6 +84,58 @@ const createFinalRankingAndReturnScore = async ({
   return score;
 };
 
+const handleContinueRanking = async ({
+  userId,
+  rankingSessionId,
+  seq,
+  selection,
+}: {
+  userId: string;
+  rankingSessionId: string;
+  seq: number;
+  selection: RankingSelection;
+}) => {
+  const { rankingSession, ...rankingStep } =
+    await rankingStepService.getStepAndDeleteNext({
+      seq,
+      rankingSessionId,
+      userId,
+    });
+
+  const { low, high, skippedOffsets } = rankingStep;
+
+  const avg = Math.floor((low + high) / 2);
+
+  let offset: number | undefined;
+  let newLow = low;
+  let newHigh = high;
+
+  if (selection === rankingSelection.skip) {
+    const numSkips = skippedOffsets.length;
+    if (!numSkips) {
+      offset = avg - 1;
+    } else {
+      const diff =
+        (1 + Math.floor(numSkips / 2)) * (numSkips % 2 === 0 ? -1 : 1);
+      offset = avg + diff;
+    }
+  } else {
+    const choseNew = selection === rankingSelection.new;
+    newLow = choseNew ? avg + 1 : low;
+    newHigh = choseNew ? high : avg;
+  }
+
+  return rankingAlgoService.handleRankingSearch({
+    userId,
+    rankingSessionId,
+    bookId: rankingSession.bookId,
+    low: newLow,
+    high: newHigh,
+    level: rankingSession.level,
+    offset,
+  });
+};
+
 const handleRankingSearch = async ({
   userId,
   rankingSessionId,
@@ -85,6 +143,7 @@ const handleRankingSearch = async ({
   low,
   high,
   level,
+  offset,
 }: {
   userId: string;
   rankingSessionId?: string;
@@ -92,10 +151,16 @@ const handleRankingSearch = async ({
   low: number;
   high: number;
   level: number;
+  offset?: number;
 }) => {
-  if (low >= high) {
+  const avg = Math.floor((low + high) / 2);
+
+  if (
+    low >= high ||
+    (offset !== undefined && (offset <= low || offset >= high))
+  ) {
     const score = await createFinalRankingAndReturnScore({
-      insertionIndex: low,
+      insertionIndex: avg,
       userId,
       level,
       bookId,
@@ -110,7 +175,7 @@ const handleRankingSearch = async ({
     return { score, bookId };
   }
 
-  const skip = Math.floor((low + high) / 2);
+  const skip = offset === undefined ? avg : offset;
 
   const rankingToCompare = await rankingService.getRankingByOffset({
     skip,
@@ -131,7 +196,6 @@ const handleRankingSearch = async ({
 
   if (!rankingSessionId) {
     const {
-      rankingStep: { seq },
       rankingSession: { id },
     } = await rankingSessionService.createSessionAndFirstStep({
       userId,
@@ -145,11 +209,20 @@ const handleRankingSearch = async ({
       sessionId: id,
     };
   }
-  const rankingStep = await rankingSessionService.createNextStep({
-    ...rankingStepData,
-    sessionId: rankingSessionId,
-    userId,
-  });
+
+  if (offset === undefined) {
+    await rankingSessionService.createNextStep({
+      ...rankingStepData,
+      rankingSessionId,
+      userId,
+    });
+  } else {
+    await rankingSessionService.addSkippedOffset({
+      rankingSessionId,
+      userId,
+      offset,
+    });
+  }
 
   return {
     compareBook,
@@ -158,4 +231,5 @@ const handleRankingSearch = async ({
 
 export const rankingAlgoService = {
   handleRankingSearch,
+  handleContinueRanking,
 };

@@ -71,6 +71,7 @@ model RankingStep {
   seq              Int
   low              Int
   high             Int
+  skippedOffsets   Int[]             @default([])
   createdAt        DateTime          @default(now())
   rankingSession   RankingSession    @relation(fields: [rankingSessionId], references: [id])
 

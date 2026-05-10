@@ -37,6 +37,12 @@ export type UpdateUserInput = z.infer<typeof updateUserSchema>;
 
 // RANKING SCHEMAS
 
+export const rankingSelection = {
+  new: "new",
+  existing: "existing",
+  skip: "skip",
+} as const;
+
 export const startRankingSchema = z.object({
   gId: z.string().min(1),
   rankingLevel: z.int().min(0).max(2),
@@ -44,7 +50,7 @@ export const startRankingSchema = z.object({
 export const continueRankingSchema = z.object({
   sessionId: z.string().min(1),
   seq: z.number(),
-  choseNew: z.boolean(),
+  selection: z.enum(Object.values(rankingSelection)),
 });
 export const quitRankingSchema = z.object({
   sessionId: z.string().min(1),
@@ -52,4 +58,5 @@ export const quitRankingSchema = z.object({
 
 export type StartRankingInput = z.infer<typeof startRankingSchema>;
 export type ContinueRankingInput = z.infer<typeof continueRankingSchema>;
+export type RankingSelection = ContinueRankingInput["selection"];
 export type QuitRankingInput = z.infer<typeof quitRankingSchema>;

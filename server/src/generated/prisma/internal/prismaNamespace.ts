@@ -954,6 +954,7 @@ export const RankingStepScalarFieldEnum = {
   seq: 'seq',
   low: 'low',
   high: 'high',
+  skippedOffsets: 'skippedOffsets',
   createdAt: 'createdAt'
 } as const
 

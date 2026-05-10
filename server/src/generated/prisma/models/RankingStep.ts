@@ -30,12 +30,14 @@ export type RankingStepAvgAggregateOutputType = {
   seq: number | null
   low: number | null
   high: number | null
+  skippedOffsets: number | null
 }
 
 export type RankingStepSumAggregateOutputType = {
   seq: number | null
   low: number | null
   high: number | null
+  skippedOffsets: number[]
 }
 
 export type RankingStepMinAggregateOutputType = {
@@ -62,6 +64,7 @@ export type RankingStepCountAggregateOutputType = {
   seq: number
   low: number
   high: number
+  skippedOffsets: number
   createdAt: number
   _all: number
 }
@@ -71,12 +74,14 @@ export type RankingStepAvgAggregateInputType = {
   seq?: true
   low?: true
   high?: true
+  skippedOffsets?: true
 }
 
 export type RankingStepSumAggregateInputType = {
   seq?: true
   low?: true
   high?: true
+  skippedOffsets?: true
 }
 
 export type RankingStepMinAggregateInputType = {
@@ -103,6 +108,7 @@ export type RankingStepCountAggregateInputType = {
   seq?: true
   low?: true
   high?: true
+  skippedOffsets?: true
   createdAt?: true
   _all?: true
 }
@@ -199,6 +205,7 @@ export type RankingStepGroupByOutputType = {
   seq: number
   low: number
   high: number
+  skippedOffsets: number[]
   createdAt: Date
   _count: RankingStepCountAggregateOutputType | null
   _avg: RankingStepAvgAggregateOutputType | null
@@ -231,6 +238,7 @@ export type RankingStepWhereInput = {
   seq?: Prisma.IntFilter<"RankingStep"> | number
   low?: Prisma.IntFilter<"RankingStep"> | number
   high?: Prisma.IntFilter<"RankingStep"> | number
+  skippedOffsets?: Prisma.IntNullableListFilter<"RankingStep">
   createdAt?: Prisma.DateTimeFilter<"RankingStep"> | Date | string
   rankingSession?: Prisma.XOR<Prisma.RankingSessionScalarRelationFilter, Prisma.RankingSessionWhereInput>
 }
@@ -241,6 +249,7 @@ export type RankingStepOrderByWithRelationInput = {
   seq?: Prisma.SortOrder
   low?: Prisma.SortOrder
   high?: Prisma.SortOrder
+  skippedOffsets?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   rankingSession?: Prisma.RankingSessionOrderByWithRelationInput
 }
@@ -255,6 +264,7 @@ export type RankingStepWhereUniqueInput = Prisma.AtLeast<{
   seq?: Prisma.IntFilter<"RankingStep"> | number
   low?: Prisma.IntFilter<"RankingStep"> | number
   high?: Prisma.IntFilter<"RankingStep"> | number
+  skippedOffsets?: Prisma.IntNullableListFilter<"RankingStep">
   createdAt?: Prisma.DateTimeFilter<"RankingStep"> | Date | string
   rankingSession?: Prisma.XOR<Prisma.RankingSessionScalarRelationFilter, Prisma.RankingSessionWhereInput>
 }, "id" | "rankingSessionId_seq">
@@ -265,6 +275,7 @@ export type RankingStepOrderByWithAggregationInput = {
   seq?: Prisma.SortOrder
   low?: Prisma.SortOrder
   high?: Prisma.SortOrder
+  skippedOffsets?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.RankingStepCountOrderByAggregateInput
   _avg?: Prisma.RankingStepAvgOrderByAggregateInput
@@ -282,6 +293,7 @@ export type RankingStepScalarWhereWithAggregatesInput = {
   seq?: Prisma.IntWithAggregatesFilter<"RankingStep"> | number
   low?: Prisma.IntWithAggregatesFilter<"RankingStep"> | number
   high?: Prisma.IntWithAggregatesFilter<"RankingStep"> | number
+  skippedOffsets?: Prisma.IntNullableListFilter<"RankingStep">
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"RankingStep"> | Date | string
 }
 
@@ -290,6 +302,7 @@ export type RankingStepCreateInput = {
   seq: number
   low: number
   high: number
+  skippedOffsets?: Prisma.RankingStepCreateskippedOffsetsInput | number[]
   createdAt?: Date | string
   rankingSession: Prisma.RankingSessionCreateNestedOneWithoutRankingStepsInput
 }
@@ -300,6 +313,7 @@ export type RankingStepUncheckedCreateInput = {
   seq: number
   low: number
   high: number
+  skippedOffsets?: Prisma.RankingStepCreateskippedOffsetsInput | number[]
   createdAt?: Date | string
 }
 
@@ -308,6 +322,7 @@ export type RankingStepUpdateInput = {
   seq?: Prisma.IntFieldUpdateOperationsInput | number
   low?: Prisma.IntFieldUpdateOperationsInput | number
   high?: Prisma.IntFieldUpdateOperationsInput | number
+  skippedOffsets?: Prisma.RankingStepUpdateskippedOffsetsInput | number[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   rankingSession?: Prisma.RankingSessionUpdateOneRequiredWithoutRankingStepsNestedInput
 }
@@ -318,6 +333,7 @@ export type RankingStepUncheckedUpdateInput = {
   seq?: Prisma.IntFieldUpdateOperationsInput | number
   low?: Prisma.IntFieldUpdateOperationsInput | number
   high?: Prisma.IntFieldUpdateOperationsInput | number
+  skippedOffsets?: Prisma.RankingStepUpdateskippedOffsetsInput | number[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -327,6 +343,7 @@ export type RankingStepCreateManyInput = {
   seq: number
   low: number
   high: number
+  skippedOffsets?: Prisma.RankingStepCreateskippedOffsetsInput | number[]
   createdAt?: Date | string
 }
 
@@ -335,6 +352,7 @@ export type RankingStepUpdateManyMutationInput = {
   seq?: Prisma.IntFieldUpdateOperationsInput | number
   low?: Prisma.IntFieldUpdateOperationsInput | number
   high?: Prisma.IntFieldUpdateOperationsInput | number
+  skippedOffsets?: Prisma.RankingStepUpdateskippedOffsetsInput | number[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -344,6 +362,7 @@ export type RankingStepUncheckedUpdateManyInput = {
   seq?: Prisma.IntFieldUpdateOperationsInput | number
   low?: Prisma.IntFieldUpdateOperationsInput | number
   high?: Prisma.IntFieldUpdateOperationsInput | number
+  skippedOffsets?: Prisma.RankingStepUpdateskippedOffsetsInput | number[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -357,6 +376,14 @@ export type RankingStepOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
+export type IntNullableListFilter<$PrismaModel = never> = {
+  equals?: number[] | Prisma.ListIntFieldRefInput<$PrismaModel> | null
+  has?: number | Prisma.IntFieldRefInput<$PrismaModel> | null
+  hasEvery?: number[] | Prisma.ListIntFieldRefInput<$PrismaModel>
+  hasSome?: number[] | Prisma.ListIntFieldRefInput<$PrismaModel>
+  isEmpty?: boolean
+}
+
 export type RankingStepRankingSessionIdSeqCompoundUniqueInput = {
   rankingSessionId: string
   seq: number
@@ -368,6 +395,7 @@ export type RankingStepCountOrderByAggregateInput = {
   seq?: Prisma.SortOrder
   low?: Prisma.SortOrder
   high?: Prisma.SortOrder
+  skippedOffsets?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -375,6 +403,7 @@ export type RankingStepAvgOrderByAggregateInput = {
   seq?: Prisma.SortOrder
   low?: Prisma.SortOrder
   high?: Prisma.SortOrder
+  skippedOffsets?: Prisma.SortOrder
 }
 
 export type RankingStepMaxOrderByAggregateInput = {
@@ -399,6 +428,7 @@ export type RankingStepSumOrderByAggregateInput = {
   seq?: Prisma.SortOrder
   low?: Prisma.SortOrder
   high?: Prisma.SortOrder
+  skippedOffsets?: Prisma.SortOrder
 }
 
 export type RankingStepCreateNestedManyWithoutRankingSessionInput = {
@@ -443,11 +473,21 @@ export type RankingStepUncheckedUpdateManyWithoutRankingSessionNestedInput = {
   deleteMany?: Prisma.RankingStepScalarWhereInput | Prisma.RankingStepScalarWhereInput[]
 }
 
+export type RankingStepCreateskippedOffsetsInput = {
+  set: number[]
+}
+
+export type RankingStepUpdateskippedOffsetsInput = {
+  set?: number[]
+  push?: number | number[]
+}
+
 export type RankingStepCreateWithoutRankingSessionInput = {
   id?: string
   seq: number
   low: number
   high: number
+  skippedOffsets?: Prisma.RankingStepCreateskippedOffsetsInput | number[]
   createdAt?: Date | string
 }
 
@@ -456,6 +496,7 @@ export type RankingStepUncheckedCreateWithoutRankingSessionInput = {
   seq: number
   low: number
   high: number
+  skippedOffsets?: Prisma.RankingStepCreateskippedOffsetsInput | number[]
   createdAt?: Date | string
 }
 
@@ -494,6 +535,7 @@ export type RankingStepScalarWhereInput = {
   seq?: Prisma.IntFilter<"RankingStep"> | number
   low?: Prisma.IntFilter<"RankingStep"> | number
   high?: Prisma.IntFilter<"RankingStep"> | number
+  skippedOffsets?: Prisma.IntNullableListFilter<"RankingStep">
   createdAt?: Prisma.DateTimeFilter<"RankingStep"> | Date | string
 }
 
@@ -502,6 +544,7 @@ export type RankingStepCreateManyRankingSessionInput = {
   seq: number
   low: number
   high: number
+  skippedOffsets?: Prisma.RankingStepCreateskippedOffsetsInput | number[]
   createdAt?: Date | string
 }
 
@@ -510,6 +553,7 @@ export type RankingStepUpdateWithoutRankingSessionInput = {
   seq?: Prisma.IntFieldUpdateOperationsInput | number
   low?: Prisma.IntFieldUpdateOperationsInput | number
   high?: Prisma.IntFieldUpdateOperationsInput | number
+  skippedOffsets?: Prisma.RankingStepUpdateskippedOffsetsInput | number[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -518,6 +562,7 @@ export type RankingStepUncheckedUpdateWithoutRankingSessionInput = {
   seq?: Prisma.IntFieldUpdateOperationsInput | number
   low?: Prisma.IntFieldUpdateOperationsInput | number
   high?: Prisma.IntFieldUpdateOperationsInput | number
+  skippedOffsets?: Prisma.RankingStepUpdateskippedOffsetsInput | number[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -526,6 +571,7 @@ export type RankingStepUncheckedUpdateManyWithoutRankingSessionInput = {
   seq?: Prisma.IntFieldUpdateOperationsInput | number
   low?: Prisma.IntFieldUpdateOperationsInput | number
   high?: Prisma.IntFieldUpdateOperationsInput | number
+  skippedOffsets?: Prisma.RankingStepUpdateskippedOffsetsInput | number[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -537,6 +583,7 @@ export type RankingStepSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   seq?: boolean
   low?: boolean
   high?: boolean
+  skippedOffsets?: boolean
   createdAt?: boolean
   rankingSession?: boolean | Prisma.RankingSessionDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["rankingStep"]>
@@ -547,6 +594,7 @@ export type RankingStepSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   seq?: boolean
   low?: boolean
   high?: boolean
+  skippedOffsets?: boolean
   createdAt?: boolean
   rankingSession?: boolean | Prisma.RankingSessionDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["rankingStep"]>
@@ -557,6 +605,7 @@ export type RankingStepSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   seq?: boolean
   low?: boolean
   high?: boolean
+  skippedOffsets?: boolean
   createdAt?: boolean
   rankingSession?: boolean | Prisma.RankingSessionDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["rankingStep"]>
@@ -567,10 +616,11 @@ export type RankingStepSelectScalar = {
   seq?: boolean
   low?: boolean
   high?: boolean
+  skippedOffsets?: boolean
   createdAt?: boolean
 }
 
-export type RankingStepOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "rankingSessionId" | "seq" | "low" | "high" | "createdAt", ExtArgs["result"]["rankingStep"]>
+export type RankingStepOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "rankingSessionId" | "seq" | "low" | "high" | "skippedOffsets" | "createdAt", ExtArgs["result"]["rankingStep"]>
 export type RankingStepInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   rankingSession?: boolean | Prisma.RankingSessionDefaultArgs<ExtArgs>
 }
@@ -592,6 +642,7 @@ export type $RankingStepPayload<ExtArgs extends runtime.Types.Extensions.Interna
     seq: number
     low: number
     high: number
+    skippedOffsets: number[]
     createdAt: Date
   }, ExtArgs["result"]["rankingStep"]>
   composites: {}
@@ -1022,6 +1073,7 @@ export interface RankingStepFieldRefs {
   readonly seq: Prisma.FieldRef<"RankingStep", 'Int'>
   readonly low: Prisma.FieldRef<"RankingStep", 'Int'>
   readonly high: Prisma.FieldRef<"RankingStep", 'Int'>
+  readonly skippedOffsets: Prisma.FieldRef<"RankingStep", 'Int[]'>
   readonly createdAt: Prisma.FieldRef<"RankingStep", 'DateTime'>
 }
     

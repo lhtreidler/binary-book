@@ -3,7 +3,29 @@ import { prisma } from "../lib/prisma";
 import { OmitSystem } from "../utils/type-utils";
 
 type BaseRankingStep = OmitSystem<RankingStep>;
-type CreateStep = Omit<BaseRankingStep, "rankingSessionId" | "seq">;
+type CreateStep = Omit<
+  BaseRankingStep,
+  "rankingSessionId" | "seq" | "skippedOffsets"
+>;
+
+const getNewestStepOrThrow = async ({
+  rankingSessionId,
+  userId,
+}: {
+  rankingSessionId: string;
+  userId: string;
+}) => {
+  const next = await prisma.rankingStep.findFirst({
+    where: { rankingSessionId, rankingSession: { userId } },
+    orderBy: { seq: "desc" },
+  });
+
+  if (!next) {
+    throw new Error("No steps created");
+  }
+
+  return next;
+};
 
 const createSessionAndFirstStep = async ({
   userId,
@@ -37,37 +59,20 @@ const createSessionAndFirstStep = async ({
 };
 
 const createNextStep = async ({
-  sessionId,
+  rankingSessionId,
   userId,
   ...data
-}: { sessionId: string; userId: string } & CreateStep) => {
-  const next = await prisma.rankingStep.findFirst({
-    where: { rankingSessionId: sessionId, rankingSession: { userId } },
-    orderBy: { seq: "desc" },
-    select: {
-      seq: true,
-    },
-  });
-
-  if (!next) {
-    throw new Error("No steps created");
-  }
+}: { rankingSessionId: string; userId: string } & CreateStep) => {
+  const next = await getNewestStepOrThrow({ userId, rankingSessionId });
 
   return prisma.rankingStep.create({
     data: {
       ...data,
-      rankingSessionId: sessionId,
+      rankingSessionId: rankingSessionId,
       seq: next.seq + 1,
     },
   });
 };
-
-// const update = ({ id, ...data }: { id: string; high: number; low: number }) => {
-//   return prisma.rankingSession.update({
-//     where: { id },
-//     data,
-//   });
-// };
 
 const getById = (where: { id: string; userId: string }) => {
   return prisma.rankingSession.findUnique({
@@ -88,10 +93,38 @@ const deleteSession = async (where: { id: string; userId: string }) => {
   ]);
 };
 
+const addSkippedOffset = async ({
+  rankingSessionId,
+  userId,
+  offset,
+}: {
+  rankingSessionId: string;
+  userId: string;
+  offset: number;
+}) => {
+  const { id } = await getNewestStepOrThrow({ rankingSessionId, userId });
+
+  await prisma.rankingStep.update({
+    where: {
+      rankingSessionId,
+      rankingSession: {
+        userId,
+      },
+      id,
+    },
+    data: {
+      skippedOffsets: {
+        push: offset,
+      },
+    },
+  });
+};
+
 export const rankingSessionService = {
   createSessionAndFirstStep,
   getById,
   delete: deleteSession,
   // update,
   createNextStep,
+  addSkippedOffset,
 };
