@@ -89,19 +89,15 @@ export interface RankingBookInfo {
 }
 
 export type FinishedRankingResponse = { score: number; bookId: string };
+type RankingResponse = { seq: number; compareBook: RankingBookInfo };
 
 export type StartRankingResponse =
-  | {
+  | ({
       sessionId: string;
-      compareBook: RankingBookInfo;
-    }
+    } & RankingResponse)
   | FinishedRankingResponse;
 
-export type ContinueRankingResponse =
-  | {
-      compareBook: RankingBookInfo;
-    }
-  | FinishedRankingResponse;
+export type ContinueRankingResponse = RankingResponse | FinishedRankingResponse;
 
 export type QuitRankingResponse = void;
 

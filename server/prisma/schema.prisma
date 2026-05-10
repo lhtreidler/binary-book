@@ -72,15 +72,14 @@ model RankingStep {
   book             Book              @relation(fields: [bookId], references: [id])
   rankingSession   RankingSession    @relation(fields: [rankingSessionId], references: [id])
 
-
   @@index([bookId])
-  @@index([rankingSessionId, seq])
+  @@index([rankingSessionId])
   @@unique([rankingSessionId, seq])
 }
 
 model SearchCache {
   id               String            @id @default(uuid()) @db.Uuid
   query            String            @unique
-  jsonResult       Json
+  jsonResult       String
   cachedAt         DateTime          @default(now())
 }

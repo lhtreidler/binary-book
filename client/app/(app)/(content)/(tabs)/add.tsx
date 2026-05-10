@@ -41,14 +41,13 @@ export default function Add() {
   };
 
   const onCloseModal = (bookId?: string) => {
-    queryClient.invalidateQueries({ queryKey: ["books", query] });
-    queryClient.invalidateQueries({ queryKey: ["books", "list"] });
-    setSelectedBook(null);
-
     if (bookId) {
+      queryClient.invalidateQueries({ queryKey: ["books", query] });
+      queryClient.invalidateQueries({ queryKey: ["books", "list"] });
       reset();
       router.push(`/book/${bookId}`);
     }
+    setSelectedBook(null);
   };
 
   return (

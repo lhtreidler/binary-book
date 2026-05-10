@@ -18,6 +18,7 @@ export interface StartRankingInput {
 
 export interface ContinueRankingInput {
   sessionId: string;
+  seq: number;
   choseNew: boolean;
 }
 

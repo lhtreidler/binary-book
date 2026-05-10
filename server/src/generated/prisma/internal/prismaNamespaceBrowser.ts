@@ -115,7 +115,8 @@ export const RankingSessionScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  level: 'level'
 } as const
 
 export type RankingSessionScalarFieldEnum = (typeof RankingSessionScalarFieldEnum)[keyof typeof RankingSessionScalarFieldEnum]
@@ -128,7 +129,6 @@ export const RankingStepScalarFieldEnum = {
   seq: 'seq',
   low: 'low',
   high: 'high',
-  level: 'level',
   createdAt: 'createdAt'
 } as const
 
@@ -153,13 +153,6 @@ export const SortOrder = {
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
-export const JsonNullValueInput = {
-  JsonNull: JsonNull
-} as const
-
-export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
-
-
 export const QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
@@ -174,13 +167,4 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
-
-
-export const JsonNullValueFilter = {
-  DbNull: DbNull,
-  JsonNull: JsonNull,
-  AnyNull: AnyNull
-} as const
-
-export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 

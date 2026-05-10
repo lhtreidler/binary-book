@@ -28,7 +28,6 @@ import { FinishedRankingResponse } from "@/lib/api/types";
 import { useQuitRanking } from "@/lib/api/hooks/useRanking";
 import { sliceJoinArray, sliceString } from "@/lib/format-utils";
 import { TierButtons, Phase, phaseToHeader } from "./constants";
-import { useRouter } from "expo-router";
 
 const formatAuthors = (authors: string[]) =>
   authors.length ? authors.join(", ") : "Unknown Author";
@@ -109,11 +108,11 @@ export const RankingModal = ({
     setCompareBook(null);
     setSessionId(null);
     setError(null);
-    if (result) {
-      onClose(result.bookId);
-    } else if (sessionId) {
+    if (sessionId && !result) {
       quitRanking.mutate({ sessionId });
     }
+
+    onClose((result && result.bookId) || undefined);
   };
 
   const isLoading = startMutation.isPending || continueMutation.isPending;

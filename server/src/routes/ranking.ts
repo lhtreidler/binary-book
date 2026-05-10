@@ -15,6 +15,7 @@ import {
   rankingSessionService,
   rankingAlgoService,
   STARTING_RAW_SCORE,
+  rankingStepService,
 } from "../services";
 
 const router = Router();
@@ -64,23 +65,13 @@ router.post("/start", validateBody(startRankingSchema), async (req, res) => {
 
     const result = await rankingAlgoService.handleRankingSearch({
       userId,
-      rankingSessionId: rankingSession.id,
       bookId,
       low: 0,
       high: rankingCount,
-      level: rankingSession.level,
+      level: rankingLevel,
     });
 
-    const rankingSession =
-      await rankingSessionService.createSessionAndFirstStep({
-        userId,
-        level: rankingLevel,
-        bookId,
-      });
-    // Clean up the ranking session
-    await rankingSessionService.delete({ id: rankingSessionId, userId });
-
-    res.send({ ...result, sessionId: rankingSession.id });
+    res.send(result);
   } catch (err) {
     res.status(500).json({ error: "Internal server error" });
   }
@@ -105,20 +96,21 @@ router.post(
         return;
       }
 
-      const { sessionId: rankingSessionId, choseNew } =
-        req.body as ContinueRankingInput;
+      const { seq, sessionId, choseNew } = req.body as ContinueRankingInput;
 
-      const rankingSession = await rankingSessionService.getById({
-        id: rankingSessionId,
-        userId,
-      });
+      const { rankingSession, ...rankingStep } =
+        await rankingStepService.getStepAndDeleteNext({
+          seq,
+          rankingSessionId: sessionId,
+          userId,
+        });
 
-      if (!rankingSession) {
+      if (!rankingStep) {
         res.status(404).json({ error: "Ranking session not found" });
         return;
       }
 
-      const { low, high } = rankingSession;
+      const { low, high } = rankingStep;
 
       if (low === null || high === null) {
         res.status(400).json({ error: "Invalid ranking session state" });
@@ -137,8 +129,8 @@ router.post(
 
       const result = await rankingAlgoService.handleRankingSearch({
         userId,
-        rankingSessionId,
-        bookId: rankingSession.bookId,
+        rankingSessionId: sessionId,
+        bookId: rankingStep.bookId,
         low: newLow,
         high: newHigh,
         level: rankingSession.level,

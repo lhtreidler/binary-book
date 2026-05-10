@@ -125,22 +125,34 @@ const handleRankingSearch = async ({
 
   const { book } = rankingToCompare;
 
+  const rankingStepData = { level, low, high, bookId: book.id };
+
+  const compareBook = { title: book.title, authors: book.authors };
+
   if (!rankingSessionId) {
-    const rankingSession =
-      await rankingSessionService.createSessionAndFirstStep({
-        userId,
-        data: {
-          low,
-          high,
-          bookId: book.id,
-        },
-      });
+    const {
+      rankingStep: { seq },
+      rankingSession: { id },
+    } = await rankingSessionService.createSessionAndFirstStep({
+      userId,
+      ...rankingStepData,
+    });
+
+    return {
+      compareBook,
+      seq,
+      sessionId: rankingSessionId,
+    };
   }
+  const rankingStep = await rankingSessionService.createNextStep({
+    ...rankingStepData,
+    sessionId: rankingSessionId,
+    userId,
+  });
 
   return {
-    compareBook: book,
-    low,
-    high,
+    compareBook,
+    seq: rankingStep.seq,
   };
 };
 

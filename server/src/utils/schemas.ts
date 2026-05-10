@@ -43,6 +43,7 @@ export const startRankingSchema = z.object({
 });
 export const continueRankingSchema = z.object({
   sessionId: z.string().min(1),
+  seq: z.number(),
   choseNew: z.boolean(),
 });
 export const quitRankingSchema = z.object({
