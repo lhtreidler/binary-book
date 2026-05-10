@@ -31,7 +31,7 @@ model Book {
   authors          String[]
   compareStr       String
   rankings         Ranking[]
-  rankingSteps     RankingStep[]
+  rankingSessions  RankingSession[]
 }
 
 model Ranking {
@@ -53,27 +53,27 @@ model Ranking {
 model RankingSession {
   id               String            @id @default(uuid()) @db.Uuid
   userId           String            @db.Uuid
+  bookId           String            @db.Uuid
   createdAt        DateTime          @default(now())
   updatedAt        DateTime          @updatedAt
   user             User              @relation(fields: [userId], references: [id])
   level            Int
+  book             Book              @relation(fields: [bookId], references: [id])
   rankingSteps     RankingStep[]
 
+  @@index([bookId])
   @@index([userId])
 }
 
 model RankingStep {
   id               String            @id @default(uuid()) @db.Uuid
-  bookId           String            @db.Uuid
   rankingSessionId String            @db.Uuid
   seq              Int
   low              Int
   high             Int
   createdAt        DateTime          @default(now())
-  book             Book              @relation(fields: [bookId], references: [id])
   rankingSession   RankingSession    @relation(fields: [rankingSessionId], references: [id])
 
-  @@index([bookId])
   @@index([rankingSessionId])
   @@unique([rankingSessionId, seq])
 }

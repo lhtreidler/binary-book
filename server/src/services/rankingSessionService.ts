@@ -8,17 +8,19 @@ type CreateStep = Omit<BaseRankingStep, "rankingSessionId" | "seq">;
 const createSessionAndFirstStep = async ({
   userId,
   level,
+  bookId,
   ...data
 }: {
   userId: string;
   level: number;
+  bookId: string;
 } & CreateStep) => {
-  console.log(data);
   const { rankingSteps, ...rankingSession } =
     await prisma.rankingSession.create({
       data: {
         userId,
         level,
+        bookId,
         rankingSteps: {
           create: {
             ...data,

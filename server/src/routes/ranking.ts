@@ -125,7 +125,7 @@ router.post(
       const result = await rankingAlgoService.handleRankingSearch({
         userId,
         rankingSessionId: sessionId,
-        bookId: rankingStep.bookId,
+        bookId: rankingSession.bookId,
         low: newLow,
         high: newHigh,
         level: rankingSession.level,

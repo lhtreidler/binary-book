@@ -114,6 +114,7 @@ export type RankingScalarFieldEnum = (typeof RankingScalarFieldEnum)[keyof typeo
 export const RankingSessionScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
+  bookId: 'bookId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   level: 'level'
@@ -124,7 +125,6 @@ export type RankingSessionScalarFieldEnum = (typeof RankingSessionScalarFieldEnu
 
 export const RankingStepScalarFieldEnum = {
   id: 'id',
-  bookId: 'bookId',
   rankingSessionId: 'rankingSessionId',
   seq: 'seq',
   low: 'low',

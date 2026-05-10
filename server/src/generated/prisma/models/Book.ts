@@ -179,7 +179,7 @@ export type BookWhereInput = {
   authors?: Prisma.StringNullableListFilter<"Book">
   compareStr?: Prisma.StringFilter<"Book"> | string
   rankings?: Prisma.RankingListRelationFilter
-  rankingSteps?: Prisma.RankingStepListRelationFilter
+  rankingSessions?: Prisma.RankingSessionListRelationFilter
 }
 
 export type BookOrderByWithRelationInput = {
@@ -189,7 +189,7 @@ export type BookOrderByWithRelationInput = {
   authors?: Prisma.SortOrder
   compareStr?: Prisma.SortOrder
   rankings?: Prisma.RankingOrderByRelationAggregateInput
-  rankingSteps?: Prisma.RankingStepOrderByRelationAggregateInput
+  rankingSessions?: Prisma.RankingSessionOrderByRelationAggregateInput
 }
 
 export type BookWhereUniqueInput = Prisma.AtLeast<{
@@ -202,7 +202,7 @@ export type BookWhereUniqueInput = Prisma.AtLeast<{
   authors?: Prisma.StringNullableListFilter<"Book">
   compareStr?: Prisma.StringFilter<"Book"> | string
   rankings?: Prisma.RankingListRelationFilter
-  rankingSteps?: Prisma.RankingStepListRelationFilter
+  rankingSessions?: Prisma.RankingSessionListRelationFilter
 }, "id" | "googleId">
 
 export type BookOrderByWithAggregationInput = {
@@ -234,7 +234,7 @@ export type BookCreateInput = {
   authors?: Prisma.BookCreateauthorsInput | string[]
   compareStr: string
   rankings?: Prisma.RankingCreateNestedManyWithoutBookInput
-  rankingSteps?: Prisma.RankingStepCreateNestedManyWithoutBookInput
+  rankingSessions?: Prisma.RankingSessionCreateNestedManyWithoutBookInput
 }
 
 export type BookUncheckedCreateInput = {
@@ -244,7 +244,7 @@ export type BookUncheckedCreateInput = {
   authors?: Prisma.BookCreateauthorsInput | string[]
   compareStr: string
   rankings?: Prisma.RankingUncheckedCreateNestedManyWithoutBookInput
-  rankingSteps?: Prisma.RankingStepUncheckedCreateNestedManyWithoutBookInput
+  rankingSessions?: Prisma.RankingSessionUncheckedCreateNestedManyWithoutBookInput
 }
 
 export type BookUpdateInput = {
@@ -254,7 +254,7 @@ export type BookUpdateInput = {
   authors?: Prisma.BookUpdateauthorsInput | string[]
   compareStr?: Prisma.StringFieldUpdateOperationsInput | string
   rankings?: Prisma.RankingUpdateManyWithoutBookNestedInput
-  rankingSteps?: Prisma.RankingStepUpdateManyWithoutBookNestedInput
+  rankingSessions?: Prisma.RankingSessionUpdateManyWithoutBookNestedInput
 }
 
 export type BookUncheckedUpdateInput = {
@@ -264,7 +264,7 @@ export type BookUncheckedUpdateInput = {
   authors?: Prisma.BookUpdateauthorsInput | string[]
   compareStr?: Prisma.StringFieldUpdateOperationsInput | string
   rankings?: Prisma.RankingUncheckedUpdateManyWithoutBookNestedInput
-  rankingSteps?: Prisma.RankingStepUncheckedUpdateManyWithoutBookNestedInput
+  rankingSessions?: Prisma.RankingSessionUncheckedUpdateManyWithoutBookNestedInput
 }
 
 export type BookCreateManyInput = {
@@ -349,18 +349,18 @@ export type BookUpdateOneRequiredWithoutRankingsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.BookUpdateToOneWithWhereWithoutRankingsInput, Prisma.BookUpdateWithoutRankingsInput>, Prisma.BookUncheckedUpdateWithoutRankingsInput>
 }
 
-export type BookCreateNestedOneWithoutRankingStepsInput = {
-  create?: Prisma.XOR<Prisma.BookCreateWithoutRankingStepsInput, Prisma.BookUncheckedCreateWithoutRankingStepsInput>
-  connectOrCreate?: Prisma.BookCreateOrConnectWithoutRankingStepsInput
+export type BookCreateNestedOneWithoutRankingSessionsInput = {
+  create?: Prisma.XOR<Prisma.BookCreateWithoutRankingSessionsInput, Prisma.BookUncheckedCreateWithoutRankingSessionsInput>
+  connectOrCreate?: Prisma.BookCreateOrConnectWithoutRankingSessionsInput
   connect?: Prisma.BookWhereUniqueInput
 }
 
-export type BookUpdateOneRequiredWithoutRankingStepsNestedInput = {
-  create?: Prisma.XOR<Prisma.BookCreateWithoutRankingStepsInput, Prisma.BookUncheckedCreateWithoutRankingStepsInput>
-  connectOrCreate?: Prisma.BookCreateOrConnectWithoutRankingStepsInput
-  upsert?: Prisma.BookUpsertWithoutRankingStepsInput
+export type BookUpdateOneRequiredWithoutRankingSessionsNestedInput = {
+  create?: Prisma.XOR<Prisma.BookCreateWithoutRankingSessionsInput, Prisma.BookUncheckedCreateWithoutRankingSessionsInput>
+  connectOrCreate?: Prisma.BookCreateOrConnectWithoutRankingSessionsInput
+  upsert?: Prisma.BookUpsertWithoutRankingSessionsInput
   connect?: Prisma.BookWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.BookUpdateToOneWithWhereWithoutRankingStepsInput, Prisma.BookUpdateWithoutRankingStepsInput>, Prisma.BookUncheckedUpdateWithoutRankingStepsInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.BookUpdateToOneWithWhereWithoutRankingSessionsInput, Prisma.BookUpdateWithoutRankingSessionsInput>, Prisma.BookUncheckedUpdateWithoutRankingSessionsInput>
 }
 
 export type BookCreateWithoutRankingsInput = {
@@ -369,7 +369,7 @@ export type BookCreateWithoutRankingsInput = {
   title: string
   authors?: Prisma.BookCreateauthorsInput | string[]
   compareStr: string
-  rankingSteps?: Prisma.RankingStepCreateNestedManyWithoutBookInput
+  rankingSessions?: Prisma.RankingSessionCreateNestedManyWithoutBookInput
 }
 
 export type BookUncheckedCreateWithoutRankingsInput = {
@@ -378,7 +378,7 @@ export type BookUncheckedCreateWithoutRankingsInput = {
   title: string
   authors?: Prisma.BookCreateauthorsInput | string[]
   compareStr: string
-  rankingSteps?: Prisma.RankingStepUncheckedCreateNestedManyWithoutBookInput
+  rankingSessions?: Prisma.RankingSessionUncheckedCreateNestedManyWithoutBookInput
 }
 
 export type BookCreateOrConnectWithoutRankingsInput = {
@@ -403,7 +403,7 @@ export type BookUpdateWithoutRankingsInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   authors?: Prisma.BookUpdateauthorsInput | string[]
   compareStr?: Prisma.StringFieldUpdateOperationsInput | string
-  rankingSteps?: Prisma.RankingStepUpdateManyWithoutBookNestedInput
+  rankingSessions?: Prisma.RankingSessionUpdateManyWithoutBookNestedInput
 }
 
 export type BookUncheckedUpdateWithoutRankingsInput = {
@@ -412,10 +412,10 @@ export type BookUncheckedUpdateWithoutRankingsInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   authors?: Prisma.BookUpdateauthorsInput | string[]
   compareStr?: Prisma.StringFieldUpdateOperationsInput | string
-  rankingSteps?: Prisma.RankingStepUncheckedUpdateManyWithoutBookNestedInput
+  rankingSessions?: Prisma.RankingSessionUncheckedUpdateManyWithoutBookNestedInput
 }
 
-export type BookCreateWithoutRankingStepsInput = {
+export type BookCreateWithoutRankingSessionsInput = {
   id?: string
   googleId: string
   title: string
@@ -424,7 +424,7 @@ export type BookCreateWithoutRankingStepsInput = {
   rankings?: Prisma.RankingCreateNestedManyWithoutBookInput
 }
 
-export type BookUncheckedCreateWithoutRankingStepsInput = {
+export type BookUncheckedCreateWithoutRankingSessionsInput = {
   id?: string
   googleId: string
   title: string
@@ -433,23 +433,23 @@ export type BookUncheckedCreateWithoutRankingStepsInput = {
   rankings?: Prisma.RankingUncheckedCreateNestedManyWithoutBookInput
 }
 
-export type BookCreateOrConnectWithoutRankingStepsInput = {
+export type BookCreateOrConnectWithoutRankingSessionsInput = {
   where: Prisma.BookWhereUniqueInput
-  create: Prisma.XOR<Prisma.BookCreateWithoutRankingStepsInput, Prisma.BookUncheckedCreateWithoutRankingStepsInput>
+  create: Prisma.XOR<Prisma.BookCreateWithoutRankingSessionsInput, Prisma.BookUncheckedCreateWithoutRankingSessionsInput>
 }
 
-export type BookUpsertWithoutRankingStepsInput = {
-  update: Prisma.XOR<Prisma.BookUpdateWithoutRankingStepsInput, Prisma.BookUncheckedUpdateWithoutRankingStepsInput>
-  create: Prisma.XOR<Prisma.BookCreateWithoutRankingStepsInput, Prisma.BookUncheckedCreateWithoutRankingStepsInput>
+export type BookUpsertWithoutRankingSessionsInput = {
+  update: Prisma.XOR<Prisma.BookUpdateWithoutRankingSessionsInput, Prisma.BookUncheckedUpdateWithoutRankingSessionsInput>
+  create: Prisma.XOR<Prisma.BookCreateWithoutRankingSessionsInput, Prisma.BookUncheckedCreateWithoutRankingSessionsInput>
   where?: Prisma.BookWhereInput
 }
 
-export type BookUpdateToOneWithWhereWithoutRankingStepsInput = {
+export type BookUpdateToOneWithWhereWithoutRankingSessionsInput = {
   where?: Prisma.BookWhereInput
-  data: Prisma.XOR<Prisma.BookUpdateWithoutRankingStepsInput, Prisma.BookUncheckedUpdateWithoutRankingStepsInput>
+  data: Prisma.XOR<Prisma.BookUpdateWithoutRankingSessionsInput, Prisma.BookUncheckedUpdateWithoutRankingSessionsInput>
 }
 
-export type BookUpdateWithoutRankingStepsInput = {
+export type BookUpdateWithoutRankingSessionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   googleId?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
@@ -458,7 +458,7 @@ export type BookUpdateWithoutRankingStepsInput = {
   rankings?: Prisma.RankingUpdateManyWithoutBookNestedInput
 }
 
-export type BookUncheckedUpdateWithoutRankingStepsInput = {
+export type BookUncheckedUpdateWithoutRankingSessionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   googleId?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
@@ -474,12 +474,12 @@ export type BookUncheckedUpdateWithoutRankingStepsInput = {
 
 export type BookCountOutputType = {
   rankings: number
-  rankingSteps: number
+  rankingSessions: number
 }
 
 export type BookCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   rankings?: boolean | BookCountOutputTypeCountRankingsArgs
-  rankingSteps?: boolean | BookCountOutputTypeCountRankingStepsArgs
+  rankingSessions?: boolean | BookCountOutputTypeCountRankingSessionsArgs
 }
 
 /**
@@ -502,8 +502,8 @@ export type BookCountOutputTypeCountRankingsArgs<ExtArgs extends runtime.Types.E
 /**
  * BookCountOutputType without action
  */
-export type BookCountOutputTypeCountRankingStepsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.RankingStepWhereInput
+export type BookCountOutputTypeCountRankingSessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.RankingSessionWhereInput
 }
 
 
@@ -514,7 +514,7 @@ export type BookSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   authors?: boolean
   compareStr?: boolean
   rankings?: boolean | Prisma.Book$rankingsArgs<ExtArgs>
-  rankingSteps?: boolean | Prisma.Book$rankingStepsArgs<ExtArgs>
+  rankingSessions?: boolean | Prisma.Book$rankingSessionsArgs<ExtArgs>
   _count?: boolean | Prisma.BookCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["book"]>
 
@@ -545,7 +545,7 @@ export type BookSelectScalar = {
 export type BookOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "googleId" | "title" | "authors" | "compareStr", ExtArgs["result"]["book"]>
 export type BookInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   rankings?: boolean | Prisma.Book$rankingsArgs<ExtArgs>
-  rankingSteps?: boolean | Prisma.Book$rankingStepsArgs<ExtArgs>
+  rankingSessions?: boolean | Prisma.Book$rankingSessionsArgs<ExtArgs>
   _count?: boolean | Prisma.BookCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type BookIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -555,7 +555,7 @@ export type $BookPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   name: "Book"
   objects: {
     rankings: Prisma.$RankingPayload<ExtArgs>[]
-    rankingSteps: Prisma.$RankingStepPayload<ExtArgs>[]
+    rankingSessions: Prisma.$RankingSessionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -958,7 +958,7 @@ readonly fields: BookFieldRefs;
 export interface Prisma__BookClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   rankings<T extends Prisma.Book$rankingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Book$rankingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RankingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  rankingSteps<T extends Prisma.Book$rankingStepsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Book$rankingStepsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RankingStepPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  rankingSessions<T extends Prisma.Book$rankingSessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Book$rankingSessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RankingSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1405,27 +1405,27 @@ export type Book$rankingsArgs<ExtArgs extends runtime.Types.Extensions.InternalA
 }
 
 /**
- * Book.rankingSteps
+ * Book.rankingSessions
  */
-export type Book$rankingStepsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Book$rankingSessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the RankingStep
+   * Select specific fields to fetch from the RankingSession
    */
-  select?: Prisma.RankingStepSelect<ExtArgs> | null
+  select?: Prisma.RankingSessionSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the RankingStep
+   * Omit specific fields from the RankingSession
    */
-  omit?: Prisma.RankingStepOmit<ExtArgs> | null
+  omit?: Prisma.RankingSessionOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.RankingStepInclude<ExtArgs> | null
-  where?: Prisma.RankingStepWhereInput
-  orderBy?: Prisma.RankingStepOrderByWithRelationInput | Prisma.RankingStepOrderByWithRelationInput[]
-  cursor?: Prisma.RankingStepWhereUniqueInput
+  include?: Prisma.RankingSessionInclude<ExtArgs> | null
+  where?: Prisma.RankingSessionWhereInput
+  orderBy?: Prisma.RankingSessionOrderByWithRelationInput | Prisma.RankingSessionOrderByWithRelationInput[]
+  cursor?: Prisma.RankingSessionWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.RankingStepScalarFieldEnum | Prisma.RankingStepScalarFieldEnum[]
+  distinct?: Prisma.RankingSessionScalarFieldEnum | Prisma.RankingSessionScalarFieldEnum[]
 }
 
 /**
