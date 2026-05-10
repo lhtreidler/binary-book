@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
+import { ScrollView, View } from "react-native";
 import { Box } from "../ui/box";
 import { Button, ButtonIcon } from "../ui/button";
 import { HStack } from "../ui/hstack";
 import { Image } from "../ui/image";
-import { Input, InputField } from "../ui/input";
+import { Input, InputField, InputIcon, InputSlot } from "../ui/input";
+import { CloseIcon } from "../ui/icon";
 import { Spinner } from "../ui/spinner";
 import { Text } from "../ui/text";
 import { VStack } from "../ui/vstack";
@@ -15,9 +17,12 @@ export const Autocomplete = ({
   inputProps,
   fieldProps = {},
   onChange = () => {},
+  onClear,
   rightActions = [],
+  overlay = false,
 }: AutocompleteProps) => {
   const [isChanged, setIsChanged] = useState(false);
+  const [inputHeight, setInputHeight] = useState(50);
 
   useEffect(() => {
     if (options.length || isLoading) setIsChanged(true);
@@ -79,6 +84,55 @@ export const Autocomplete = ({
     });
   };
 
+  if (overlay) {
+    return (
+      <View style={{ zIndex: 100, backgroundColor: "white" }}>
+        <View
+          style={{ paddingHorizontal: 16, paddingVertical: 10 }}
+          onLayout={(e) => setInputHeight(e.nativeEvent.layout.height)}
+        >
+          <Input {...inputProps}>
+            <InputField
+              variant="underlined"
+              onChangeText={onChange}
+              {...fieldProps}
+            />
+            {fieldProps.value ? (
+              <InputSlot onPress={onClear} className="pr-1">
+                <InputIcon as={CloseIcon} />
+              </InputSlot>
+            ) : null}
+          </Input>
+        </View>
+        {isChanged && (
+          <View
+            style={{
+              position: "absolute",
+              top: inputHeight,
+              left: 0,
+              right: 0,
+              backgroundColor: "white",
+              maxHeight: 400,
+              zIndex: 100,
+              elevation: 5,
+              shadowColor: "#000",
+              shadowOffset: { width: 0, height: 2 },
+              shadowOpacity: 0.15,
+              shadowRadius: 4,
+            }}
+          >
+            <ScrollView>
+              <View style={{ paddingVertical: 8 }}>
+                {getOptions()}
+                {isLoading ? <Spinner className="my-4" /> : null}
+              </View>
+            </ScrollView>
+          </View>
+        )}
+      </View>
+    );
+  }
+
   return (
     <VStack>
       <Input {...inputProps}>
@@ -87,6 +141,11 @@ export const Autocomplete = ({
           onChangeText={onChange}
           {...fieldProps}
         />
+        {fieldProps.value ? (
+          <InputSlot onPress={onClear} className="pr-1">
+            <InputIcon as={CloseIcon} />
+          </InputSlot>
+        ) : null}
       </Input>
       {getOptions()}
       {isLoading ? <Spinner className="mt-2" /> : null}

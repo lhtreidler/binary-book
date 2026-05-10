@@ -20,8 +20,21 @@ model User {
   passwordHash     String
   rankings         Ranking[]
   rankingSessions  RankingSession[]
+  followers        Follow[]          @relation("Following")
+  following        Follow[]          @relation("Follower")
   createdAt        DateTime          @default(now())
   updatedAt        DateTime          @updatedAt
+}
+
+model Follow {
+  fromId           String            @db.Uuid
+  toId             String            @db.Uuid
+  from             User              @relation("Followers", fields: [toId], references: [id])
+  to               User              @relation("Followings", fields: [fromId], references: [id])
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+
+  @@id([followerId, followingId])
 }
 
 model Book {

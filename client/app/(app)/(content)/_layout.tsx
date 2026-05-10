@@ -1,5 +1,3 @@
-import { Box } from "@/components/ui/box";
-import { Text } from "@/components/ui/text";
 import { Stack } from "expo-router";
 
 export default function Layout() {

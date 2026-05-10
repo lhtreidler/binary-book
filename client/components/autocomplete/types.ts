@@ -19,6 +19,8 @@ export type AutocompleteProps = {
   inputProps?: React.ComponentProps<typeof Input>;
   fieldProps?: React.ComponentProps<typeof InputField>;
   onChange: (input: string) => void;
+  onClear?: () => void;
+  overlay?: boolean;
   rightActions?: {
     icon: keyof typeof nameToIcon;
     handler: (key: string) => void;
