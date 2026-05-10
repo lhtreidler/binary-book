@@ -394,6 +394,7 @@ export const ModelName = {
   Book: 'Book',
   Ranking: 'Ranking',
   RankingSession: 'RankingSession',
+  RankingStep: 'RankingStep',
   SearchCache: 'SearchCache'
 } as const
 
@@ -410,7 +411,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "book" | "ranking" | "rankingSession" | "searchCache"
+    modelProps: "user" | "book" | "ranking" | "rankingSession" | "rankingStep" | "searchCache"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -710,6 +711,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    RankingStep: {
+      payload: Prisma.$RankingStepPayload<ExtArgs>
+      fields: Prisma.RankingStepFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.RankingStepFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RankingStepPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.RankingStepFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RankingStepPayload>
+        }
+        findFirst: {
+          args: Prisma.RankingStepFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RankingStepPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.RankingStepFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RankingStepPayload>
+        }
+        findMany: {
+          args: Prisma.RankingStepFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RankingStepPayload>[]
+        }
+        create: {
+          args: Prisma.RankingStepCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RankingStepPayload>
+        }
+        createMany: {
+          args: Prisma.RankingStepCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.RankingStepCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RankingStepPayload>[]
+        }
+        delete: {
+          args: Prisma.RankingStepDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RankingStepPayload>
+        }
+        update: {
+          args: Prisma.RankingStepUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RankingStepPayload>
+        }
+        deleteMany: {
+          args: Prisma.RankingStepDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.RankingStepUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.RankingStepUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RankingStepPayload>[]
+        }
+        upsert: {
+          args: Prisma.RankingStepUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RankingStepPayload>
+        }
+        aggregate: {
+          args: Prisma.RankingStepAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateRankingStep>
+        }
+        groupBy: {
+          args: Prisma.RankingStepGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RankingStepGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.RankingStepCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RankingStepCountAggregateOutputType> | number
+        }
+      }
+    }
     SearchCache: {
       payload: Prisma.$SearchCachePayload<ExtArgs>
       fields: Prisma.SearchCacheFieldRefs
@@ -864,15 +939,25 @@ export type RankingScalarFieldEnum = (typeof RankingScalarFieldEnum)[keyof typeo
 export const RankingSessionScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
-  bookId: 'bookId',
-  low: 'low',
-  high: 'high',
-  level: 'level',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type RankingSessionScalarFieldEnum = (typeof RankingSessionScalarFieldEnum)[keyof typeof RankingSessionScalarFieldEnum]
+
+
+export const RankingStepScalarFieldEnum = {
+  id: 'id',
+  bookId: 'bookId',
+  rankingSessionId: 'rankingSessionId',
+  seq: 'seq',
+  low: 'low',
+  high: 'high',
+  level: 'level',
+  createdAt: 'createdAt'
+} as const
+
+export type RankingStepScalarFieldEnum = (typeof RankingStepScalarFieldEnum)[keyof typeof RankingStepScalarFieldEnum]
 
 
 export const SearchCacheScalarFieldEnum = {
@@ -893,6 +978,13 @@ export const SortOrder = {
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
+
+
 export const QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
@@ -907,6 +999,15 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 
 
 
@@ -968,6 +1069,20 @@ export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'In
  * Reference to a field of type 'Int[]'
  */
 export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Json'
+ */
+export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+/**
+ * Reference to a field of type 'QueryMode'
+ */
+export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
     
 
 /**
@@ -1061,6 +1176,7 @@ export type GlobalOmitConfig = {
   book?: Prisma.BookOmit
   ranking?: Prisma.RankingOmit
   rankingSession?: Prisma.RankingSessionOmit
+  rankingStep?: Prisma.RankingStepOmit
   searchCache?: Prisma.SearchCacheOmit
 }
 

@@ -27,14 +27,12 @@ export type AggregateSearchCache = {
 export type SearchCacheMinAggregateOutputType = {
   id: string | null
   query: string | null
-  jsonResult: string | null
   cachedAt: Date | null
 }
 
 export type SearchCacheMaxAggregateOutputType = {
   id: string | null
   query: string | null
-  jsonResult: string | null
   cachedAt: Date | null
 }
 
@@ -50,14 +48,12 @@ export type SearchCacheCountAggregateOutputType = {
 export type SearchCacheMinAggregateInputType = {
   id?: true
   query?: true
-  jsonResult?: true
   cachedAt?: true
 }
 
 export type SearchCacheMaxAggregateInputType = {
   id?: true
   query?: true
-  jsonResult?: true
   cachedAt?: true
 }
 
@@ -144,7 +140,7 @@ export type SearchCacheGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inte
 export type SearchCacheGroupByOutputType = {
   id: string
   query: string
-  jsonResult: string
+  jsonResult: runtime.JsonValue
   cachedAt: Date
   _count: SearchCacheCountAggregateOutputType | null
   _min: SearchCacheMinAggregateOutputType | null
@@ -172,7 +168,7 @@ export type SearchCacheWhereInput = {
   NOT?: Prisma.SearchCacheWhereInput | Prisma.SearchCacheWhereInput[]
   id?: Prisma.UuidFilter<"SearchCache"> | string
   query?: Prisma.StringFilter<"SearchCache"> | string
-  jsonResult?: Prisma.StringFilter<"SearchCache"> | string
+  jsonResult?: Prisma.JsonFilter<"SearchCache">
   cachedAt?: Prisma.DateTimeFilter<"SearchCache"> | Date | string
 }
 
@@ -189,7 +185,7 @@ export type SearchCacheWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.SearchCacheWhereInput | Prisma.SearchCacheWhereInput[]
   OR?: Prisma.SearchCacheWhereInput[]
   NOT?: Prisma.SearchCacheWhereInput | Prisma.SearchCacheWhereInput[]
-  jsonResult?: Prisma.StringFilter<"SearchCache"> | string
+  jsonResult?: Prisma.JsonFilter<"SearchCache">
   cachedAt?: Prisma.DateTimeFilter<"SearchCache"> | Date | string
 }, "id" | "query">
 
@@ -209,56 +205,56 @@ export type SearchCacheScalarWhereWithAggregatesInput = {
   NOT?: Prisma.SearchCacheScalarWhereWithAggregatesInput | Prisma.SearchCacheScalarWhereWithAggregatesInput[]
   id?: Prisma.UuidWithAggregatesFilter<"SearchCache"> | string
   query?: Prisma.StringWithAggregatesFilter<"SearchCache"> | string
-  jsonResult?: Prisma.StringWithAggregatesFilter<"SearchCache"> | string
+  jsonResult?: Prisma.JsonWithAggregatesFilter<"SearchCache">
   cachedAt?: Prisma.DateTimeWithAggregatesFilter<"SearchCache"> | Date | string
 }
 
 export type SearchCacheCreateInput = {
   id?: string
   query: string
-  jsonResult: string
+  jsonResult: Prisma.JsonNullValueInput | runtime.InputJsonValue
   cachedAt?: Date | string
 }
 
 export type SearchCacheUncheckedCreateInput = {
   id?: string
   query: string
-  jsonResult: string
+  jsonResult: Prisma.JsonNullValueInput | runtime.InputJsonValue
   cachedAt?: Date | string
 }
 
 export type SearchCacheUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   query?: Prisma.StringFieldUpdateOperationsInput | string
-  jsonResult?: Prisma.StringFieldUpdateOperationsInput | string
+  jsonResult?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   cachedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type SearchCacheUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   query?: Prisma.StringFieldUpdateOperationsInput | string
-  jsonResult?: Prisma.StringFieldUpdateOperationsInput | string
+  jsonResult?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   cachedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type SearchCacheCreateManyInput = {
   id?: string
   query: string
-  jsonResult: string
+  jsonResult: Prisma.JsonNullValueInput | runtime.InputJsonValue
   cachedAt?: Date | string
 }
 
 export type SearchCacheUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   query?: Prisma.StringFieldUpdateOperationsInput | string
-  jsonResult?: Prisma.StringFieldUpdateOperationsInput | string
+  jsonResult?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   cachedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type SearchCacheUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   query?: Prisma.StringFieldUpdateOperationsInput | string
-  jsonResult?: Prisma.StringFieldUpdateOperationsInput | string
+  jsonResult?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   cachedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -272,14 +268,12 @@ export type SearchCacheCountOrderByAggregateInput = {
 export type SearchCacheMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   query?: Prisma.SortOrder
-  jsonResult?: Prisma.SortOrder
   cachedAt?: Prisma.SortOrder
 }
 
 export type SearchCacheMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   query?: Prisma.SortOrder
-  jsonResult?: Prisma.SortOrder
   cachedAt?: Prisma.SortOrder
 }
 
@@ -321,7 +315,7 @@ export type $SearchCachePayload<ExtArgs extends runtime.Types.Extensions.Interna
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     query: string
-    jsonResult: string
+    jsonResult: runtime.JsonValue
     cachedAt: Date
   }, ExtArgs["result"]["searchCache"]>
   composites: {}
@@ -748,7 +742,7 @@ export interface Prisma__SearchCacheClient<T, Null = never, ExtArgs extends runt
 export interface SearchCacheFieldRefs {
   readonly id: Prisma.FieldRef<"SearchCache", 'String'>
   readonly query: Prisma.FieldRef<"SearchCache", 'String'>
-  readonly jsonResult: Prisma.FieldRef<"SearchCache", 'String'>
+  readonly jsonResult: Prisma.FieldRef<"SearchCache", 'Json'>
   readonly cachedAt: Prisma.FieldRef<"SearchCache", 'DateTime'>
 }
     

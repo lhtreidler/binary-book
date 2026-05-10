@@ -65,6 +65,11 @@ export type Ranking = Prisma.RankingModel
  */
 export type RankingSession = Prisma.RankingSessionModel
 /**
+ * Model RankingStep
+ * 
+ */
+export type RankingStep = Prisma.RankingStepModel
+/**
  * Model SearchCache
  * 
  */

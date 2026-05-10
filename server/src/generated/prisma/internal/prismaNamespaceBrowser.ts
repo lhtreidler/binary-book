@@ -53,6 +53,7 @@ export const ModelName = {
   Book: 'Book',
   Ranking: 'Ranking',
   RankingSession: 'RankingSession',
+  RankingStep: 'RankingStep',
   SearchCache: 'SearchCache'
 } as const
 
@@ -113,15 +114,25 @@ export type RankingScalarFieldEnum = (typeof RankingScalarFieldEnum)[keyof typeo
 export const RankingSessionScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
-  bookId: 'bookId',
-  low: 'low',
-  high: 'high',
-  level: 'level',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type RankingSessionScalarFieldEnum = (typeof RankingSessionScalarFieldEnum)[keyof typeof RankingSessionScalarFieldEnum]
+
+
+export const RankingStepScalarFieldEnum = {
+  id: 'id',
+  bookId: 'bookId',
+  rankingSessionId: 'rankingSessionId',
+  seq: 'seq',
+  low: 'low',
+  high: 'high',
+  level: 'level',
+  createdAt: 'createdAt'
+} as const
+
+export type RankingStepScalarFieldEnum = (typeof RankingStepScalarFieldEnum)[keyof typeof RankingStepScalarFieldEnum]
 
 
 export const SearchCacheScalarFieldEnum = {
@@ -142,6 +153,13 @@ export const SortOrder = {
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
+
+
 export const QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
@@ -156,4 +174,13 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 
