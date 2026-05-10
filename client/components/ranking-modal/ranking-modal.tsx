@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 
 import { Box } from "../ui/box";
 import { Button, ButtonText } from "../ui/button";
@@ -92,6 +92,10 @@ export const RankingModal = ({
     } catch {
       setError("Could not start ranking. Please try again.");
     }
+  };
+
+  const handleBack = () => {
+    setComparisons((prev) => prev.slice(0, -1));
   };
 
   const handleChoice = async (choseNew: boolean) => {
@@ -198,7 +202,7 @@ export const RankingModal = ({
   return (
     <Modal isOpen={isOpen} onClose={onCloseModal}>
       <ModalBackdrop />
-      <ModalContent className="h-2/3">
+      <ModalContent>
         {isLoading && (
           <Box className="absolute inset-0 z-10 items-center justify-center bg-white/60 rounded-md">
             <Spinner />
@@ -219,6 +223,13 @@ export const RankingModal = ({
             )}
           </VStack>
         </ModalBody>
+        {phase === "comparing" && comparisons.length > 1 && (
+          <ModalFooter className="justify-start">
+            <Button variant="outline" onPress={handleBack} isDisabled={isLoading}>
+              <ButtonText>Back</ButtonText>
+            </Button>
+          </ModalFooter>
+        )}
         {phase === "score" && (
           <ModalFooter>
             <Button onPress={onCloseModal}>
