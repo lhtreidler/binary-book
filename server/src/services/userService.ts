@@ -19,6 +19,22 @@ const create = (data: CreateUser) => {
   });
 };
 
+const getIsEmailTaken = async (data: { email: string }) => {
+  const existingCount = await prisma.user.count({
+    where: { email: formatEmail(data.email) },
+  });
+
+  return existingCount === 0;
+};
+
+const getIsUsernameTaken = async (data: { username: string }) => {
+  const existingCount = await prisma.user.count({
+    where: { username: formatUsername(data.username) },
+  });
+
+  return existingCount === 0;
+};
+
 const getIsUniqueOrThrow = async (data: {
   username: string;
   email: string;
@@ -40,4 +56,6 @@ export const userService = {
   getByEmail,
   create,
   getIsUniqueOrThrow,
+  getIsEmailTaken,
+  getIsUsernameTaken,
 };

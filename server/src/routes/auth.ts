@@ -9,6 +9,7 @@ import { validateBody } from "../middleware/validation.js";
 import { userService } from "../services/userService.js";
 import { authService } from "../services/authService.js";
 import { formatEmail, formatUsername } from "../utils/format.js";
+import { authenticateToken } from "../middleware/auth.js";
 
 const router = Router();
 
@@ -112,5 +113,26 @@ router.get("/me", (req: Request, res: Response): void => {
   }
   res.json({ user: req.user });
 });
+
+router.get(
+  "/check-username",
+  authenticateToken,
+  async (req: Request, res: Response) => {
+    try {
+      const { username } = req.query;
+
+      if (!username || typeof username !== "string") {
+        res.status(400).send({ message: "Invalid request" });
+        return;
+      }
+
+      const isTaken = await userService.getIsUsernameTaken({ username });
+
+      res.json({ isTaken });
+    } catch {
+      res.status(500).send({ message: "Internal Server Error" });
+    }
+  },
+);
 
 export default router;
