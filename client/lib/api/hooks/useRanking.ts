@@ -16,10 +16,12 @@ export interface StartRankingInput {
   gId: string;
 }
 
+export type RankingSelection = "new" | "existing" | "skip";
+
 export interface ContinueRankingInput {
   sessionId: string;
   seq: number;
-  choseNew: boolean;
+  selection: RankingSelection;
 }
 
 export interface QuitRankingInput {

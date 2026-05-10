@@ -25,7 +25,7 @@ import {
   useStartRanking,
 } from "@/lib/api";
 import { FinishedRankingResponse } from "@/lib/api/types";
-import { useQuitRanking } from "@/lib/api/hooks/useRanking";
+import { RankingSelection, useQuitRanking } from "@/lib/api/hooks/useRanking";
 import { sliceJoinArray, sliceString } from "@/lib/format-utils";
 import { TierButtons, Phase, phaseToHeader } from "./constants";
 
@@ -64,10 +64,7 @@ export const RankingModal = ({
   const continueMutation = useContinueRanking();
   const quitRanking = useQuitRanking();
 
-  console.log(error);
-
   const applyResult = (res: StartRankingResponse | ContinueRankingResponse) => {
-    console.log(res);
     if ("sessionId" in res) {
       setSessionId(res.sessionId);
     }
@@ -98,17 +95,20 @@ export const RankingModal = ({
     setComparisons((prev) => prev.slice(0, -1));
   };
 
-  const handleChoice = async (choseNew: boolean) => {
+  const handleChoice = async (selection: RankingSelection) => {
     if (!sessionId) return;
     setError(null);
     try {
       const result = await continueMutation.mutateAsync({
         sessionId,
-        choseNew,
+        selection,
         seq: comparisons.length,
       });
-      console.log({ result });
-      applyResult(result);
+      if (selection === "skip" && !getIsFinishedRankingResponse(result)) {
+        setComparisons((prev) => [...prev.slice(0, -1), result.compareBook]);
+      } else {
+        applyResult(result);
+      }
     } catch {
       setError("Could not continue ranking. Please try again.");
     }
@@ -165,7 +165,7 @@ export const RankingModal = ({
               <>
                 <Pressable
                   key={title}
-                  onPress={() => handleChoice(isNew)}
+                  onPress={() => handleChoice(isNew ? "new" : "existing")}
                   disabled={isLoading}
                   className="flex-1"
                 >
@@ -223,10 +223,25 @@ export const RankingModal = ({
             )}
           </VStack>
         </ModalBody>
-        {phase === "comparing" && comparisons.length > 1 && (
-          <ModalFooter className="justify-start">
-            <Button variant="outline" onPress={handleBack} isDisabled={isLoading}>
-              <ButtonText>Back</ButtonText>
+        {phase === "comparing" && (
+          <ModalFooter className="justify-between">
+            {comparisons.length > 1 ? (
+              <Button
+                variant="outline"
+                onPress={handleBack}
+                isDisabled={isLoading}
+              >
+                <ButtonText>Back</ButtonText>
+              </Button>
+            ) : (
+              <Box />
+            )}
+            <Button
+              variant="outline"
+              onPress={() => handleChoice("skip")}
+              isDisabled={isLoading}
+            >
+              <ButtonText>Skip</ButtonText>
             </Button>
           </ModalFooter>
         )}

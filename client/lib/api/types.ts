@@ -89,7 +89,7 @@ export interface RankingBookInfo {
 }
 
 export type FinishedRankingResponse = { score: number; bookId: string };
-type RankingResponse = { seq: number; compareBook: RankingBookInfo };
+type RankingResponse = { compareBook: RankingBookInfo };
 
 export type StartRankingResponse =
   | ({

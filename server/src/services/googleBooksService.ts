@@ -47,9 +47,7 @@ const queryGoogleBooks = async ({
   const cachedResult = await searchCacheService.getByQuery({ query });
 
   if (cachedResult?.jsonResult) {
-    return formatResult(
-      JSON.parse(cachedResult.jsonResult) as GoogleBooksSearchResponse,
-    );
+    return JSON.parse(cachedResult.jsonResult) as FormattedBookItems;
   }
 
   const formattedResult = await fetchBooks(query);
