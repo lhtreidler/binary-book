@@ -20,6 +20,7 @@ export type {
   StartRankingResponse,
   ContinueRankingResponse,
   ApiError,
+  SearchUserResponse,
 } from "./types";
 
 export * from "./hooks";

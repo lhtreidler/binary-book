@@ -56,6 +56,12 @@ const getUserById = ({ id }: { id: string }) => {
   return prisma.user.findFirst({ where: { id } });
 };
 
+const getByUsername = ({ username }: { username: string }) => {
+  return prisma.user.findUnique({
+    where: { username: formatUsername(username) },
+  });
+};
+
 const update = ({
   data,
   id,
@@ -68,6 +74,7 @@ const update = ({
 
 export const userService = {
   getByEmail,
+  getByUsername,
   create,
   getIsUniqueOrThrow,
   getIsEmailTaken,

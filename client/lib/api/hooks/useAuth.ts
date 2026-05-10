@@ -16,6 +16,7 @@ import {
   ApiError,
   CheckUsernameResponse,
   UpdateUserResponse,
+  SearchUserResponse,
 } from "../types";
 import { useSession } from "@/session/ctx";
 import { AxiosError } from "axios";
@@ -88,6 +89,26 @@ export function useCheckUsername(
       const client = await getApiClient();
       const { data } = await client.get<CheckUsernameResponse>(
         `/auth/check-username?username=${encodeURI(username)}`,
+      );
+      return data;
+    },
+    enabled: !!username && enabled,
+  });
+}
+
+/**
+ * Search for a user by username
+ */
+export function useSearchUser(
+  username: string,
+  enabled = true,
+): UseQueryResult<SearchUserResponse | null, ApiError> {
+  return useQuery({
+    queryKey: ["auth", "user", username],
+    queryFn: async () => {
+      const client = await getApiClient();
+      const { data } = await client.get<SearchUserResponse>(
+        `/auth/user/${encodeURIComponent(username)}`,
       );
       return data;
     },
