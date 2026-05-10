@@ -179,7 +179,9 @@ const getRankingCountByLevel = async ({
 const createRankingAndGetScore = async (data: BaseRanking) => {
   const ranking = await prisma.ranking.create({ data });
 
-  return getRankingScore(ranking);
+  const score = await getRankingScore(ranking);
+
+  return { score, bookId: ranking.bookId };
 };
 
 const getBookByOffset = async ({

@@ -51,14 +51,14 @@ router.post("/start", validateBody(startRankingSchema), async (req, res) => {
     });
 
     if (rankingCount === 0) {
-      const score = await rankingService.createRankingAndGetScore({
+      const result = await rankingService.createRankingAndGetScore({
         userId,
         rawScore: STARTING_RAW_SCORE,
         bookId,
         level: rankingLevel,
       });
 
-      res.send({ score });
+      res.send(result);
       return;
     }
 

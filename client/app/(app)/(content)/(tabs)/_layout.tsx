@@ -7,6 +7,7 @@ import {
   StarIcon,
 } from "@/components/ui/icon";
 import { ComponentProps } from "react";
+import { Box } from "@/components/ui/box";
 
 type IconAs = ComponentProps<typeof Icon>["as"];
 

@@ -68,7 +68,7 @@ const createFinalRankingAndReturnScore = async ({
     rawScore = (lowRanking.rawScore + highRanking.rawScore) / 2;
   }
 
-  const score = await rankingService.createRankingAndGetScore({
+  const { score } = await rankingService.createRankingAndGetScore({
     userId,
     rawScore,
     bookId,
