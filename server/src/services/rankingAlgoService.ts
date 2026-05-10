@@ -1,4 +1,10 @@
-import { rankingService, rankingSessionService, STARTING_RAW_SCORE } from ".";
+import {
+  rankingService,
+  rankingSessionService,
+  rankingStepService,
+  STARTING_RAW_SCORE,
+} from ".";
+import { rankingSelection, RankingSelection } from "../utils/schemas";
 
 const createFinalRankingAndReturnScore = async ({
   insertionIndex,
@@ -19,7 +25,7 @@ const createFinalRankingAndReturnScore = async ({
   let rawScore: number;
 
   const getBook = async (skip: number) =>
-    rankingService.getBookByOffset({
+    rankingService.getRankingByOffset({
       skip,
       userId,
       includeBook: false,
@@ -78,6 +84,58 @@ const createFinalRankingAndReturnScore = async ({
   return score;
 };
 
+const handleContinueRanking = async ({
+  userId,
+  rankingSessionId,
+  seq,
+  selection,
+}: {
+  userId: string;
+  rankingSessionId: string;
+  seq: number;
+  selection: RankingSelection;
+}) => {
+  const { rankingSession, ...rankingStep } =
+    await rankingStepService.getStepAndDeleteNext({
+      seq,
+      rankingSessionId,
+      userId,
+    });
+
+  const { low, high, skippedOffsets } = rankingStep;
+
+  const avg = Math.floor((low + high) / 2);
+
+  let offset: number | undefined;
+  let newLow = low;
+  let newHigh = high;
+
+  if (selection === rankingSelection.skip) {
+    const numSkips = skippedOffsets.length;
+    if (!numSkips) {
+      offset = avg - 1;
+    } else {
+      const diff =
+        (1 + Math.floor(numSkips / 2)) * (numSkips % 2 === 0 ? -1 : 1);
+      offset = avg + diff;
+    }
+  } else {
+    const choseNew = selection === rankingSelection.new;
+    newLow = choseNew ? avg + 1 : low;
+    newHigh = choseNew ? high : avg;
+  }
+
+  return rankingAlgoService.handleRankingSearch({
+    userId,
+    rankingSessionId,
+    bookId: rankingSession.bookId,
+    low: newLow,
+    high: newHigh,
+    level: rankingSession.level,
+    offset,
+  });
+};
+
 const handleRankingSearch = async ({
   userId,
   rankingSessionId,
@@ -85,31 +143,41 @@ const handleRankingSearch = async ({
   low,
   high,
   level,
+  offset,
 }: {
   userId: string;
-  rankingSessionId: string;
+  rankingSessionId?: string;
   bookId: string;
   low: number;
   high: number;
   level: number;
+  offset?: number;
 }) => {
-  if (low >= high) {
+  const avg = Math.floor((low + high) / 2);
+
+  if (
+    low >= high ||
+    (offset !== undefined && (offset <= low || offset >= high))
+  ) {
     const score = await createFinalRankingAndReturnScore({
-      insertionIndex: low,
+      insertionIndex: avg,
       userId,
       level,
       bookId,
     });
-    // Clean up the ranking session
-    await rankingSessionService.delete({ id: rankingSessionId, userId });
+
+    // Clean up the ranking session if it was created
+    if (rankingSessionId) {
+      await rankingSessionService.delete({ id: rankingSessionId, userId });
+    }
 
     // Return the final score and no further comparisons needed
     return { score, bookId };
   }
 
-  const skip = Math.floor((low + high) / 2);
+  const skip = offset === undefined ? avg : offset;
 
-  const rankingToCompare = await rankingService.getBookByOffset({
+  const rankingToCompare = await rankingService.getRankingByOffset({
     skip,
     userId,
     includeBook: true,
@@ -120,15 +188,48 @@ const handleRankingSearch = async ({
     throw new Error("Ranking not found");
   }
 
-  await rankingSessionService.update({ high, low, id: rankingSessionId });
-
   const { book } = rankingToCompare;
 
+  const rankingStepData = { low, high };
+
+  const compareBook = { title: book.title, authors: book.authors };
+
+  if (!rankingSessionId) {
+    const {
+      rankingSession: { id },
+    } = await rankingSessionService.createSessionAndFirstStep({
+      userId,
+      level,
+      bookId,
+      ...rankingStepData,
+    });
+
+    return {
+      compareBook,
+      sessionId: id,
+    };
+  }
+
+  if (offset === undefined) {
+    await rankingSessionService.createNextStep({
+      ...rankingStepData,
+      rankingSessionId,
+      userId,
+    });
+  } else {
+    await rankingSessionService.addSkippedOffset({
+      rankingSessionId,
+      userId,
+      offset,
+    });
+  }
+
   return {
-    compareBook: { title: book.title, authors: book.authors },
+    compareBook,
   };
 };
 
 export const rankingAlgoService = {
   handleRankingSearch,
+  handleContinueRanking,
 };

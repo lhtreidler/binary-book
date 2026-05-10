@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 // Reusable field schemas
-export const emailSchema = z.string().email("Invalid email address");
+export const emailSchema = z.email("Invalid email address");
 export const passwordSchema = z
   .string()
   .min(8, "Password must be at least 8 characters");
@@ -37,13 +37,20 @@ export type UpdateUserInput = z.infer<typeof updateUserSchema>;
 
 // RANKING SCHEMAS
 
+export const rankingSelection = {
+  new: "new",
+  existing: "existing",
+  skip: "skip",
+} as const;
+
 export const startRankingSchema = z.object({
   gId: z.string().min(1),
   rankingLevel: z.int().min(0).max(2),
 });
 export const continueRankingSchema = z.object({
   sessionId: z.string().min(1),
-  choseNew: z.boolean(),
+  seq: z.number(),
+  selection: z.enum(Object.values(rankingSelection)),
 });
 export const quitRankingSchema = z.object({
   sessionId: z.string().min(1),
@@ -51,4 +58,5 @@ export const quitRankingSchema = z.object({
 
 export type StartRankingInput = z.infer<typeof startRankingSchema>;
 export type ContinueRankingInput = z.infer<typeof continueRankingSchema>;
+export type RankingSelection = ContinueRankingInput["selection"];
 export type QuitRankingInput = z.infer<typeof quitRankingSchema>;

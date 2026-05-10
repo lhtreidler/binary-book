@@ -54,8 +54,6 @@ export function SignInForm({ type }: { type: "login" | "signup" }) {
     } catch (error) {
       const err = error as AxiosError;
 
-      console.log(err.message);
-
       const message =
         err.message ||
         (isLogIn

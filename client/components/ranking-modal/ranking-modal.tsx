@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 
 import { Box } from "../ui/box";
 import { Button, ButtonText } from "../ui/button";
@@ -25,10 +25,9 @@ import {
   useStartRanking,
 } from "@/lib/api";
 import { FinishedRankingResponse } from "@/lib/api/types";
-import { useQuitRanking } from "@/lib/api/hooks/useRanking";
+import { RankingSelection, useQuitRanking } from "@/lib/api/hooks/useRanking";
 import { sliceJoinArray, sliceString } from "@/lib/format-utils";
 import { TierButtons, Phase, phaseToHeader } from "./constants";
-import { useRouter } from "expo-router";
 
 const formatAuthors = (authors: string[]) =>
   authors.length ? authors.join(", ") : "Unknown Author";
@@ -50,14 +49,16 @@ export const RankingModal = ({
 }) => {
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [compareBook, setCompareBook] = useState<RankingBookInfo | null>(null);
+  const [comparisons, setComparisons] = useState<RankingBookInfo[]>([]);
   const [result, setResult] = useState<FinishedRankingResponse | null>(null);
+
+  const bookToCompare = comparisons[comparisons.length - 1];
 
   const phase: Phase = useMemo(() => {
     if (result) return "score";
-    if (compareBook) return "comparing";
+    if (comparisons.length) return "comparing";
     return "tier";
-  }, [result, compareBook]);
+  }, [result, comparisons]);
 
   const startMutation = useStartRanking();
   const continueMutation = useContinueRanking();
@@ -71,7 +72,7 @@ export const RankingModal = ({
     if (getIsFinishedRankingResponse(res)) {
       setResult(res);
     } else {
-      setCompareBook(res.compareBook);
+      setComparisons((prev) => [...prev, res.compareBook]);
     }
   };
 
@@ -90,15 +91,24 @@ export const RankingModal = ({
     }
   };
 
-  const handleChoice = async (choseNew: boolean) => {
+  const handleBack = () => {
+    setComparisons((prev) => prev.slice(0, -1));
+  };
+
+  const handleChoice = async (selection: RankingSelection) => {
     if (!sessionId) return;
     setError(null);
     try {
       const result = await continueMutation.mutateAsync({
         sessionId,
-        choseNew,
+        selection,
+        seq: comparisons.length,
       });
-      applyResult(result);
+      if (selection === "skip" && !getIsFinishedRankingResponse(result)) {
+        setComparisons((prev) => [...prev.slice(0, -1), result.compareBook]);
+      } else {
+        applyResult(result);
+      }
     } catch {
       setError("Could not continue ranking. Please try again.");
     }
@@ -106,14 +116,14 @@ export const RankingModal = ({
 
   const onCloseModal = () => {
     setResult(null);
-    setCompareBook(null);
+    setComparisons([]);
     setSessionId(null);
     setError(null);
-    if (result) {
-      onClose(result.bookId);
-    } else if (sessionId) {
+    if (sessionId && !result) {
       quitRanking.mutate({ sessionId });
     }
+
+    onClose((result && result.bookId) || undefined);
   };
 
   const isLoading = startMutation.isPending || continueMutation.isPending;
@@ -144,18 +154,18 @@ export const RankingModal = ({
       );
     }
 
-    if (phase === "comparing" && compareBook) {
+    if (phase === "comparing" && bookToCompare) {
       return (
         <>
           <HStack space="md" className="items-center justify-center">
             {[
               { ...book, isNew: true },
-              { ...compareBook, isNew: false },
+              { ...bookToCompare, isNew: false },
             ].map(({ title, authors = [], isNew }, i) => (
               <>
                 <Pressable
                   key={title}
-                  onPress={() => handleChoice(isNew)}
+                  onPress={() => handleChoice(isNew ? "new" : "existing")}
                   disabled={isLoading}
                   className="flex-1"
                 >
@@ -203,12 +213,38 @@ export const RankingModal = ({
             {phaseToHeader[phase]}
           </Text>
         </ModalHeader>
-        <ModalBody>
-          {getContent()}
-          {error && (
-            <Text className="text-error-400 text-center mt-2">{error}</Text>
-          )}
+        <ModalBody className="h-fit">
+          <VStack>
+            {getContent()}
+            {error && (
+              <Box>
+                <Text className="text-error-400 text-center mt-2">{error}</Text>
+              </Box>
+            )}
+          </VStack>
         </ModalBody>
+        {phase === "comparing" && (
+          <ModalFooter className="justify-between">
+            {comparisons.length > 1 ? (
+              <Button
+                variant="outline"
+                onPress={handleBack}
+                isDisabled={isLoading}
+              >
+                <ButtonText>Back</ButtonText>
+              </Button>
+            ) : (
+              <Box />
+            )}
+            <Button
+              variant="outline"
+              onPress={() => handleChoice("skip")}
+              isDisabled={isLoading}
+            >
+              <ButtonText>Skip</ButtonText>
+            </Button>
+          </ModalFooter>
+        )}
         {phase === "score" && (
           <ModalFooter>
             <Button onPress={onCloseModal}>

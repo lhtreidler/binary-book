@@ -184,7 +184,7 @@ const createRankingAndGetScore = async (data: BaseRanking) => {
   return { score, bookId: ranking.bookId };
 };
 
-const getBookByOffset = async ({
+const getRankingByOffset = async ({
   skip,
   userId,
   includeBook,
@@ -211,7 +211,7 @@ export const rankingService = {
   getRankingByBook,
   getRankingCountByLevel,
   createRankingAndGetScore,
-  getBookByOffset,
+  getRankingByOffset,
   getHighestLowestRankingScores,
   getRankingScore,
 };

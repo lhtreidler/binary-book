@@ -53,6 +53,7 @@ export const ModelName = {
   Book: 'Book',
   Ranking: 'Ranking',
   RankingSession: 'RankingSession',
+  RankingStep: 'RankingStep',
   SearchCache: 'SearchCache'
 } as const
 
@@ -114,14 +115,25 @@ export const RankingSessionScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   bookId: 'bookId',
-  low: 'low',
-  high: 'high',
-  level: 'level',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  level: 'level'
 } as const
 
 export type RankingSessionScalarFieldEnum = (typeof RankingSessionScalarFieldEnum)[keyof typeof RankingSessionScalarFieldEnum]
+
+
+export const RankingStepScalarFieldEnum = {
+  id: 'id',
+  rankingSessionId: 'rankingSessionId',
+  seq: 'seq',
+  low: 'low',
+  high: 'high',
+  skippedOffsets: 'skippedOffsets',
+  createdAt: 'createdAt'
+} as const
+
+export type RankingStepScalarFieldEnum = (typeof RankingStepScalarFieldEnum)[keyof typeof RankingStepScalarFieldEnum]
 
 
 export const SearchCacheScalarFieldEnum = {

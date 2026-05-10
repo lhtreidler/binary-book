@@ -5,6 +5,7 @@ import {
   continueRankingSchema,
   QuitRankingInput,
   quitRankingSchema,
+  rankingSelection,
   StartRankingInput,
   startRankingSchema,
 } from "../utils/schemas";
@@ -15,6 +16,7 @@ import {
   rankingSessionService,
   rankingAlgoService,
   STARTING_RAW_SCORE,
+  rankingStepService,
 } from "../services";
 
 const router = Router();
@@ -62,26 +64,26 @@ router.post("/start", validateBody(startRankingSchema), async (req, res) => {
       return;
     }
 
-    const rankingSession = await rankingSessionService.create({
-      userId,
-      level: rankingLevel,
-      bookId,
-    });
-
     const result = await rankingAlgoService.handleRankingSearch({
       userId,
-      rankingSessionId: rankingSession.id,
       bookId,
       low: 0,
       high: rankingCount,
-      level: rankingSession.level,
+      level: rankingLevel,
     });
 
-    res.send({ ...result, sessionId: rankingSession.id });
+    res.send(result);
   } catch (err) {
     res.status(500).json({ error: "Internal server error" });
   }
 });
+
+/**
+ * 1. Take in the rankingStepId & get it
+ * 2. Delete all steps where seq > current seq
+ * 3. Create new ranking step
+ *
+ */
 
 router.post(
   "/continue",
@@ -95,43 +97,13 @@ router.post(
         return;
       }
 
-      const { sessionId: rankingSessionId, choseNew } =
-        req.body as ContinueRankingInput;
+      const { seq, sessionId, selection } = req.body as ContinueRankingInput;
 
-      const rankingSession = await rankingSessionService.getById({
-        id: rankingSessionId,
+      const result = await rankingAlgoService.handleContinueRanking({
         userId,
-      });
-
-      if (!rankingSession) {
-        res.status(404).json({ error: "Ranking session not found" });
-        return;
-      }
-
-      const { low, high } = rankingSession;
-
-      if (low === null || high === null) {
-        res.status(400).json({ error: "Invalid ranking session state" });
-        return;
-      }
-
-      if (rankingSession.userId !== userId) {
-        res.status(403).json({ error: "Forbidden" });
-        return;
-      }
-
-      const avg = Math.floor((low + high) / 2);
-
-      const newLow = choseNew ? avg + 1 : low;
-      const newHigh = choseNew ? high : avg;
-
-      const result = await rankingAlgoService.handleRankingSearch({
-        userId,
-        rankingSessionId,
-        bookId: rankingSession.bookId,
-        low: newLow,
-        high: newHigh,
-        level: rankingSession.level,
+        rankingSessionId: sessionId,
+        seq,
+        selection,
       });
 
       res.send(result);
