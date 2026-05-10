@@ -16,7 +16,9 @@ const TabIcon = ({ as, color }: { as: IconAs; color: string }) => (
 
 export default function Index() {
   return (
-    <Tabs screenOptions={{ tabBarActiveTintColor: "#2563eb" }}>
+    <Tabs
+      screenOptions={{ tabBarActiveTintColor: "#2563eb", headerShown: false }}
+    >
       <Tabs.Screen
         name="index"
         options={{

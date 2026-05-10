@@ -14,6 +14,7 @@ import { VStack } from "../ui/vstack";
 import type { FormData, FormProps } from "./types";
 import { Field } from "./field";
 import { Box } from "../ui/box";
+import { Text } from "../ui/text";
 
 export const Form = ({
   questions,
@@ -23,6 +24,9 @@ export const Form = ({
   containerProps = {},
   isLoading = false,
   zodSchema,
+  errorMap = {},
+  error,
+  buttonContainerProps = {},
 }: FormProps) => {
   const [formData, setFormData] = useState<FormData>({});
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -72,6 +76,7 @@ export const Form = ({
           alignItems: "center",
           width: "100%",
         }}
+        {...buttonContainerProps}
       >
         <HStack space="lg">
           {buttons.map(({ label, onPress, ...buttonProps }, index) => (
@@ -102,7 +107,7 @@ export const Form = ({
       <VStack space="md">
         {questions.map((q) => {
           const { key, label, helperText } = q;
-          const error = errors[key];
+          const error = errorMap[key] || errors[key];
           return (
             <FormControl
               key={key}
@@ -119,11 +124,12 @@ export const Form = ({
                 onChange={onChangeHandler}
                 isFormDisabled={isFormDisabled}
               />
-              {helperText ? (
-                <FormControlHelper>
-                  <FormControlHelperText>{helperText}</FormControlHelperText>
-                </FormControlHelper>
-              ) : null}
+              {!!helperText &&
+                (typeof helperText === "string" ? (
+                  <FormControlHelper>
+                    <FormControlHelperText>{helperText}</FormControlHelperText>
+                  </FormControlHelper>
+                ) : helperText)}
               <FormControlError>
                 <FormControlErrorText className="text-red-500">
                   {error}
@@ -134,6 +140,7 @@ export const Form = ({
         })}
       </VStack>
       {getButtons()}
+      {error && <Text className="text-red-500">{error}</Text>}
     </VStack>
   );
 };

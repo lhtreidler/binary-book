@@ -3,7 +3,7 @@
  * Import from here for convenience
  */
 
-export { useMe, useLogin, useSignup } from "./useAuth";
+export { useMe, useLogin, useSignup, useIsAccountSetUp } from "./useAuth";
 export type { LoginInput, SignupInput } from "./useAuth";
 
 export { useStartRanking, useContinueRanking } from "./useRanking";

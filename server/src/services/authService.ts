@@ -22,16 +22,14 @@ const createUserAndReturnToken = async ({
 }: {
   email: string;
   password: string;
-  username: string;
 }) => {
   // Hash password
   const passwordHash = await createPasswordHash(password);
 
   const email = formatEmail(data.email);
-  const username = formatUsername(data.username);
 
   // Create user
-  const { id } = await userService.create({ email, passwordHash, username });
+  const { id } = await userService.create({ email, passwordHash });
 
   return createToken({
     userId: id,

@@ -5,7 +5,7 @@ import { OmitSystem, WithOptional } from "../utils/type-utils";
 
 type BaseUser = OmitSystem<User>;
 
-type CreateUser = WithOptional<BaseUser, "firstName" | "lastName">;
+type CreateUser = WithOptional<BaseUser, "firstName" | "lastName" | "username">;
 
 const getByEmail = ({ email }: { email: string }) => {
   return prisma.user.findUnique({
@@ -32,7 +32,7 @@ const getIsUsernameTaken = async (data: { username: string }) => {
     where: { username: formatUsername(data.username) },
   });
 
-  return existingCount === 0;
+  return existingCount > 0;
 };
 
 const getIsUniqueOrThrow = async (data: {
@@ -52,10 +52,26 @@ const getIsUniqueOrThrow = async (data: {
   }
 };
 
+const getUserById = ({ id }: { id: string }) => {
+  return prisma.user.findFirst({ where: { id } });
+};
+
+const update = ({
+  data,
+  id,
+}: {
+  id: string;
+  data: Partial<Pick<User, "firstName" | "lastName" | "username">>;
+}) => {
+  return prisma.user.update({ data, where: { id } });
+};
+
 export const userService = {
   getByEmail,
   create,
   getIsUniqueOrThrow,
   getIsEmailTaken,
   getIsUsernameTaken,
+  getUserById,
+  update,
 };
