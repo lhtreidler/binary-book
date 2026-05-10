@@ -1,5 +1,4 @@
 import { Router, Request, Response } from "express";
-import { prisma } from "../lib/prisma.js";
 import { authenticateToken } from "../middleware/auth.js";
 import { googleBooksService, rankingService } from "../services";
 import { bookService } from "../services";

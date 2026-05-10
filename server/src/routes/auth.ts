@@ -4,11 +4,14 @@ import {
   loginSchema,
   SignupInput,
   signupSchema,
+  UpdateUserInput,
+  updateUserSchema,
 } from "../utils/schemas.js";
 import { validateBody } from "../middleware/validation.js";
 import { userService } from "../services/userService.js";
 import { authService } from "../services/authService.js";
 import { formatEmail, formatUsername } from "../utils/format.js";
+import { authenticateToken } from "../middleware/auth.js";
 
 const router = Router();
 
@@ -18,14 +21,9 @@ router.post(
   validateBody(signupSchema),
   async (req: Request, res: Response): Promise<void> => {
     try {
-      const {
-        email: unformattedEmail,
-        username: unformattedUsername,
-        password,
-      } = req.body as SignupInput;
+      const { email: unformattedEmail, password } = req.body as SignupInput;
 
       const email = formatEmail(unformattedEmail);
-      const username = formatUsername(unformattedUsername);
 
       // Check if user already exists
       const existingUser = await userService.getByEmail({ email });
@@ -38,7 +36,6 @@ router.post(
       const token = await authService.createUserAndReturnToken({
         email,
         password,
-        username,
       });
 
       res.status(201).json({
@@ -105,12 +102,66 @@ router.post(
 );
 
 // Get current user
-router.get("/me", (req: Request, res: Response): void => {
+router.get("/me", authenticateToken, async (req: Request, res: Response) => {
   if (!req.user) {
     res.status(401).json({ message: "Not authenticated" });
     return;
   }
-  res.json({ user: req.user });
+
+  const user = await userService.getUserById({ id: req.user.userId });
+
+  if (!user) {
+    res.status(401).json({ message: "User not found" });
+    return;
+  }
+
+  const { email, username, firstName, lastName } = user;
+
+  res.json({ email, username, firstName, lastName });
 });
+
+router.get(
+  "/check-username",
+  authenticateToken,
+  async (req: Request, res: Response) => {
+    try {
+      const { username } = req.query;
+
+      if (!username || typeof username !== "string") {
+        res.status(400).send({ message: "Invalid request" });
+        return;
+      }
+
+      const isTaken = await userService.getIsUsernameTaken({ username });
+
+      res.json({ isTaken });
+    } catch {
+      res.status(500).send({ message: "Internal Server Error" });
+    }
+  },
+);
+
+router.post(
+  "/details",
+  authenticateToken,
+  validateBody(updateUserSchema),
+  async (req: Request, res: Response) => {
+    try {
+      const { user } = req;
+
+      if (!user || !user.userId) {
+        res.status(401).send({ message: "Unauthorized" });
+        return;
+      }
+
+      const data = req.body as UpdateUserInput;
+
+      await userService.update({ id: user.userId, data });
+      res.send({ success: true });
+    } catch {
+      res.status(500).send({ message: "Internal Server Error" });
+    }
+  },
+);
 
 export default router;

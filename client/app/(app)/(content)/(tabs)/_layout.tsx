@@ -7,6 +7,7 @@ import {
   StarIcon,
 } from "@/components/ui/icon";
 import { ComponentProps } from "react";
+import { Box } from "@/components/ui/box";
 
 type IconAs = ComponentProps<typeof Icon>["as"];
 
@@ -16,7 +17,9 @@ const TabIcon = ({ as, color }: { as: IconAs; color: string }) => (
 
 export default function Index() {
   return (
-    <Tabs screenOptions={{ tabBarActiveTintColor: "#2563eb" }}>
+    <Tabs
+      screenOptions={{ tabBarActiveTintColor: "#2563eb", headerShown: false }}
+    >
       <Tabs.Screen
         name="index"
         options={{

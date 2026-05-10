@@ -3,7 +3,6 @@
  */
 
 export interface User {
-  id: string;
   email: string;
   firstName: string | null;
   lastName: string | null;
@@ -14,8 +13,14 @@ export interface AuthResponse {
   token: string;
 }
 
-export interface MeResponse {
-  user: User;
+export interface UpdateUserResponse {
+  success: boolean;
+}
+
+export type MeResponse = User;
+
+export interface CheckUsernameResponse {
+  isTaken: boolean;
 }
 
 export interface Book {

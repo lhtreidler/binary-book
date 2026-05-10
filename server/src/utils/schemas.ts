@@ -8,13 +8,15 @@ export const passwordSchema = z
 export const nameSchema = z.string().min(1, "Name is required").optional();
 export const usernameSchema = z
   .string()
-  .min(3, "Username must be at least 3 characters");
+  .min(4, "Username must be at least 4 characters")
+  .max(20, "Username must be 20 characters or less")
+  .regex(/^[a-z0-9_.]+$/, "Username cannot contain special characters")
+  .lowercase("Username must be lowercase");
 
 // Auth schemas
 export const signupSchema = z.object({
   email: emailSchema,
   password: passwordSchema,
-  username: usernameSchema,
 });
 
 export const loginSchema = z.object({
@@ -22,9 +24,16 @@ export const loginSchema = z.object({
   password: z.string().min(1, "Password is required"),
 });
 
+export const updateUserSchema = z.object({
+  username: usernameSchema.optional(),
+  firstName: z.string().min(1).optional(),
+  lastName: z.string().min(1).optional(),
+});
+
 // Type inference
 export type SignupInput = z.infer<typeof signupSchema>;
 export type LoginInput = z.infer<typeof loginSchema>;
+export type UpdateUserInput = z.infer<typeof updateUserSchema>;
 
 // RANKING SCHEMAS
 

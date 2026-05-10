@@ -62,7 +62,6 @@ export const RankingModal = ({
   const startMutation = useStartRanking();
   const continueMutation = useContinueRanking();
   const quitRanking = useQuitRanking();
-  const router = useRouter();
 
   const applyResult = (res: StartRankingResponse | ContinueRankingResponse) => {
     if ("sessionId" in res) {
