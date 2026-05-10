@@ -1,13 +1,27 @@
-import { RankingSession } from "../generated/prisma/client";
+import { RankingSession, RankingStep } from "../generated/prisma/client";
 import { prisma } from "../lib/prisma";
+import { OmitSystem } from "../utils/type-utils";
 
-type BaseRankingSession = Omit<
-  RankingSession,
-  "updatedAt" | "createdAt" | "id"
->;
+type BaseRankingStep = OmitSystem<RankingStep>;
 
-const create = (data: Omit<BaseRankingSession, "low" | "high">) => {
-  return prisma.rankingSession.create({ data });
+const createSessionAndFirstStep = async ({
+  userId,
+  data,
+}: {
+  userId: string;
+  data: Omit<BaseRankingStep, "rankingSessionId" | "seq">;
+}) => {
+  return prisma.rankingSession.create({
+    data: {
+      userId,
+      rankingSteps: {
+        create: {
+          ...data,
+          seq: 1,
+        },
+      },
+    },
+  });
 };
 
 const update = ({ id, ...data }: { id: string; high: number; low: number }) => {
@@ -26,11 +40,14 @@ const getById = (where: { id: string; userId: string }) => {
 const deleteSession = (where: { id: string; userId: string }) => {
   return prisma.rankingSession.delete({
     where,
+    include: {
+      rankingSteps: true,
+    },
   });
 };
 
 export const rankingSessionService = {
-  create,
+  createSessionAndFirstStep,
   getById,
   delete: deleteSession,
   update,

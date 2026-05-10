@@ -62,12 +62,6 @@ router.post("/start", validateBody(startRankingSchema), async (req, res) => {
       return;
     }
 
-    const rankingSession = await rankingSessionService.create({
-      userId,
-      level: rankingLevel,
-      bookId,
-    });
-
     const result = await rankingAlgoService.handleRankingSearch({
       userId,
       rankingSessionId: rankingSession.id,
@@ -77,11 +71,27 @@ router.post("/start", validateBody(startRankingSchema), async (req, res) => {
       level: rankingSession.level,
     });
 
+    const rankingSession =
+      await rankingSessionService.createSessionAndFirstStep({
+        userId,
+        level: rankingLevel,
+        bookId,
+      });
+    // Clean up the ranking session
+    await rankingSessionService.delete({ id: rankingSessionId, userId });
+
     res.send({ ...result, sessionId: rankingSession.id });
   } catch (err) {
     res.status(500).json({ error: "Internal server error" });
   }
 });
+
+/**
+ * 1. Take in the rankingStepId & get it
+ * 2. Delete all steps where seq > current seq
+ * 3. Create new ranking step
+ *
+ */
 
 router.post(
   "/continue",

@@ -87,7 +87,7 @@ const handleRankingSearch = async ({
   level,
 }: {
   userId: string;
-  rankingSessionId: string;
+  rankingSessionId?: string;
   bookId: string;
   low: number;
   high: number;
@@ -100,8 +100,11 @@ const handleRankingSearch = async ({
       level,
       bookId,
     });
-    // Clean up the ranking session
-    await rankingSessionService.delete({ id: rankingSessionId, userId });
+
+    // Clean up the ranking session if it was created
+    if (rankingSessionId) {
+      await rankingSessionService.delete({ id: rankingSessionId, userId });
+    }
 
     // Return the final score and no further comparisons needed
     return { score, bookId };
@@ -120,12 +123,24 @@ const handleRankingSearch = async ({
     throw new Error("Ranking not found");
   }
 
-  await rankingSessionService.update({ high, low, id: rankingSessionId });
-
   const { book } = rankingToCompare;
 
+  if (!rankingSessionId) {
+    const rankingSession =
+      await rankingSessionService.createSessionAndFirstStep({
+        userId,
+        data: {
+          low,
+          high,
+          bookId: book.id,
+        },
+      });
+  }
+
   return {
-    compareBook: { title: book.title, authors: book.authors },
+    compareBook: book,
+    low,
+    high,
   };
 };
 
