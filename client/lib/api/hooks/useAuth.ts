@@ -181,7 +181,6 @@ export function useUploadProfileImage(): UseMutationResult<
     mutationFn: async ({ localUri, mimeType }) => {
       const { uploadToCloudinary } = await import("@/lib/cloudinary");
       const url = await uploadToCloudinary(localUri, mimeType);
-      console.log({ url });
 
       const client = await getApiClient();
       await client.post<UpdateUserResponse>("/auth/details", {

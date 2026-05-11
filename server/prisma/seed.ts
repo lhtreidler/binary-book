@@ -139,33 +139,20 @@ const fetchBooks = async (bookCount: number) => {
 
 const createFollows = async (userIds: string[]) => {
   const toCreate = userIds.flatMap((userId) => {
-    const [numFollowers, numFollowing] = createArray(2, () =>
-      getRandom(0, userIds.length - 1),
-    );
+    const numFollowing = getRandom(0, userIds.length - 1);
     const filteredIds = userIds.filter((id) => id !== userId);
-    const remainingFollowerIds = new Set(filteredIds);
-    const remainingFollowingIds = new Set(filteredIds);
+    const remainingIds = new Set(filteredIds);
 
-    const followers = [];
     const following = [];
 
-    for (let i = 0; i < Math.max(numFollowers, numFollowing); i++) {
-      if (i <= numFollowers) {
-        const index = getRandom(0, remainingFollowerIds.size - 1);
-        const curr = Array.from(remainingFollowerIds.values())[index];
-        followers.push({ toId: userId, fromId: curr });
-        remainingFollowerIds.delete(curr);
-      }
-
-      if (i <= numFollowing) {
-        const index = getRandom(0, remainingFollowingIds.size - 1);
-        const curr = Array.from(remainingFollowingIds.values())[index];
-        following.push({ toId: curr, fromId: userId });
-        remainingFollowingIds.delete(curr);
-      }
+    for (let i = 0; i <= numFollowing; i++) {
+      const index = getRandom(0, remainingIds.size - 1);
+      const curr = Array.from(remainingIds.values())[index];
+      following.push({ toId: userId, fromId: curr });
+      remainingIds.delete(curr);
     }
 
-    return [...followers, ...following];
+    return following;
   });
 
   return prisma.follow.createManyAndReturn({ data: toCreate });

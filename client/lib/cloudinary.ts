@@ -6,9 +6,7 @@ export async function uploadToCloudinary(
   mimeType = "image/jpeg",
 ): Promise<string> {
   const url = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/upload`;
-  console.log({ url });
   const formData = new FormData();
-  console.log({ UPLOAD_PRESET });
   formData.append("upload_preset", UPLOAD_PRESET!);
   formData.append("file", {
     uri: localUri,
@@ -19,7 +17,6 @@ export async function uploadToCloudinary(
   const response = await fetch(url, { method: "POST", body: formData });
 
   if (!response.ok) {
-    console.log(response);
     throw new Error(`Cloudinary upload failed: ${response.status}`);
   }
 
