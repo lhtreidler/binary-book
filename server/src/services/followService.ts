@@ -40,8 +40,46 @@ const destroy = (data: { fromId: string; toId: string }) => {
   });
 };
 
+const getAllFollowing = ({
+  userId,
+  skip,
+  take,
+}: {
+  userId: string;
+  skip: number;
+  take: number;
+}) => {
+  return prisma.follow.findMany({
+    where: {
+      fromId: userId,
+    },
+    skip,
+    take,
+  });
+};
+
+const getAllFollowers = ({
+  userId,
+  skip,
+  take,
+}: {
+  userId: string;
+  skip: number;
+  take: number;
+}) => {
+  return prisma.follow.findMany({
+    where: {
+      toId: userId,
+    },
+    skip,
+    take,
+  });
+};
+
 export const followService = {
   getFollowStatus,
   create,
   destroy,
+  getAllFollowing,
+  getAllFollowers,
 };

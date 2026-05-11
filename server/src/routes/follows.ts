@@ -1,9 +1,66 @@
 import { Router, Request, Response } from "express";
 import { authenticateToken } from "../middleware/auth";
 import { followService, userService } from "../services";
+import { handlePaginatedRequest } from "../utils/pagination";
 
 const router = Router();
 router.use(authenticateToken);
+
+router.get("/following{/:userId}", async (req: Request, res: Response) => {
+  try {
+    const {
+      user,
+      query: { page },
+      params: { userId },
+    } = req;
+
+    if (!user) {
+      res.status(401).send({ message: "Unauthorized" });
+      return;
+    }
+
+    const result = await handlePaginatedRequest({
+      page,
+      callback: async (params) =>
+        followService.getAllFollowing({
+          userId: userId || user.userId,
+          ...params,
+        }),
+    });
+
+    res.send(result);
+  } catch {
+    res.status(500).send({ message: "Internal Server Error" });
+  }
+});
+
+router.get("/followers{/:userId}", async (req: Request, res: Response) => {
+  try {
+    const {
+      user,
+      query: { page },
+      params: { userId },
+    } = req;
+
+    if (!user) {
+      res.status(401).send({ message: "Unauthorized" });
+      return;
+    }
+
+    const result = await handlePaginatedRequest({
+      page,
+      callback: async (params) =>
+        followService.getAllFollowers({
+          userId: userId || user.userId,
+          ...params,
+        }),
+    });
+
+    res.send(result);
+  } catch {
+    res.status(500).send({ message: "Internal Server Error" });
+  }
+});
 
 router.post("/:friendId", async (req: Request, res: Response) => {
   try {
