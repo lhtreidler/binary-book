@@ -10,12 +10,13 @@ const getPaginationParams = (page = 1) => {
 };
 
 export const handlePaginatedRequest = async <T>({
-  page = 1,
+  page: p,
   callback,
 }: {
-  page?: number;
+  page?: string | number;
   callback: (p: ReturnType<typeof getPaginationParams>) => Promise<T[]>;
 }) => {
+  const page = Number.isNaN(Number(p)) ? 1 : Number(p);
   const paginationParams = getPaginationParams(page);
   const result = await callback(paginationParams);
   return {

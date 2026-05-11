@@ -50,6 +50,7 @@ export const AnyNull = runtime.objectEnumValues.instances.AnyNull
 
 export const ModelName = {
   User: 'User',
+  Follow: 'Follow',
   Book: 'Book',
   Ranking: 'Ranking',
   RankingSession: 'RankingSession',
@@ -80,11 +81,22 @@ export const UserScalarFieldEnum = {
   email: 'email',
   username: 'username',
   passwordHash: 'passwordHash',
+  profileImg: 'profileImg',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const FollowScalarFieldEnum = {
+  fromId: 'fromId',
+  toId: 'toId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type FollowScalarFieldEnum = (typeof FollowScalarFieldEnum)[keyof typeof FollowScalarFieldEnum]
 
 
 export const BookScalarFieldEnum = {
@@ -168,4 +180,71 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const UserOrderByRelevanceFieldEnum = {
+  id: 'id',
+  firstName: 'firstName',
+  lastName: 'lastName',
+  email: 'email',
+  username: 'username',
+  passwordHash: 'passwordHash',
+  profileImg: 'profileImg'
+} as const
+
+export type UserOrderByRelevanceFieldEnum = (typeof UserOrderByRelevanceFieldEnum)[keyof typeof UserOrderByRelevanceFieldEnum]
+
+
+export const FollowOrderByRelevanceFieldEnum = {
+  fromId: 'fromId',
+  toId: 'toId'
+} as const
+
+export type FollowOrderByRelevanceFieldEnum = (typeof FollowOrderByRelevanceFieldEnum)[keyof typeof FollowOrderByRelevanceFieldEnum]
+
+
+export const BookOrderByRelevanceFieldEnum = {
+  id: 'id',
+  googleId: 'googleId',
+  title: 'title',
+  authors: 'authors',
+  compareStr: 'compareStr'
+} as const
+
+export type BookOrderByRelevanceFieldEnum = (typeof BookOrderByRelevanceFieldEnum)[keyof typeof BookOrderByRelevanceFieldEnum]
+
+
+export const RankingOrderByRelevanceFieldEnum = {
+  id: 'id',
+  bookId: 'bookId',
+  userId: 'userId'
+} as const
+
+export type RankingOrderByRelevanceFieldEnum = (typeof RankingOrderByRelevanceFieldEnum)[keyof typeof RankingOrderByRelevanceFieldEnum]
+
+
+export const RankingSessionOrderByRelevanceFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  bookId: 'bookId'
+} as const
+
+export type RankingSessionOrderByRelevanceFieldEnum = (typeof RankingSessionOrderByRelevanceFieldEnum)[keyof typeof RankingSessionOrderByRelevanceFieldEnum]
+
+
+export const RankingStepOrderByRelevanceFieldEnum = {
+  id: 'id',
+  rankingSessionId: 'rankingSessionId'
+} as const
+
+export type RankingStepOrderByRelevanceFieldEnum = (typeof RankingStepOrderByRelevanceFieldEnum)[keyof typeof RankingStepOrderByRelevanceFieldEnum]
+
+
+export const SearchCacheOrderByRelevanceFieldEnum = {
+  id: 'id',
+  query: 'query',
+  jsonResult: 'jsonResult'
+} as const
+
+export type SearchCacheOrderByRelevanceFieldEnum = (typeof SearchCacheOrderByRelevanceFieldEnum)[keyof typeof SearchCacheOrderByRelevanceFieldEnum]
 

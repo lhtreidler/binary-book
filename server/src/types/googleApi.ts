@@ -73,4 +73,5 @@ export type FormattedBookItems = {
   key: string;
   title: string;
   authors: string[];
+  thumbnail?: string;
 }[];

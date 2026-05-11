@@ -28,6 +28,7 @@ export const updateUserSchema = z.object({
   username: usernameSchema.optional(),
   firstName: z.string().min(1).optional(),
   lastName: z.string().min(1).optional(),
+  profileImg: z.url().nullable().optional(),
 });
 
 // Type inference

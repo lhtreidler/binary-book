@@ -19,6 +19,7 @@ export const useAutocomplete = ({
 
   const reset = () => {
     setSearch("");
+    onChange("");
   };
 
   useDebounce({
@@ -30,6 +31,7 @@ export const useAutocomplete = ({
     onChange: (input: string) => {
       setSearch(input);
     },
+    onClear: reset,
     options,
     isLoading,
     fieldProps: { value: search },

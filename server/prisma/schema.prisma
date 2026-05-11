@@ -4,6 +4,7 @@
 generator client {
   provider = "prisma-client"
   output   = "../src/generated/prisma"
+  previewFeatures = ["fullTextSearchPostgres"]
 }
 
 datasource db {
@@ -18,10 +19,24 @@ model User {
   email            String            @unique
   username         String?           @unique
   passwordHash     String
+  profileImg       String?
   rankings         Ranking[]
   rankingSessions  RankingSession[]
+  followers        Follow[]          @relation("Followings") 
+  followings       Follow[]          @relation("Followers") 
   createdAt        DateTime          @default(now())
   updatedAt        DateTime          @updatedAt
+}
+
+model Follow {
+  fromId           String            @db.Uuid
+  toId             String            @db.Uuid
+  from             User              @relation("Followers", fields: [fromId], references: [id])
+  to               User              @relation("Followings", fields: [toId], references: [id])
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+
+  @@id([fromId, toId])
 }
 
 model Book {

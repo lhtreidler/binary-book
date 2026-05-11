@@ -1,5 +1,3 @@
-import { Box } from "@/components/ui/box";
-import { Text } from "@/components/ui/text";
 import { Stack } from "expo-router";
 
 export default function Layout() {
@@ -7,9 +5,10 @@ export default function Layout() {
     <Stack>
       <Stack.Screen name="(tabs)" options={{ headerTitle: "Binary Book" }} />
       <Stack.Screen
-        name="book"
+        name="book/[bookId]"
         options={{ headerBackTitle: "Back", headerTitle: "" }}
       />
+      <Stack.Screen name="follow/[type]" />
     </Stack>
   );
 }

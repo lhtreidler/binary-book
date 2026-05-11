@@ -239,6 +239,7 @@ export type RankingSessionOrderByWithRelationInput = {
   user?: Prisma.UserOrderByWithRelationInput
   book?: Prisma.BookOrderByWithRelationInput
   rankingSteps?: Prisma.RankingStepOrderByRelationAggregateInput
+  _relevance?: Prisma.RankingSessionOrderByRelevanceInput
 }
 
 export type RankingSessionWhereUniqueInput = Prisma.AtLeast<{
@@ -355,6 +356,12 @@ export type RankingSessionListRelationFilter = {
 
 export type RankingSessionOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type RankingSessionOrderByRelevanceInput = {
+  fields: Prisma.RankingSessionOrderByRelevanceFieldEnum | Prisma.RankingSessionOrderByRelevanceFieldEnum[]
+  sort: Prisma.SortOrder
+  search: string
 }
 
 export type RankingSessionCountOrderByAggregateInput = {

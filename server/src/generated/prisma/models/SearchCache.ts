@@ -181,6 +181,7 @@ export type SearchCacheOrderByWithRelationInput = {
   query?: Prisma.SortOrder
   jsonResult?: Prisma.SortOrder
   cachedAt?: Prisma.SortOrder
+  _relevance?: Prisma.SearchCacheOrderByRelevanceInput
 }
 
 export type SearchCacheWhereUniqueInput = Prisma.AtLeast<{
@@ -260,6 +261,12 @@ export type SearchCacheUncheckedUpdateManyInput = {
   query?: Prisma.StringFieldUpdateOperationsInput | string
   jsonResult?: Prisma.StringFieldUpdateOperationsInput | string
   cachedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type SearchCacheOrderByRelevanceInput = {
+  fields: Prisma.SearchCacheOrderByRelevanceFieldEnum | Prisma.SearchCacheOrderByRelevanceFieldEnum[]
+  sort: Prisma.SortOrder
+  search: string
 }
 
 export type SearchCacheCountOrderByAggregateInput = {

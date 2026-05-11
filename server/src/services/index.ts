@@ -7,3 +7,4 @@ export * from "./searchCacheService";
 export * from "./rankingAlgoService";
 export * from "./authService";
 export * from "./rankingStepService";
+export * from "./followService";

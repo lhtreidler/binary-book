@@ -10,7 +10,7 @@ import {
 import { validateBody } from "../middleware/validation.js";
 import { userService } from "../services/userService.js";
 import { authService } from "../services/authService.js";
-import { formatEmail, formatUsername } from "../utils/format.js";
+import { formatEmail } from "../utils/format.js";
 import { authenticateToken } from "../middleware/auth.js";
 
 const router = Router();
@@ -115,9 +115,9 @@ router.get("/me", authenticateToken, async (req: Request, res: Response) => {
     return;
   }
 
-  const { email, username, firstName, lastName } = user;
+  const { email, username, firstName, lastName, profileImg } = user;
 
-  res.json({ email, username, firstName, lastName });
+  res.json({ email, username, firstName, lastName, profileImg });
 });
 
 router.get(

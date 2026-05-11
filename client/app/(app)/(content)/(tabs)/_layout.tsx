@@ -1,13 +1,14 @@
-import { Tabs } from "expo-router";
+import { Tabs, usePathname } from "expo-router";
 import {
-  AddIcon,
+  FavouriteIcon,
   Icon,
   MenuIcon,
-  SettingsIcon,
   StarIcon,
+  UserIcon,
 } from "@/components/ui/icon";
 import { ComponentProps } from "react";
-import { Box } from "@/components/ui/box";
+import { View } from "react-native";
+import { BookAutocomplete } from "@/components/book-autocomplete";
 
 type IconAs = ComponentProps<typeof Icon>["as"];
 
@@ -15,41 +16,44 @@ const TabIcon = ({ as, color }: { as: IconAs; color: string }) => (
   <Icon as={as} size="lg" style={{ color }} />
 );
 
-export default function Index() {
+const tabs = [
+  { name: "index", title: "Home", icon: StarIcon },
+  { name: "list", title: "List", icon: MenuIcon },
+  { name: "community", title: "Community", icon: FavouriteIcon },
+  { name: "profile/index", title: "Profile", icon: UserIcon },
+] as const;
+
+export default function TabLayout() {
+  const pathname = usePathname();
+
+  const isAutocompleteSticky = pathname === "/community";
+  const isAutocompleteShown = pathname !== "/settings";
+
   return (
-    <Tabs
-      screenOptions={{ tabBarActiveTintColor: "#2563eb", headerShown: false }}
-    >
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: "Home",
-          tabBarIcon: ({ color }) => <TabIcon as={StarIcon} color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="list"
-        options={{
-          title: "List",
-          tabBarIcon: ({ color }) => <TabIcon as={MenuIcon} color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="add"
-        options={{
-          title: "Add Book",
-          tabBarIcon: ({ color }) => <TabIcon as={AddIcon} color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="settings"
-        options={{
-          title: "Settings",
-          tabBarIcon: ({ color }) => (
-            <TabIcon as={SettingsIcon} color={color} />
-          ),
-        }}
-      />
-    </Tabs>
+    <View style={{ flex: 1 }}>
+      {isAutocompleteShown && (
+        <BookAutocomplete isSticky={isAutocompleteSticky} />
+      )}
+      <View style={{ flex: 1 }}>
+        <Tabs
+          screenOptions={{
+            tabBarActiveTintColor: "#2563eb",
+            headerShown: false,
+          }}
+        >
+          {tabs.map(({ name, title, icon }) => (
+            <Tabs.Screen
+              key={name}
+              name={name}
+              options={{
+                title,
+                tabBarIcon: ({ color }) => <TabIcon as={icon} color={color} />,
+              }}
+            />
+          ))}
+          <Tabs.Screen name="profile/[userId]" options={{ href: null }} />
+        </Tabs>
+      </View>
+    </View>
   );
 }

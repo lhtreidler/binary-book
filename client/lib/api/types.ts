@@ -7,6 +7,7 @@ export interface User {
   firstName: string | null;
   lastName: string | null;
   username: string | null;
+  profileImg: string | null;
 }
 
 export interface AuthResponse {
@@ -22,6 +23,33 @@ export type MeResponse = User;
 export interface CheckUsernameResponse {
   isTaken: boolean;
 }
+
+export type SearchByUsernameResponse = {
+  users: {
+    username: string;
+    firstName: string | null;
+    lastName: string | null;
+    profileImg: string | null;
+    id: string;
+  }[];
+};
+
+type ProfileData = {
+  firstName: string | null;
+  lastName: string | null;
+  username: string | null;
+  profileImg: string | null;
+  createdAt: Date;
+  followerCount: number;
+  followingCount: number;
+};
+
+export type UseGetMyProfileResponse = ProfileData;
+
+export type UseGetProfileResponse = ProfileData & {
+  isUserFollowing: boolean;
+  isUserFollowed: boolean;
+};
 
 export interface Book {
   id: string;
@@ -105,3 +133,16 @@ export interface ApiError {
   error: string;
   message?: string;
 }
+
+export type FollowListUser = {
+  id: string;
+  username: string | null;
+  profileImg: string | null;
+  firstName: string | null;
+  lastName: string | null;
+};
+
+export type FollowListResponse = {
+  result: FollowListUser[];
+  nextPage: number | null;
+};

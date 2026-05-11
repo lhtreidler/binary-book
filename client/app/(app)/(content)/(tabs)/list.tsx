@@ -1,14 +1,13 @@
-import { Box } from "@/components/ui/box";
 import { HStack } from "@/components/ui/hstack";
 import { Pressable } from "@/components/ui/pressable";
-import { Spinner } from "@/components/ui/spinner";
 import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
+import { InfiniteList } from "@/components/elements";
 import { BookListItem } from "@/lib/api";
 import { useBookList } from "@/lib/api/hooks/useBooks";
 import { router } from "expo-router";
 import { useMemo } from "react";
-import { FlatList, ListRenderItem } from "react-native";
+import { ListRenderItem } from "react-native";
 
 const scoreColorClass = (score: number) => {
   if (score >= 6.7) return "text-success-700";
@@ -58,49 +57,20 @@ export default function List() {
     <Row item={item} />
   );
 
-  if (isLoading) {
-    return (
-      <Box className="flex-1 items-center justify-center max-h-10">
-        <Spinner />
-      </Box>
-    );
-  }
-
-  if (isError) {
-    return (
-      <Box className="flex-1 items-center justify-center px-4">
-        <Text>Failed to load list. Please try again later.</Text>
-      </Box>
-    );
-  }
-
   return (
-    <Box className="flex-1">
-      <FlatList
-        data={items}
-        keyExtractor={(_, index) => String(index)}
-        renderItem={renderItem}
-        onRefresh={refetch}
-        refreshing={isRefetching && !isFetchingNextPage}
-        onEndReached={() => {
-          if (hasNextPage && !isFetchingNextPage) {
-            fetchNextPage();
-          }
-        }}
-        onEndReachedThreshold={0.5}
-        ListFooterComponent={
-          isFetchingNextPage ? (
-            <Box className="py-4">
-              <Spinner />
-            </Box>
-          ) : null
-        }
-        ListEmptyComponent={
-          <Box className="items-center justify-center py-10">
-            <Text className="text-typography-500">No ranked books yet.</Text>
-          </Box>
-        }
-      />
-    </Box>
+    <InfiniteList
+      items={items}
+      renderItem={renderItem}
+      keyExtractor={(_, index) => String(index)}
+      isLoading={isLoading}
+      isError={isError}
+      hasNextPage={hasNextPage}
+      isFetchingNextPage={isFetchingNextPage}
+      isRefetching={isRefetching}
+      fetchNextPage={fetchNextPage}
+      refetch={refetch}
+      emptyMessage="No ranked books yet."
+      errorMessage="Failed to load list. Please try again later."
+    />
   );
 }

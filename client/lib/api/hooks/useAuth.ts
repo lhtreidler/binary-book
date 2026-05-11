@@ -42,6 +42,7 @@ export interface UpdateUserInput {
   firstName?: string;
   lastName?: string;
   username?: string;
+  profileImg?: string | null;
 }
 
 /**
@@ -70,9 +71,19 @@ export function useMe(): UseQueryResult<User, ApiError> {
   });
 }
 
+export function useIsLoggedIn() {
+  const { data, isLoading } = useMe();
+  const value = useSession();
+
+  return { isLoading, isLoggedIn: !!value?.session && !!data?.username };
+}
+
 export const useIsAccountSetUp = () => {
-  const { data } = useMe();
-  return !!(data && data.username && data.firstName && data.email);
+  const { data, isLoading } = useMe();
+  return {
+    isAccountSetUp: !!(data && data.username && data.firstName && data.email),
+    isLoading,
+  };
 };
 
 /**
@@ -157,6 +168,26 @@ export function useUpdateUser(): UseMutationResult<
         input,
       );
       return data;
+    },
+  });
+}
+
+export function useUploadProfileImage(): UseMutationResult<
+  { url: string },
+  ApiError,
+  { localUri: string; mimeType?: string }
+> {
+  return useMutation({
+    mutationFn: async ({ localUri, mimeType }) => {
+      const { uploadToCloudinary } = await import("@/lib/cloudinary");
+      const url = await uploadToCloudinary(localUri, mimeType);
+
+      const client = await getApiClient();
+      await client.post<UpdateUserResponse>("/auth/details", {
+        profileImg: url,
+      });
+
+      return { url };
     },
   });
 }

@@ -5,7 +5,6 @@ import {
   continueRankingSchema,
   QuitRankingInput,
   quitRankingSchema,
-  rankingSelection,
   StartRankingInput,
   startRankingSchema,
 } from "../utils/schemas";
@@ -16,7 +15,6 @@ import {
   rankingSessionService,
   rankingAlgoService,
   STARTING_RAW_SCORE,
-  rankingStepService,
 } from "../services";
 
 const router = Router();
