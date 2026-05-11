@@ -5,8 +5,13 @@ import { Autocomplete, useAutocomplete } from "@/components/autocomplete";
 import { RankingModal } from "@/components/ranking-modal/RankingModal";
 import { BookSearchItem } from "@/lib/api";
 import { useSearchBooks } from "@/lib/api/hooks/useBooks";
+import { Box } from "../ui/box";
 
-export const BookAutocomplete = () => {
+export const BookAutocomplete = ({
+  isSticky = false,
+}: {
+  isSticky?: boolean;
+}) => {
   const [query, setQuery] = useState("");
   const [selectedBook, setSelectedBook] = useState<BookSearchItem | null>(null);
 
@@ -43,8 +48,10 @@ export const BookAutocomplete = () => {
     setSelectedBook(null);
   };
 
+  const containerClassName = `w-full bg-transparent${isSticky ? " sticky" : ""}`;
+
   return (
-    <>
+    <Box className={containerClassName}>
       <Autocomplete
         {...autocompleteProps}
         fieldProps={{
@@ -59,6 +66,6 @@ export const BookAutocomplete = () => {
         isOpen={!!selectedBook}
         onClose={onCloseModal}
       />
-    </>
+    </Box>
   );
 };

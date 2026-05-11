@@ -16,7 +16,6 @@ import {
   ApiError,
   CheckUsernameResponse,
   UpdateUserResponse,
-  SearchByUsernameResponse,
 } from "../types";
 import { useSession } from "@/session/ctx";
 import { AxiosError } from "axios";

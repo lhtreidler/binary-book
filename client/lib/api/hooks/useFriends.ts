@@ -19,7 +19,6 @@ export function useSearchByUsername({
       const { data } = await client.get<SearchByUsernameResponse>(
         `/friends/search?q=${encodeURIComponent(username)}`,
       );
-      console.log(data);
       return data;
     },
     enabled: !!username && enabled,
