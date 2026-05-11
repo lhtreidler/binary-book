@@ -1,3 +1,7 @@
+import {
+  FollowFindManyArgs,
+  FollowWhereInput,
+} from "../generated/prisma/models";
 import { prisma } from "../lib/prisma";
 
 const getFollowStatus = async ({
@@ -40,39 +44,57 @@ const destroy = (data: { fromId: string; toId: string }) => {
   });
 };
 
-const getAllFollowing = ({
+const getAll = ({
   userId,
-  skip,
-  take,
+  getFollowers,
+  ...rest
 }: {
   userId: string;
+  getFollowers: boolean;
   skip: number;
   take: number;
 }) => {
+  const where = getFollowers
+    ? {
+        toId: userId,
+      }
+    : { fromId: userId };
+
+  const select = {
+    username: true,
+    profileImg: true,
+    firstName: true,
+    lastName: true,
+  };
+
+  const include = getFollowers ? { from: { select } } : { to: { select } };
+
   return prisma.follow.findMany({
-    where: {
-      fromId: userId,
-    },
-    skip,
-    take,
+    where,
+    ...rest,
+    include,
   });
 };
 
-const getAllFollowers = ({
-  userId,
-  skip,
-  take,
-}: {
+const getAllFollowing = (params: {
   userId: string;
   skip: number;
   take: number;
 }) => {
-  return prisma.follow.findMany({
-    where: {
-      toId: userId,
-    },
-    skip,
-    take,
+  return getAll({
+    ...params,
+    getFollowers: false,
+  });
+};
+
+const getAllFollowers = (params: {
+  userId: string;
+  skip: number;
+  take: number;
+}) => {
+  return getAll({
+    ...params,
+    getFollowers: true,
   });
 };
 

@@ -6,7 +6,7 @@ import { handlePaginatedRequest } from "../utils/pagination";
 const router = Router();
 router.use(authenticateToken);
 
-router.get("/following{/:userId}", async (req: Request, res: Response) => {
+router.get("/following/:userId?", async (req: Request, res: Response) => {
   try {
     const {
       user,
@@ -34,7 +34,7 @@ router.get("/following{/:userId}", async (req: Request, res: Response) => {
   }
 });
 
-router.get("/followers{/:userId}", async (req: Request, res: Response) => {
+router.get("/followers/:userId?", async (req: Request, res: Response) => {
   try {
     const {
       user,

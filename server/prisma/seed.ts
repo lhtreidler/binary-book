@@ -18,7 +18,7 @@ import { parseArgs } from "node:util";
 const RANKING_MIN = 10;
 
 const options = {
-  userCount: { type: "string", default: "10" },
+  userCount: { type: "string", default: "100" },
   bookCount: { type: "string", default: "200" },
   useJsonData: { type: "boolean", default: true },
 } as const;
@@ -88,11 +88,15 @@ const createRankings = (userId: string, booksIds: string[]) => {
 };
 
 const createUser = (i: number) => {
-  return {
-    username: formatUsername(faker.internet.username()),
-    email: `leahtreidler+${i}@gmail.com`,
+  const name = {
     firstName: faker.person.firstName(),
-    lastName: faker.person.lastName(),
+    ...(Math.random() > 0.2 ? { lastName: faker.person.lastName() } : {}),
+  };
+
+  return {
+    username: formatUsername(faker.internet.username(name)),
+    email: `leahtreidler+${i}@gmail.com`,
+    ...name,
   };
 };
 
@@ -133,6 +137,40 @@ const fetchBooks = async (bookCount: number) => {
   return allBooks;
 };
 
+const createFollows = async (userIds: string[]) => {
+  const toCreate = userIds.flatMap((userId) => {
+    const [numFollowers, numFollowing] = createArray(2, () =>
+      getRandom(0, userIds.length - 1),
+    );
+    const filteredIds = userIds.filter((id) => id !== userId);
+    const remainingFollowerIds = new Set(filteredIds);
+    const remainingFollowingIds = new Set(filteredIds);
+
+    const followers = [];
+    const following = [];
+
+    for (let i = 0; i < Math.max(numFollowers, numFollowing); i++) {
+      if (i <= numFollowers) {
+        const index = getRandom(0, remainingFollowerIds.size - 1);
+        const curr = Array.from(remainingFollowerIds.values())[index];
+        followers.push({ toId: userId, fromId: curr });
+        remainingFollowerIds.delete(curr);
+      }
+
+      if (i <= numFollowing) {
+        const index = getRandom(0, remainingFollowingIds.size - 1);
+        const curr = Array.from(remainingFollowingIds.values())[index];
+        following.push({ toId: curr, fromId: userId });
+        remainingFollowingIds.delete(curr);
+      }
+    }
+
+    return [...followers, ...following];
+  });
+
+  return prisma.follow.createManyAndReturn({ data: toCreate });
+};
+
 async function main() {
   const { values } = parseArgs({ options });
 
@@ -162,6 +200,9 @@ async function main() {
     data: createArray(userCount, (i) => ({ ...createUser(i), passwordHash })),
   });
   console.log(`Created ${createdUsers.length} users`);
+
+  const createdFollows = await createFollows(createdUsers.map(({ id }) => id));
+  console.log(`Created ${createdFollows.length} follows`);
 
   const rankingsToCreate = createdUsers.flatMap(({ id }) =>
     createRankings(

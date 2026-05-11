@@ -11,6 +11,7 @@ export type ProfileProps =
     }
   | {
       isSelf: false;
+      userId: string;
       data?: UseGetProfileResponse | null;
       onFollow: () => void;
       onUnfollow: () => void;

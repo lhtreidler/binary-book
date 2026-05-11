@@ -133,3 +133,16 @@ export interface ApiError {
   error: string;
   message?: string;
 }
+
+export type FollowListUser = {
+  id: string;
+  username: string | null;
+  profileImg: string | null;
+  firstName: string | null;
+  lastName: string | null;
+};
+
+export type FollowListResponse = {
+  result: FollowListUser[];
+  nextPage: number | null;
+};

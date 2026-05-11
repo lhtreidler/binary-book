@@ -1,4 +1,5 @@
 import { ScrollView } from "react-native";
+import { router } from "expo-router";
 import { useSession } from "@/session/ctx";
 import { Box } from "@/components/ui/box";
 import { Button, ButtonText } from "@/components/ui/button";
@@ -50,13 +51,33 @@ export function Profile(props: ProfileProps) {
         <ProfileAvatar {...data} size="xl" includeDetail allowUpload={isSelf} />
 
         <HStack space="2xl" className="justify-center">
-          <Pressable>
+          <Pressable
+            onPress={() =>
+              router.push({
+                pathname: "/follow/[type]",
+                params: {
+                  type: "followers",
+                  ...(!props.isSelf && { userId: props.userId, username: data.username ?? undefined }),
+                },
+              })
+            }
+          >
             <VStack className="items-center">
               <Text className="font-bold text-lg">{data.followerCount}</Text>
               <Text className="text-gray-500 text-sm">Followers</Text>
             </VStack>
           </Pressable>
-          <Pressable>
+          <Pressable
+            onPress={() =>
+              router.push({
+                pathname: "/follow/[type]",
+                params: {
+                  type: "following",
+                  ...(!props.isSelf && { userId: props.userId, username: data.username ?? undefined }),
+                },
+              })
+            }
+          >
             <VStack className="items-center">
               <Text className="font-bold text-lg">{data.followingCount}</Text>
               <Text className="text-gray-500 text-sm">Following</Text>
