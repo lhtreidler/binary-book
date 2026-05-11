@@ -1,5 +1,11 @@
-import { Tabs } from "expo-router";
-import { Icon, MenuIcon, SettingsIcon, StarIcon } from "@/components/ui/icon";
+import { Tabs, usePathname } from "expo-router";
+import {
+  FavouriteIcon,
+  Icon,
+  MenuIcon,
+  SettingsIcon,
+  StarIcon,
+} from "@/components/ui/icon";
 import { ComponentProps } from "react";
 import { View } from "react-native";
 import { BookAutocomplete } from "@/components/book-autocomplete";
@@ -10,10 +16,19 @@ const TabIcon = ({ as, color }: { as: IconAs; color: string }) => (
   <Icon as={as} size="lg" style={{ color }} />
 );
 
+const tabs = [
+  { name: "index", title: "Home", icon: StarIcon },
+  { name: "list", title: "List", icon: MenuIcon },
+  { name: "community", title: "Community", icon: FavouriteIcon },
+  { name: "settings", title: "Settings", icon: SettingsIcon },
+] as const;
+
 export default function TabLayout() {
+  const pathname = usePathname();
+
   return (
     <View style={{ flex: 1 }}>
-      <BookAutocomplete />
+      {pathname !== "/community" && <BookAutocomplete />}
       <View style={{ flex: 1 }}>
         <Tabs
           screenOptions={{
@@ -21,33 +36,16 @@ export default function TabLayout() {
             headerShown: false,
           }}
         >
-          <Tabs.Screen
-            name="index"
-            options={{
-              title: "Home",
-              tabBarIcon: ({ color }) => (
-                <TabIcon as={StarIcon} color={color} />
-              ),
-            }}
-          />
-          <Tabs.Screen
-            name="list"
-            options={{
-              title: "List",
-              tabBarIcon: ({ color }) => (
-                <TabIcon as={MenuIcon} color={color} />
-              ),
-            }}
-          />
-          <Tabs.Screen
-            name="settings"
-            options={{
-              title: "Settings",
-              tabBarIcon: ({ color }) => (
-                <TabIcon as={SettingsIcon} color={color} />
-              ),
-            }}
-          />
+          {tabs.map(({ name, title, icon }) => (
+            <Tabs.Screen
+              key={name}
+              name={name}
+              options={{
+                title,
+                tabBarIcon: ({ color }) => <TabIcon as={icon} color={color} />,
+              }}
+            />
+          ))}
         </Tabs>
       </View>
     </View>

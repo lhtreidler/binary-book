@@ -23,11 +23,13 @@ export interface CheckUsernameResponse {
   isTaken: boolean;
 }
 
-export interface SearchUserResponse {
-  username: string;
-  firstName: string | null;
-  lastName: string | null;
-}
+export type SearchByUsernameResponse = {
+  users: {
+    username: string;
+    firstName: string | null;
+    lastName: string | null;
+  }[];
+};
 
 export interface Book {
   id: string;

@@ -20,11 +20,13 @@ import { VStack } from "@/components/ui/vstack";
 import {
   UpdateUserInput,
   useCheckUsername,
+  useIsAccountSetUp,
   useUpdateUser,
 } from "@/lib/api/hooks/useAuth";
 import { useDebounce } from "@/lib/utils";
 import { useMemo, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
+import { LoadingView } from "@/components/layout";
 
 type BaseProps = {
   error?: string;
@@ -42,6 +44,7 @@ const usernameSchema = z
 const CreateUsername = ({ onSubmit, isLoading, error }: BaseProps) => {
   const [username, setUsername] = useState("");
   const [query, setQuery] = useState("");
+  const accountSetUp = useIsAccountSetUp();
 
   const validationError = useMemo(() => {
     if (!username) return undefined;
@@ -105,6 +108,8 @@ const CreateUsername = ({ onSubmit, isLoading, error }: BaseProps) => {
   const errorMessage = validationError || error;
 
   const isSubmitDisabled = !isValidUserName || isLoading;
+
+  if (accountSetUp.isLoading) return <LoadingView />;
 
   return (
     <VStack className="w-full" space="md">

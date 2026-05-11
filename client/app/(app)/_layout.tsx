@@ -2,7 +2,7 @@ import { useIsAccountSetUp } from "@/lib/api/hooks";
 import { Stack } from "expo-router";
 
 export default function App() {
-  const isAccountSetUp = useIsAccountSetUp();
+  const { isAccountSetUp } = useIsAccountSetUp();
 
   return (
     <Stack>

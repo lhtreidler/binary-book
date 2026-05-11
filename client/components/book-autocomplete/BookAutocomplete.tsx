@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "expo-router";
 import { Autocomplete, useAutocomplete } from "@/components/autocomplete";
-import { RankingModal } from "@/components/ranking-modal/ranking-modal";
+import { RankingModal } from "@/components/ranking-modal/RankingModal";
 import { BookSearchItem } from "@/lib/api";
 import { useSearchBooks } from "@/lib/api/hooks/useBooks";
 
@@ -47,7 +47,10 @@ export const BookAutocomplete = () => {
     <>
       <Autocomplete
         {...autocompleteProps}
-        fieldProps={{ ...autocompleteProps.fieldProps, placeholder: "Search for books..." }}
+        fieldProps={{
+          ...autocompleteProps.fieldProps,
+          placeholder: "Search for books...",
+        }}
         overlay
         rightActions={[{ icon: "add", handler: onSelectBook }]}
       />

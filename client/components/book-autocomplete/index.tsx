@@ -1,1 +1,1 @@
-export * from "./book-autocomplete";
+export * from "./BookAutocomplete";
