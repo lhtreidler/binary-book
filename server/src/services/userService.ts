@@ -64,14 +64,17 @@ const getUserAndFollowDetails = async ({
   userId: string;
   friendId?: string;
 }) => {
+  const userIdToGet = friendId || userId;
+
   const [userData, followData] = await Promise.all([
     prisma.user.findUnique({
-      where: { id: friendId },
+      where: { id: userIdToGet },
       include: {
         _count: {
           select: {
             followers: true,
             followings: true,
+            rankings: true,
           },
         },
       },
@@ -89,10 +92,12 @@ const getUserAndFollowDetails = async ({
     username,
     profileImg,
     createdAt,
+    lastName,
   } = userData;
 
   return {
     firstName,
+    lastName,
     username,
     profileImg,
     createdAt,

@@ -34,19 +34,20 @@ export function useSearchByUsername({
  * Get user profile
  */
 export function useGetProfile({
-  friendId,
+  userId,
 }: {
-  friendId: string;
+  userId?: string;
 }): UseQueryResult<UseGetProfileResponse | null, ApiError> {
   return useQuery({
-    queryKey: ["users", friendId],
+    queryKey: ["users", userId],
     queryFn: async () => {
       const client = await getApiClient();
       const { data } = await client.get<UseGetProfileResponse>(
-        `/users/${friendId}`,
+        `/users/${userId}`,
       );
       return data;
     },
+    enabled: !!userId,
   });
 }
 
@@ -58,7 +59,7 @@ export function useGetMyProfile(): UseQueryResult<
   ApiError
 > {
   return useQuery({
-    queryKey: ["users"],
+    queryKey: ["users", "me"],
     queryFn: async () => {
       const client = await getApiClient();
       const { data } = await client.get<UseGetMyProfileResponse>(`/users/me`);

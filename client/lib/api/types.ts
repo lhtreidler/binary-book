@@ -36,6 +36,7 @@ export type SearchByUsernameResponse = {
 
 type ProfileData = {
   firstName: string | null;
+  lastName: string | null;
   username: string | null;
   profileImg: string | null;
   createdAt: Date;

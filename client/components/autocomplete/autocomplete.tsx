@@ -17,7 +17,7 @@ const Option = ({
   id: key,
   label,
   thumbnail,
-  isAvatar,
+  avatarProps,
   hideAction = false,
   rightActions,
   href,
@@ -31,11 +31,9 @@ const Option = ({
         key={key}
         className="bg-slate-50 border-gray-700 py-2 px-4 border-b-hairline flex flex-row items-center w-full gap-3"
       >
-        {isAvatar && (
-          <ProfileAvatar size="sm" thumbnail={thumbnail} name={label} />
-        )}
+        {avatarProps && <ProfileAvatar size="sm" {...avatarProps} />}
 
-        {thumbnail && !isAvatar && (
+        {thumbnail && !avatarProps && (
           <Box className="w-1/4 aspect-[2/3]" style={{ width: 70 }}>
             <Image
               size="xs"

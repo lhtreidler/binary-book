@@ -16,12 +16,15 @@ export default function Community() {
     if (!data) return [];
 
     return data.users.map(
-      ({ id, username, profileImg }) =>
+      ({ id, username, profileImg, firstName, lastName }) =>
         ({
           key: username,
           label: username,
-          thumbnail: profileImg ?? undefined,
-          isAvatar: true,
+          avatarProps: {
+            profileImg,
+            firstName,
+            lastName,
+          },
           href: `/profile/${id}`,
         }) as AutocompleteOption,
     );

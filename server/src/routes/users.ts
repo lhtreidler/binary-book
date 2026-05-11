@@ -24,6 +24,25 @@ router.get("/", async (req: Request, res: Response) => {
   }
 });
 
+router.get("/me", async (req: Request, res: Response) => {
+  try {
+    const { user } = req;
+
+    if (!user) {
+      res.status(401).send({ message: "Unauthorized" });
+      return;
+    }
+
+    const data = await userService.getUserAndFollowDetails({
+      userId: user.userId,
+    });
+
+    res.json(data);
+  } catch (err) {
+    res.status(500).send({ message: "Internal Server Error" });
+  }
+});
+
 router.get("/:friendId", async (req: Request, res: Response) => {
   try {
     const { user } = req;

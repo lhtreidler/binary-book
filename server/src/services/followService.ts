@@ -26,6 +26,22 @@ const getFollowStatus = async ({
   };
 };
 
+const create = (data: { fromId: string; toId: string }) => {
+  return prisma.follow.create({
+    data,
+  });
+};
+
+const destroy = (data: { fromId: string; toId: string }) => {
+  return prisma.follow.delete({
+    where: {
+      fromId_toId: data,
+    },
+  });
+};
+
 export const followService = {
   getFollowStatus,
+  create,
+  destroy,
 };

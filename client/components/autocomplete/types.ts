@@ -2,6 +2,7 @@ import React from "react";
 import { Input, InputField } from "../ui/input";
 import { AddIcon } from "../ui/icon";
 import { Href } from "expo-router";
+import { ProfileAvatarProps } from "../elements";
 
 export const nameToIcon = {
   add: AddIcon,
@@ -11,7 +12,7 @@ export type AutocompleteOption = {
   key: string;
   label: string;
   thumbnail?: string;
-  isAvatar?: boolean;
+  avatarProps?: ProfileAvatarProps;
   hideAction?: boolean;
   href?: Href;
 };
