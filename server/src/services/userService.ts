@@ -88,7 +88,7 @@ const update = ({
   id,
 }: {
   id: string;
-  data: Partial<Pick<User, "firstName" | "lastName" | "username">>;
+  data: Partial<Pick<User, "firstName" | "lastName" | "username" | "profileImg">>;
 }) => {
   return prisma.user.update({ data, where: { id } });
 };

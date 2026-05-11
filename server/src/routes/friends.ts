@@ -1,6 +1,5 @@
 import { Router, Request, Response } from "express";
 import { authenticateToken } from "../middleware/auth";
-import { formatUsername } from "../utils/format";
 import { userService } from "../services";
 
 const router = Router();

@@ -2,7 +2,7 @@ import { Stack } from "expo-router";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useEffect } from "react";
 
-import { SessionProvider, useSession } from "@/session/ctx";
+import { SessionProvider } from "@/session/ctx";
 import { SplashScreenController } from "@/components/splash";
 import { initializeApiClient } from "@/lib/api";
 
@@ -10,6 +10,7 @@ import { GluestackUIProvider } from "@/components/ui/gluestack-ui-provider";
 import "@/global.css";
 import { Center } from "@/components/ui/center";
 import { Spinner } from "@/components/ui/spinner";
+import { useIsLoggedIn } from "@/lib/api/hooks/useAuth";
 
 const queryClient = new QueryClient();
 
@@ -35,7 +36,7 @@ export default function Root() {
 }
 
 function RootNavigator() {
-  const { session, isLoading } = useSession();
+  const { isLoading, isLoggedIn } = useIsLoggedIn();
 
   if (isLoading) {
     return (
@@ -44,8 +45,6 @@ function RootNavigator() {
       </Center>
     );
   }
-
-  const isLoggedIn = !!session;
 
   return (
     <Stack screenOptions={{ headerShown: false }}>

@@ -14,15 +14,6 @@ const AuthContext = createContext<{
   isLoading: true,
 });
 
-export function useIsLoggedIn() {
-  const value = use(AuthContext);
-  if (!value) {
-    throw new Error("useIsLoggedIn must be wrapped in a <SessionProvider />");
-  }
-
-  return !!value.session;
-}
-
 // Use this hook to access the user info.
 export function useSession() {
   const value = use(AuthContext);

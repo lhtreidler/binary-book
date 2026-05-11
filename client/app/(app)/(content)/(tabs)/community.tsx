@@ -30,7 +30,12 @@ export default function Community() {
     <View>
       <VStack className="p-4">
         <Text bold>Friends</Text>
-        <Autocomplete {...autocompleteProps} />
+        <Autocomplete
+          fieldProps={{
+            placeholder: "Search for friends...",
+          }}
+          {...autocompleteProps}
+        />
       </VStack>
     </View>
   );

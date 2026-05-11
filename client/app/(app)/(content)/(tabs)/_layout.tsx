@@ -3,8 +3,8 @@ import {
   FavouriteIcon,
   Icon,
   MenuIcon,
-  SettingsIcon,
   StarIcon,
+  UserIcon,
 } from "@/components/ui/icon";
 import { ComponentProps } from "react";
 import { View } from "react-native";
@@ -20,15 +20,20 @@ const tabs = [
   { name: "index", title: "Home", icon: StarIcon },
   { name: "list", title: "List", icon: MenuIcon },
   { name: "community", title: "Community", icon: FavouriteIcon },
-  { name: "settings", title: "Settings", icon: SettingsIcon },
+  { name: "settings", title: "Profile", icon: UserIcon },
 ] as const;
 
 export default function TabLayout() {
   const pathname = usePathname();
 
+  const isAutocompleteSticky = pathname === "/community";
+  const isAutocompleteShown = pathname !== "/settings";
+
   return (
     <View style={{ flex: 1 }}>
-      {pathname !== "/community" && <BookAutocomplete />}
+      {isAutocompleteShown && (
+        <BookAutocomplete isSticky={isAutocompleteSticky} />
+      )}
       <View style={{ flex: 1 }}>
         <Tabs
           screenOptions={{
