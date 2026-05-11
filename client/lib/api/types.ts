@@ -30,7 +30,24 @@ export type SearchByUsernameResponse = {
     firstName: string | null;
     lastName: string | null;
     profileImg: string | null;
+    id: string;
   }[];
+};
+
+type ProfileData = {
+  firstName: string | null;
+  username: string | null;
+  profileImg: string | null;
+  createdAt: Date;
+  followerCount: number;
+  followingCount: number;
+};
+
+export type UseGetMyProfileResponse = ProfileData;
+
+export type UseGetProfileResponse = ProfileData & {
+  isUserFollowing: boolean;
+  isUserFollowed: boolean;
 };
 
 export interface Book {

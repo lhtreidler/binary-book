@@ -5,7 +5,7 @@ export default function Layout() {
     <Stack>
       <Stack.Screen name="(tabs)" options={{ headerTitle: "Binary Book" }} />
       <Stack.Screen
-        name="book"
+        name="book/[bookId]"
         options={{ headerBackTitle: "Back", headerTitle: "" }}
       />
     </Stack>

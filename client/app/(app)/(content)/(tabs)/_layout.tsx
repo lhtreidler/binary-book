@@ -51,6 +51,7 @@ export default function TabLayout() {
               }}
             />
           ))}
+          <Tabs.Screen name="profile/[friendId]" options={{ href: null }} />
         </Tabs>
       </View>
     </View>

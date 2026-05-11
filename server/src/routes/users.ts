@@ -5,7 +5,7 @@ import { userService } from "../services";
 const router = Router();
 router.use(authenticateToken);
 
-router.get("/search", async (req: Request, res: Response) => {
+router.get("/", async (req: Request, res: Response) => {
   try {
     const { q: username } = req.query;
 
@@ -19,6 +19,27 @@ router.get("/search", async (req: Request, res: Response) => {
     });
 
     res.json({ users });
+  } catch {
+    res.status(500).send({ message: "Internal Server Error" });
+  }
+});
+
+router.get("/:friendId", async (req: Request, res: Response) => {
+  try {
+    const { user } = req;
+    const { friendId } = req.params;
+
+    if (!user) {
+      res.status(401).send({ message: "Unauthorized" });
+      return;
+    }
+
+    const data = await userService.getUserAndFollowDetails({
+      userId: user.userId,
+      friendId,
+    });
+
+    res.json(data);
   } catch {
     res.status(500).send({ message: "Internal Server Error" });
   }

@@ -2,6 +2,7 @@ import { User } from "../generated/prisma/client";
 import { prisma } from "../lib/prisma";
 import { formatEmail, formatUsername } from "../utils/format";
 import { OmitSystem, WithOptional } from "../utils/type-utils";
+import { followService } from "./followService";
 
 type BaseUser = OmitSystem<User>;
 
@@ -56,6 +57,51 @@ const getUserById = ({ id }: { id: string }) => {
   return prisma.user.findFirst({ where: { id } });
 };
 
+const getUserAndFollowDetails = async ({
+  userId,
+  friendId,
+}: {
+  userId: string;
+  friendId?: string;
+}) => {
+  const [userData, followData] = await Promise.all([
+    prisma.user.findUnique({
+      where: { id: friendId },
+      include: {
+        _count: {
+          select: {
+            followers: true,
+            followings: true,
+          },
+        },
+      },
+    }),
+    ...(friendId ? [followService.getFollowStatus({ userId, friendId })] : []),
+  ]);
+
+  if (!userData) {
+    throw new Error("User does not exist");
+  }
+
+  const {
+    _count: { followers: followerCount, followings: followingCount },
+    firstName,
+    username,
+    profileImg,
+    createdAt,
+  } = userData;
+
+  return {
+    firstName,
+    username,
+    profileImg,
+    createdAt,
+    followerCount,
+    followingCount,
+    ...(followData || {}),
+  };
+};
+
 const getByUsername = ({ username }: { username: string }) => {
   return prisma.user.findUnique({
     where: { username: formatUsername(username) },
@@ -80,6 +126,7 @@ const searchByUsername = ({ username }: { username: string }) => {
       firstName: true,
       lastName: true,
       profileImg: true,
+      id: true,
     },
   });
 };
@@ -89,7 +136,9 @@ const update = ({
   id,
 }: {
   id: string;
-  data: Partial<Pick<User, "firstName" | "lastName" | "username" | "profileImg">>;
+  data: Partial<
+    Pick<User, "firstName" | "lastName" | "username" | "profileImg">
+  >;
 }) => {
   return prisma.user.update({ data, where: { id } });
 };
@@ -104,4 +153,5 @@ export const userService = {
   getUserById,
   update,
   searchByUsername,
+  getUserAndFollowDetails,
 };

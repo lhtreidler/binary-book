@@ -9,8 +9,71 @@ import { CloseIcon } from "../ui/icon";
 import { Spinner } from "../ui/spinner";
 import { Text } from "../ui/text";
 import { VStack } from "../ui/vstack";
-import { AutocompleteProps, nameToIcon } from "./types";
+import { AutocompleteOption, AutocompleteProps, nameToIcon } from "./types";
 import { ProfileAvatar } from "../elements";
+import { Link } from "expo-router";
+
+const Option = ({
+  id: key,
+  label,
+  thumbnail,
+  isAvatar,
+  hideAction = false,
+  rightActions,
+  href,
+}: Omit<AutocompleteOption, "key"> & {
+  id: string;
+  rightActions: AutocompleteProps["rightActions"];
+}) => {
+  const getContent = () => {
+    return (
+      <Box
+        key={key}
+        className="bg-slate-50 border-gray-700 py-2 px-4 border-b-hairline flex flex-row items-center w-full gap-3"
+      >
+        {isAvatar && (
+          <ProfileAvatar size="sm" thumbnail={thumbnail} name={label} />
+        )}
+
+        {thumbnail && !isAvatar && (
+          <Box className="w-1/4 aspect-[2/3]" style={{ width: 70 }}>
+            <Image
+              size="xs"
+              source={{ uri: thumbnail }}
+              alt={label}
+              className="w-full h-full"
+            />
+          </Box>
+        )}
+        <Box className="flex-1">
+          <Text>{label}</Text>
+        </Box>
+
+        {rightActions && !hideAction && (
+          <HStack className="ml-2">
+            {rightActions.map(({ icon, handler }, i) => (
+              <Button
+                size="sm"
+                className="rounded-full"
+                variant="outline"
+                key={i}
+                onPress={() => handler(key)}
+              >
+                <ButtonIcon
+                  className="py-2 px-0"
+                  size="sm"
+                  as={nameToIcon[icon]}
+                />
+              </Button>
+            ))}
+          </HStack>
+        )}
+      </Box>
+    );
+  };
+
+  return href ? <Link href={href}>{getContent()}</Link> : getContent();
+};
 
 export const Autocomplete = ({
   options,
@@ -41,53 +104,9 @@ export const Autocomplete = ({
       );
     }
 
-    return options.map((option) => {
-      const { key, label, thumbnail, isAvatar, hideAction = false } = option;
-      return (
-        <Box
-          key={key}
-          className="bg-slate-50 border-gray-700 py-2 px-4 border-b-hairline flex flex-row items-center w-full gap-3"
-        >
-          {isAvatar && (
-            <ProfileAvatar size="sm" thumbnail={thumbnail} name={label} />
-          )}
-
-          {thumbnail && !isAvatar && (
-            <Box className="w-1/4 aspect-[2/3]" style={{ width: 70 }}>
-              <Image
-                size="xs"
-                source={{ uri: thumbnail }}
-                alt={label}
-                className="w-full h-full"
-              />
-            </Box>
-          )}
-          <Box className="flex-1">
-            <Text>{label}</Text>
-          </Box>
-
-          {rightActions && !hideAction && (
-            <HStack className="ml-2">
-              {rightActions.map(({ icon, handler }, i) => (
-                <Button
-                  size="sm"
-                  className="rounded-full"
-                  variant="outline"
-                  key={i}
-                  onPress={() => handler(key)}
-                >
-                  <ButtonIcon
-                    className="py-2 px-0"
-                    size="sm"
-                    as={nameToIcon[icon]}
-                  />
-                </Button>
-              ))}
-            </HStack>
-          )}
-        </Box>
-      );
-    });
+    return options.map(({ key, ...option }) => (
+      <Option key={key} id={key} {...option} rightActions={rightActions} />
+    ));
   };
 
   if (overlay) {

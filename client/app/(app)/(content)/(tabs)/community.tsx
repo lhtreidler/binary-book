@@ -1,7 +1,8 @@
 import { Autocomplete, useAutocomplete } from "@/components/autocomplete";
+import { AutocompleteOption } from "@/components/autocomplete/types";
 import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
-import { useSearchByUsername } from "@/lib/api/hooks/useFriends";
+import { useSearchByUsername } from "@/lib/api/hooks/useUsers";
 import { useMemo, useState } from "react";
 import { View } from "react-native";
 
@@ -14,12 +15,16 @@ export default function Community() {
   const options = useMemo(() => {
     if (!data) return [];
 
-    return data.users.map(({ username, profileImg }) => ({
-      key: username,
-      label: username,
-      thumbnail: profileImg ?? undefined,
-      isAvatar: true,
-    }));
+    return data.users.map(
+      ({ id, username, profileImg }) =>
+        ({
+          key: username,
+          label: username,
+          thumbnail: profileImg ?? undefined,
+          isAvatar: true,
+          href: `/profile/${id}`,
+        }) as AutocompleteOption,
+    );
   }, [data]);
 
   const autocompleteProps = useAutocomplete({
