@@ -141,28 +141,6 @@ router.get(
   },
 );
 
-router.get(
-  "/user/:username",
-  authenticateToken,
-  async (req: Request, res: Response) => {
-    try {
-      const { username } = req.params;
-
-      const user = await userService.getByUsername({ username });
-
-      if (!user) {
-        res.status(404).json({ message: "User not found" });
-        return;
-      }
-
-      const { username: u, firstName, lastName } = user;
-      res.json({ username: u, firstName, lastName });
-    } catch {
-      res.status(500).send({ message: "Internal Server Error" });
-    }
-  },
-);
-
 router.post(
   "/details",
   authenticateToken,

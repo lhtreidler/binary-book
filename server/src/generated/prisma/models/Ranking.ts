@@ -250,6 +250,7 @@ export type RankingOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   book?: Prisma.BookOrderByWithRelationInput
   user?: Prisma.UserOrderByWithRelationInput
+  _relevance?: Prisma.RankingOrderByRelevanceInput
 }
 
 export type RankingWhereUniqueInput = Prisma.AtLeast<{
@@ -372,6 +373,12 @@ export type RankingListRelationFilter = {
 
 export type RankingOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type RankingOrderByRelevanceInput = {
+  fields: Prisma.RankingOrderByRelevanceFieldEnum | Prisma.RankingOrderByRelevanceFieldEnum[]
+  sort: Prisma.SortOrder
+  search: string
 }
 
 export type RankingUserIdBookIdCompoundUniqueInput = {

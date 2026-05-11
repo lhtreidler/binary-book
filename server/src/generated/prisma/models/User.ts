@@ -31,6 +31,7 @@ export type UserMinAggregateOutputType = {
   email: string | null
   username: string | null
   passwordHash: string | null
+  profileImg: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -42,6 +43,7 @@ export type UserMaxAggregateOutputType = {
   email: string | null
   username: string | null
   passwordHash: string | null
+  profileImg: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -53,6 +55,7 @@ export type UserCountAggregateOutputType = {
   email: number
   username: number
   passwordHash: number
+  profileImg: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -66,6 +69,7 @@ export type UserMinAggregateInputType = {
   email?: true
   username?: true
   passwordHash?: true
+  profileImg?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -77,6 +81,7 @@ export type UserMaxAggregateInputType = {
   email?: true
   username?: true
   passwordHash?: true
+  profileImg?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -88,6 +93,7 @@ export type UserCountAggregateInputType = {
   email?: true
   username?: true
   passwordHash?: true
+  profileImg?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -172,6 +178,7 @@ export type UserGroupByOutputType = {
   email: string
   username: string | null
   passwordHash: string
+  profileImg: string | null
   createdAt: Date
   updatedAt: Date
   _count: UserCountAggregateOutputType | null
@@ -204,10 +211,13 @@ export type UserWhereInput = {
   email?: Prisma.StringFilter<"User"> | string
   username?: Prisma.StringNullableFilter<"User"> | string | null
   passwordHash?: Prisma.StringFilter<"User"> | string
+  profileImg?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   rankings?: Prisma.RankingListRelationFilter
   rankingSessions?: Prisma.RankingSessionListRelationFilter
+  followers?: Prisma.FollowListRelationFilter
+  followings?: Prisma.FollowListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -217,10 +227,14 @@ export type UserOrderByWithRelationInput = {
   email?: Prisma.SortOrder
   username?: Prisma.SortOrderInput | Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
+  profileImg?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   rankings?: Prisma.RankingOrderByRelationAggregateInput
   rankingSessions?: Prisma.RankingSessionOrderByRelationAggregateInput
+  followers?: Prisma.FollowOrderByRelationAggregateInput
+  followings?: Prisma.FollowOrderByRelationAggregateInput
+  _relevance?: Prisma.UserOrderByRelevanceInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -233,10 +247,13 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   firstName?: Prisma.StringNullableFilter<"User"> | string | null
   lastName?: Prisma.StringNullableFilter<"User"> | string | null
   passwordHash?: Prisma.StringFilter<"User"> | string
+  profileImg?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   rankings?: Prisma.RankingListRelationFilter
   rankingSessions?: Prisma.RankingSessionListRelationFilter
+  followers?: Prisma.FollowListRelationFilter
+  followings?: Prisma.FollowListRelationFilter
 }, "id" | "email" | "username">
 
 export type UserOrderByWithAggregationInput = {
@@ -246,6 +263,7 @@ export type UserOrderByWithAggregationInput = {
   email?: Prisma.SortOrder
   username?: Prisma.SortOrderInput | Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
+  profileImg?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
@@ -263,6 +281,7 @@ export type UserScalarWhereWithAggregatesInput = {
   email?: Prisma.StringWithAggregatesFilter<"User"> | string
   username?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   passwordHash?: Prisma.StringWithAggregatesFilter<"User"> | string
+  profileImg?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
 }
@@ -274,10 +293,13 @@ export type UserCreateInput = {
   email: string
   username?: string | null
   passwordHash: string
+  profileImg?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   rankings?: Prisma.RankingCreateNestedManyWithoutUserInput
   rankingSessions?: Prisma.RankingSessionCreateNestedManyWithoutUserInput
+  followers?: Prisma.FollowCreateNestedManyWithoutToInput
+  followings?: Prisma.FollowCreateNestedManyWithoutFromInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -287,10 +309,13 @@ export type UserUncheckedCreateInput = {
   email: string
   username?: string | null
   passwordHash: string
+  profileImg?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   rankings?: Prisma.RankingUncheckedCreateNestedManyWithoutUserInput
   rankingSessions?: Prisma.RankingSessionUncheckedCreateNestedManyWithoutUserInput
+  followers?: Prisma.FollowUncheckedCreateNestedManyWithoutToInput
+  followings?: Prisma.FollowUncheckedCreateNestedManyWithoutFromInput
 }
 
 export type UserUpdateInput = {
@@ -300,10 +325,13 @@ export type UserUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  profileImg?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   rankings?: Prisma.RankingUpdateManyWithoutUserNestedInput
   rankingSessions?: Prisma.RankingSessionUpdateManyWithoutUserNestedInput
+  followers?: Prisma.FollowUpdateManyWithoutToNestedInput
+  followings?: Prisma.FollowUpdateManyWithoutFromNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -313,10 +341,13 @@ export type UserUncheckedUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  profileImg?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   rankings?: Prisma.RankingUncheckedUpdateManyWithoutUserNestedInput
   rankingSessions?: Prisma.RankingSessionUncheckedUpdateManyWithoutUserNestedInput
+  followers?: Prisma.FollowUncheckedUpdateManyWithoutToNestedInput
+  followings?: Prisma.FollowUncheckedUpdateManyWithoutFromNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -326,6 +357,7 @@ export type UserCreateManyInput = {
   email: string
   username?: string | null
   passwordHash: string
+  profileImg?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -337,6 +369,7 @@ export type UserUpdateManyMutationInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  profileImg?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -348,8 +381,15 @@ export type UserUncheckedUpdateManyInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  profileImg?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type UserOrderByRelevanceInput = {
+  fields: Prisma.UserOrderByRelevanceFieldEnum | Prisma.UserOrderByRelevanceFieldEnum[]
+  sort: Prisma.SortOrder
+  search: string
 }
 
 export type UserCountOrderByAggregateInput = {
@@ -359,6 +399,7 @@ export type UserCountOrderByAggregateInput = {
   email?: Prisma.SortOrder
   username?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
+  profileImg?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -370,6 +411,7 @@ export type UserMaxOrderByAggregateInput = {
   email?: Prisma.SortOrder
   username?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
+  profileImg?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -381,6 +423,7 @@ export type UserMinOrderByAggregateInput = {
   email?: Prisma.SortOrder
   username?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
+  profileImg?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -400,6 +443,34 @@ export type NullableStringFieldUpdateOperationsInput = {
 
 export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
+}
+
+export type UserCreateNestedOneWithoutFollowingsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutFollowingsInput, Prisma.UserUncheckedCreateWithoutFollowingsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFollowingsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserCreateNestedOneWithoutFollowersInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutFollowersInput, Prisma.UserUncheckedCreateWithoutFollowersInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFollowersInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutFollowingsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutFollowingsInput, Prisma.UserUncheckedCreateWithoutFollowingsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFollowingsInput
+  upsert?: Prisma.UserUpsertWithoutFollowingsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutFollowingsInput, Prisma.UserUpdateWithoutFollowingsInput>, Prisma.UserUncheckedUpdateWithoutFollowingsInput>
+}
+
+export type UserUpdateOneRequiredWithoutFollowersNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutFollowersInput, Prisma.UserUncheckedCreateWithoutFollowersInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFollowersInput
+  upsert?: Prisma.UserUpsertWithoutFollowersInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutFollowersInput, Prisma.UserUpdateWithoutFollowersInput>, Prisma.UserUncheckedUpdateWithoutFollowersInput>
 }
 
 export type UserCreateNestedOneWithoutRankingsInput = {
@@ -430,6 +501,158 @@ export type UserUpdateOneRequiredWithoutRankingSessionsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutRankingSessionsInput, Prisma.UserUpdateWithoutRankingSessionsInput>, Prisma.UserUncheckedUpdateWithoutRankingSessionsInput>
 }
 
+export type UserCreateWithoutFollowingsInput = {
+  id?: string
+  firstName?: string | null
+  lastName?: string | null
+  email: string
+  username?: string | null
+  passwordHash: string
+  profileImg?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  rankings?: Prisma.RankingCreateNestedManyWithoutUserInput
+  rankingSessions?: Prisma.RankingSessionCreateNestedManyWithoutUserInput
+  followers?: Prisma.FollowCreateNestedManyWithoutToInput
+}
+
+export type UserUncheckedCreateWithoutFollowingsInput = {
+  id?: string
+  firstName?: string | null
+  lastName?: string | null
+  email: string
+  username?: string | null
+  passwordHash: string
+  profileImg?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  rankings?: Prisma.RankingUncheckedCreateNestedManyWithoutUserInput
+  rankingSessions?: Prisma.RankingSessionUncheckedCreateNestedManyWithoutUserInput
+  followers?: Prisma.FollowUncheckedCreateNestedManyWithoutToInput
+}
+
+export type UserCreateOrConnectWithoutFollowingsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutFollowingsInput, Prisma.UserUncheckedCreateWithoutFollowingsInput>
+}
+
+export type UserCreateWithoutFollowersInput = {
+  id?: string
+  firstName?: string | null
+  lastName?: string | null
+  email: string
+  username?: string | null
+  passwordHash: string
+  profileImg?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  rankings?: Prisma.RankingCreateNestedManyWithoutUserInput
+  rankingSessions?: Prisma.RankingSessionCreateNestedManyWithoutUserInput
+  followings?: Prisma.FollowCreateNestedManyWithoutFromInput
+}
+
+export type UserUncheckedCreateWithoutFollowersInput = {
+  id?: string
+  firstName?: string | null
+  lastName?: string | null
+  email: string
+  username?: string | null
+  passwordHash: string
+  profileImg?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  rankings?: Prisma.RankingUncheckedCreateNestedManyWithoutUserInput
+  rankingSessions?: Prisma.RankingSessionUncheckedCreateNestedManyWithoutUserInput
+  followings?: Prisma.FollowUncheckedCreateNestedManyWithoutFromInput
+}
+
+export type UserCreateOrConnectWithoutFollowersInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutFollowersInput, Prisma.UserUncheckedCreateWithoutFollowersInput>
+}
+
+export type UserUpsertWithoutFollowingsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutFollowingsInput, Prisma.UserUncheckedUpdateWithoutFollowingsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutFollowingsInput, Prisma.UserUncheckedCreateWithoutFollowingsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutFollowingsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutFollowingsInput, Prisma.UserUncheckedUpdateWithoutFollowingsInput>
+}
+
+export type UserUpdateWithoutFollowingsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  profileImg?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  rankings?: Prisma.RankingUpdateManyWithoutUserNestedInput
+  rankingSessions?: Prisma.RankingSessionUpdateManyWithoutUserNestedInput
+  followers?: Prisma.FollowUpdateManyWithoutToNestedInput
+}
+
+export type UserUncheckedUpdateWithoutFollowingsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  profileImg?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  rankings?: Prisma.RankingUncheckedUpdateManyWithoutUserNestedInput
+  rankingSessions?: Prisma.RankingSessionUncheckedUpdateManyWithoutUserNestedInput
+  followers?: Prisma.FollowUncheckedUpdateManyWithoutToNestedInput
+}
+
+export type UserUpsertWithoutFollowersInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutFollowersInput, Prisma.UserUncheckedUpdateWithoutFollowersInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutFollowersInput, Prisma.UserUncheckedCreateWithoutFollowersInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutFollowersInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutFollowersInput, Prisma.UserUncheckedUpdateWithoutFollowersInput>
+}
+
+export type UserUpdateWithoutFollowersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  profileImg?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  rankings?: Prisma.RankingUpdateManyWithoutUserNestedInput
+  rankingSessions?: Prisma.RankingSessionUpdateManyWithoutUserNestedInput
+  followings?: Prisma.FollowUpdateManyWithoutFromNestedInput
+}
+
+export type UserUncheckedUpdateWithoutFollowersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  profileImg?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  rankings?: Prisma.RankingUncheckedUpdateManyWithoutUserNestedInput
+  rankingSessions?: Prisma.RankingSessionUncheckedUpdateManyWithoutUserNestedInput
+  followings?: Prisma.FollowUncheckedUpdateManyWithoutFromNestedInput
+}
+
 export type UserCreateWithoutRankingsInput = {
   id?: string
   firstName?: string | null
@@ -437,9 +660,12 @@ export type UserCreateWithoutRankingsInput = {
   email: string
   username?: string | null
   passwordHash: string
+  profileImg?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   rankingSessions?: Prisma.RankingSessionCreateNestedManyWithoutUserInput
+  followers?: Prisma.FollowCreateNestedManyWithoutToInput
+  followings?: Prisma.FollowCreateNestedManyWithoutFromInput
 }
 
 export type UserUncheckedCreateWithoutRankingsInput = {
@@ -449,9 +675,12 @@ export type UserUncheckedCreateWithoutRankingsInput = {
   email: string
   username?: string | null
   passwordHash: string
+  profileImg?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   rankingSessions?: Prisma.RankingSessionUncheckedCreateNestedManyWithoutUserInput
+  followers?: Prisma.FollowUncheckedCreateNestedManyWithoutToInput
+  followings?: Prisma.FollowUncheckedCreateNestedManyWithoutFromInput
 }
 
 export type UserCreateOrConnectWithoutRankingsInput = {
@@ -477,9 +706,12 @@ export type UserUpdateWithoutRankingsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  profileImg?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   rankingSessions?: Prisma.RankingSessionUpdateManyWithoutUserNestedInput
+  followers?: Prisma.FollowUpdateManyWithoutToNestedInput
+  followings?: Prisma.FollowUpdateManyWithoutFromNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRankingsInput = {
@@ -489,9 +721,12 @@ export type UserUncheckedUpdateWithoutRankingsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  profileImg?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   rankingSessions?: Prisma.RankingSessionUncheckedUpdateManyWithoutUserNestedInput
+  followers?: Prisma.FollowUncheckedUpdateManyWithoutToNestedInput
+  followings?: Prisma.FollowUncheckedUpdateManyWithoutFromNestedInput
 }
 
 export type UserCreateWithoutRankingSessionsInput = {
@@ -501,9 +736,12 @@ export type UserCreateWithoutRankingSessionsInput = {
   email: string
   username?: string | null
   passwordHash: string
+  profileImg?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   rankings?: Prisma.RankingCreateNestedManyWithoutUserInput
+  followers?: Prisma.FollowCreateNestedManyWithoutToInput
+  followings?: Prisma.FollowCreateNestedManyWithoutFromInput
 }
 
 export type UserUncheckedCreateWithoutRankingSessionsInput = {
@@ -513,9 +751,12 @@ export type UserUncheckedCreateWithoutRankingSessionsInput = {
   email: string
   username?: string | null
   passwordHash: string
+  profileImg?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   rankings?: Prisma.RankingUncheckedCreateNestedManyWithoutUserInput
+  followers?: Prisma.FollowUncheckedCreateNestedManyWithoutToInput
+  followings?: Prisma.FollowUncheckedCreateNestedManyWithoutFromInput
 }
 
 export type UserCreateOrConnectWithoutRankingSessionsInput = {
@@ -541,9 +782,12 @@ export type UserUpdateWithoutRankingSessionsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  profileImg?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   rankings?: Prisma.RankingUpdateManyWithoutUserNestedInput
+  followers?: Prisma.FollowUpdateManyWithoutToNestedInput
+  followings?: Prisma.FollowUpdateManyWithoutFromNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRankingSessionsInput = {
@@ -553,9 +797,12 @@ export type UserUncheckedUpdateWithoutRankingSessionsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  profileImg?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   rankings?: Prisma.RankingUncheckedUpdateManyWithoutUserNestedInput
+  followers?: Prisma.FollowUncheckedUpdateManyWithoutToNestedInput
+  followings?: Prisma.FollowUncheckedUpdateManyWithoutFromNestedInput
 }
 
 
@@ -566,11 +813,15 @@ export type UserUncheckedUpdateWithoutRankingSessionsInput = {
 export type UserCountOutputType = {
   rankings: number
   rankingSessions: number
+  followers: number
+  followings: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   rankings?: boolean | UserCountOutputTypeCountRankingsArgs
   rankingSessions?: boolean | UserCountOutputTypeCountRankingSessionsArgs
+  followers?: boolean | UserCountOutputTypeCountFollowersArgs
+  followings?: boolean | UserCountOutputTypeCountFollowingsArgs
 }
 
 /**
@@ -597,6 +848,20 @@ export type UserCountOutputTypeCountRankingSessionsArgs<ExtArgs extends runtime.
   where?: Prisma.RankingSessionWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountFollowersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.FollowWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountFollowingsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.FollowWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -605,10 +870,13 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   email?: boolean
   username?: boolean
   passwordHash?: boolean
+  profileImg?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   rankings?: boolean | Prisma.User$rankingsArgs<ExtArgs>
   rankingSessions?: boolean | Prisma.User$rankingSessionsArgs<ExtArgs>
+  followers?: boolean | Prisma.User$followersArgs<ExtArgs>
+  followings?: boolean | Prisma.User$followingsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -619,6 +887,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   email?: boolean
   username?: boolean
   passwordHash?: boolean
+  profileImg?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["user"]>
@@ -630,6 +899,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   email?: boolean
   username?: boolean
   passwordHash?: boolean
+  profileImg?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["user"]>
@@ -641,14 +911,17 @@ export type UserSelectScalar = {
   email?: boolean
   username?: boolean
   passwordHash?: boolean
+  profileImg?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "firstName" | "lastName" | "email" | "username" | "passwordHash" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "firstName" | "lastName" | "email" | "username" | "passwordHash" | "profileImg" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   rankings?: boolean | Prisma.User$rankingsArgs<ExtArgs>
   rankingSessions?: boolean | Prisma.User$rankingSessionsArgs<ExtArgs>
+  followers?: boolean | Prisma.User$followersArgs<ExtArgs>
+  followings?: boolean | Prisma.User$followingsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -659,6 +932,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   objects: {
     rankings: Prisma.$RankingPayload<ExtArgs>[]
     rankingSessions: Prisma.$RankingSessionPayload<ExtArgs>[]
+    followers: Prisma.$FollowPayload<ExtArgs>[]
+    followings: Prisma.$FollowPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -667,6 +942,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     email: string
     username: string | null
     passwordHash: string
+    profileImg: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["user"]>
@@ -1065,6 +1341,8 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   readonly [Symbol.toStringTag]: "PrismaPromise"
   rankings<T extends Prisma.User$rankingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$rankingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RankingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   rankingSessions<T extends Prisma.User$rankingSessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$rankingSessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RankingSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  followers<T extends Prisma.User$followersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$followersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FollowPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  followings<T extends Prisma.User$followingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$followingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FollowPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1100,6 +1378,7 @@ export interface UserFieldRefs {
   readonly email: Prisma.FieldRef<"User", 'String'>
   readonly username: Prisma.FieldRef<"User", 'String'>
   readonly passwordHash: Prisma.FieldRef<"User", 'String'>
+  readonly profileImg: Prisma.FieldRef<"User", 'String'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
 }
@@ -1535,6 +1814,54 @@ export type User$rankingSessionsArgs<ExtArgs extends runtime.Types.Extensions.In
   take?: number
   skip?: number
   distinct?: Prisma.RankingSessionScalarFieldEnum | Prisma.RankingSessionScalarFieldEnum[]
+}
+
+/**
+ * User.followers
+ */
+export type User$followersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Follow
+   */
+  select?: Prisma.FollowSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Follow
+   */
+  omit?: Prisma.FollowOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FollowInclude<ExtArgs> | null
+  where?: Prisma.FollowWhereInput
+  orderBy?: Prisma.FollowOrderByWithRelationInput | Prisma.FollowOrderByWithRelationInput[]
+  cursor?: Prisma.FollowWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.FollowScalarFieldEnum | Prisma.FollowScalarFieldEnum[]
+}
+
+/**
+ * User.followings
+ */
+export type User$followingsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Follow
+   */
+  select?: Prisma.FollowSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Follow
+   */
+  omit?: Prisma.FollowOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FollowInclude<ExtArgs> | null
+  where?: Prisma.FollowWhereInput
+  orderBy?: Prisma.FollowOrderByWithRelationInput | Prisma.FollowOrderByWithRelationInput[]
+  cursor?: Prisma.FollowWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.FollowScalarFieldEnum | Prisma.FollowScalarFieldEnum[]
 }
 
 /**

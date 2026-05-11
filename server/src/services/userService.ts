@@ -59,6 +59,27 @@ const getUserById = ({ id }: { id: string }) => {
 const getByUsername = ({ username }: { username: string }) => {
   return prisma.user.findUnique({
     where: { username: formatUsername(username) },
+    omit: {
+      passwordHash: true,
+    },
+  });
+};
+
+const searchByUsername = ({ username }: { username: string }) => {
+  return prisma.user.findMany({
+    orderBy: {
+      _relevance: {
+        fields: ["username"],
+        search: formatUsername(username),
+        sort: "desc",
+      },
+    },
+    take: 20,
+    select: {
+      username: true,
+      firstName: true,
+      lastName: true,
+    },
   });
 };
 
@@ -81,4 +102,5 @@ export const userService = {
   getIsUsernameTaken,
   getUserById,
   update,
+  searchByUsername,
 };

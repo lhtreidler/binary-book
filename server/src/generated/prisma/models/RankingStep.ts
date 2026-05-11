@@ -252,6 +252,7 @@ export type RankingStepOrderByWithRelationInput = {
   skippedOffsets?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   rankingSession?: Prisma.RankingSessionOrderByWithRelationInput
+  _relevance?: Prisma.RankingStepOrderByRelevanceInput
 }
 
 export type RankingStepWhereUniqueInput = Prisma.AtLeast<{
@@ -382,6 +383,12 @@ export type IntNullableListFilter<$PrismaModel = never> = {
   hasEvery?: number[] | Prisma.ListIntFieldRefInput<$PrismaModel>
   hasSome?: number[] | Prisma.ListIntFieldRefInput<$PrismaModel>
   isEmpty?: boolean
+}
+
+export type RankingStepOrderByRelevanceInput = {
+  fields: Prisma.RankingStepOrderByRelevanceFieldEnum | Prisma.RankingStepOrderByRelevanceFieldEnum[]
+  sort: Prisma.SortOrder
+  search: string
 }
 
 export type RankingStepRankingSessionIdSeqCompoundUniqueInput = {

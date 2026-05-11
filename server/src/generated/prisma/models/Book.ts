@@ -190,6 +190,7 @@ export type BookOrderByWithRelationInput = {
   compareStr?: Prisma.SortOrder
   rankings?: Prisma.RankingOrderByRelationAggregateInput
   rankingSessions?: Prisma.RankingSessionOrderByRelationAggregateInput
+  _relevance?: Prisma.BookOrderByRelevanceInput
 }
 
 export type BookWhereUniqueInput = Prisma.AtLeast<{
@@ -297,6 +298,12 @@ export type StringNullableListFilter<$PrismaModel = never> = {
   hasEvery?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
   hasSome?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
   isEmpty?: boolean
+}
+
+export type BookOrderByRelevanceInput = {
+  fields: Prisma.BookOrderByRelevanceFieldEnum | Prisma.BookOrderByRelevanceFieldEnum[]
+  sort: Prisma.SortOrder
+  search: string
 }
 
 export type BookCountOrderByAggregateInput = {

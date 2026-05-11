@@ -50,6 +50,11 @@ path.join(process.cwd(), "src/generated/prisma/libquery_engine-darwin.dylib.node
  */
 export type User = Prisma.UserModel
 /**
+ * Model Follow
+ * 
+ */
+export type Follow = Prisma.FollowModel
+/**
  * Model Book
  * 
  */
