@@ -29,6 +29,7 @@ export type SearchByUsernameResponse = {
     username: string;
     firstName: string | null;
     lastName: string | null;
+    profileImg: string | null;
   }[];
 };
 

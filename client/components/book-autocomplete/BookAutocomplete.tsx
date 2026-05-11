@@ -21,10 +21,10 @@ export const BookAutocomplete = ({
 
   const options = useMemo(() => {
     if (!data) return [];
-    return data.items.map(({ key, title, authors, isRanked }) => {
+    return data.items.map(({ key, title, authors, isRanked, thumbnail }) => {
       const authorStr = authors.length ? authors.join(", ") : "Unknown Author";
       const label = `${title} by ${authorStr}`;
-      return { key, label, hideAction: isRanked };
+      return { key, label, hideAction: isRanked, thumbnail };
     });
   }, [data]);
 

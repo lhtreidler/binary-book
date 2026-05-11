@@ -14,9 +14,11 @@ export default function Community() {
   const options = useMemo(() => {
     if (!data) return [];
 
-    return data.users.map(({ username }) => ({
+    return data.users.map(({ username, profileImg }) => ({
       key: username,
       label: username,
+      thumbnail: profileImg ?? undefined,
+      isAvatar: true,
     }));
   }, [data]);
 

@@ -1,11 +1,5 @@
 import { useState } from "react";
-import {
-  ActivityIndicator,
-  Image,
-  Pressable,
-  ScrollView,
-  View,
-} from "react-native";
+import { ActivityIndicator, Pressable, ScrollView, View } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { useQueryClient } from "@tanstack/react-query";
 import { useMe, useUploadProfileImage } from "@/lib/api/hooks/useAuth";
@@ -14,41 +8,30 @@ import { Box } from "@/components/ui/box";
 import { Button, ButtonText } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
+import { ProfileAvatar } from "@/components/elements";
+import { LoadingView } from "@/components/layout";
 
 const Avatar = ({
   uri,
-  initials,
+  name,
+  lastName,
   uploading,
   onPress,
 }: {
   uri: string | null;
-  initials: string;
+  name: string | null;
+  lastName: string | null;
   uploading: boolean;
   onPress: () => void;
 }) => (
   <Pressable onPress={onPress}>
-    <View style={{ width: 96, height: 96 }}>
-      {uri ? (
-        <Image
-          source={{ uri }}
-          style={{ width: 96, height: 96, borderRadius: 48 }}
-        />
-      ) : (
-        <View
-          style={{
-            width: 96,
-            height: 96,
-            borderRadius: 48,
-            backgroundColor: "#2563eb",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Text style={{ color: "white", fontSize: 32, fontWeight: "600" }}>
-            {initials}
-          </Text>
-        </View>
-      )}
+    <View className="w-32 h-32">
+      <ProfileAvatar
+        size="2xl"
+        thumbnail={uri}
+        name={name}
+        lastName={lastName}
+      />
       {uploading && (
         <View
           style={{
@@ -75,13 +58,6 @@ export default function ProfileTab() {
   const [uploadError, setUploadError] = useState("");
 
   const fullName = [user?.firstName, user?.lastName].filter(Boolean).join(" ");
-  const initials =
-    [user?.firstName?.[0], user?.lastName?.[0]]
-      .filter(Boolean)
-      .join("")
-      .toUpperCase() ||
-    user?.username?.[0]?.toUpperCase() ||
-    "?";
 
   const onPickImage = async () => {
     setUploadError("");
@@ -113,13 +89,16 @@ export default function ProfileTab() {
     }
   };
 
+  if (!user) return <LoadingView />;
+
   return (
     <ScrollView style={{ flex: 1 }} contentContainerStyle={{ padding: 24 }}>
       <VStack space="xl">
         <VStack className="items-center" space="md">
           <Avatar
             uri={user?.profileImg ?? null}
-            initials={initials}
+            name={user.firstName}
+            lastName={user.lastName}
             uploading={uploadProfileImage.isPending}
             onPress={onPickImage}
           />

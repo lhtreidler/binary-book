@@ -10,6 +10,7 @@ import { Spinner } from "../ui/spinner";
 import { Text } from "../ui/text";
 import { VStack } from "../ui/vstack";
 import { AutocompleteProps, nameToIcon } from "./types";
+import { ProfileAvatar } from "../elements";
 
 export const Autocomplete = ({
   options,
@@ -41,16 +42,17 @@ export const Autocomplete = ({
     }
 
     return options.map((option) => {
-      const { key, label, thumbnail, hideAction = false } = option;
+      const { key, label, thumbnail, isAvatar, hideAction = false } = option;
       return (
         <Box
           key={key}
           className="bg-slate-50 border-gray-700 py-2 px-4 border-b-hairline flex flex-row items-center w-full gap-3"
         >
-          <Box className="flex-1">
-            <Text>{label}</Text>
-          </Box>
-          {thumbnail ? (
+          {isAvatar && (
+            <ProfileAvatar size="sm" thumbnail={thumbnail} name={label} />
+          )}
+
+          {thumbnail && !isAvatar && (
             <Box className="w-1/4 aspect-[2/3]" style={{ width: 70 }}>
               <Image
                 size="xs"
@@ -59,7 +61,11 @@ export const Autocomplete = ({
                 className="w-full h-full"
               />
             </Box>
-          ) : null}
+          )}
+          <Box className="flex-1">
+            <Text>{label}</Text>
+          </Box>
+
           {rightActions && !hideAction && (
             <HStack className="ml-2">
               {rightActions.map(({ icon, handler }, i) => (

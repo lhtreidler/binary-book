@@ -22,10 +22,13 @@ const formatResult = (res: GoogleBooksSearchResponse) => {
   return dedupeBooks(res.items).reduce<FormattedBookItems>((acc, item) => {
     const {
       id,
-      volumeInfo: { title, authors = [] },
+      volumeInfo: { title, authors = [], imageLinks },
     } = item;
 
-    return [...acc, { key: id, title, authors }];
+    return [
+      ...acc,
+      { key: id, title, authors, thumbnail: imageLinks?.thumbnail },
+    ];
   }, []);
 };
 

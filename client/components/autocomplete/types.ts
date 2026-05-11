@@ -10,6 +10,7 @@ type Option = {
   key: string;
   label: string;
   thumbnail?: string;
+  isAvatar?: boolean;
   hideAction?: boolean;
 };
 

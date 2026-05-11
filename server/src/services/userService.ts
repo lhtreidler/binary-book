@@ -79,6 +79,7 @@ const searchByUsername = ({ username }: { username: string }) => {
       username: true,
       firstName: true,
       lastName: true,
+      profileImg: true,
     },
   });
 };
