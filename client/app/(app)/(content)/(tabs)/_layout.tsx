@@ -20,7 +20,7 @@ const tabs = [
   { name: "index", title: "Home", icon: StarIcon },
   { name: "list", title: "List", icon: MenuIcon },
   { name: "community", title: "Community", icon: FavouriteIcon },
-  { name: "settings", title: "Profile", icon: UserIcon },
+  { name: "profile/index", title: "Profile", icon: UserIcon },
 ] as const;
 
 export default function TabLayout() {
