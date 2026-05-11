@@ -18,7 +18,7 @@ export function useSearchByUsername({
   enabled?: boolean;
 }): UseQueryResult<SearchByUsernameResponse | null, ApiError> {
   return useQuery({
-    queryKey: ["users", username],
+    queryKey: ["users", "search", username],
     queryFn: async () => {
       const client = await getApiClient();
       const { data } = await client.get<SearchByUsernameResponse>(
@@ -39,7 +39,7 @@ export function useGetProfile({
   userId?: string;
 }): UseQueryResult<UseGetProfileResponse | null, ApiError> {
   return useQuery({
-    queryKey: ["users", userId],
+    queryKey: ["users", "profile", userId],
     queryFn: async () => {
       const client = await getApiClient();
       const { data } = await client.get<UseGetProfileResponse>(

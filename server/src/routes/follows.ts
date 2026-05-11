@@ -1,6 +1,6 @@
 import { Router, Request, Response } from "express";
 import { authenticateToken } from "../middleware/auth";
-import { followService, userService } from "../services";
+import { followService } from "../services";
 import { handlePaginatedRequest } from "../utils/pagination";
 
 const router = Router();

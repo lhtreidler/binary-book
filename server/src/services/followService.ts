@@ -1,7 +1,3 @@
-import {
-  FollowFindManyArgs,
-  FollowWhereInput,
-} from "../generated/prisma/models";
 import { prisma } from "../lib/prisma";
 
 const getFollowStatus = async ({

@@ -1,8 +1,6 @@
 import { useMemo } from "react";
-import { FlatList, ListRenderItem } from "react-native";
-import { Box } from "@/components/ui/box";
-import { Spinner } from "@/components/ui/spinner";
-import { Text } from "@/components/ui/text";
+import { ListRenderItem } from "react-native";
+import { InfiniteList } from "@/components/elements";
 import { useFollowList } from "@/lib/api/hooks/useFollows";
 import { FollowListUser } from "@/lib/api/types";
 import { FollowListItem } from "./FollowListItem";
@@ -35,47 +33,19 @@ export function FollowList({ type, userId, isSelf }: FollowListProps) {
     <FollowListItem item={item} action={itemAction} />
   );
 
-  if (isLoading) {
-    return (
-      <Box className="flex-1 items-center justify-center">
-        <Spinner />
-      </Box>
-    );
-  }
-
-  if (isError) {
-    return (
-      <Box className="flex-1 items-center justify-center px-4">
-        <Text>Failed to load. Please try again.</Text>
-      </Box>
-    );
-  }
-
   return (
-    <Box className="flex-1">
-      <FlatList
-        data={items}
-        keyExtractor={(item) => item.id}
-        renderItem={renderItem}
-        onRefresh={refetch}
-        refreshing={isRefetching && !isFetchingNextPage}
-        onEndReached={() => {
-          if (hasNextPage && !isFetchingNextPage) fetchNextPage();
-        }}
-        onEndReachedThreshold={0.5}
-        ListFooterComponent={
-          isFetchingNextPage ? (
-            <Box className="py-4">
-              <Spinner />
-            </Box>
-          ) : null
-        }
-        ListEmptyComponent={
-          <Box className="items-center justify-center py-10">
-            <Text className="text-typography-500">No {type} yet.</Text>
-          </Box>
-        }
-      />
-    </Box>
+    <InfiniteList
+      items={items}
+      renderItem={renderItem}
+      keyExtractor={(item) => item.id}
+      isLoading={isLoading}
+      isError={isError}
+      hasNextPage={hasNextPage}
+      isFetchingNextPage={isFetchingNextPage}
+      isRefetching={isRefetching}
+      fetchNextPage={fetchNextPage}
+      refetch={refetch}
+      emptyMessage={`No ${type} yet.`}
+    />
   );
 }

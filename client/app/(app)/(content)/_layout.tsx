@@ -8,7 +8,7 @@ export default function Layout() {
         name="book/[bookId]"
         options={{ headerBackTitle: "Back", headerTitle: "" }}
       />
-      <Stack.Screen name="follow/[type]" options={{ headerTitle: "" }} />
+      <Stack.Screen name="follow/[type]" />
     </Stack>
   );
 }

@@ -62,6 +62,7 @@ export const ProfileAvatar = ({
     try {
       await uploadProfileImage.mutateAsync({ localUri, mimeType });
       queryClient.invalidateQueries({ queryKey: ["auth", "me"] });
+      queryClient.invalidateQueries({ queryKey: ["users", "me"] });
     } catch {
       setUploadError("Upload failed. Please try again.");
     }

@@ -83,7 +83,7 @@ const getUserAndFollowDetails = async ({
   ]);
 
   if (!userData) {
-    throw new Error("User does not exist");
+    return null;
   }
 
   const {

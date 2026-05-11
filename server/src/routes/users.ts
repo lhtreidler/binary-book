@@ -37,6 +37,11 @@ router.get("/me", async (req: Request, res: Response) => {
       userId: user.userId,
     });
 
+    if (!data) {
+      res.status(404).send({ message: "User not found" });
+      return;
+    }
+
     res.json(data);
   } catch (err) {
     res.status(500).send({ message: "Internal Server Error" });
@@ -57,6 +62,11 @@ router.get("/:friendId", async (req: Request, res: Response) => {
       userId: user.userId,
       friendId,
     });
+
+    if (!data) {
+      res.status(404).send({ message: "User not found" });
+      return;
+    }
 
     res.json(data);
   } catch {

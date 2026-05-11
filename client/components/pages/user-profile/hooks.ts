@@ -9,6 +9,7 @@ export const useProfile = ({ userId }: { userId: string }) => {
   const [followError, setFollowError] = useState("");
 
   const onFollow = async () => {
+    setFollowError("");
     try {
       await follow.mutateAsync();
     } catch {
@@ -17,6 +18,7 @@ export const useProfile = ({ userId }: { userId: string }) => {
   };
 
   const onUnfollow = async () => {
+    setFollowError("");
     try {
       await unfollow.mutateAsync();
     } catch {
