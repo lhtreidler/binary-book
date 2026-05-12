@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import { generateToken } from "../utils/jwt";
-import { userService } from "./userService";
+import { userService } from "./users/userService";
 import { formatEmail, formatUsername } from "../utils/format";
 
 const getIsValidPassword = (password: string, passwordHash: string) => {

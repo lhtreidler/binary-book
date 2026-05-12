@@ -1,7 +1,7 @@
-import { User } from "../generated/prisma/client";
-import { prisma } from "../lib/prisma";
-import { formatEmail, formatUsername } from "../utils/format";
-import { OmitSystem, WithOptional } from "../utils/type-utils";
+import { User } from "../../generated/prisma/client";
+import { prisma } from "../../lib/prisma";
+import { formatEmail, formatUsername } from "../../utils/format";
+import { OmitSystem, WithOptional } from "../../utils/type-utils";
 import { followService } from "./followService";
 
 type BaseUser = OmitSystem<User>;

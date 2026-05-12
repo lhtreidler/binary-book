@@ -1,6 +1,6 @@
-import { Ranking } from "../generated/prisma/client";
-import { prisma } from "../lib/prisma";
-import { handlePaginatedRequest } from "../utils/pagination";
+import { Ranking } from "../../generated/prisma/client";
+import { prisma } from "../../lib/prisma";
+import { handlePaginatedRequest } from "../../utils/pagination";
 
 type MinMax = { minRaw: number | null; maxRaw: number | null };
 type BaseRanking = Omit<Ranking, "updatedAt" | "createdAt" | "id">;

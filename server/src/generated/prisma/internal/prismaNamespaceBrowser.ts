@@ -53,6 +53,7 @@ export const ModelName = {
   Follow: 'Follow',
   Book: 'Book',
   Ranking: 'Ranking',
+  Bookmark: 'Bookmark',
   RankingSession: 'RankingSession',
   RankingStep: 'RankingStep',
   SearchCache: 'SearchCache'
@@ -121,6 +122,17 @@ export const RankingScalarFieldEnum = {
 } as const
 
 export type RankingScalarFieldEnum = (typeof RankingScalarFieldEnum)[keyof typeof RankingScalarFieldEnum]
+
+
+export const BookmarkScalarFieldEnum = {
+  id: 'id',
+  bookId: 'bookId',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type BookmarkScalarFieldEnum = (typeof BookmarkScalarFieldEnum)[keyof typeof BookmarkScalarFieldEnum]
 
 
 export const RankingSessionScalarFieldEnum = {
@@ -221,6 +233,15 @@ export const RankingOrderByRelevanceFieldEnum = {
 } as const
 
 export type RankingOrderByRelevanceFieldEnum = (typeof RankingOrderByRelevanceFieldEnum)[keyof typeof RankingOrderByRelevanceFieldEnum]
+
+
+export const BookmarkOrderByRelevanceFieldEnum = {
+  id: 'id',
+  bookId: 'bookId',
+  userId: 'userId'
+} as const
+
+export type BookmarkOrderByRelevanceFieldEnum = (typeof BookmarkOrderByRelevanceFieldEnum)[keyof typeof BookmarkOrderByRelevanceFieldEnum]
 
 
 export const RankingSessionOrderByRelevanceFieldEnum = {

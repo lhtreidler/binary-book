@@ -1,5 +1,5 @@
-import { prisma } from "../lib/prisma";
-import { FormattedBookItems } from "../types/googleApi";
+import { prisma } from "../../lib/prisma";
+import { FormattedBookItems } from "../../types/googleApi";
 
 const formatQuery = (query: string) => JSON.stringify(query).toLowerCase();
 

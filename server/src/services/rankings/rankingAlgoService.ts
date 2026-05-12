@@ -3,8 +3,8 @@ import {
   rankingSessionService,
   rankingStepService,
   STARTING_RAW_SCORE,
-} from ".";
-import { rankingSelection, RankingSelection } from "../utils/schemas";
+} from "..";
+import { rankingSelection, RankingSelection } from "../../utils/schemas";
 
 const createFinalRankingAndReturnScore = async ({
   insertionIndex,

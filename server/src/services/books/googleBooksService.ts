@@ -2,10 +2,10 @@ import {
   FormattedBookItems,
   GoogleBooksSearchResponse,
   GoogleBooksVolume,
-} from "../types/googleApi";
-import { createBookComparisonStr, dedupeBooks } from "../utils/dedupe";
-import { stripHtml } from "../utils/html";
-import { prisma } from "../lib/prisma";
+} from "../../types/googleApi";
+import { createBookComparisonStr, dedupeBooks } from "../../utils/dedupe";
+import { stripHtml } from "../../utils/html";
+import { prisma } from "../../lib/prisma";
 import { searchCacheService } from "./searchCacheService";
 
 const baseUrl = "https://www.googleapis.com/books/v1/volumes";

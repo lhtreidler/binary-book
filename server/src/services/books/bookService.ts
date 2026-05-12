@@ -1,6 +1,6 @@
-import { prisma } from "../lib/prisma";
+import { prisma } from "../../lib/prisma";
 import { googleBooksService } from "./googleBooksService";
-import { rankingService } from "./rankingService";
+import { rankingService } from "../rankings/rankingService";
 
 const getBookDetails = async ({
   userId,
