@@ -46,6 +46,7 @@ model Book {
   title           String
   authors         String[]
   compareStr      String
+  thumbnail       String?
   rankings        Ranking[]
   bookmarks       Bookmark[]
   rankingSessions RankingSession[]

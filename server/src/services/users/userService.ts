@@ -6,7 +6,10 @@ import { followService } from "./followService";
 
 type BaseUser = OmitSystem<User>;
 
-type CreateUser = WithOptional<BaseUser, "firstName" | "lastName" | "username">;
+type CreateUser = WithOptional<
+  BaseUser,
+  "firstName" | "lastName" | "username" | "profileImg"
+>;
 
 const getByEmail = ({ email }: { email: string }) => {
   return prisma.user.findUnique({

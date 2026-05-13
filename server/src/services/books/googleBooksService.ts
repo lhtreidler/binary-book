@@ -16,31 +16,23 @@ const createQueryUrl = (q: string) =>
 const createVolumeUrl = (id: string) =>
   `${baseUrl}/${id}?key=${process.env.GOOGLE_BOOKS_API_KEY}`;
 
-const formatResult = (res: GoogleBooksSearchResponse) => {
-  if (!res.items) return [];
-
-  return dedupeBooks(res.items).reduce<FormattedBookItems>((acc, item) => {
-    const {
-      id,
-      volumeInfo: { title, authors = [], imageLinks },
-    } = item;
-
-    return [
-      ...acc,
-      { key: id, title, authors, thumbnail: imageLinks?.thumbnail },
-    ];
-  }, []);
-};
-
-const fetchBooks = async (query: string) => {
+const fetchBooks = async (query: string): Promise<FormattedBookItems> => {
   const books = (await fetch(createQueryUrl(query)).then((response) =>
     response.json(),
   )) as GoogleBooksSearchResponse;
 
-  return formatResult(books);
+  return (books.items || []).map(
+    ({ id, volumeInfo: { title, authors = [], imageLinks } }) => ({
+      key: id,
+      title,
+      authors,
+      thumbnail: imageLinks?.thumbnail,
+      compareStr: createBookComparisonStr(title, authors),
+    }),
+  );
 };
 
-const queryGoogleBooks = async ({
+const queryBooks = async ({
   userId,
   query,
 }: {
@@ -49,56 +41,91 @@ const queryGoogleBooks = async ({
 }) => {
   const cachedResult = await searchCacheService.getByQuery({ query });
 
+  let result: FormattedBookItems = [];
   if (cachedResult?.jsonResult) {
-    return JSON.parse(cachedResult.jsonResult) as FormattedBookItems;
-  }
-
-  const formattedResult = await fetchBooks(query);
-
-  try {
-    await searchCacheService.create({ query, result: formattedResult });
-  } catch (err) {
-    console.error(err);
+    result = JSON.parse(cachedResult.jsonResult) as FormattedBookItems;
+  } else {
+    result = await fetchBooks(query);
+    await searchCacheService.create({ query, result });
   }
 
   // get matching books from user's shelf by google id
   let googleIds: string[] = [];
   let comparisonStrings: string[] = [];
 
-  formattedResult.forEach(({ key, title, authors }) => {
+  result.forEach(({ key, compareStr }) => {
     googleIds.push(key);
-    comparisonStrings.push(createBookComparisonStr(title, authors));
+    comparisonStrings.push(compareStr);
   });
 
   // find books the user has ranked with the same comparison string or googleId
-  const rankedBooks = await prisma.book.findMany({
+  const compareOr = [
+    {
+      googleId: {
+        in: googleIds,
+      },
+    },
+    {
+      compareStr: {
+        in: comparisonStrings,
+      },
+    },
+  ];
+
+  const existingData = await prisma.book.findMany({
     where: {
+      OR: compareOr,
+    },
+    include: {
       rankings: {
-        some: {
+        where: {
           userId,
         },
       },
-      OR: [
-        {
-          googleId: {
-            in: googleIds,
-          },
-        },
-        {
-          compareStr: {
-            in: comparisonStrings,
-          },
-        },
-      ],
+      bookmarks: {
+        where: { userId },
+      },
     },
   });
 
-  return formattedResult.map((item) => {
-    return {
-      ...item,
-      isRanked: rankedBooks.some(({ googleId }) => googleId === item.key),
-    };
-  });
+  const compareStrSet = new Set<string>();
+
+  const bookData = result
+    .map((res) => {
+      const bookCompareStr = res.compareStr;
+
+      const matchedBook =
+        existingData.find(({ googleId }) => googleId === res.key) ||
+        existingData.find(({ compareStr }) => compareStr === bookCompareStr);
+
+      if (matchedBook) {
+        compareStrSet.add(bookCompareStr);
+
+        const { id: _id, googleId, rankings, bookmarks, ...rest } = matchedBook;
+
+        return {
+          key: googleId,
+          isRanked: !!rankings.length,
+          isBookmarked: !!bookmarks.length,
+          ...rest,
+        };
+      }
+
+      if (compareStrSet.has(bookCompareStr)) {
+        return null;
+      }
+
+      compareStrSet.add(bookCompareStr);
+
+      return {
+        ...res,
+        isRanked: false,
+        isBookmarked: false,
+      };
+    })
+    .filter((n) => !!n);
+
+  return bookData;
 };
 
 const getOrCreateBookByGoogleId = async (googleId: string) => {
@@ -184,7 +211,7 @@ const getVolumeDetails = async (volumeId: string): Promise<VolumeDetails> => {
 };
 
 export const googleBooksService = {
-  queryGoogleBooks,
+  queryGoogleBooks: queryBooks,
   getOrCreateBookByGoogleId,
   getVolumeDetails,
   fetchBooks,

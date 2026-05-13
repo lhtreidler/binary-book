@@ -1,12 +1,7 @@
 import "dotenv/config";
 import { Pool } from "pg";
 import { PrismaPg } from "@prisma/adapter-pg";
-import {
-  Book,
-  Bookmark,
-  PrismaClient,
-  Ranking,
-} from "../src/generated/prisma/client";
+import { PrismaClient, Ranking } from "../src/generated/prisma/client";
 import { faker } from "@faker-js/faker";
 import * as fs from "node:fs";
 import {
@@ -20,9 +15,7 @@ import { FormattedBookItems } from "../src/types/googleApi";
 import { createBookComparisonStr } from "../src/utils/dedupe";
 import { parseArgs } from "node:util";
 import {
-  BookmarkCreateArgs,
   BookmarkCreateManyArgs,
-  RankingCreateArgs,
   RankingCreateManyArgs,
 } from "../src/generated/prisma/models";
 
@@ -172,7 +165,6 @@ const fetchBooks = async (bookCount: number) => {
     .filter((n) => !!n)
     .map(({ key, ...data }) => ({
       googleId: key,
-      compareStr: createBookComparisonStr(data.title, data.authors),
       ...data,
     }));
 

@@ -1078,7 +1078,8 @@ export const BookScalarFieldEnum = {
   googleId: 'googleId',
   title: 'title',
   authors: 'authors',
-  compareStr: 'compareStr'
+  compareStr: 'compareStr',
+  thumbnail: 'thumbnail'
 } as const
 
 export type BookScalarFieldEnum = (typeof BookScalarFieldEnum)[keyof typeof BookScalarFieldEnum]
@@ -1193,7 +1194,8 @@ export const BookOrderByRelevanceFieldEnum = {
   googleId: 'googleId',
   title: 'title',
   authors: 'authors',
-  compareStr: 'compareStr'
+  compareStr: 'compareStr',
+  thumbnail: 'thumbnail'
 } as const
 
 export type BookOrderByRelevanceFieldEnum = (typeof BookOrderByRelevanceFieldEnum)[keyof typeof BookOrderByRelevanceFieldEnum]

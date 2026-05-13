@@ -177,7 +177,14 @@ const getRankingCountByLevel = async ({
 };
 
 const createRankingAndGetScore = async (data: BaseRanking) => {
-  const ranking = await prisma.ranking.create({ data });
+  const { userId, bookId } = data;
+
+  const [ranking] = await prisma.$transaction([
+    prisma.ranking.create({ data }),
+    prisma.bookmark.deleteMany({
+      where: { userId, bookId },
+    }),
+  ]);
 
   const score = await getRankingScore(ranking);
 

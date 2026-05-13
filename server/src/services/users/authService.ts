@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
-import { generateToken } from "../utils/jwt";
-import { userService } from "./users/userService";
-import { formatEmail, formatUsername } from "../utils/format";
+import { generateToken } from "../../utils/jwt";
+import { userService } from "../users/userService";
+import { formatEmail, formatUsername } from "../../utils/format";
 
 const getIsValidPassword = (password: string, passwordHash: string) => {
   return bcrypt.compare(password, passwordHash);
