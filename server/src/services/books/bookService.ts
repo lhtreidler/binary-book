@@ -19,6 +19,11 @@ const getBookDetails = async ({
           userId,
         },
       },
+      bookmarks: {
+        where: {
+          userId,
+        },
+      },
     },
   });
 
@@ -33,7 +38,7 @@ const getBookDetails = async ({
     userScore = await rankingService.getRankingScore(book.rankings[0]);
   }
 
-  return { ...details, userScore };
+  return { ...details, userScore, bookmarkId: book.bookmarks[0]?.id ?? null };
 };
 
 const getByGoogleId = ({ googleId }: { googleId: string }) => {

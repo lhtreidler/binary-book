@@ -1,9 +1,10 @@
 import {
+  FormattedBookItem,
   FormattedBookItems,
   GoogleBooksSearchResponse,
   GoogleBooksVolume,
 } from "../../types/googleApi";
-import { createBookComparisonStr, dedupeBooks } from "../../utils/dedupe";
+import { createBookComparisonStr } from "../../utils/dedupe";
 import { stripHtml } from "../../utils/html";
 import { prisma } from "../../lib/prisma";
 import { searchCacheService } from "./searchCacheService";
@@ -23,7 +24,7 @@ const fetchBooks = async (query: string): Promise<FormattedBookItems> => {
 
   return (books.items || []).map(
     ({ id, volumeInfo: { title, authors = [], imageLinks } }) => ({
-      key: id,
+      apiId: id,
       title,
       authors,
       thumbnail: imageLinks?.thumbnail,
@@ -53,8 +54,8 @@ const queryBooks = async ({
   let googleIds: string[] = [];
   let comparisonStrings: string[] = [];
 
-  result.forEach(({ key, compareStr }) => {
-    googleIds.push(key);
+  result.forEach(({ apiId, compareStr }) => {
+    googleIds.push(apiId);
     comparisonStrings.push(compareStr);
   });
 
@@ -88,44 +89,54 @@ const queryBooks = async ({
     },
   });
 
-  const compareStrSet = new Set<string>();
+  const compareStrMap: Record<
+    string,
+    FormattedBookItem & {
+      id: string | null;
+      isRanked: boolean;
+      bookmarkId: string | null;
+      orderIndex: number;
+    }
+  > = {};
 
-  const bookData = result
-    .map((res) => {
-      const bookCompareStr = res.compareStr;
+  result.forEach((res, orderIndex) => {
+    const bookCompareStr = res.compareStr;
 
-      const matchedBook =
-        existingData.find(({ googleId }) => googleId === res.key) ||
-        existingData.find(({ compareStr }) => compareStr === bookCompareStr);
+    const matchedBook =
+      existingData.find(({ googleId }) => googleId === res.apiId) ||
+      existingData.find(({ compareStr }) => compareStr === bookCompareStr);
 
-      if (matchedBook) {
-        compareStrSet.add(bookCompareStr);
+    const existingInSet = compareStrMap[bookCompareStr];
 
-        const { id: _id, googleId, rankings, bookmarks, ...rest } = matchedBook;
+    if (existingInSet.isRanked || existingInSet.bookmarkId || !matchedBook) {
+      return;
+    }
 
-        return {
-          key: googleId,
-          isRanked: !!rankings.length,
-          isBookmarked: !!bookmarks.length,
-          ...rest,
-        };
-      }
+    if (matchedBook) {
+      const { id, googleId, rankings, bookmarks, ...rest } = matchedBook;
 
-      if (compareStrSet.has(bookCompareStr)) {
-        return null;
-      }
-
-      compareStrSet.add(bookCompareStr);
-
-      return {
-        ...res,
-        isRanked: false,
-        isBookmarked: false,
+      compareStrMap[bookCompareStr] = {
+        id,
+        apiId: googleId,
+        isRanked: !!rankings.length,
+        bookmarkId: bookmarks[0]?.id ?? null,
+        orderIndex,
+        ...rest,
       };
-    })
-    .filter((n) => !!n);
+    } else {
+      compareStrMap[bookCompareStr] = {
+        ...res,
+        id: null,
+        isRanked: false,
+        bookmarkId: null,
+        orderIndex,
+      };
+    }
+  });
 
-  return bookData;
+  return Object.values(compareStrMap)
+    .sort((a, b) => b.orderIndex - a.orderIndex)
+    .map(({ orderIndex: _i, ...rest }) => rest);
 };
 
 const getOrCreateBookByGoogleId = async (googleId: string) => {
@@ -146,7 +157,6 @@ const getOrCreateBookByGoogleId = async (googleId: string) => {
   }
 
   const {
-    id,
     volumeInfo: { title, authors = [] },
   } = book;
 
@@ -171,7 +181,7 @@ const getOrCreateBookByGoogleId = async (googleId: string) => {
 };
 
 export type VolumeDetails = {
-  googleId: string;
+  apiId: string;
   title: string | null;
   authors: string[];
   thumbnail: string | null;
@@ -195,7 +205,7 @@ const getVolumeDetails = async (volumeId: string): Promise<VolumeDetails> => {
   const rawThumbnail = volumeInfo?.imageLinks?.thumbnail ?? null;
 
   return {
-    googleId: volume.id,
+    apiId: volume.id,
     title: volumeInfo?.title ?? null,
     authors: volumeInfo?.authors ?? [],
     thumbnail: rawThumbnail ? rawThumbnail.replace(/^http:/, "https:") : null,

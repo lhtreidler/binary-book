@@ -17,8 +17,8 @@ export const dedupeBooks = (googleBooks: FormattedBookItems) => {
 
   const dedupedBooks = sortedWithIndex.filter((book) => {
     const compareStr = createBookComparisonStr(book.title, book.authors);
-    if (bookSet.has(compareStr) || idSet.has(book.key)) return null;
-    idSet.add(book.key);
+    if (bookSet.has(compareStr) || idSet.has(book.apiId)) return null;
+    idSet.add(book.apiId);
     bookSet.add(compareStr);
     return { ...book, compareStr };
   });

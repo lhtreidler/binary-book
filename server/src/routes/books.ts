@@ -65,6 +65,22 @@ router.get("/list", async (req: Request, res: Response) => {
   }
 });
 
+router.get("/ensure/:apiId", async (req: Request, res: Response): Promise<void> => {
+  if (!req.user || !req.user.userId) {
+    res.status(401).json({ message: "Unauthorized" });
+    return;
+  }
+
+  const { apiId } = req.params;
+
+  try {
+    const book = await googleBooksService.getOrCreateBookByGoogleId(apiId);
+    res.json({ id: book.id });
+  } catch (err) {
+    res.status(500).json({ message: "Failed to resolve book." });
+  }
+});
+
 router.get(
   "/details/:bookId",
   async (req: Request, res: Response): Promise<void> => {

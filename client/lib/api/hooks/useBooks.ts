@@ -9,6 +9,8 @@ import {
   useQuery,
   UseQueryResult,
   keepPreviousData,
+  useMutation,
+  UseMutationResult,
 } from "@tanstack/react-query";
 import { getApiClient } from "../client";
 import {
@@ -61,21 +63,37 @@ export function useBookList(): UseInfiniteQueryResult<
   });
 }
 
-export const fetchBookDetail = async (googleId: string) => {
+export function useEnsureBook(): UseMutationResult<
+  { id: string },
+  ApiError,
+  string
+> {
+  return useMutation({
+    mutationFn: async (apiId: string) => {
+      const client = await getApiClient();
+      const { data } = await client.get<{ id: string }>(
+        `/books/ensure/${apiId}`,
+      );
+      return data;
+    },
+  });
+}
+
+export const fetchBookDetail = async (bookId: string) => {
   const client = await getApiClient();
   const { data } = await client.get<BookDetailResponse>(
-    `/books/details/${googleId}`,
+    `/books/details/${bookId}`,
   );
 
   return data;
 };
 
 export function useBookDetail(
-  googleId: string | undefined,
+  bookId: string | undefined,
 ): UseQueryResult<BookDetailResponse, ApiError> {
   return useQuery({
-    queryKey: ["books", "detail", googleId],
-    queryFn: () => fetchBookDetail(googleId as string),
-    enabled: !!googleId,
+    queryKey: ["books", "detail", bookId],
+    queryFn: () => fetchBookDetail(bookId as string),
+    enabled: !!bookId,
   });
 }

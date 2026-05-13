@@ -82,7 +82,7 @@ export const RankingModal = ({
     try {
       const result = await startMutation.mutateAsync({
         rankingLevel: level,
-        gId: book.key,
+        apiId: book.apiId,
       });
 
       applyResult(result);

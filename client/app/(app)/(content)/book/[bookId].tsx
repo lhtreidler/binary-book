@@ -1,10 +1,16 @@
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Box } from "@/components/ui/box";
+import { Button } from "@/components/ui/button";
 import { HStack } from "@/components/ui/hstack";
 import { Image } from "@/components/ui/image";
 import { Spinner } from "@/components/ui/spinner";
 import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
-import { useBookDetail } from "@/lib/api/hooks/useBooks";
+import {
+  useBookDetail,
+  useCreateBookmark,
+  useDeleteBookmark,
+} from "@/lib/api/hooks";
 import { useLocalSearchParams } from "expo-router";
 import { ScrollView } from "react-native";
 
@@ -17,6 +23,8 @@ const scoreColorClass = (score: number) => {
 export default function BookDetail() {
   const { bookId } = useLocalSearchParams<{ bookId: string }>();
   const { data, isLoading, isError } = useBookDetail(bookId);
+  const { mutate: createBookmark } = useCreateBookmark();
+  const { mutate: deleteBookmark } = useDeleteBookmark();
 
   if (isLoading) {
     return (
@@ -66,6 +74,23 @@ export default function BookDetail() {
               <Text bold size="2xl" className={scoreColorClass(data.userScore)}>
                 {data.userScore.toFixed(1)}
               </Text>
+            )}
+            {data.userScore === null && (
+              <Button
+                size="sm"
+                variant="outline"
+                className="rounded-full self-start"
+                onPress={() =>
+                  data.bookmarkId
+                    ? deleteBookmark(data.bookmarkId)
+                    : createBookmark(data.apiId)
+                }
+              >
+                <FontAwesome
+                  name={data.bookmarkId ? "bookmark" : "bookmark-o"}
+                  size={16}
+                />
+              </Button>
             )}
           </VStack>
         </HStack>

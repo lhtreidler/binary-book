@@ -4,7 +4,11 @@ import { useRouter } from "expo-router";
 import { Autocomplete, useAutocomplete } from "@/components/autocomplete";
 import { RankingModal } from "@/components/ranking-modal/RankingModal";
 import { BookSearchItem } from "@/lib/api";
-import { useSearchBooks } from "@/lib/api/hooks/useBooks";
+import {
+  useSearchBooks,
+  useCreateBookmark,
+  useDeleteBookmark,
+} from "@/lib/api/hooks";
 import { Box } from "../ui/box";
 
 export const BookAutocomplete = ({
@@ -18,14 +22,26 @@ export const BookAutocomplete = ({
   const queryClient = useQueryClient();
   const router = useRouter();
   const { isLoading, data } = useSearchBooks({ query });
+  const { mutate: createBookmark } = useCreateBookmark();
+  const { mutate: deleteBookmark } = useDeleteBookmark();
 
   const options = useMemo(() => {
     if (!data) return [];
-    return data.items.map(({ key, title, authors, isRanked, thumbnail }) => {
-      const authorStr = authors.length ? authors.join(", ") : "Unknown Author";
-      const label = `${title} by ${authorStr}`;
-      return { key, label, hideAction: isRanked, thumbnail };
-    });
+    return data.items.map(
+      ({ apiId, title, authors, isRanked, thumbnail, bookmarkId }) => {
+        const authorStr = authors.length
+          ? authors.join(", ")
+          : "Unknown Author";
+        const label = `${title} by ${authorStr}`;
+        return {
+          key: apiId,
+          label,
+          hideAction: isRanked,
+          thumbnail,
+          bookmarkId,
+        };
+      },
+    );
   }, [data]);
 
   const { reset, ...autocompleteProps } = useAutocomplete({
@@ -34,9 +50,26 @@ export const BookAutocomplete = ({
     isLoading,
   });
 
-  const onSelectBook = (gId: string) => {
-    const book = data?.items.find(({ key }) => key === gId);
+  const onSelectBook = (apiId: string) => {
+    const book = data?.items.find((b) => b.apiId === apiId);
     if (book) setSelectedBook(book);
+  };
+
+  const onBookmarkBook = (apiId: string) => {
+    const book = data?.items.find((b) => b.apiId === apiId);
+    if (!book) return;
+
+    if (book.bookmarkId) {
+      deleteBookmark(book.bookmarkId, {
+        onSuccess: () =>
+          queryClient.invalidateQueries({ queryKey: ["books", query] }),
+      });
+    } else {
+      createBookmark(apiId, {
+        onSuccess: () =>
+          queryClient.invalidateQueries({ queryKey: ["books", query] }),
+      });
+    }
   };
 
   const onCloseModal = (bookId?: string) => {
@@ -59,7 +92,14 @@ export const BookAutocomplete = ({
           placeholder: "Search for books...",
         }}
         overlay
-        rightActions={[{ icon: "add", handler: onSelectBook }]}
+        rightActions={[
+          {
+            faIcon: "bookmark-o",
+            faIconActive: "bookmark",
+            handler: onBookmarkBook,
+          },
+          { icon: "add", handler: onSelectBook },
+        ]}
       />
       <RankingModal
         book={selectedBook}

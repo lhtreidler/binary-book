@@ -45,7 +45,7 @@ export const rankingSelection = {
 } as const;
 
 export const startRankingSchema = z.object({
-  gId: z.string().min(1),
+  apiId: z.string().min(1),
   rankingLevel: z.int().min(0).max(2),
 });
 export const continueRankingSchema = z.object({
@@ -61,3 +61,11 @@ export type StartRankingInput = z.infer<typeof startRankingSchema>;
 export type ContinueRankingInput = z.infer<typeof continueRankingSchema>;
 export type RankingSelection = ContinueRankingInput["selection"];
 export type QuitRankingInput = z.infer<typeof quitRankingSchema>;
+
+// BOOKMARK SCHEMAS
+
+export const createBookmarkSchema = z.object({
+  apiId: z.string().min(1),
+});
+
+export type CreateBookmarkInput = z.infer<typeof createBookmarkSchema>;

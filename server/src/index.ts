@@ -7,6 +7,7 @@ import {
   usersRoutes,
   rankingRoutes,
   followsRoutes,
+  bookmarksRoutes,
 } from "./routes";
 
 const app = express();
@@ -22,6 +23,7 @@ app.use("/ranking", rankingRoutes);
 app.use("/books", bookRoutes);
 app.use("/users", usersRoutes);
 app.use("/follow", followsRoutes);
+app.use("/bookmarks", bookmarksRoutes);
 
 // Health check
 app.get("/health", (_req, res) => {

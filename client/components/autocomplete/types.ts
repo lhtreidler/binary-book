@@ -8,6 +8,19 @@ export const nameToIcon = {
   add: AddIcon,
 } as const;
 
+export type GluestackRightAction = {
+  icon: keyof typeof nameToIcon;
+  handler: (key: string) => void;
+};
+
+export type FaRightAction = {
+  faIcon: string;
+  faIconActive?: string;
+  handler: (key: string) => void;
+};
+
+export type RightAction = GluestackRightAction | FaRightAction;
+
 export type AutocompleteOption = {
   key: string;
   label: string;
@@ -15,6 +28,7 @@ export type AutocompleteOption = {
   avatarProps?: ProfileAvatarProps;
   hideAction?: boolean;
   href?: Href;
+  bookmarkId?: string | null;
 };
 
 export type AutocompleteProps = {
@@ -25,8 +39,5 @@ export type AutocompleteProps = {
   onChange: (input: string) => void;
   onClear?: () => void;
   overlay?: boolean;
-  rightActions?: {
-    icon: keyof typeof nameToIcon;
-    handler: (key: string) => void;
-  }[];
+  rightActions?: RightAction[];
 };

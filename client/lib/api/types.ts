@@ -53,16 +53,16 @@ export type UseGetProfileResponse = ProfileData & {
 
 export interface Book {
   id: string;
-  googleId: string;
-  // Add other book fields as needed
 }
 
 export interface BookSearchItem {
-  key: string;
+  apiId: string;
+  id: string | null;
   title: string;
   authors: string[];
   thumbnail: string;
   isRanked: boolean;
+  bookmarkId: string | null;
 }
 
 export interface BookSearchResponse {
@@ -82,7 +82,7 @@ export interface BookListResponse {
 }
 
 export interface BookDetailResponse {
-  googleId: string;
+  apiId: string;
   title: string | null;
   authors: string[];
   thumbnail: string | null;
@@ -91,6 +91,7 @@ export interface BookDetailResponse {
   pageCount: number | null;
   categories: string[];
   userScore: number | null;
+  bookmarkId: string | null;
 }
 
 export interface Ranking {

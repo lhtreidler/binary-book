@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { ScrollView, View } from "react-native";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Box } from "../ui/box";
 import { Button, ButtonIcon } from "../ui/button";
 import { HStack } from "../ui/hstack";
@@ -9,9 +10,12 @@ import { CloseIcon } from "../ui/icon";
 import { Spinner } from "../ui/spinner";
 import { Text } from "../ui/text";
 import { VStack } from "../ui/vstack";
-import { AutocompleteOption, AutocompleteProps, nameToIcon } from "./types";
+import { AutocompleteOption, AutocompleteProps, FaRightAction, nameToIcon } from "./types";
 import { ProfileAvatar } from "../elements";
 import { Link } from "expo-router";
+
+const isFaAction = (action: NonNullable<AutocompleteProps["rightActions"]>[number]): action is FaRightAction =>
+  "faIcon" in action;
 
 const Option = ({
   id: key,
@@ -19,6 +23,7 @@ const Option = ({
   thumbnail,
   avatarProps,
   hideAction = false,
+  bookmarkId,
   rightActions,
   href,
 }: Omit<AutocompleteOption, "key"> & {
@@ -49,21 +54,40 @@ const Option = ({
 
         {rightActions && !hideAction && (
           <HStack className="ml-2">
-            {rightActions.map(({ icon, handler }, i) => (
-              <Button
-                size="sm"
-                className="rounded-full"
-                variant="outline"
-                key={i}
-                onPress={() => handler(key)}
-              >
-                <ButtonIcon
-                  className="py-2 px-0"
+            {rightActions.map((action, i) =>
+              isFaAction(action) ? (
+                <Button
                   size="sm"
-                  as={nameToIcon[icon]}
-                />
-              </Button>
-            ))}
+                  className="rounded-full"
+                  variant="outline"
+                  key={i}
+                  onPress={() => action.handler(key)}
+                >
+                  <FontAwesome
+                    name={
+                      bookmarkId && action.faIconActive
+                        ? (action.faIconActive as any)
+                        : (action.faIcon as any)
+                    }
+                    size={14}
+                  />
+                </Button>
+              ) : (
+                <Button
+                  size="sm"
+                  className="rounded-full"
+                  variant="outline"
+                  key={i}
+                  onPress={() => action.handler(key)}
+                >
+                  <ButtonIcon
+                    className="py-2 px-0"
+                    size="sm"
+                    as={nameToIcon[action.icon]}
+                  />
+                </Button>
+              )
+            )}
           </HStack>
         )}
       </Box>
