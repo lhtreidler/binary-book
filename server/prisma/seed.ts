@@ -11,20 +11,20 @@ import {
 } from "../src/services";
 import { formatUsername } from "../src/utils/format";
 import bookData from "./data.json";
-import { FormattedBookItems } from "../src/types/googleApi";
-import { createBookComparisonStr } from "../src/utils/dedupe";
 import { parseArgs } from "node:util";
 import {
+  BookCreateManyArgs,
   BookmarkCreateManyArgs,
   RankingCreateManyArgs,
 } from "../src/generated/prisma/models";
+import _ from "lodash";
 
 const RANKING_MIN = 10;
 
 const options = {
   userCount: { type: "string", default: "100" },
   bookCount: { type: "string", default: "200" },
-  useJsonData: { type: "boolean", default: true },
+  useJsonData: { type: "string", default: "true" },
 } as const;
 
 const connectionString = `${process.env.DATABASE_URL}`;
@@ -137,40 +137,56 @@ const createUser = (i: number) => {
   };
 };
 
+
 const fetchBooks = async (bookCount: number) => {
   fs.accessSync(filePath);
 
   // get books from google data if bookData is not stored already
-  const books: FormattedBookItems = [];
+  const books: BookCreateManyArgs["data"] = [];
   const googleIds = new Set();
+
+  const CHUNK_SIZE = 5;
 
   while (books.length < bookCount) {
     console.log("Book length:", books.length);
-    const bookTitle = faker.book.title();
-    const result = await googleBooksService.fetchBooks(bookTitle);
-    if (result.length) {
-      const res =
-        result.find(({ title }) =>
-          title.toLowerCase().includes(bookTitle.toLowerCase()),
-        ) || result[0];
+    const titles = Array.from(
+      new Set(createArray(bookCount - books.length, () => faker.book.title())),
+    );
 
-      if (!googleIds.has(res.key)) {
-        googleIds.add(res.key);
-        books.push(res);
-      }
+    const chunks = _.chunk(titles, CHUNK_SIZE);
+
+    for (let chunk of chunks) {
+      const results = await Promise.all(
+        chunk.map((title) => googleBooksService.fetchBooks(title)),
+      );
+
+      const mappedResults = results
+        .map((result, i) => {
+          if (!result.length) return null;
+          const res =
+            result.find(({ title }) =>
+              title.toLowerCase().includes(titles[i].toLowerCase()),
+            ) || result[0];
+
+          if (!googleIds.has(res.apiId)) {
+            googleIds.add(res.apiId);
+            const { apiId, ...data } = res;
+            return {
+              googleId: apiId,
+              ...data,
+            };
+          }
+        })
+        .filter((n) => !!n);
+
+      books.push(...mappedResults);
+      fs.writeFileSync(filePath, JSON.stringify(books));
     }
   }
 
-  const allBooks = books
-    .filter((n) => !!n)
-    .map(({ key, ...data }) => ({
-      googleId: key,
-      ...data,
-    }));
+  fs.writeFileSync(filePath, JSON.stringify(books));
 
-  fs.writeFileSync(filePath, JSON.stringify(allBooks));
-
-  return allBooks;
+  return books;
 };
 
 const createFollows = async (userIds: string[]) => {
@@ -199,7 +215,7 @@ async function main() {
 
   const userCount = Number(values.userCount);
   const bookCount = Number(values.bookCount);
-  const useJsonData = values.useJsonData;
+  const useJsonData = values.useJsonData !== "false";
 
   console.log(
     `Options: userCount = ${userCount}, bookCount = ${bookCount}, useJsonData = ${useJsonData}`,

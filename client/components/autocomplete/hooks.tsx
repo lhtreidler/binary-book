@@ -6,10 +6,12 @@ export const useAutocomplete = ({
   onChange,
   isLoading,
   options,
+  fieldProps = {},
 }: {
   onChange: (input: string) => void;
   isLoading: boolean;
   options: AutocompleteProps["options"];
+  fieldProps?: AutocompleteProps["fieldProps"];
 }): AutocompleteProps & { reset: () => void } => {
   const [search, setSearch] = useState("");
 
@@ -34,7 +36,8 @@ export const useAutocomplete = ({
     onClear: reset,
     options,
     isLoading,
-    fieldProps: { value: search },
+    fieldProps: { ...fieldProps },
+    inputValue: search,
     reset,
   };
 };

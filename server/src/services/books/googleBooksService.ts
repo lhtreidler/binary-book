@@ -12,25 +12,42 @@ import { searchCacheService } from "./searchCacheService";
 const baseUrl = "https://www.googleapis.com/books/v1/volumes";
 
 const createQueryUrl = (q: string) =>
-  `${baseUrl}?q=${encodeURIComponent(q)}&projection=lite&printType=books&key=${process.env.GOOGLE_BOOKS_API_KEY}`;
+  `${baseUrl}?q=${encodeURIComponent(q)}&projection=lite&printType=books&key=${process.env.GOOGLE_BOOKS_API_KEY_2}`;
 
 const createVolumeUrl = (id: string) =>
   `${baseUrl}/${id}?key=${process.env.GOOGLE_BOOKS_API_KEY}`;
 
-const fetchBooks = async (query: string): Promise<FormattedBookItems> => {
-  const books = (await fetch(createQueryUrl(query)).then((response) =>
-    response.json(),
-  )) as GoogleBooksSearchResponse;
+const fetchBooks = async (
+  query: string,
+  maxRetries = 5,
+): Promise<FormattedBookItems> => {
+  for (let attempt = 0; attempt <= maxRetries; attempt++) {
+    const response = await fetch(createQueryUrl(query));
 
-  return (books.items || []).map(
-    ({ id, volumeInfo: { title, authors = [], imageLinks } }) => ({
-      apiId: id,
-      title,
-      authors,
-      thumbnail: imageLinks?.thumbnail,
-      compareStr: createBookComparisonStr(title, authors),
-    }),
-  );
+    if (response.status === 429) {
+      if (attempt === maxRetries)
+        throw new Error("Rate limit exceeded after max retries");
+      const delay = 1000 * Math.pow(2, attempt);
+      console.log(
+        `Rate limited, retrying in ${delay}ms (attempt ${attempt + 1}/${maxRetries})...`,
+      );
+      await new Promise((resolve) => setTimeout(resolve, delay));
+      continue;
+    }
+
+    const books = (await response.json()) as GoogleBooksSearchResponse;
+    return (books.items || []).map(
+      ({ id, volumeInfo: { title, authors = [], imageLinks } }) => ({
+        apiId: id,
+        title,
+        authors,
+        thumbnail: imageLinks?.thumbnail,
+        compareStr: createBookComparisonStr(title, authors),
+      }),
+    );
+  }
+
+  return [];
 };
 
 const queryBooks = async ({
@@ -108,7 +125,10 @@ const queryBooks = async ({
 
     const existingInSet = compareStrMap[bookCompareStr];
 
-    if (existingInSet.isRanked || existingInSet.bookmarkId || !matchedBook) {
+    if (
+      (matchedBook && (existingInSet?.isRanked || existingInSet?.bookmarkId)) ||
+      (!matchedBook && !!existingInSet)
+    ) {
       return;
     }
 
@@ -116,6 +136,7 @@ const queryBooks = async ({
       const { id, googleId, rankings, bookmarks, ...rest } = matchedBook;
 
       compareStrMap[bookCompareStr] = {
+        ...res,
         id,
         apiId: googleId,
         isRanked: !!rankings.length,
@@ -135,7 +156,7 @@ const queryBooks = async ({
   });
 
   return Object.values(compareStrMap)
-    .sort((a, b) => b.orderIndex - a.orderIndex)
+    .sort((a, b) => a.orderIndex - b.orderIndex)
     .map(({ orderIndex: _i, ...rest }) => rest);
 };
 

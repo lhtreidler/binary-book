@@ -1,0 +1,37 @@
+import { AutocompleteOption, icons } from "./types";
+import { HStack } from "../ui/hstack";
+import { Button, ButtonIcon } from "../ui/button";
+import { Text } from "../ui/text";
+
+export const Actions = ({
+  hideAction,
+  id,
+  rightActions,
+}: AutocompleteOption) => {
+  if (hideAction || !rightActions) return null;
+
+  const actions = Array.isArray(rightActions) ? rightActions : [rightActions];
+
+  console.log(actions);
+
+  return (
+    <HStack className="ml-2" space="sm">
+      {actions.map(({ icon, isActive, handler }, i) => (
+        <Button
+          key={icon}
+          size="sm"
+          className="rounded-full"
+          variant="outline"
+          onPress={() => handler(id)}
+        >
+          <ButtonIcon
+            key={icon}
+            size="sm"
+            as={icons[icon]}
+            fill={isActive ? "black" : ""}
+          />
+        </Button>
+      ))}
+    </HStack>
+  );
+};

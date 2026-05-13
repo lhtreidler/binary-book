@@ -18,7 +18,7 @@ export default function Community() {
     return data.users.map(
       ({ id, username, profileImg, firstName, lastName }) =>
         ({
-          key: username,
+          id: username,
           label: username,
           avatarProps: {
             profileImg,
@@ -34,18 +34,16 @@ export default function Community() {
     onChange: (q: string) => setUsernameToSearch(q),
     isLoading,
     options,
+    fieldProps: {
+      placeholder: "Search for friends...",
+    },
   });
 
   return (
     <View>
       <VStack className="p-4">
         <Text bold>Friends</Text>
-        <Autocomplete
-          fieldProps={{
-            placeholder: "Search for friends...",
-          }}
-          {...autocompleteProps}
-        />
+        <Autocomplete {...autocompleteProps} />
       </VStack>
     </View>
   );
