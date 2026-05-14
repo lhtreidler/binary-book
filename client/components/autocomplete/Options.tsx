@@ -7,6 +7,10 @@ import { Link } from "expo-router";
 import { Actions } from "./Actions";
 import { HStack } from "../ui/hstack";
 import { BookOpen } from "lucide-react-native";
+import { VStack } from "../ui/vstack";
+import { ButtonText, Button } from "../ui/button";
+import { Spinner } from "../ui/spinner";
+import { Divider } from "../ui/divider";
 
 const Option = (props: AutocompleteOption) => {
   const { id: key, label, thumbnail, hasThumbnail, avatarProps, href } = props;
@@ -18,7 +22,7 @@ const Option = (props: AutocompleteOption) => {
 
         {hasThumbnail && !avatarProps && (
           <Box
-            className="bg-slate-200 items-center justify-center"
+            className="items-center justify-center"
             style={{ width: 70, aspectRatio: 2 / 3 }}
           >
             {thumbnail ? (
@@ -43,17 +47,15 @@ const Option = (props: AutocompleteOption) => {
   };
 
   return (
-    <Box
-      key={key}
-      className="bg-slate-50 border-gray-700 py-2 px-4 border-b-hairline flex flex-row items-center w-full gap-3"
-    >
+    <VStack key={key} className="py-2 px-4 w-full gap-3">
       <HStack className="w-full items-center">
         <Box className="flex-1">
           {href ? <Link href={href}>{getContent()}</Link> : getContent()}
         </Box>
         <Actions {...props} />
       </HStack>
-    </Box>
+      <Divider />
+    </VStack>
   );
 };
 
@@ -62,6 +64,10 @@ export const Options = ({
   isLoading,
   isChanged,
 }: AutocompleteProps & { isChanged: boolean }) => {
+  if (isLoading) {
+    return <Spinner className="my-4" />;
+  }
+
   if (!options.length && !isLoading && isChanged) {
     return (
       <Box className="p-2 w-full">
@@ -72,5 +78,14 @@ export const Options = ({
     );
   }
 
-  return options.map((option) => <Option key={option.id} {...option} />);
+  return (
+    <VStack>
+      {options.slice(0, 5).map((option) => (
+        <Option key={option.id} {...option} />
+      ))}
+      <Button variant="link" className="pb-2">
+        <ButtonText>View All Results...</ButtonText>
+      </Button>
+    </VStack>
+  );
 };

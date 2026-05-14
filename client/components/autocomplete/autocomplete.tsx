@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
-import { ScrollView, View } from "react-native";
+import { View } from "react-native";
 import { Input, InputField, InputIcon, InputSlot } from "../ui/input";
 import { CloseIcon } from "../ui/icon";
-import { Spinner } from "../ui/spinner";
-import { VStack } from "../ui/vstack";
 import { AutocompleteProps } from "./types";
 import { Options } from "./Options";
+import { Box } from "../ui/box";
 
 export const Autocomplete = (props: AutocompleteProps) => {
   const {
@@ -15,7 +14,6 @@ export const Autocomplete = (props: AutocompleteProps) => {
     fieldProps = {},
     onChange = () => {},
     onClear,
-    overlay = false,
     inputValue: value,
   } = props;
 
@@ -45,13 +43,13 @@ export const Autocomplete = (props: AutocompleteProps) => {
     );
   };
 
-  if (overlay) {
-    return (
-      <View style={{ zIndex: 100, backgroundColor: "white" }}>
-        <View
-          style={{ paddingHorizontal: 16, paddingVertical: 10 }}
-          onLayout={(e) => setInputHeight(e.nativeEvent.layout.height)}
-        >
+  return (
+    <View
+      className="w-full z-10 flex flex-col justify-center items-center p-4"
+      style={{ backgroundColor: "white" }}
+    >
+      <Box className="w-5/6">
+        <View onLayout={(e) => setInputHeight(e.nativeEvent.layout.height)}>
           {getInput()}
         </View>
         {isChanged && (
@@ -66,28 +64,17 @@ export const Autocomplete = (props: AutocompleteProps) => {
               zIndex: 100,
               elevation: 5,
               shadowColor: "#000",
-              shadowOffset: { width: 0, height: 2 },
+              shadowOffset: { width: 0, height: 4 },
               shadowOpacity: 0.15,
               shadowRadius: 4,
             }}
           >
-            <ScrollView>
-              <View style={{ paddingVertical: 8 }}>
-                <Options {...props} isChanged={isChanged} />
-                {isLoading ? <Spinner className="my-4" /> : null}
-              </View>
-            </ScrollView>
+            <Box className="w-full bg-white">
+              <Options {...props} isChanged={isChanged} />
+            </Box>
           </View>
         )}
-      </View>
-    );
-  }
-
-  return (
-    <VStack>
-      {getInput()}
-      <Options {...props} isChanged={isChanged} />
-      {isLoading ? <Spinner className="mt-2" /> : null}
-    </VStack>
+      </Box>
+    </View>
   );
 };

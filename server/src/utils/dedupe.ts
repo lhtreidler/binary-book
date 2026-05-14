@@ -1,5 +1,4 @@
-import { Book } from "../generated/prisma/client";
-import { FormattedBookItems, GoogleBooksVolume } from "../types/googleApi";
+import { FormattedBookItems } from "../types/googleApi";
 
 const normalize = (str: string) => str.trim().toLowerCase();
 

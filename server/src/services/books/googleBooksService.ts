@@ -8,25 +8,33 @@ import { createBookComparisonStr } from "../../utils/dedupe";
 import { stripHtml } from "../../utils/html";
 import { prisma } from "../../lib/prisma";
 import { searchCacheService } from "./searchCacheService";
+import { appendPath, appendSearchParams, buildUrl } from "../../utils/requests";
 
-const baseUrl = "https://www.googleapis.com/books/v1/volumes";
+const apiUrl = buildUrl("https://www.googleapis.com/books/v1/volumes", {
+  key: process.env.GOOGLE_BOOKS_API_KEY,
+});
 
 const createQueryUrl = (q: string) =>
-  `${baseUrl}?q=${encodeURIComponent(q)}&projection=lite&printType=books&key=${process.env.GOOGLE_BOOKS_API_KEY_2}`;
+  appendSearchParams(apiUrl, {
+    q,
+    projection: "lite",
+    printType: "books",
+    maxResults: "10",
+  });
 
-const createVolumeUrl = (id: string) =>
-  `${baseUrl}/${id}?key=${process.env.GOOGLE_BOOKS_API_KEY}`;
+const createVolumeUrl = (id: string) => appendPath(apiUrl, id);
 
 const fetchBooks = async (
   query: string,
-  maxRetries = 5,
+  maxRetries = 1,
 ): Promise<FormattedBookItems> => {
   for (let attempt = 0; attempt <= maxRetries; attempt++) {
     const response = await fetch(createQueryUrl(query));
 
     if (response.status === 429) {
-      if (attempt === maxRetries)
+      if (attempt === maxRetries) {
         throw new Error("Rate limit exceeded after max retries");
+      }
       const delay = 1000 * Math.pow(2, attempt);
       console.log(
         `Rate limited, retrying in ${delay}ms (attempt ${attempt + 1}/${maxRetries})...`,

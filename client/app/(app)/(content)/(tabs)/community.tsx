@@ -41,8 +41,10 @@ export default function Community() {
 
   return (
     <View>
-      <VStack className="p-4">
-        <Text bold>Friends</Text>
+      <VStack>
+        <Text bold className="p4">
+          Friends
+        </Text>
         <Autocomplete {...autocompleteProps} />
       </VStack>
     </View>

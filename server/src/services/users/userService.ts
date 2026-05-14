@@ -128,7 +128,7 @@ const searchByUsername = ({ username }: { username: string }) => {
         sort: "desc",
       },
     },
-    take: 20,
+    take: 10,
     select: {
       username: true,
       firstName: true,
