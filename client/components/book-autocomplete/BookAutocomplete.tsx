@@ -1,7 +1,7 @@
 import { Autocomplete } from "@/components/autocomplete";
 import { RankingModal } from "@/components/ranking-modal/RankingModal";
 import { Box } from "../ui/box";
-import { useBookAutocomplete } from "./hook";
+import { useBookAutocomplete } from "./hooks";
 
 export const BookAutocomplete = ({
   isSticky = false,

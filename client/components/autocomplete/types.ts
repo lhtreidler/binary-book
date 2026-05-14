@@ -19,7 +19,8 @@ export type RightAction = {
 export type AutocompleteOption = {
   id: string;
   label: string;
-  thumbnail?: string;
+  thumbnail?: string | null;
+  hasThumbnail?: boolean;
   avatarProps?: ProfileAvatarProps;
   hideAction?: boolean;
   href?: Href;

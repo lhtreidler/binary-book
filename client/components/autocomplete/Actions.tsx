@@ -1,7 +1,6 @@
 import { AutocompleteOption, icons } from "./types";
 import { HStack } from "../ui/hstack";
 import { Button, ButtonIcon } from "../ui/button";
-import { Text } from "../ui/text";
 
 export const Actions = ({
   hideAction,
@@ -11,8 +10,6 @@ export const Actions = ({
   if (hideAction || !rightActions) return null;
 
   const actions = Array.isArray(rightActions) ? rightActions : [rightActions];
-
-  console.log(actions);
 
   return (
     <HStack className="ml-2" space="sm">

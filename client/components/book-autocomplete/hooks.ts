@@ -29,12 +29,15 @@ export const useBookAutocomplete = () => {
     };
 
     const onBookmarkBook = (apiId: string) => {
+      console.log("bookmarking", apiId);
       const book = data?.items.find((b) => b.apiId === apiId);
       if (!book) return;
 
       if (book.bookmarkId) {
+        console.log("delete");
         deleteBookmark(book.bookmarkId);
       } else {
+        console.log("create");
         createBookmark(apiId);
       }
     };
@@ -50,6 +53,7 @@ export const useBookAutocomplete = () => {
           label,
           hideAction: isRanked,
           thumbnail,
+          hasThumbnail: true,
           rightActions: [
             {
               icon: "bookmark",

@@ -6,23 +6,31 @@ import { ProfileAvatar } from "../elements";
 import { Link } from "expo-router";
 import { Actions } from "./Actions";
 import { HStack } from "../ui/hstack";
+import { BookOpen } from "lucide-react-native";
 
 const Option = (props: AutocompleteOption) => {
-  const { id: key, label, thumbnail, avatarProps, href } = props;
+  const { id: key, label, thumbnail, hasThumbnail, avatarProps, href } = props;
 
   const getContent = () => {
     return (
       <HStack space="md">
         {avatarProps && <ProfileAvatar size="sm" {...avatarProps} />}
 
-        {thumbnail && !avatarProps && (
-          <Box className="w-1/4 aspect-[2/3]" style={{ width: 70 }}>
-            <Image
-              size="xs"
-              source={{ uri: thumbnail }}
-              alt={label}
-              className="w-full h-full"
-            />
+        {hasThumbnail && !avatarProps && (
+          <Box
+            className="bg-slate-200 items-center justify-center"
+            style={{ width: 70, aspectRatio: 2 / 3 }}
+          >
+            {thumbnail ? (
+              <Image
+                size="xs"
+                source={{ uri: thumbnail }}
+                alt={label}
+                className="w-full h-full"
+              />
+            ) : (
+              <BookOpen size={24} color="#94a3b8" />
+            )}
           </Box>
         )}
         <Box className="flex-1 h-full">
