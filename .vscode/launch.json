@@ -1,0 +1,21 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Server: dev",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "${workspaceFolder}/server/node_modules/.bin/tsx",
+      "runtimeArgs": ["watch", "src/index.ts"],
+      "cwd": "${workspaceFolder}/server",
+      "sourceMaps": true,
+      "resolveSourceMapLocations": [
+        "${workspaceFolder}/**",
+        "!**/node_modules/**"
+      ],
+      "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
+      "console": "integratedTerminal",
+      "restart": true
+    }
+  ]
+}

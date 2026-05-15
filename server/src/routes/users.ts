@@ -17,11 +17,13 @@ router.get("/", async (req: Request, res: Response) => {
 
     const { result: users, nextPage } = await handlePaginatedRequest({
       page: page as string | undefined,
-      callback: (params) => userService.searchByUsername({ username, ...params }),
+      callback: (params) =>
+        userService.searchByUsername({ username, ...params }),
     });
 
     res.json({ users, nextPage });
-  } catch {
+  } catch (err) {
+    console.error(err);
     res.status(500).send({ message: "Internal Server Error" });
   }
 });

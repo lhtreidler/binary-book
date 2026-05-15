@@ -3,10 +3,17 @@ import { FormattedBookItems } from "../../types/googleApi";
 
 const formatQuery = (query: string) => JSON.stringify(query).toLowerCase();
 
-const getByQuery = ({ query }: { query: string }) => {
-  return prisma.searchCache.findFirst({
+const getByQuery = async ({ query }: { query: string }) => {
+  const result = await prisma.searchCache.findFirst({
     where: { query: formatQuery(query) },
   });
+
+  if (!result) return null;
+
+  return {
+    ...result,
+    jsonResult: result.jsonResult as FormattedBookItems,
+  };
 };
 
 const create = ({
@@ -19,7 +26,7 @@ const create = ({
   return prisma.searchCache.create({
     data: {
       query: formatQuery(query),
-      jsonResult: JSON.stringify(result),
+      jsonResult: result,
     },
   });
 };

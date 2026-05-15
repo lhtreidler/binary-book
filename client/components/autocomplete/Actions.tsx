@@ -18,14 +18,15 @@ export const Actions = ({
           key={icon}
           size="sm"
           className="rounded-full"
-          variant="outline"
+          variant={isActive ? "solid" : "outline"}
           onPress={() => handler(id)}
         >
           <ButtonIcon
             key={icon}
             size="sm"
             as={icons[icon]}
-            fill={isActive ? "black" : ""}
+            fill={isActive ? "white" : ""}
+            stroke={isActive ? "white" : ""}
           />
         </Button>
       ))}

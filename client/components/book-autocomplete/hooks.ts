@@ -13,6 +13,8 @@ import { buildBookOptions } from "./utils";
 
 const useBookActionHandlers = (getItems: () => BookSearchItem[]) => {
   const [selectedBook, setSelectedBook] = useState<BookSearchItem | null>(null);
+  const [bookmarkOverrides, setBookmarkOverrides] = useState<Map<string, string | null>>(new Map());
+  const [rankedOverrides, setRankedOverrides] = useState<Set<string>>(new Set());
   const { mutate: createBookmark } = useCreateBookmark();
   const { mutate: deleteBookmark } = useDeleteBookmark();
 
@@ -24,14 +26,28 @@ const useBookActionHandlers = (getItems: () => BookSearchItem[]) => {
   const onBookmarkBook = (apiId: string) => {
     const book = getItems().find((b) => b.apiId === apiId);
     if (!book) return;
-    if (book.bookmarkId) {
-      deleteBookmark(book.bookmarkId);
+
+    const effectiveBookmarkId = bookmarkOverrides.has(apiId)
+      ? bookmarkOverrides.get(apiId)
+      : book.bookmarkId;
+
+    if (effectiveBookmarkId) {
+      deleteBookmark(effectiveBookmarkId, {
+        onSuccess: () =>
+          setBookmarkOverrides((prev) => new Map(prev).set(apiId, null)),
+      });
     } else {
-      createBookmark(apiId);
+      createBookmark(apiId, {
+        onSuccess: (data) =>
+          setBookmarkOverrides((prev) => new Map(prev).set(apiId, data.id)),
+      });
     }
   };
 
-  return { selectedBook, setSelectedBook, onSelectBook, onBookmarkBook };
+  const markBookRanked = (apiId: string) =>
+    setRankedOverrides((prev) => new Set(prev).add(apiId));
+
+  return { selectedBook, setSelectedBook, onSelectBook, onBookmarkBook, bookmarkOverrides, rankedOverrides, markBookRanked };
 };
 
 export const useBookAutocomplete = () => {
@@ -40,7 +56,7 @@ export const useBookAutocomplete = () => {
   const router = useRouter();
   const { isLoading, data } = useSearchBooks({ query });
 
-  const { selectedBook, setSelectedBook, onSelectBook, onBookmarkBook } =
+  const { selectedBook, setSelectedBook, onSelectBook, onBookmarkBook, bookmarkOverrides, rankedOverrides, markBookRanked } =
     useBookActionHandlers(() => data?.items ?? []);
 
   const options = useMemo(
@@ -48,8 +64,8 @@ export const useBookAutocomplete = () => {
       buildBookOptions(data?.items ?? [], {
         onSelect: onSelectBook,
         onBookmark: onBookmarkBook,
-      }),
-    [data?.items, onBookmarkBook, onSelectBook],
+      }, bookmarkOverrides, rankedOverrides),
+    [data?.items, onBookmarkBook, onSelectBook, bookmarkOverrides, rankedOverrides],
   );
 
   const { reset, ...autocompleteProps } = useAutocomplete({
@@ -69,7 +85,9 @@ export const useBookAutocomplete = () => {
 
   const onCloseModal = (bookId?: string) => {
     if (bookId) {
+      if (selectedBook) markBookRanked(selectedBook.apiId);
       queryClient.invalidateQueries({ queryKey: ["books", "list"] });
+      queryClient.invalidateQueries({ queryKey: ["books", "detail", bookId] });
       reset();
       router.push(`/book/${bookId}`);
     }
@@ -99,7 +117,7 @@ export const useBookSearchPage = (query: string) => {
     [data],
   );
 
-  const { selectedBook, setSelectedBook, onSelectBook, onBookmarkBook } =
+  const { selectedBook, setSelectedBook, onSelectBook, onBookmarkBook, bookmarkOverrides, rankedOverrides, markBookRanked } =
     useBookActionHandlers(() => allItems);
 
   const options = useMemo(
@@ -107,13 +125,15 @@ export const useBookSearchPage = (query: string) => {
       buildBookOptions(allItems, {
         onSelect: onSelectBook,
         onBookmark: onBookmarkBook,
-      }),
-    [allItems, onBookmarkBook, onSelectBook],
+      }, bookmarkOverrides, rankedOverrides),
+    [allItems, onBookmarkBook, onSelectBook, bookmarkOverrides, rankedOverrides],
   );
 
   const onCloseModal = (bookId?: string) => {
     if (bookId) {
+      if (selectedBook) markBookRanked(selectedBook.apiId);
       queryClient.invalidateQueries({ queryKey: ["books", "list"] });
+      queryClient.invalidateQueries({ queryKey: ["books", "detail", bookId] });
       router.push(`/book/${bookId}`);
     }
     setSelectedBook(null);

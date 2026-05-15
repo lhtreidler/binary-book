@@ -16,14 +16,14 @@ const apiUrl = buildUrl("https://www.googleapis.com/books/v1/volumes", {
 });
 
 const createQueryUrl = (q: string) =>
-  appendSearchParams(apiUrl, {
+  appendSearchParams(new URL(apiUrl), {
     q,
     projection: "lite",
     printType: "books",
     maxResults: "40",
   });
 
-const createVolumeUrl = (id: string) => appendPath(apiUrl, id);
+const createVolumeUrl = (id: string) => appendPath(new URL(apiUrl), id);
 
 const fetchBooks = async (
   query: string,
@@ -42,6 +42,13 @@ const fetchBooks = async (
       );
       await new Promise((resolve) => setTimeout(resolve, delay));
       continue;
+    }
+
+    if (!response.ok) {
+      const body = await response.text();
+      throw new Error(
+        `Google Books API error ${response.status}: ${body.slice(0, 300)}`,
+      );
     }
 
     const books = (await response.json()) as GoogleBooksSearchResponse;
@@ -70,10 +77,8 @@ const queryBooks = async ({
 }) => {
   const cachedResult = await searchCacheService.getByQuery({ query });
 
-  let result: FormattedBookItems = [];
-  if (cachedResult?.jsonResult) {
-    result = JSON.parse(cachedResult.jsonResult) as FormattedBookItems;
-  } else {
+  let result: FormattedBookItems = cachedResult ? cachedResult.jsonResult : [];
+  if (!cachedResult) {
     result = await fetchBooks(query);
     await searchCacheService.create({ query, result });
   }
@@ -147,13 +152,13 @@ const queryBooks = async ({
       const { id, googleId, rankings, bookmarks, ...rest } = matchedBook;
 
       compareStrMap[bookCompareStr] = {
+        ...rest,
         ...res,
         id,
         apiId: googleId,
         isRanked: !!rankings.length,
         bookmarkId: bookmarks[0]?.id ?? null,
         orderIndex,
-        ...rest,
       };
     } else {
       compareStrMap[bookCompareStr] = {

@@ -21,7 +21,7 @@ export function useCreateBookmark(): UseMutationResult<
   return useMutation({
     mutationFn: createBookmark,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["books"] });
+      queryClient.invalidateQueries({ queryKey: ["books", "detail"] });
     },
   });
 }
@@ -41,7 +41,7 @@ export function useDeleteBookmark(): UseMutationResult<
   return useMutation({
     mutationFn: deleteBookmark,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["books"] });
+      queryClient.invalidateQueries({ queryKey: ["books", "detail"] });
     },
   });
 }
