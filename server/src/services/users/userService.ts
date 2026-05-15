@@ -119,16 +119,28 @@ const getByUsername = ({ username }: { username: string }) => {
   });
 };
 
-const searchByUsername = ({ username }: { username: string }) => {
+const searchByUsername = ({
+  username,
+  skip,
+  take,
+}: {
+  username: string;
+  skip: number;
+  take: number;
+}) => {
   return prisma.user.findMany({
-    orderBy: {
-      _relevance: {
-        fields: ["username"],
-        search: formatUsername(username),
-        sort: "desc",
+    orderBy: [
+      {
+        _relevance: {
+          fields: ["username"],
+          search: formatUsername(username),
+          sort: "desc",
+        },
       },
-    },
-    take: 10,
+      { id: "asc" },
+    ],
+    skip,
+    take,
     select: {
       username: true,
       firstName: true,

@@ -2,6 +2,8 @@
  * API Response Types
  */
 
+export type Paginated<T extends object> = T & { nextPage: number | null };
+
 export interface User {
   email: string;
   firstName: string | null;
@@ -24,15 +26,15 @@ export interface CheckUsernameResponse {
   isTaken: boolean;
 }
 
-export type SearchByUsernameResponse = {
-  users: {
-    username: string;
-    firstName: string | null;
-    lastName: string | null;
-    profileImg: string | null;
-    id: string;
-  }[];
+export type UserSearchItem = {
+  username: string;
+  firstName: string | null;
+  lastName: string | null;
+  profileImg: string | null;
+  id: string;
 };
+
+export type SearchByUsernameResponse = Paginated<{ users: UserSearchItem[] }>;
 
 type ProfileData = {
   firstName: string | null;
@@ -65,9 +67,7 @@ export interface BookSearchItem {
   bookmarkId: string | null;
 }
 
-export interface BookSearchResponse {
-  items: BookSearchItem[];
-}
+export type BookSearchResponse = Paginated<{ items: BookSearchItem[] }>;
 
 export interface BookListItem {
   bookId: string;
@@ -76,10 +76,7 @@ export interface BookListItem {
   score: number;
 }
 
-export interface BookListResponse {
-  list: BookListItem[];
-  nextPage: number | null;
-}
+export type BookListResponse = Paginated<{ list: BookListItem[] }>;
 
 export interface BookDetailResponse {
   apiId: string;
@@ -143,7 +140,4 @@ export type FollowListUser = {
   lastName: string | null;
 };
 
-export type FollowListResponse = {
-  result: FollowListUser[];
-  nextPage: number | null;
-};
+export type FollowListResponse = Paginated<{ result: FollowListUser[] }>;

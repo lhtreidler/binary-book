@@ -7,11 +7,13 @@ export const useAutocomplete = ({
   isLoading,
   options,
   fieldProps = {},
+  initialOptionCount = 5,
 }: {
   onChange: (input: string) => void;
   isLoading: boolean;
   options: AutocompleteProps["options"];
   fieldProps?: AutocompleteProps["fieldProps"];
+  initialOptionCount?: number;
 }): AutocompleteProps & { reset: () => void } => {
   const [search, setSearch] = useState("");
 
@@ -34,7 +36,7 @@ export const useAutocomplete = ({
       setSearch(input);
     },
     onClear: reset,
-    options,
+    options: options.slice(0, initialOptionCount),
     isLoading,
     fieldProps: { ...fieldProps },
     inputValue: search,

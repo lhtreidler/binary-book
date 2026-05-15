@@ -8,7 +8,7 @@ router.use(authenticateToken);
 
 router.get("/", async (req: Request, res: Response): Promise<void> => {
   const {
-    query: { q },
+    query: { q, page },
   } = req;
 
   if (!req.user || !req.user.userId) {
@@ -24,12 +24,13 @@ router.get("/", async (req: Request, res: Response): Promise<void> => {
   }
 
   try {
-    const items = await googleBooksService.queryGoogleBooks({
+    const result = await googleBooksService.queryGoogleBooks({
       query: q,
       userId,
+      page: page ? Number(page) : 1,
     });
 
-    res.json({ items });
+    res.json(result);
   } catch (err) {
     console.log(err);
     res

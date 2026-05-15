@@ -1,24 +1,26 @@
 import { Router, Request, Response } from "express";
 import { authenticateToken } from "../middleware/auth";
 import { userService } from "../services";
+import { handlePaginatedRequest } from "../utils/pagination";
 
 const router = Router();
 router.use(authenticateToken);
 
 router.get("/", async (req: Request, res: Response) => {
   try {
-    const { q: username } = req.query;
+    const { q: username, page } = req.query;
 
     if (!username || typeof username !== "string") {
       res.status(403).send({ message: "Invalid request" });
       return;
     }
 
-    const users = await userService.searchByUsername({
-      username,
+    const { result: users, nextPage } = await handlePaginatedRequest({
+      page: page as string | undefined,
+      callback: (params) => userService.searchByUsername({ username, ...params }),
     });
 
-    res.json({ users });
+    res.json({ users, nextPage });
   } catch {
     res.status(500).send({ message: "Internal Server Error" });
   }

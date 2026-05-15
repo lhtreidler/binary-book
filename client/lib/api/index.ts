@@ -21,6 +21,7 @@ export type {
   ContinueRankingResponse,
   ApiError,
   SearchByUsernameResponse as SearchUserResponse,
+  UserSearchItem,
 } from "./types";
 
 export * from "./hooks";

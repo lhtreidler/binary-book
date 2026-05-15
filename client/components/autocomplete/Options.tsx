@@ -12,7 +12,7 @@ import { ButtonText, Button } from "../ui/button";
 import { Spinner } from "../ui/spinner";
 import { Divider } from "../ui/divider";
 
-const Option = (props: AutocompleteOption) => {
+export const Option = (props: AutocompleteOption) => {
   const { id: key, label, thumbnail, hasThumbnail, avatarProps, href } = props;
 
   const getContent = () => {
@@ -63,6 +63,7 @@ export const Options = ({
   options,
   isLoading,
   isChanged,
+  onViewAll,
 }: AutocompleteProps & { isChanged: boolean }) => {
   if (isLoading) {
     return <Spinner className="my-4" />;
@@ -80,12 +81,14 @@ export const Options = ({
 
   return (
     <VStack>
-      {options.slice(0, 5).map((option) => (
+      {options.map((option) => (
         <Option key={option.id} {...option} />
       ))}
-      <Button variant="link" className="pb-2">
-        <ButtonText>View All Results...</ButtonText>
-      </Button>
+      {onViewAll && (
+        <Button variant="link" className="pb-2" onPress={onViewAll}>
+          <ButtonText>View All Results...</ButtonText>
+        </Button>
+      )}
     </VStack>
   );
 };

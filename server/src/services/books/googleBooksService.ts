@@ -9,6 +9,7 @@ import { stripHtml } from "../../utils/html";
 import { prisma } from "../../lib/prisma";
 import { searchCacheService } from "./searchCacheService";
 import { appendPath, appendSearchParams, buildUrl } from "../../utils/requests";
+import { handlePaginatedRequest } from "../../utils/pagination";
 
 const apiUrl = buildUrl("https://www.googleapis.com/books/v1/volumes", {
   key: process.env.GOOGLE_BOOKS_API_KEY,
@@ -19,7 +20,7 @@ const createQueryUrl = (q: string) =>
     q,
     projection: "lite",
     printType: "books",
-    maxResults: "10",
+    maxResults: "40",
   });
 
 const createVolumeUrl = (id: string) => appendPath(apiUrl, id);
@@ -61,9 +62,11 @@ const fetchBooks = async (
 const queryBooks = async ({
   userId,
   query,
+  page = 1,
 }: {
   userId: string;
   query: string;
+  page?: number;
 }) => {
   const cachedResult = await searchCacheService.getByQuery({ query });
 
@@ -163,9 +166,16 @@ const queryBooks = async ({
     }
   });
 
-  return Object.values(compareStrMap)
+  const allItems = Object.values(compareStrMap)
     .sort((a, b) => a.orderIndex - b.orderIndex)
     .map(({ orderIndex: _i, ...rest }) => rest);
+
+  const { result: items, nextPage } = await handlePaginatedRequest({
+    page,
+    callback: async ({ skip, take }) => allItems.slice(skip, skip + take),
+  });
+
+  return { items, nextPage };
 };
 
 const getOrCreateBookByGoogleId = async (googleId: string) => {

@@ -133,10 +133,10 @@ const createUser = (i: number) => {
   return {
     username: formatUsername(faker.internet.username(name)),
     email: `leahtreidler+${i}@gmail.com`,
+    profileImg: faker.image.personPortrait(),
     ...name,
   };
 };
-
 
 const fetchBooks = async (bookCount: number) => {
   fs.accessSync(filePath);

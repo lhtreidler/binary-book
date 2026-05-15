@@ -14,6 +14,7 @@ export const Autocomplete = (props: AutocompleteProps) => {
     fieldProps = {},
     onChange = () => {},
     onClear,
+    onViewAll,
     inputValue: value,
   } = props;
 
@@ -70,7 +71,7 @@ export const Autocomplete = (props: AutocompleteProps) => {
             }}
           >
             <Box className="w-full bg-white">
-              <Options {...props} isChanged={isChanged} />
+              <Options {...props} isChanged={isChanged} onViewAll={onViewAll} />
             </Box>
           </View>
         )}

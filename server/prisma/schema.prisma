@@ -114,6 +114,6 @@ model RankingStep {
 model SearchCache {
   id         String   @id @default(uuid()) @db.Uuid
   query      String   @unique
-  jsonResult String
+  jsonResult Json
   cachedAt   DateTime @default(now())
 }

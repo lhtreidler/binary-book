@@ -34,6 +34,7 @@ export type AutocompleteProps = {
   fieldProps?: Omit<React.ComponentProps<typeof InputField>, "value">;
   onChange: (input: string) => void;
   onClear?: () => void;
+  onViewAll?: () => void;
   overlay?: boolean;
   inputValue: string;
 };
