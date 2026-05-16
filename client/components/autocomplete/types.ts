@@ -18,7 +18,7 @@ export type RightAction = {
 
 export type AutocompleteOption = {
   id: string;
-  label: string;
+  label: string | React.ReactNode;
   thumbnail?: string | null;
   hasThumbnail?: boolean;
   avatarProps?: ProfileAvatarProps;
@@ -37,4 +37,5 @@ export type AutocompleteProps = {
   onViewAll?: () => void;
   overlay?: boolean;
   inputValue: string;
+  itemMaxHeight?: number;
 };

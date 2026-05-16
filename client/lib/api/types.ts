@@ -32,6 +32,8 @@ export type UserSearchItem = {
   lastName: string | null;
   profileImg: string | null;
   id: string;
+  isFollowedByYou: boolean;
+  isFollowingYou: boolean;
 };
 
 export type SearchByUsernameResponse = Paginated<{ users: UserSearchItem[] }>;
@@ -138,6 +140,10 @@ export type FollowListUser = {
   profileImg: string | null;
   firstName: string | null;
   lastName: string | null;
+  /** Whether the current logged-in user follows this person */
+  isFollowedByYou: boolean;
+  /** Whether this person follows the current logged-in user */
+  isFollowingYou: boolean;
 };
 
 export type FollowListResponse = Paginated<{ result: FollowListUser[] }>;

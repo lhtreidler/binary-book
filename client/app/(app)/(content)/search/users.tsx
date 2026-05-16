@@ -1,30 +1,10 @@
-import { Option } from "@/components/autocomplete/Options";
-import { AutocompleteOption } from "@/components/autocomplete/types";
 import { InfiniteList } from "@/components/elements";
+import { FollowListItem } from "@/components/page-layouts/follow-list/FollowListItem";
 import { useSearchUsersInfinite } from "@/lib/api/hooks";
 import { SearchUserResponse, UserSearchItem } from "@/lib/api";
 import { Stack, useLocalSearchParams } from "expo-router";
 import { useMemo } from "react";
 import { ListRenderItem } from "react-native";
-
-const renderItem: ListRenderItem<AutocompleteOption> = ({ item }) => (
-  <Option {...item} />
-);
-
-const keyExtractor = (item: AutocompleteOption) => item.id;
-
-const mapUserToOption = ({
-  id,
-  username,
-  profileImg,
-  firstName,
-  lastName,
-}: UserSearchItem): AutocompleteOption => ({
-  id,
-  label: username ?? id,
-  avatarProps: { profileImg, firstName, lastName },
-  href: `/profile/${id}`,
-});
 
 export default function UserSearchScreen() {
   const { q = "" } = useLocalSearchParams<{ q: string }>();
@@ -39,18 +19,14 @@ export default function UserSearchScreen() {
     isRefetching,
   } = useSearchUsersInfinite({ username: q });
 
-  const options = useMemo(() => {
-    const seen = new Set<string>();
-    return (
-      data?.pages
-        .flatMap((p: SearchUserResponse) => p.users.map(mapUserToOption))
-        .filter(({ id }) => {
-          if (seen.has(id)) return false;
-          seen.add(id);
-          return true;
-        }) ?? []
-    );
-  }, [data]);
+  const items = useMemo(
+    () => data?.pages.flatMap((p: SearchUserResponse) => p.users) ?? [],
+    [data],
+  );
+
+  const renderItem: ListRenderItem<UserSearchItem> = ({ item }) => (
+    <FollowListItem item={item} />
+  );
 
   return (
     <>
@@ -58,9 +34,9 @@ export default function UserSearchScreen() {
         options={{ title: `Results for "${q}"`, headerBackTitle: "Back" }}
       />
       <InfiniteList
-        items={options}
+        items={items}
         renderItem={renderItem}
-        keyExtractor={keyExtractor}
+        keyExtractor={(item) => item.id}
         isLoading={isLoading}
         isError={isError}
         hasNextPage={hasNextPage}

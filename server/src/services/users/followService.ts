@@ -1,4 +1,5 @@
 import { prisma } from "../../lib/prisma";
+import _ from "lodash";
 
 const getFollowStatus = async ({
   userId,
@@ -40,58 +41,59 @@ const destroy = (data: { fromId: string; toId: string }) => {
   });
 };
 
-const getAll = ({
-  userId,
-  getFollowers,
-  ...rest
-}: {
-  userId: string;
-  getFollowers: boolean;
+type GetAllParams = {
+  /** The authenticated user — used to compute isFollowedByYou / isFollowingYou */
+  viewerId: string;
   skip: number;
   take: number;
-}) => {
-  const where = getFollowers
-    ? {
-        toId: userId,
-      }
-    : { fromId: userId };
-
-  const select = {
-    username: true,
-    profileImg: true,
-    firstName: true,
-    lastName: true,
-  };
-
-  const include = getFollowers ? { from: { select } } : { to: { select } };
-
-  return prisma.follow.findMany({
-    where,
-    ...rest,
-    include,
-  });
 };
 
-const getAllFollowing = (params: {
-  userId: string;
-  skip: number;
-  take: number;
-}) => {
-  return getAll({
-    ...params,
-    getFollowers: false,
+const buildUserSelect = (viewerId: string) => ({
+  id: true,
+  username: true,
+  profileImg: true,
+  firstName: true,
+  lastName: true,
+  _count: {
+    select: {
+      followings: { where: { toId: viewerId } },
+      followers: { where: { fromId: viewerId } },
+    },
+  },
+});
+
+/** Returns the users that `from` follows */
+const getAllFollowing = async ({
+  from,
+  viewerId,
+}: GetAllParams & { from: string }) => {
+  const result = await prisma.follow.findMany({
+    where: { fromId: from },
+    include: { to: { select: buildUserSelect(viewerId) } },
   });
+
+  return result.map(({ to: { _count, ...user } }) => ({
+    isFollowingYou: !!_count.followings,
+    isFollowedByYou: !!_count.followers,
+    ...user,
+  }));
 };
 
-const getAllFollowers = (params: {
-  userId: string;
-  skip: number;
-  take: number;
-}) => {
-  return getAll({
-    ...params,
-    getFollowers: true,
+/** Returns the users that follow `to` */
+const getAllFollowers = async ({
+  to,
+  viewerId,
+}: GetAllParams & { to: string }) => {
+  const result = await prisma.follow.findMany({
+    where: { toId: to },
+    include: { from: { select: buildUserSelect(viewerId) } },
   });
+
+  return result.map(({ from: { _count, ...user } }) => ({
+    isFollowingYou: !!_count.followings,
+    isFollowedByYou: !!_count.followers,
+    ...user,
+  }));
 };
 
 export const followService = {

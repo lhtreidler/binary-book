@@ -20,6 +20,7 @@ export const BookAutocomplete = ({
           ...autocompleteProps.fieldProps,
           placeholder: "Search for books...",
         }}
+        itemMaxHeight={150}
         overlay
       />
       <RankingModal {...modalProps} />

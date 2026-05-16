@@ -10,16 +10,29 @@ import { router } from "expo-router";
 
 type FollowListItemProps = {
   item: FollowListUser;
-  /** "follow" shows "Follow Back", "unfollow" shows "Unfollow", undefined hides the button */
-  action?: "follow" | "unfollow";
+  /**
+   * When true, hides the button if the current user already follows this person
+   * instead of showing "Unfollow". Use for non-self follow lists.
+   */
+  hideWhenFollowing?: boolean;
 };
 
-export const FollowListItem = ({ item, action }: FollowListItemProps) => {
+export const FollowListItem = ({
+  item,
+  hideWhenFollowing = false,
+}: FollowListItemProps) => {
   const follow = useFollow(item.id);
   const unfollow = useUnfollow(item.id);
   const isPending = follow.isPending || unfollow.isPending;
 
   const fullName = [item.firstName, item.lastName].filter(Boolean).join(" ");
+
+  let action: "follow" | "follow-back" | "unfollow" | undefined;
+  if (item.isFollowedByYou) {
+    action = hideWhenFollowing ? undefined : "unfollow";
+  } else {
+    action = item.isFollowingYou ? "follow-back" : "follow";
+  }
 
   return (
     <Pressable onPress={() => router.push(`/profile/${item.id}`)}>
@@ -40,13 +53,15 @@ export const FollowListItem = ({ item, action }: FollowListItemProps) => {
             <Text className="text-gray-500 text-sm">@{item.username}</Text>
           ) : null}
         </VStack>
-        {action === "follow" && (
+        {(action === "follow" || action === "follow-back") && (
           <Button
             size="sm"
             onPress={() => follow.mutate()}
             isDisabled={isPending}
           >
-            <ButtonText>Follow Back</ButtonText>
+            <ButtonText>
+              {action === "follow-back" ? "Follow Back" : "Follow"}
+            </ButtonText>
           </Button>
         )}
         {action === "unfollow" && (

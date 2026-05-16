@@ -12,8 +12,9 @@ import { ButtonText, Button } from "../ui/button";
 import { Spinner } from "../ui/spinner";
 import { Divider } from "../ui/divider";
 
-export const Option = (props: AutocompleteOption) => {
-  const { id: key, label, thumbnail, hasThumbnail, avatarProps, href } = props;
+export const Option = (props: AutocompleteOption & { itemMaxHeight?: number }) => {
+  const { id: key, label, thumbnail, hasThumbnail, avatarProps, href, itemMaxHeight } = props;
+  const labelString = typeof label === "string" ? label : "";
 
   const getContent = () => {
     return (
@@ -29,7 +30,7 @@ export const Option = (props: AutocompleteOption) => {
               <Image
                 size="xs"
                 source={{ uri: thumbnail }}
-                alt={label}
+                alt={labelString}
                 className="w-full h-full"
               />
             ) : (
@@ -39,7 +40,7 @@ export const Option = (props: AutocompleteOption) => {
         )}
         <Box className="flex-1 h-full">
           <Box className="flex justify-center pt-1">
-            <Text>{label}</Text>
+            {typeof label === "string" ? <Text>{label}</Text> : label}
           </Box>
         </Box>
       </HStack>
@@ -47,7 +48,11 @@ export const Option = (props: AutocompleteOption) => {
   };
 
   return (
-    <VStack key={key} className="py-2 px-4 w-full gap-3">
+    <VStack
+      key={key}
+      className="py-2 px-4 w-full gap-3"
+      style={itemMaxHeight ? { maxHeight: itemMaxHeight, overflow: "hidden" } : undefined}
+    >
       <HStack className="w-full items-center">
         <Box className="flex-1">
           {href ? <Link href={href}>{getContent()}</Link> : getContent()}
@@ -64,6 +69,7 @@ export const Options = ({
   isLoading,
   isChanged,
   onViewAll,
+  itemMaxHeight,
 }: AutocompleteProps & { isChanged: boolean }) => {
   if (isLoading) {
     return <Spinner className="my-4" />;
@@ -82,7 +88,7 @@ export const Options = ({
   return (
     <VStack>
       {options.map((option) => (
-        <Option key={option.id} {...option} />
+        <Option key={option.id} {...option} itemMaxHeight={itemMaxHeight} />
       ))}
       {onViewAll && (
         <Button variant="link" className="pb-2" onPress={onViewAll}>

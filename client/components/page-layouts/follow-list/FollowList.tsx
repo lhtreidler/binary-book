@@ -23,14 +23,8 @@ export function FollowList({ type, userId, isSelf }: FollowListProps) {
     [data],
   );
 
-  const itemAction = isSelf
-    ? type === "followers"
-      ? "follow"
-      : "unfollow"
-    : undefined;
-
   const renderItem: ListRenderItem<FollowListUser> = ({ item }) => (
-    <FollowListItem item={item} action={itemAction} />
+    <FollowListItem item={item} hideWhenFollowing={!isSelf} />
   );
 
   return (

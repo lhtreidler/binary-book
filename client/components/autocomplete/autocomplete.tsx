@@ -15,14 +15,19 @@ export const Autocomplete = (props: AutocompleteProps) => {
     onChange = () => {},
     onClear,
     onViewAll,
+    overlay,
     inputValue: value,
   } = props;
 
   const [isChanged, setIsChanged] = useState(false);
+  const [isDropdownVisible, setIsDropdownVisible] = useState(true);
   const [inputHeight, setInputHeight] = useState(50);
 
   useEffect(() => {
-    if (options.length || isLoading) setIsChanged(true);
+    if (options.length || isLoading) {
+      setIsChanged(true);
+      setIsDropdownVisible(true);
+    }
     if (value === "") setIsChanged(false);
   }, [options, isLoading, value]);
 
@@ -33,6 +38,8 @@ export const Autocomplete = (props: AutocompleteProps) => {
           variant="underlined"
           onChangeText={onChange}
           value={value}
+          onFocus={overlay ? () => { if (isChanged) setIsDropdownVisible(true); } : undefined}
+          onBlur={overlay ? () => { setTimeout(() => setIsDropdownVisible(false), 150); } : undefined}
           {...fieldProps}
         />
         {value ? (
@@ -44,6 +51,8 @@ export const Autocomplete = (props: AutocompleteProps) => {
     );
   };
 
+  const showDropdown = isChanged && (!overlay || isDropdownVisible);
+
   return (
     <View
       className="w-full z-10 flex flex-col justify-center items-center p-4"
@@ -53,7 +62,7 @@ export const Autocomplete = (props: AutocompleteProps) => {
         <View onLayout={(e) => setInputHeight(e.nativeEvent.layout.height)}>
           {getInput()}
         </View>
-        {isChanged && (
+        {showDropdown && (
           <View
             style={{
               position: "absolute",

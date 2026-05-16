@@ -8,7 +8,12 @@ router.use(authenticateToken);
 
 router.get("/", async (req: Request, res: Response) => {
   try {
-    const { q: username, page } = req.query;
+    const { user, query: { q: username, page } } = req;
+
+    if (!user) {
+      res.status(401).send({ message: "Unauthorized" });
+      return;
+    }
 
     if (!username || typeof username !== "string") {
       res.status(403).send({ message: "Invalid request" });
@@ -18,7 +23,7 @@ router.get("/", async (req: Request, res: Response) => {
     const { result: users, nextPage } = await handlePaginatedRequest({
       page: page as string | undefined,
       callback: (params) =>
-        userService.searchByUsername({ username, ...params }),
+        userService.searchByUsername({ username, viewerId: user.userId, ...params }),
     });
 
     res.json({ users, nextPage });

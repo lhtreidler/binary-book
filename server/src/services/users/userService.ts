@@ -119,16 +119,18 @@ const getByUsername = ({ username }: { username: string }) => {
   });
 };
 
-const searchByUsername = ({
+const searchByUsername = async ({
   username,
+  viewerId,
   skip,
   take,
 }: {
   username: string;
+  viewerId: string;
   skip: number;
   take: number;
 }) => {
-  return prisma.user.findMany({
+  const results = await prisma.user.findMany({
     orderBy: [
       {
         _relevance: {
@@ -147,8 +149,20 @@ const searchByUsername = ({
       lastName: true,
       profileImg: true,
       id: true,
+      _count: {
+        select: {
+          followings: { where: { toId: viewerId } },
+          followers: { where: { fromId: viewerId } },
+        },
+      },
     },
   });
+
+  return results.map(({ _count, ...user }) => ({
+    ...user,
+    isFollowingYou: !!_count.followings,
+    isFollowedByYou: !!_count.followers,
+  }));
 };
 
 const update = ({

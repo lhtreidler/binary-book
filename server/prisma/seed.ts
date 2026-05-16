@@ -133,7 +133,7 @@ const createUser = (i: number) => {
   return {
     username: formatUsername(faker.internet.username(name)),
     email: `leahtreidler+${i}@gmail.com`,
-    profileImg: faker.image.personPortrait(),
+    profileImg: faker.image.urlPicsumPhotos(),
     ...name,
   };
 };

@@ -169,6 +169,7 @@ export function useUpdateUser(): UseMutationResult<
   ApiError,
   UpdateUserInput
 > {
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (input: UpdateUserInput) => {
       const client = await getApiClient();
@@ -177,6 +178,10 @@ export function useUpdateUser(): UseMutationResult<
         input,
       );
       return data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["auth", "me"] });
+      queryClient.invalidateQueries({ queryKey: ["users", "me"] });
     },
   });
 }
