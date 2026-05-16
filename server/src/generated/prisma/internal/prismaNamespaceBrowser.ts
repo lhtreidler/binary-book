@@ -53,6 +53,7 @@ export const ModelName = {
   Follow: 'Follow',
   Book: 'Book',
   Ranking: 'Ranking',
+  Bookmark: 'Bookmark',
   RankingSession: 'RankingSession',
   RankingStep: 'RankingStep',
   SearchCache: 'SearchCache'
@@ -104,7 +105,8 @@ export const BookScalarFieldEnum = {
   googleId: 'googleId',
   title: 'title',
   authors: 'authors',
-  compareStr: 'compareStr'
+  compareStr: 'compareStr',
+  thumbnail: 'thumbnail'
 } as const
 
 export type BookScalarFieldEnum = (typeof BookScalarFieldEnum)[keyof typeof BookScalarFieldEnum]
@@ -121,6 +123,17 @@ export const RankingScalarFieldEnum = {
 } as const
 
 export type RankingScalarFieldEnum = (typeof RankingScalarFieldEnum)[keyof typeof RankingScalarFieldEnum]
+
+
+export const BookmarkScalarFieldEnum = {
+  id: 'id',
+  bookId: 'bookId',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type BookmarkScalarFieldEnum = (typeof BookmarkScalarFieldEnum)[keyof typeof BookmarkScalarFieldEnum]
 
 
 export const RankingSessionScalarFieldEnum = {
@@ -166,6 +179,13 @@ export const SortOrder = {
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
+
+
 export const QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
@@ -208,7 +228,8 @@ export const BookOrderByRelevanceFieldEnum = {
   googleId: 'googleId',
   title: 'title',
   authors: 'authors',
-  compareStr: 'compareStr'
+  compareStr: 'compareStr',
+  thumbnail: 'thumbnail'
 } as const
 
 export type BookOrderByRelevanceFieldEnum = (typeof BookOrderByRelevanceFieldEnum)[keyof typeof BookOrderByRelevanceFieldEnum]
@@ -221,6 +242,15 @@ export const RankingOrderByRelevanceFieldEnum = {
 } as const
 
 export type RankingOrderByRelevanceFieldEnum = (typeof RankingOrderByRelevanceFieldEnum)[keyof typeof RankingOrderByRelevanceFieldEnum]
+
+
+export const BookmarkOrderByRelevanceFieldEnum = {
+  id: 'id',
+  bookId: 'bookId',
+  userId: 'userId'
+} as const
+
+export type BookmarkOrderByRelevanceFieldEnum = (typeof BookmarkOrderByRelevanceFieldEnum)[keyof typeof BookmarkOrderByRelevanceFieldEnum]
 
 
 export const RankingSessionOrderByRelevanceFieldEnum = {
@@ -240,10 +270,18 @@ export const RankingStepOrderByRelevanceFieldEnum = {
 export type RankingStepOrderByRelevanceFieldEnum = (typeof RankingStepOrderByRelevanceFieldEnum)[keyof typeof RankingStepOrderByRelevanceFieldEnum]
 
 
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
+
+
 export const SearchCacheOrderByRelevanceFieldEnum = {
   id: 'id',
-  query: 'query',
-  jsonResult: 'jsonResult'
+  query: 'query'
 } as const
 
 export type SearchCacheOrderByRelevanceFieldEnum = (typeof SearchCacheOrderByRelevanceFieldEnum)[keyof typeof SearchCacheOrderByRelevanceFieldEnum]

@@ -65,6 +65,11 @@ export type Book = Prisma.BookModel
  */
 export type Ranking = Prisma.RankingModel
 /**
+ * Model Bookmark
+ * 
+ */
+export type Bookmark = Prisma.BookmarkModel
+/**
  * Model RankingSession
  * 
  */

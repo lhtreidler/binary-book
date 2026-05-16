@@ -8,8 +8,7 @@ import {
   updateUserSchema,
 } from "../utils/schemas.js";
 import { validateBody } from "../middleware/validation.js";
-import { userService } from "../services/userService.js";
-import { authService } from "../services/authService.js";
+import { authService, userService } from "../services";
 import { formatEmail } from "../utils/format.js";
 import { authenticateToken } from "../middleware/auth.js";
 

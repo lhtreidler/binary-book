@@ -1,133 +1,68 @@
 import { useEffect, useState } from "react";
-import { ScrollView, View } from "react-native";
-import { Box } from "../ui/box";
-import { Button, ButtonIcon } from "../ui/button";
-import { HStack } from "../ui/hstack";
-import { Image } from "../ui/image";
+import { View } from "react-native";
 import { Input, InputField, InputIcon, InputSlot } from "../ui/input";
 import { CloseIcon } from "../ui/icon";
-import { Spinner } from "../ui/spinner";
-import { Text } from "../ui/text";
-import { VStack } from "../ui/vstack";
-import { AutocompleteOption, AutocompleteProps, nameToIcon } from "./types";
-import { ProfileAvatar } from "../elements";
-import { Link } from "expo-router";
+import { AutocompleteProps } from "./types";
+import { Options } from "./Options";
+import { Box } from "../ui/box";
 
-const Option = ({
-  id: key,
-  label,
-  thumbnail,
-  avatarProps,
-  hideAction = false,
-  rightActions,
-  href,
-}: Omit<AutocompleteOption, "key"> & {
-  id: string;
-  rightActions: AutocompleteProps["rightActions"];
-}) => {
-  const getContent = () => {
-    return (
-      <Box
-        key={key}
-        className="bg-slate-50 border-gray-700 py-2 px-4 border-b-hairline flex flex-row items-center w-full gap-3"
-      >
-        {avatarProps && <ProfileAvatar size="sm" {...avatarProps} />}
+export const Autocomplete = (props: AutocompleteProps) => {
+  const {
+    options,
+    isLoading,
+    inputProps,
+    fieldProps = {},
+    onChange = () => {},
+    onClear,
+    onViewAll,
+    overlay,
+    inputValue: value,
+  } = props;
 
-        {thumbnail && !avatarProps && (
-          <Box className="w-1/4 aspect-[2/3]" style={{ width: 70 }}>
-            <Image
-              size="xs"
-              source={{ uri: thumbnail }}
-              alt={label}
-              className="w-full h-full"
-            />
-          </Box>
-        )}
-        <Box className="flex-1">
-          <Text>{label}</Text>
-        </Box>
-
-        {rightActions && !hideAction && (
-          <HStack className="ml-2">
-            {rightActions.map(({ icon, handler }, i) => (
-              <Button
-                size="sm"
-                className="rounded-full"
-                variant="outline"
-                key={i}
-                onPress={() => handler(key)}
-              >
-                <ButtonIcon
-                  className="py-2 px-0"
-                  size="sm"
-                  as={nameToIcon[icon]}
-                />
-              </Button>
-            ))}
-          </HStack>
-        )}
-      </Box>
-    );
-  };
-
-  return href ? <Link href={href}>{getContent()}</Link> : getContent();
-};
-
-export const Autocomplete = ({
-  options,
-  isLoading,
-  inputProps,
-  fieldProps = {},
-  onChange = () => {},
-  onClear,
-  rightActions = [],
-  overlay = false,
-}: AutocompleteProps) => {
   const [isChanged, setIsChanged] = useState(false);
+  const [isDropdownVisible, setIsDropdownVisible] = useState(true);
   const [inputHeight, setInputHeight] = useState(50);
 
   useEffect(() => {
-    if (options.length || isLoading) setIsChanged(true);
-    if (fieldProps.value === "") setIsChanged(false);
-  }, [options, isLoading, fieldProps.value]);
-
-  const getOptions = () => {
-    if (!options.length && !isLoading && isChanged) {
-      return (
-        <Box className="p-2 w-full">
-          <Text className="text-center">
-            No results found. Please try a different search term.
-          </Text>
-        </Box>
-      );
+    if (options.length || isLoading) {
+      setIsChanged(true);
+      setIsDropdownVisible(true);
     }
+    if (value === "") setIsChanged(false);
+  }, [options, isLoading, value]);
 
-    return options.map(({ key, ...option }) => (
-      <Option key={key} id={key} {...option} rightActions={rightActions} />
-    ));
+  const getInput = () => {
+    return (
+      <Input {...inputProps}>
+        <InputField
+          variant="underlined"
+          onChangeText={onChange}
+          value={value}
+          onFocus={overlay ? () => { if (isChanged) setIsDropdownVisible(true); } : undefined}
+          onBlur={overlay ? () => { setTimeout(() => setIsDropdownVisible(false), 150); } : undefined}
+          {...fieldProps}
+        />
+        {value ? (
+          <InputSlot onPress={onClear} className="pr-1">
+            <InputIcon as={CloseIcon} />
+          </InputSlot>
+        ) : null}
+      </Input>
+    );
   };
 
-  if (overlay) {
-    return (
-      <View style={{ zIndex: 100, backgroundColor: "white" }}>
-        <View
-          style={{ paddingHorizontal: 16, paddingVertical: 10 }}
-          onLayout={(e) => setInputHeight(e.nativeEvent.layout.height)}
-        >
-          <Input {...inputProps}>
-            <InputField
-              variant="underlined"
-              onChangeText={onChange}
-              {...fieldProps}
-            />
-            {fieldProps.value ? (
-              <InputSlot onPress={onClear} className="pr-1">
-                <InputIcon as={CloseIcon} />
-              </InputSlot>
-            ) : null}
-          </Input>
+  const showDropdown = isChanged && (!overlay || isDropdownVisible);
+
+  return (
+    <View
+      className="w-full z-10 flex flex-col justify-center items-center p-4"
+      style={{ backgroundColor: "white" }}
+    >
+      <Box className="w-5/6">
+        <View onLayout={(e) => setInputHeight(e.nativeEvent.layout.height)}>
+          {getInput()}
         </View>
-        {isChanged && (
+        {showDropdown && (
           <View
             style={{
               position: "absolute",
@@ -139,39 +74,17 @@ export const Autocomplete = ({
               zIndex: 100,
               elevation: 5,
               shadowColor: "#000",
-              shadowOffset: { width: 0, height: 2 },
+              shadowOffset: { width: 0, height: 4 },
               shadowOpacity: 0.15,
               shadowRadius: 4,
             }}
           >
-            <ScrollView>
-              <View style={{ paddingVertical: 8 }}>
-                {getOptions()}
-                {isLoading ? <Spinner className="my-4" /> : null}
-              </View>
-            </ScrollView>
+            <Box className="w-full bg-white">
+              <Options {...props} isChanged={isChanged} onViewAll={onViewAll} />
+            </Box>
           </View>
         )}
-      </View>
-    );
-  }
-
-  return (
-    <VStack>
-      <Input {...inputProps}>
-        <InputField
-          variant="underlined"
-          onChangeText={onChange}
-          {...fieldProps}
-        />
-        {fieldProps.value ? (
-          <InputSlot onPress={onClear} className="pr-1">
-            <InputIcon as={CloseIcon} />
-          </InputSlot>
-        ) : null}
-      </Input>
-      {getOptions()}
-      {isLoading ? <Spinner className="mt-2" /> : null}
-    </VStack>
+      </Box>
+    </View>
   );
 };

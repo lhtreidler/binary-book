@@ -1,6 +1,6 @@
-import { RankingSession, RankingStep } from "../generated/prisma/client";
-import { prisma } from "../lib/prisma";
-import { OmitSystem } from "../utils/type-utils";
+import { RankingSession, RankingStep } from "../../generated/prisma/client";
+import { prisma } from "../../lib/prisma";
+import { OmitSystem } from "../../utils/type-utils";
 
 type BaseRankingStep = OmitSystem<RankingStep>;
 type CreateStep = Omit<

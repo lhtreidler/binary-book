@@ -5,6 +5,7 @@
 import {
   useMutation,
   useQuery,
+  useQueryClient,
   UseQueryResult,
   UseMutationResult,
 } from "@tanstack/react-query";
@@ -57,6 +58,11 @@ export function useMe(): UseQueryResult<User, ApiError> {
       try {
         const client = await getApiClient();
         const { data } = await client.get<MeResponse>("/auth/me");
+
+        if (!data.username) {
+          signOut();
+        }
+
         return data || {};
       } catch (err) {
         const error = err as AxiosError;
@@ -98,7 +104,8 @@ export function useCheckUsername(
     queryFn: async () => {
       const client = await getApiClient();
       const { data } = await client.get<CheckUsernameResponse>(
-        `/auth/check-username?username=${encodeURI(username)}`,
+        `/auth/check-username`,
+        { params: { username } },
       );
       return data;
     },
@@ -115,6 +122,7 @@ export function useLogin(): UseMutationResult<
   LoginInput
 > {
   const { signIn } = useSession();
+  const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: async (input: LoginInput) => {
@@ -123,8 +131,8 @@ export function useLogin(): UseMutationResult<
       return data;
     },
     onSuccess: async (data) => {
-      // Update session context which will sync to storage
       signIn(data.token);
+      await queryClient.invalidateQueries({ queryKey: ["auth", "me"] });
     },
   });
 }
@@ -138,6 +146,7 @@ export function useSignup(): UseMutationResult<
   SignupInput
 > {
   const { signIn } = useSession();
+  const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: async (input: SignupInput) => {
@@ -146,8 +155,8 @@ export function useSignup(): UseMutationResult<
       return data;
     },
     onSuccess: async (data) => {
-      // Update session context which will sync to storage
       signIn(data.token);
+      await queryClient.invalidateQueries({ queryKey: ["auth", "me"] });
     },
   });
 }
@@ -160,6 +169,7 @@ export function useUpdateUser(): UseMutationResult<
   ApiError,
   UpdateUserInput
 > {
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (input: UpdateUserInput) => {
       const client = await getApiClient();
@@ -168,6 +178,10 @@ export function useUpdateUser(): UseMutationResult<
         input,
       );
       return data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["auth", "me"] });
+      queryClient.invalidateQueries({ queryKey: ["users", "me"] });
     },
   });
 }

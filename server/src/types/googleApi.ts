@@ -69,9 +69,12 @@ export type GoogleBooksSearchResponse = {
   items?: GoogleBooksVolume[];
 };
 
-export type FormattedBookItems = {
-  key: string;
+export type FormattedBookItem = {
+  apiId: string;
   title: string;
   authors: string[];
-  thumbnail?: string;
-}[];
+  thumbnail?: string | null;
+  compareStr: string;
+};
+
+export type FormattedBookItems = FormattedBookItem[];

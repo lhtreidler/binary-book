@@ -1,32 +1,41 @@
 import React from "react";
 import { Input, InputField } from "../ui/input";
 import { AddIcon } from "../ui/icon";
+import { Bookmark } from "lucide-react-native";
 import { Href } from "expo-router";
 import { ProfileAvatarProps } from "../elements";
 
-export const nameToIcon = {
+export const icons = {
   add: AddIcon,
+  bookmark: Bookmark,
 } as const;
 
+export type RightAction = {
+  icon: keyof typeof icons;
+  handler: (key: string) => void;
+  isActive?: boolean;
+};
+
 export type AutocompleteOption = {
-  key: string;
-  label: string;
-  thumbnail?: string;
+  id: string;
+  label: string | React.ReactNode;
+  thumbnail?: string | null;
+  hasThumbnail?: boolean;
   avatarProps?: ProfileAvatarProps;
   hideAction?: boolean;
   href?: Href;
+  rightActions?: RightAction[] | RightAction;
 };
 
 export type AutocompleteProps = {
   options: AutocompleteOption[];
   isLoading?: boolean;
   inputProps?: React.ComponentProps<typeof Input>;
-  fieldProps?: React.ComponentProps<typeof InputField>;
+  fieldProps?: Omit<React.ComponentProps<typeof InputField>, "value">;
   onChange: (input: string) => void;
   onClear?: () => void;
+  onViewAll?: () => void;
   overlay?: boolean;
-  rightActions?: {
-    icon: keyof typeof nameToIcon;
-    handler: (key: string) => void;
-  }[];
+  inputValue: string;
+  itemMaxHeight?: number;
 };

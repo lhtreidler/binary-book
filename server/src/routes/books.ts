@@ -8,7 +8,7 @@ router.use(authenticateToken);
 
 router.get("/", async (req: Request, res: Response): Promise<void> => {
   const {
-    query: { q },
+    query: { q, page },
   } = req;
 
   if (!req.user || !req.user.userId) {
@@ -24,13 +24,15 @@ router.get("/", async (req: Request, res: Response): Promise<void> => {
   }
 
   try {
-    const items = await googleBooksService.queryGoogleBooks({
+    const result = await googleBooksService.queryGoogleBooks({
       query: q,
       userId,
+      page: page ? Number(page) : 1,
     });
 
-    res.json({ items });
+    res.json(result);
   } catch (err) {
+    console.log(err);
     res
       .status(500)
       .json({ message: "Failed to fetch books. Please try again later." });
@@ -64,6 +66,25 @@ router.get("/list", async (req: Request, res: Response) => {
       .json({ message: "Failed to fetch list. Please try again later." });
   }
 });
+
+router.get(
+  "/ensure/:apiId",
+  async (req: Request, res: Response): Promise<void> => {
+    if (!req.user || !req.user.userId) {
+      res.status(401).json({ message: "Unauthorized" });
+      return;
+    }
+
+    const { apiId } = req.params;
+
+    try {
+      const book = await googleBooksService.getOrCreateBookByGoogleId(apiId);
+      res.json({ id: book.id });
+    } catch (err) {
+      res.status(500).json({ message: "Failed to resolve book." });
+    }
+  },
+);
 
 router.get(
   "/details/:bookId",

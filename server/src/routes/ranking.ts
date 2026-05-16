@@ -29,9 +29,9 @@ router.post("/start", validateBody(startRankingSchema), async (req, res) => {
       return;
     }
 
-    const { rankingLevel, gId } = req.body as StartRankingInput;
+    const { rankingLevel, apiId } = req.body as StartRankingInput;
 
-    const book = await googleBooksService.getOrCreateBookByGoogleId(gId);
+    const book = await googleBooksService.getOrCreateBookByGoogleId(apiId);
 
     const { id: bookId } = book;
 

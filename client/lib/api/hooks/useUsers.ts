@@ -1,4 +1,10 @@
-import { useQuery, UseQueryResult } from "@tanstack/react-query";
+import {
+  useInfiniteQuery,
+  UseInfiniteQueryResult,
+  InfiniteData,
+  useQuery,
+  UseQueryResult,
+} from "@tanstack/react-query";
 import {
   ApiError,
   SearchByUsernameResponse,
@@ -6,6 +12,14 @@ import {
   UseGetProfileResponse,
 } from "../types";
 import { getApiClient } from "../client";
+
+export const searchUsers = async (username: string, page = 1) => {
+  const client = await getApiClient();
+  const { data } = await client.get<SearchByUsernameResponse>("/users", {
+    params: { q: username, page },
+  });
+  return data;
+};
 
 /**
  * Search for a user by username
@@ -19,14 +33,22 @@ export function useSearchByUsername({
 }): UseQueryResult<SearchByUsernameResponse | null, ApiError> {
   return useQuery({
     queryKey: ["users", "search", username],
-    queryFn: async () => {
-      const client = await getApiClient();
-      const { data } = await client.get<SearchByUsernameResponse>(
-        `/users?q=${encodeURIComponent(username)}`,
-      );
-      return data;
-    },
+    queryFn: () => searchUsers(username),
     enabled: !!username && enabled,
+  });
+}
+
+export function useSearchUsersInfinite({
+  username,
+}: {
+  username: string;
+}): UseInfiniteQueryResult<InfiniteData<SearchByUsernameResponse>, ApiError> {
+  return useInfiniteQuery({
+    queryKey: ["users", "search", "infinite", username],
+    queryFn: ({ pageParam }) => searchUsers(username, pageParam),
+    initialPageParam: 1,
+    getNextPageParam: (lastPage) => lastPage.nextPage,
+    enabled: !!username,
   });
 }
 

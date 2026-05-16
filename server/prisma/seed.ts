@@ -1,7 +1,7 @@
 import "dotenv/config";
 import { Pool } from "pg";
 import { PrismaPg } from "@prisma/adapter-pg";
-import { Book, PrismaClient, Ranking } from "../src/generated/prisma/client";
+import { PrismaClient, Ranking } from "../src/generated/prisma/client";
 import { faker } from "@faker-js/faker";
 import * as fs from "node:fs";
 import {
@@ -11,16 +11,20 @@ import {
 } from "../src/services";
 import { formatUsername } from "../src/utils/format";
 import bookData from "./data.json";
-import { FormattedBookItems } from "../src/types/googleApi";
-import { createBookComparisonStr } from "../src/utils/dedupe";
 import { parseArgs } from "node:util";
+import {
+  BookCreateManyArgs,
+  BookmarkCreateManyArgs,
+  RankingCreateManyArgs,
+} from "../src/generated/prisma/models";
+import _ from "lodash";
 
 const RANKING_MIN = 10;
 
 const options = {
   userCount: { type: "string", default: "100" },
   bookCount: { type: "string", default: "200" },
-  useJsonData: { type: "boolean", default: true },
+  useJsonData: { type: "string", default: "true" },
 } as const;
 
 const connectionString = `${process.env.DATABASE_URL}`;
@@ -36,55 +40,88 @@ const createArray = <T>(length: number, callback: (i: number) => T) => {
 
 const getRandom = (min: number, max: number) => faker.number.int({ min, max });
 
-const createRankings = (userId: string, booksIds: string[]) => {
-  let booksRemaining = new Set(booksIds);
-  const length = getRandom(RANKING_MIN, booksIds.length - 1);
-  console.log(`Creating ${length} rankings for ${userId}`);
-  const gap = 100;
+const createRankingsAndBookmarks = async (
+  userIds: string[],
+  booksIds: string[],
+) => {
+  const allRankings: RankingCreateManyArgs["data"] = [];
+  const allBookmarks: BookmarkCreateManyArgs["data"] = [];
 
-  const levelToRankings = {
-    0: [],
-    1: [],
-    2: [],
-  } as Record<number, Pick<Ranking, "bookId" | "rawScore">[]>;
+  for (let userId of userIds) {
+    let booksRemaining = new Set(booksIds);
+    const numRankings = getRandom(RANKING_MIN, Math.floor(booksIds.length / 2));
+    const numBookmarks = getRandom(0, booksIds.length - numRankings);
+    console.log(
+      `Creating ${numRankings} rankings and ${numBookmarks} bookmarks for ${userId}`,
+    );
+    const gap = 100;
 
-  for (let i = 0; i < length; i++) {
-    const bookIdIndex = getRandom(0, booksRemaining.size - 1);
-    const bookId = Array.from(booksRemaining)[bookIdIndex];
+    const levelToRankings = {
+      0: [],
+      1: [],
+      2: [],
+    } as Record<number, Pick<Ranking, "bookId" | "rawScore">[]>;
 
-    booksRemaining.delete(bookId);
-    const level = getRandom(0, 2);
+    for (let i = 0; i < numRankings; i++) {
+      const bookIdIndex = getRandom(0, booksRemaining.size - 1);
+      const bookId = Array.from(booksRemaining)[bookIdIndex];
 
-    const existingRankings = levelToRankings[level];
+      booksRemaining.delete(bookId);
+      const level = getRandom(0, 2);
 
-    let rawScore = STARTING_RAW_SCORE;
-    const rankingIndex = getRandom(0, Math.max(0, existingRankings.length - 1));
-    if (existingRankings.length > 0) {
-      const higherScore = existingRankings[rankingIndex]?.rawScore;
-      const lowerScore = existingRankings[rankingIndex - 1]?.rawScore;
+      const existingRankings = levelToRankings[level];
 
-      if (higherScore === undefined) {
-        rawScore = lowerScore + gap;
-      } else if (lowerScore === undefined) {
-        rawScore = higherScore - gap;
-      } else {
-        rawScore = (higherScore + lowerScore) / 2;
+      let rawScore = STARTING_RAW_SCORE;
+      const rankingIndex = getRandom(
+        0,
+        Math.max(0, existingRankings.length - 1),
+      );
+      if (existingRankings.length > 0) {
+        const higherScore = existingRankings[rankingIndex]?.rawScore;
+        const lowerScore = existingRankings[rankingIndex - 1]?.rawScore;
+
+        if (higherScore === undefined) {
+          rawScore = lowerScore + gap;
+        } else if (lowerScore === undefined) {
+          rawScore = higherScore - gap;
+        } else {
+          rawScore = (higherScore + lowerScore) / 2;
+        }
       }
+
+      const updatedLevel = [...levelToRankings[level]];
+      updatedLevel.splice(rankingIndex, 0, { bookId, rawScore });
+
+      levelToRankings[level] = updatedLevel;
     }
 
-    const updatedLevel = [...levelToRankings[level]];
-    updatedLevel.splice(rankingIndex, 0, { bookId, rawScore });
+    const bookmarks = createArray(numBookmarks, () => {
+      const bookIdIndex = getRandom(0, booksRemaining.size - 1);
+      const bookId = Array.from(booksRemaining)[bookIdIndex];
 
-    levelToRankings[level] = updatedLevel;
+      booksRemaining.delete(bookId);
+
+      return { bookId, userId };
+    });
+
+    const rankings = Object.entries(levelToRankings).flatMap(
+      ([level, rankings]) => {
+        return rankings.map((ranking) => ({
+          userId,
+          level: Number(level),
+          ...ranking,
+        }));
+      },
+    );
+
+    allBookmarks.push(...bookmarks);
+    allRankings.push(...rankings);
   }
 
-  return Object.entries(levelToRankings).flatMap(([level, rankings]) => {
-    return rankings.map((ranking) => ({
-      userId,
-      level: Number(level),
-      ...ranking,
-    }));
-  });
+  await Promise.all([
+    prisma.bookmark.createMany({ data: allBookmarks }),
+    prisma.ranking.createMany({ data: allRankings }),
+  ]);
 };
 
 const createUser = (i: number) => {
@@ -96,6 +133,7 @@ const createUser = (i: number) => {
   return {
     username: formatUsername(faker.internet.username(name)),
     email: `leahtreidler+${i}@gmail.com`,
+    profileImg: faker.image.urlPicsumPhotos(),
     ...name,
   };
 };
@@ -104,44 +142,58 @@ const fetchBooks = async (bookCount: number) => {
   fs.accessSync(filePath);
 
   // get books from google data if bookData is not stored already
-  const books: FormattedBookItems = [];
+  const books: BookCreateManyArgs["data"] = [];
   const googleIds = new Set();
+
+  const CHUNK_SIZE = 5;
 
   while (books.length < bookCount) {
     console.log("Book length:", books.length);
-    const bookTitle = faker.book.title();
-    const result = await googleBooksService.fetchBooks(bookTitle);
-    if (result.length) {
-      const res =
-        result.find(({ title }) =>
-          title.toLowerCase().includes(bookTitle.toLowerCase()),
-        ) || result[0];
+    const titles = Array.from(
+      new Set(createArray(bookCount - books.length, () => faker.book.title())),
+    );
 
-      if (!googleIds.has(res.key)) {
-        googleIds.add(res.key);
-        books.push(res);
-      }
+    const chunks = _.chunk(titles, CHUNK_SIZE);
+
+    for (let chunk of chunks) {
+      const results = await Promise.all(
+        chunk.map((title) => googleBooksService.fetchBooks(title)),
+      );
+
+      const mappedResults = results
+        .map((result, i) => {
+          if (!result.length) return null;
+          const res =
+            result.find(({ title }) =>
+              title.toLowerCase().includes(titles[i].toLowerCase()),
+            ) || result[0];
+
+          if (!googleIds.has(res.apiId)) {
+            googleIds.add(res.apiId);
+            const { apiId, ...data } = res;
+            return {
+              googleId: apiId,
+              ...data,
+            };
+          }
+        })
+        .filter((n) => !!n);
+
+      books.push(...mappedResults);
+      fs.writeFileSync(filePath, JSON.stringify(books));
     }
   }
 
-  const allBooks = books
-    .filter((n) => !!n)
-    .map(({ key, ...data }) => ({
-      googleId: key,
-      compareStr: createBookComparisonStr(data.title, data.authors),
-      ...data,
-    }));
+  fs.writeFileSync(filePath, JSON.stringify(books));
 
-  fs.writeFileSync(filePath, JSON.stringify(allBooks));
-
-  return allBooks;
+  return books;
 };
 
 const createFollows = async (userIds: string[]) => {
   const toCreate = userIds.flatMap((userId) => {
-    const numFollowing = getRandom(0, userIds.length - 1);
     const filteredIds = userIds.filter((id) => id !== userId);
     const remainingIds = new Set(filteredIds);
+    const numFollowing = getRandom(0, filteredIds.length - 1);
 
     const following = [];
 
@@ -163,7 +215,7 @@ async function main() {
 
   const userCount = Number(values.userCount);
   const bookCount = Number(values.bookCount);
-  const useJsonData = values.useJsonData;
+  const useJsonData = values.useJsonData !== "false";
 
   console.log(
     `Options: userCount = ${userCount}, bookCount = ${bookCount}, useJsonData = ${useJsonData}`,
@@ -191,15 +243,10 @@ async function main() {
   const createdFollows = await createFollows(createdUsers.map(({ id }) => id));
   console.log(`Created ${createdFollows.length} follows`);
 
-  const rankingsToCreate = createdUsers.flatMap(({ id }) =>
-    createRankings(
-      id,
-      createdBooks.map(({ id }) => id),
-    ),
+  await createRankingsAndBookmarks(
+    createdUsers.map(({ id }) => id),
+    createdBooks.map(({ id }) => id),
   );
-
-  await prisma.ranking.createMany({ data: rankingsToCreate });
-  console.log(`Created ${rankingsToCreate.length} rankings`);
 
   console.log(`Success!`);
 }

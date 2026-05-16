@@ -1,1202 +1,1965 @@
 [
   {
-    "googleId": "lyTxUXv3jgwC",
-    "compareStr": "title:elizabeth gaskell's cranford+authors:thomas recchio",
-    "title": "Elizabeth Gaskell's Cranford",
-    "authors": ["Thomas Recchio"]
-  },
-  {
-    "googleId": "06lUDTcPQoQC",
-    "compareStr": "title:american pastoral+authors:philip roth",
-    "title": "American Pastoral",
-    "authors": ["Philip Roth"]
-  },
-  {
-    "googleId": "dpmegh1uQWAC",
-    "compareStr": "title:general and synthetic methods+authors:g. pattenden",
-    "title": "General and Synthetic Methods",
-    "authors": ["G. Pattenden"]
-  },
-  {
-    "googleId": "emopvwCTzt8C",
-    "compareStr": "title:the auditory outlook+authors:josephine baxter timberlake",
-    "title": "The Auditory Outlook",
-    "authors": ["Josephine Baxter Timberlake"]
-  },
-  {
-    "googleId": "ogpzEAAAQBAJ",
-    "compareStr": "title:the problems of philosophy+authors:bertrand russell",
-    "title": "The Problems of Philosophy",
-    "authors": ["Bertrand Russell"]
-  },
-  {
-    "googleId": "Eu9EvgAACAAJ",
-    "compareStr": "title:oliver twist (original edition)+authors:charles dickens",
-    "title": "Oliver Twist (Original Edition)",
-    "authors": ["Charles Dickens"]
-  },
-  {
-    "googleId": "_r-qEAAAQBAJ",
-    "compareStr": "title:are you there god? it's me, margaret.+authors:judy blume",
-    "title": "Are You There God? It's Me, Margaret.",
-    "authors": ["Judy Blume"]
-  },
-  {
-    "googleId": "1pCbDwAAQBAJ",
-    "compareStr": "title:a confederacy of dunces+authors:john kennedy toole",
-    "title": "A Confederacy of Dunces",
-    "authors": ["John Kennedy Toole"]
-  },
-  {
-    "googleId": "nUSnAQAACAAJ",
-    "compareStr": "title:on the road+authors:jack kerouac",
-    "title": "On the Road",
-    "authors": ["Jack Kerouac"]
-  },
-  {
-    "googleId": "FrvzlWm8x4kC",
-    "compareStr": "title:a great expectations in plain and simple english (includes study guide, complete unabridged book, historical context, biography+authors:charles dickens",
-    "title": "A Great Expectations in Plain and Simple English (Includes Study Guide, Complete Unabridged Book, Historical Context, Biography",
-    "authors": ["Charles Dickens"]
-  },
-  {
-    "googleId": "1Z0iYAAACAAJ",
-    "compareStr": "title:the moviegoer+authors:walker percy",
-    "title": "The Moviegoer",
-    "authors": ["Walker Percy"]
-  },
-  {
-    "googleId": "iXn5U2IzVH0C",
-    "compareStr": "title:the great gatsby+authors:f. scott fitzgerald",
-    "title": "The Great Gatsby",
-    "authors": ["F. Scott Fitzgerald"]
-  },
-  {
-    "googleId": "AfB8EAAAQBAJ",
-    "compareStr": "title:one hundred years of solitude+authors:gabriel garcía márquez",
-    "title": "One Hundred Years of Solitude",
-    "authors": ["Gabriel García Márquez"]
-  },
-  {
-    "googleId": "lmy-EAAAQBAJ",
-    "compareStr": "title:the count of monte cristo+authors:alexandre dumas",
-    "title": "The Count of Monte Cristo",
-    "authors": ["Alexandre Dumas"]
-  },
-  {
-    "googleId": "5dinjwEACAAJ",
-    "compareStr": "title:grimms' fairy tales+authors:the brothers grimm",
-    "title": "Grimms' Fairy Tales",
-    "authors": ["The Brothers Grimm"]
-  },
-  {
-    "googleId": "9UAMhMxslz8C",
-    "compareStr": "title:candide+authors:francois voltaire",
-    "title": "Candide",
-    "authors": ["Francois Voltaire"]
-  },
-  {
-    "googleId": "yiQ3AAAAIAAJ",
-    "compareStr": "title:walden+authors:henry david thoreau",
-    "title": "Walden",
-    "authors": ["Henry David Thoreau"]
-  },
-  {
-    "googleId": "OlCHcjX0RT4C",
-    "compareStr": "title:the hobbit+authors:j.r.r. tolkien",
-    "title": "The Hobbit",
-    "authors": ["J.R.R. Tolkien"]
-  },
-  {
-    "googleId": "mOsmAQAAIAAJ",
-    "compareStr": "title:good housekeeping magazine+authors:",
-    "title": "Good Housekeeping Magazine",
-    "authors": []
-  },
-  {
-    "googleId": "bwVDEQAAQBAJ",
-    "compareStr": "title:the blue castle+authors:lucy maud montgomery",
-    "title": "The Blue Castle",
-    "authors": ["Lucy Maud Montgomery"]
-  },
-  {
-    "googleId": "9gT-Sde1pMoC",
-    "compareStr": "title:the catcher in the rye+authors:jerome david salinger",
-    "title": "The Catcher in the Rye",
-    "authors": ["Jerome David Salinger"]
-  },
-  {
-    "googleId": "RAg_Pj_HYcMC",
-    "compareStr": "title:the strange case of dr. jekyll and mr. hyde, and other stories+authors:robert louis stevenson",
-    "title": "The Strange Case of Dr. Jekyll and Mr. Hyde, and Other Stories",
-    "authors": ["Robert Louis Stevenson"]
-  },
-  {
-    "googleId": "XB7hAAAAMAAJ",
-    "compareStr": "title:winnie-the-pooh+authors:alan alexander milne",
-    "title": "Winnie-the-Pooh",
-    "authors": ["Alan Alexander Milne"]
-  },
-  {
-    "googleId": "WYK7AAAAQBAJ",
-    "compareStr": "title:paradise lost+authors:john milton",
-    "title": "Paradise Lost",
-    "authors": ["John Milton"]
-  },
-  {
-    "googleId": "TpGWiBzrxhAC",
-    "compareStr": "title:charlie and the chocolate factory+authors:roald dahl",
-    "title": "Charlie and the Chocolate Factory",
-    "authors": ["Roald Dahl"]
-  },
-  {
-    "googleId": "wrOQLV6xB-wC",
-    "compareStr": "title:harry potter and the sorcerer's stone+authors:j.k. rowling",
-    "title": "Harry Potter and the Sorcerer's Stone",
-    "authors": ["J.K. Rowling"]
-  },
-  {
-    "googleId": "Vm8kDwAAQBAJ",
-    "compareStr": "title:considering watchmen: poetics, property, politics+authors:andrew hoberek",
-    "title": "Considering Watchmen: Poetics, Property, Politics",
-    "authors": ["Andrew Hoberek"]
-  },
-  {
-    "googleId": "WYSLDQAAQBAJ",
-    "compareStr": "title:absalom, absalom!+authors:william faulkner",
-    "title": "Absalom, Absalom!",
-    "authors": ["William Faulkner"]
-  },
-  {
-    "googleId": "yFK9zgEACAAJ",
-    "compareStr": "title:the heart is a lonely hunter+authors:carson carson mccullers",
-    "title": "The Heart Is a Lonely Hunter",
-    "authors": ["Carson Carson McCullers"]
-  },
-  {
-    "googleId": "NQA9EAAAQBAJ",
-    "compareStr": "title:on the duty of civil disobedience+authors:henry david thoreau",
-    "title": "On the Duty of Civil Disobedience",
-    "authors": ["Henry David Thoreau"]
-  },
-  {
-    "googleId": "V2-ChsYrvloC",
-    "compareStr": "title:don quixote+authors:edith grossman,miguel de cervantes",
-    "title": "Don Quixote",
-    "authors": ["Miguel de Cervantes", "Edith Grossman"]
-  },
-  {
-    "googleId": "oOjoGkmMWUMC",
-    "compareStr": "title:second treatise of government+authors:john locke",
-    "title": "Second Treatise of Government",
-    "authors": ["John Locke"]
-  },
-  {
-    "googleId": "Udz2eadsS1kC",
-    "compareStr": "title:how to read the bible book by book+authors:douglas k. stuart,gordon d. fee",
-    "title": "How to Read the Bible Book by Book",
-    "authors": ["Gordon D. Fee", "Douglas K. Stuart"]
-  },
-  {
-    "googleId": "1BON3iwjlisC",
-    "compareStr": "title:herzog & de meuron+authors:herzog & de meuron",
-    "title": "Herzog & de Meuron",
-    "authors": ["Herzog & de Meuron"]
-  },
-  {
-    "googleId": "rlDaAAAAIAAJ",
-    "compareStr": "title:uncle tom's cabin+authors:harriet beecher stowe",
-    "title": "Uncle Tom's Cabin",
-    "authors": ["Harriet Beecher Stowe"]
-  },
-  {
-    "googleId": "CQYg20lTHtMC",
-    "compareStr": "title:the little prince+authors:antoine de saint-exupéry",
-    "title": "The Little Prince",
-    "authors": ["Antoine de Saint-Exupéry"]
-  },
-  {
-    "googleId": "xU9-SJXb2K8C",
-    "compareStr": "title:romeo and juliet+authors:william shakespeare",
-    "title": "Romeo and Juliet",
-    "authors": ["William Shakespeare"]
-  },
-  {
-    "googleId": "FuIIyeGzffAC",
-    "compareStr": "title:lucky jim+authors:kingsley amis",
-    "title": "Lucky Jim",
-    "authors": ["Kingsley Amis"]
-  },
-  {
-    "googleId": "QM-HkaTDjg4C",
-    "compareStr": "title:rabbit, run+authors:john updike",
-    "title": "Rabbit, Run",
-    "authors": ["John Updike"]
-  },
-  {
-    "googleId": "Ia785bbC57IC",
-    "compareStr": "title:tinker, tailor, soldier, spy+authors:john le carre",
-    "title": "Tinker, Tailor, Soldier, Spy",
-    "authors": ["John le Carre"]
-  },
-  {
-    "googleId": "FNyEDwAAQBAJ",
-    "compareStr": "title:the woman in white+authors:wilkie collins",
-    "title": "The Woman in White",
-    "authors": ["Wilkie Collins"]
-  },
-  {
-    "googleId": "XV8XAAAAYAAJ",
-    "compareStr": "title:moby dick+authors:herman melville",
-    "title": "Moby Dick",
-    "authors": ["Herman Melville"]
-  },
-  {
-    "googleId": "ewn8DwAAQBAJ",
-    "compareStr": "title:l.a. confidential+authors:manohla dargis",
-    "title": "L.A. Confidential",
-    "authors": ["Manohla Dargis"]
-  },
-  {
-    "googleId": "0V5XAAAAYAAJ",
-    "compareStr": "title:leaves of grass+authors:walt whitman",
-    "title": "Leaves of Grass",
-    "authors": ["Walt Whitman"]
-  },
-  {
-    "googleId": "UTGnopblxt8C",
-    "compareStr": "title:the art of war+authors:sun tzu",
-    "title": "The Art of War",
-    "authors": ["Sun Tzu"]
-  },
-  {
-    "googleId": "1C5pDwAAQBAJ",
-    "compareStr": "title:a bend in the river+authors:v. s. naipaul",
-    "title": "A Bend in the River",
-    "authors": ["V. S. Naipaul"]
-  },
-  {
-    "googleId": "giwLAQAAMAAJ",
-    "compareStr": "title:the brothers karamazov+authors:fyodor dostoyevsky",
-    "title": "The Brothers Karamazov",
-    "authors": ["Fyodor Dostoyevsky"]
-  },
-  {
-    "googleId": "T7OBEAAAQBAJ",
-    "compareStr": "title:the maltese falcon+authors:dashiell hammett",
-    "title": "The Maltese Falcon",
-    "authors": ["Dashiell Hammett"]
-  },
-  {
-    "googleId": "V8sfAQAAIAAJ",
-    "compareStr": "title:the adventures of augie march+authors:saul bellow",
-    "title": "The Adventures of Augie March",
-    "authors": ["Saul Bellow"]
-  },
-  {
-    "googleId": "bgpJn-Oq22MC",
-    "compareStr": "title:a clockwork orange+authors:anthony burgess",
-    "title": "A Clockwork Orange",
-    "authors": ["Anthony Burgess"]
-  },
-  {
-    "googleId": "CyYsEQAAQBAJ",
-    "compareStr": "title:dracula+authors:bram stoker",
-    "title": "Dracula",
-    "authors": ["Bram Stoker"]
-  },
-  {
-    "googleId": "CBC5DwAAQBAJ",
-    "compareStr": "title:gone with the wind+authors:margaret mitchell",
-    "title": "Gone with the Wind",
-    "authors": ["Margaret Mitchell"]
-  },
-  {
-    "googleId": "_luMDQAAQBAJ",
-    "compareStr": "title:the sound and the fury+authors:william faulkner",
-    "title": "The Sound and the Fury",
-    "authors": ["William Faulkner"]
-  },
-  {
-    "googleId": "lkVCDQAAQBAJ",
-    "compareStr": "title:heart of darkness (fifth edition) (norton critical editions)+authors:joseph conrad",
-    "title": "Heart of Darkness (Fifth Edition) (Norton Critical Editions)",
-    "authors": ["Joseph Conrad"]
-  },
-  {
-    "googleId": "nAzVtjpDkjEC",
-    "compareStr": "title:the scarlet letter+authors:nathaniel hawthorne",
-    "title": "The Scarlet Letter",
-    "authors": ["Nathaniel Hawthorne"]
-  },
-  {
-    "googleId": "uTCaEQAAQBAJ",
-    "compareStr": "title:god's covenant - the rainbow's side of the story (genesis 9:8-17)+authors:twianie roberts",
-    "title": "God's Covenant - The Rainbow's Side of the Story (Genesis 9:8-17)",
-    "authors": ["Twianie Roberts"]
-  },
-  {
-    "googleId": "3PabEAAAQBAJ",
-    "compareStr": "title:brave new world+authors:aldous huxley",
-    "title": "Brave New World",
-    "authors": ["Aldous Huxley"]
-  },
-  {
-    "googleId": "71NB5LcRaSIC",
-    "compareStr": "title:the waste land+authors:harold bloom",
-    "title": "The Waste Land",
-    "authors": ["Harold Bloom"]
-  },
-  {
-    "googleId": "weSdpwAACAAJ",
-    "compareStr": "title:the black sheep+authors:jean merrill",
-    "title": "The Black Sheep",
-    "authors": ["Jean Merrill"]
-  },
-  {
-    "googleId": "ccCMJihqqEMC",
-    "compareStr": "title:selected stories of anton chekhov+authors:anton chekhov",
-    "title": "Selected Stories of Anton Chekhov",
-    "authors": ["Anton Chekhov"]
-  },
-  {
-    "googleId": "etKwgoyK0YcC",
-    "compareStr": "title:peter pan+authors:james matthew barrie",
-    "title": "Peter Pan",
-    "authors": ["James Matthew Barrie"]
-  },
-  {
-    "googleId": "qPNy0ELpMBYC",
-    "compareStr": "title:tess of the d'urbervilles+authors:thomas hardy",
-    "title": "Tess of the d'Urbervilles",
-    "authors": ["Thomas Hardy"]
-  },
-  {
-    "googleId": "oZJzi3ykKoYC",
-    "compareStr": "title:portnoy's complaint+authors:philip roth",
-    "title": "Portnoy's Complaint",
-    "authors": ["Philip Roth"]
-  },
-  {
-    "googleId": "9xHCAgAAQBAJ",
-    "compareStr": "title:frankenstein+authors:mary shelley",
-    "title": "Frankenstein",
-    "authors": ["Mary Shelley"]
-  },
-  {
-    "googleId": "D3eTzK5fZcsC",
-    "compareStr": "title:the life and opinions of tristram shandy, gentleman+authors:laurence sterne",
-    "title": "The Life and Opinions of Tristram Shandy, Gentleman",
-    "authors": ["Laurence Sterne"]
-  },
-  {
-    "googleId": "qkKVEAAAQBAJ",
-    "compareStr": "title:an american tragedy+authors:theodore dreiser",
-    "title": "An American Tragedy",
-    "authors": ["Theodore Dreiser"]
-  },
-  {
-    "googleId": "pX6lBs7Q0MEC",
-    "compareStr": "title:atonement+authors:ian mcewan",
-    "title": "Atonement",
-    "authors": ["Ian McEwan"]
-  },
-  {
-    "googleId": "Kpu1VY8KcYcC",
-    "compareStr": "title:in search of lost time, volume 5+authors:marcel proust",
-    "title": "In Search of Lost Time, Volume 5",
-    "authors": ["Marcel Proust"]
-  },
-  {
-    "googleId": "g4c9NZd4lPkC",
-    "compareStr": "title:malone dies+authors:samuel beckett",
-    "title": "Malone Dies",
-    "authors": ["Samuel Beckett"]
-  },
-  {
-    "googleId": "JAzxznMKiq4C",
-    "compareStr": "title:never let me go+authors:kazuo ishiguro",
-    "title": "Never Let Me Go",
-    "authors": ["Kazuo Ishiguro"]
-  },
-  {
-    "googleId": "nAKHtAEACAAJ",
-    "compareStr": "title:the big sleep+authors:raymond chandler",
-    "title": "The Big Sleep",
-    "authors": ["Raymond Chandler"]
-  },
-  {
-    "googleId": "pYIBIIyQGZ8C",
-    "compareStr": "title:to the lighthouse+authors:virginia woolf",
-    "title": "To the Lighthouse",
-    "authors": ["Virginia Woolf"]
-  },
-  {
-    "googleId": "jKmOEAAAQBAJ",
-    "compareStr": "title:ulysses+authors:james joyce",
-    "title": "Ulysses",
-    "authors": ["James Joyce"]
-  },
-  {
-    "googleId": "1f36CwAAQBAJ",
-    "compareStr": "title:the divine comedy+authors:dante alighieri",
-    "title": "The Divine Comedy",
-    "authors": ["Dante Alighieri"]
-  },
-  {
-    "googleId": "9z_zCOU7fEkC",
-    "compareStr": "title:the war of the worlds+authors:alex lubertozzi,brian holmsten",
-    "title": "The War of the Worlds",
-    "authors": ["Alex Lubertozzi", "Brian Holmsten"]
-  },
-  {
-    "googleId": "yT9aAAAAMAAJ",
-    "compareStr": "title:the wonderful wizard of oz+authors:lyman frank baum",
-    "title": "The Wonderful Wizard of Oz",
-    "authors": ["Lyman Frank Baum"]
-  },
-  {
-    "googleId": "yz0GAQAAIAAJ",
-    "compareStr": "title:things fall apart+authors:chinua achebe",
-    "title": "Things Fall Apart",
-    "authors": ["Chinua Achebe"]
-  },
-  {
-    "googleId": "_l0NEAAAQBAJ",
-    "compareStr": "title:mrs. dalloway+authors:virginia woolf",
-    "title": "Mrs. Dalloway",
-    "authors": ["Virginia Woolf"]
-  },
-  {
-    "googleId": "EO-2vZseBf0C",
-    "compareStr": "title:the diary of a young girl+authors:anne frank",
-    "title": "The Diary of a Young Girl",
-    "authors": ["Anne Frank"]
-  },
-  {
-    "googleId": "FDuyAAAACAAJ",
-    "compareStr": "title:1919+authors:john dos passos",
-    "title": "1919",
-    "authors": ["John Dos Passos"]
-  },
-  {
-    "googleId": "G0KJzgEACAAJ",
-    "compareStr": "title:treasure island+authors:robert louis stevenson",
-    "title": "Treasure Island",
-    "authors": ["Robert Louis Stevenson"]
-  },
-  {
-    "googleId": "2c2LCwAAQBAJ",
-    "compareStr": "title:anne of green gables+authors:lucy maud montgomery",
-    "title": "Anne of Green Gables",
-    "authors": ["Lucy Maud Montgomery"]
-  },
-  {
-    "googleId": "lSMGAAAAQAAJ",
-    "compareStr": "title:jane eyre+authors:charlotte brontë",
-    "title": "Jane Eyre",
-    "authors": ["Charlotte Brontë"]
-  },
-  {
-    "googleId": "NoljDwAAQBAJ",
-    "compareStr": "title:the enchanted april+authors:elizabeth von arnim",
-    "title": "The Enchanted April",
-    "authors": ["Elizabeth Von Arnim"]
-  },
-  {
-    "googleId": "mXQVbIRkHegC",
-    "compareStr": "title:freakonomics+authors:stephen j. dubner,steven d. levitt",
-    "title": "Freakonomics",
-    "authors": ["Steven D. Levitt", "Stephen J. Dubner"]
-  },
-  {
-    "googleId": "GuLZAAAAMAAJ",
-    "compareStr": "title:the lord of the rings+authors:john ronald reuel tolkien",
-    "title": "The Lord of the Rings",
-    "authors": ["John Ronald Reuel Tolkien"]
-  },
-  {
-    "googleId": "QYYQDAAAQBAJ",
-    "compareStr": "title:the pillars of the earth+authors:ken follett",
-    "title": "The Pillars of the Earth",
-    "authors": ["Ken Follett"]
-  },
-  {
-    "googleId": "pWyLDQAAQBAJ",
-    "compareStr": "title:slaughterhouse-five+authors:kurt vonnegut",
-    "title": "Slaughterhouse-Five",
-    "authors": ["Kurt Vonnegut"]
-  },
-  {
-    "googleId": "1hmdBAAAQBAJ",
-    "compareStr": "title:the three musketeers+authors:alexandre dumas",
-    "title": "The Three Musketeers",
-    "authors": ["Alexandre Dumas"]
-  },
-  {
-    "googleId": "pNQiDQAAQBAJ",
-    "compareStr": "title:neuromancer+authors:william gibson",
-    "title": "Neuromancer",
-    "authors": ["William Gibson"]
-  },
-  {
-    "googleId": "V8RdtQAACAAJ",
-    "compareStr": "title:a detailed account of the battle of austerlitz+authors:major john pine-coffin,major-general karl von stutterheim",
-    "title": "A Detailed Account of the Battle of Austerlitz",
-    "authors": ["Major-General Karl Von Stutterheim", "Major John Pine-Coffin"]
-  },
-  {
-    "googleId": "ayJpGQeyxgkC",
-    "compareStr": "title:to kill a mockingbird 40th+authors:harper lee",
-    "title": "To Kill a Mockingbird 40th",
-    "authors": ["Harper Lee"]
-  },
-  {
-    "googleId": "VzLCAgAAQBAJ",
-    "compareStr": "title:a doll's house+authors:henrik ibsen",
+    "googleId": "lR79EAAAQBAJ",
     "title": "A Doll's House",
-    "authors": ["Henrik Ibsen"]
-  },
-  {
-    "googleId": "rLOZDwAAQBAJ",
-    "compareStr": "title:nightmare abbey+authors:thomas love peacock",
-    "title": "Nightmare Abbey",
-    "authors": ["Thomas Love Peacock"]
-  },
-  {
-    "googleId": "DXPtAQAAQBAJ",
-    "compareStr": "title:men without women+authors:ernest hemingway",
-    "title": "Men Without Women",
-    "authors": ["Ernest Hemingway"]
-  },
-  {
-    "googleId": "x8MXzKzGCGUC",
-    "compareStr": "title:the hound of the baskervilles+authors:arthur conan doyle",
-    "title": "The Hound of the Baskervilles",
-    "authors": ["Arthur Conan Doyle"]
-  },
-  {
-    "googleId": "XNyEDwAAQBAJ",
-    "compareStr": "title:i, claudius+authors:robert graves",
-    "title": "I, Claudius",
-    "authors": ["Robert Graves"]
-  },
-  {
-    "googleId": "x9hcAwAAQBAJ",
-    "compareStr": "title:the yellow wallpaper (illustrated)+authors:charlotte perkins gilman",
-    "title": "The Yellow Wallpaper (Illustrated)",
-    "authors": ["Charlotte Perkins Gilman"]
-  },
-  {
-    "googleId": "ECuBswEACAAJ",
-    "compareStr": "title:the handmaid's tale+authors:margaret atwood",
-    "title": "The Handmaid's Tale",
-    "authors": ["Margaret Atwood"]
-  },
-  {
-    "googleId": "m0oRCgAAQBAJ",
-    "compareStr": "title:underworld+authors:don delillo",
-    "title": "Underworld",
-    "authors": ["Don DeLillo"]
-  },
-  {
-    "googleId": "u3t0VzbbzGMC",
-    "compareStr": "title:the thirty-nine steps+authors:john buchan",
-    "title": "The Thirty-nine Steps",
-    "authors": ["John Buchan"]
-  },
-  {
-    "googleId": "cSI5tAEACAAJ",
-    "compareStr": "title:ulysses+authors:james joyce",
-    "title": "Ulysses",
-    "authors": ["James Joyce"]
-  },
-  {
-    "googleId": "Bv0CAAAAQAAJ",
-    "compareStr": "title:the pilgrim's progress+authors:john bunyan",
-    "title": "The pilgrim's progress",
-    "authors": ["John Bunyan"]
-  },
-  {
-    "googleId": "BE4pmIwxYnIC",
-    "compareStr": "title:a study in scarlet+authors:arthur conan doyle",
-    "title": "A Study in Scarlet",
-    "authors": ["Arthur Conan Doyle"]
-  },
-  {
-    "googleId": "ghKyLjIU4-QC",
-    "compareStr": "title:the sun also rises+authors:ernest hemingway",
-    "title": "The Sun Also Rises",
-    "authors": ["Ernest Hemingway"]
-  },
-  {
-    "googleId": "ChINBAAAQBAJ",
-    "compareStr": "title:anna karenina+authors:leo tolstoy",
-    "title": "Anna Karenina",
-    "authors": ["Leo Tolstoy"]
-  },
-  {
-    "googleId": "s-QzccStux4C",
-    "compareStr": "title:blood meridian+authors:cormac mccarthy",
-    "title": "Blood Meridian",
-    "authors": ["Cormac McCarthy"]
-  },
-  {
-    "googleId": "ioWrtAEACAAJ",
-    "compareStr": "title:the works of edgar allan poe+authors:edgar allan poe",
-    "title": "The Works of Edgar Allan Poe",
-    "authors": ["Edgar Allan Poe"]
-  },
-  {
-    "googleId": "gTycDAEACAAJ",
-    "compareStr": "title:life of pi+authors:yann martel",
-    "title": "Life of Pi",
-    "authors": ["Yann Martel"]
-  },
-  {
-    "googleId": "iPLjUhiXAhYC",
-    "compareStr": "title:middlemarch+authors:george eliot",
-    "title": "Middlemarch",
-    "authors": ["George Eliot"]
-  },
-  {
-    "googleId": "k1-deNvIm9UC",
-    "compareStr": "title:lord jim+authors:cedric thomas watts,robert hampson",
-    "title": "Lord Jim",
-    "authors": ["Cedric Thomas Watts", "Robert Hampson"]
-  },
-  {
-    "googleId": "VkPzAAAAMAAJ",
-    "compareStr": "title:the tin drum+authors:günter grass",
-    "title": "The Tin Drum",
-    "authors": ["Günter Grass"]
-  },
-  {
-    "googleId": "8t3lFuD906AC",
-    "compareStr": "title:the red and the black+authors:stendhal",
-    "title": "The Red and the Black",
-    "authors": ["Stendhal"]
-  },
-  {
-    "googleId": "Z9QNjrHXxT8C",
-    "compareStr": "title:if on a winter's night a traveler+authors:italo calvino",
-    "title": "If on a Winter's Night a Traveler",
-    "authors": ["Italo Calvino"]
-  },
-  {
-    "googleId": "KLcnAQAAMAAJ",
-    "compareStr": "title:jude the obscure+authors:thomas hardy",
-    "title": "Jude the obscure",
-    "authors": ["Thomas Hardy"]
-  },
-  {
-    "googleId": "u-QdEAAAQBAJ",
-    "compareStr": "title:the picture of dorian gray+authors:oscar wilde",
-    "title": "The Picture of Dorian Gray",
-    "authors": ["Oscar Wilde"]
-  },
-  {
-    "googleId": "2RzAEAAAQBAJ",
-    "compareStr": "title:vanity fair 100 years+authors:graydon carter",
-    "title": "Vanity Fair 100 Years",
-    "authors": ["Graydon Carter"]
-  },
-  {
-    "googleId": "WV_pAAAAMAAJ",
-    "compareStr": "title:one hundred years of solitude+authors:gabriel garcía márquez",
-    "title": "One Hundred Years of Solitude",
-    "authors": ["Gabriel García Márquez"]
-  },
-  {
-    "googleId": "Bd_UZAdvUDIC",
-    "compareStr": "title:neuromancer+authors:william gibson",
-    "title": "Neuromancer",
-    "authors": ["William Gibson"]
-  },
-  {
-    "googleId": "T9BUEQAAQBAJ",
-    "compareStr": "title:animal farm+authors:george orwell",
-    "title": "Animal Farm",
-    "authors": ["George Orwell"]
-  },
-  {
-    "googleId": "F1UVD-6MUAMC",
-    "compareStr": "title:pale fire+authors:vladimir nabokov",
-    "title": "Pale Fire",
-    "authors": ["Vladimir Nabokov"]
-  },
-  {
-    "googleId": "W_nwCywktaEC",
-    "compareStr": "title:tropic of cancer+authors:henry miller",
-    "title": "Tropic of Cancer",
-    "authors": ["Henry Miller"]
-  },
-  {
-    "googleId": "7-8CAAAAQAAJ",
-    "compareStr": "title:meditations for every week in the christian year, by the compiler of 'plain prayers'.+authors:william john butler",
-    "title": "Meditations for every week in the Christian year, by the compiler of 'Plain prayers'.",
-    "authors": ["William John Butler"]
-  },
-  {
-    "googleId": "2IWXeXVRD34C",
-    "compareStr": "title:the ambassadors+authors:henry james",
-    "title": "The Ambassadors",
-    "authors": ["Henry James"]
-  },
-  {
-    "googleId": "3VcoAAAAYAAJ",
-    "compareStr": "title:the pickwick papers+authors:charles dickens",
-    "title": "The Pickwick Papers",
-    "authors": ["Charles Dickens"]
-  },
-  {
-    "googleId": "_It_EAAAQBAJ",
-    "compareStr": "title:the lion, the witch and the wardrobe+authors:c. s. lewis",
-    "title": "The Lion, the Witch and the Wardrobe",
-    "authors": ["C. S. Lewis"]
-  },
-  {
-    "googleId": "Hy1LAAAAMAAJ",
-    "compareStr": "title:nostromo+authors:joseph conrad",
-    "title": "Nostromo",
-    "authors": ["Joseph Conrad"]
-  },
-  {
-    "googleId": "XirTbN3qo1MC",
-    "compareStr": "title:the sound and the fury+authors:william faulkner",
-    "title": "The Sound and the Fury",
-    "authors": ["William Faulkner"]
-  },
-  {
-    "googleId": "78VLAQAAMAAJ",
-    "compareStr": "title:clarissa harlowe+authors:samuel richardson",
-    "title": "Clarissa Harlowe",
-    "authors": ["Samuel Richardson"]
-  },
-  {
-    "googleId": "sO9BfTuoGucC",
-    "compareStr": "title:for whom the bell tolls+authors:ernest hemingway",
-    "title": "For Whom the Bell Tolls",
-    "authors": ["Ernest Hemingway"]
-  },
-  {
-    "googleId": "x8xtwgEACAAJ",
-    "compareStr": "title:the alchemist+authors:paulo coelho",
-    "title": "The Alchemist",
-    "authors": ["Paulo Coelho"]
-  },
-  {
-    "googleId": "rmoIAQAAIAAJ",
-    "compareStr": "title:a clockwork orange+authors:anthony burgess",
-    "title": "A Clockwork Orange",
-    "authors": ["Anthony Burgess"]
-  },
-  {
-    "googleId": "RlgJzgEACAAJ",
-    "compareStr": "title:war and peace by leo tolstoy+authors:leo tolstoy",
-    "title": "War and Peace by Leo Tolstoy",
-    "authors": ["Leo Tolstoy"]
-  },
-  {
-    "googleId": "s9q60rLUbRcC",
-    "compareStr": "title:the adventures of huckleberry finn+authors:mark twain",
-    "title": "The Adventures of Huckleberry Finn",
-    "authors": ["Mark Twain"]
-  },
-  {
-    "googleId": "Go9kAAAAMAAJ",
-    "compareStr": "title:the fountainhead+authors:ayn rand",
-    "title": "The Fountainhead",
-    "authors": ["Ayn Rand"]
-  },
-  {
-    "googleId": "_Sbju4F0AVAC",
-    "compareStr": "title:faust+authors:johann wolfgang von goethe",
-    "title": "Faust",
-    "authors": ["Johann Wolfgang von Goethe"]
-  },
-  {
-    "googleId": "jU1_EAAAQBAJ",
-    "compareStr": "title:as i lay dying+authors:william faulkner",
-    "title": "As I Lay Dying",
-    "authors": ["William Faulkner"]
-  },
-  {
-    "googleId": "DLFlAAAAMAAJ",
-    "compareStr": "title:the golden bowl+authors:henry james",
-    "title": "The Golden Bowl",
-    "authors": ["Henry James"]
-  },
-  {
-    "googleId": "XafcRGXoez4C",
-    "compareStr": "title:one flew over the cuckoo's nest+authors:ken kesey",
-    "title": "One Flew Over the Cuckoo's Nest",
-    "authors": ["Ken Kesey"]
+    "authors": ["Henrik Ibsen"],
+    "thumbnail": "http://books.google.com/books/content?id=lR79EAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:a doll's house+authors:henrik ibsen"
   },
   {
     "googleId": "I91sP9F-3nwC",
-    "compareStr": "title:healing and deliverance: revealing the true identity of god+authors:",
     "title": "Healing and Deliverance: Revealing the True Identity of God",
-    "authors": []
+    "authors": [],
+    "thumbnail": "http://books.google.com/books/content?id=I91sP9F-3nwC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:healing and deliverance: revealing the true identity of god+authors:"
   },
   {
-    "googleId": "NGJubhmwqfoC",
-    "compareStr": "title:in cold blood+authors:truman capote",
-    "title": "In Cold Blood",
-    "authors": ["Truman Capote"]
+    "googleId": "_l0NEAAAQBAJ",
+    "title": "Mrs. Dalloway",
+    "authors": ["Virginia Woolf"],
+    "thumbnail": "http://books.google.com/books/content?id=_l0NEAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:mrs. dalloway+authors:virginia woolf"
   },
   {
-    "googleId": "ap-WEAAAQBAJ",
-    "compareStr": "title:norman mailer: the naked and the dead & selected letters 1945-1946 (loa #364)+authors:norman mailer",
-    "title": "Norman Mailer: The Naked and the Dead & Selected Letters 1945-1946 (LOA #364)",
-    "authors": ["Norman Mailer"]
-  },
-  {
-    "googleId": "iGO1EAAAQBAJ",
-    "compareStr": "title:animal farm+authors:george orwell",
-    "title": "Animal Farm",
-    "authors": ["George Orwell"]
-  },
-  {
-    "googleId": "CPdIzwEACAAJ",
-    "compareStr": "title:the pursuit of love by nancy mitford (book analysis)+authors:bright summaries",
-    "title": "The Pursuit of Love by Nancy Mitford (Book Analysis)",
-    "authors": ["Bright Summaries"]
-  },
-  {
-    "googleId": "5B7VEAAAQBAJ",
-    "compareStr": "title:scoop, the ice cream truck+authors:patricia keeler",
-    "title": "Scoop, the Ice Cream Truck",
-    "authors": ["Patricia Keeler"]
-  },
-  {
-    "googleId": "C0QoAQAAMAAJ",
-    "compareStr": "title:fahrenheit 451+authors:ray bradbury",
-    "title": "Fahrenheit 451",
-    "authors": ["Ray Bradbury"]
-  },
-  {
-    "googleId": "jPe4DQAAQBAJ",
-    "compareStr": "title:the time machine+authors:h. g. wells",
-    "title": "The Time Machine",
-    "authors": ["H. G. Wells"]
-  },
-  {
-    "googleId": "C_rPXanc_HAC",
-    "compareStr": "title:a portrait of the artist as a young man+authors:james joyce",
-    "title": "A Portrait of the Artist as a Young Man",
-    "authors": ["James Joyce"]
-  },
-  {
-    "googleId": "CPJDAQAAMAAJ",
-    "compareStr": "title:the call of the wild+authors:jack london",
-    "title": "The Call of the Wild",
-    "authors": ["Jack London"]
-  },
-  {
-    "googleId": "00TczwEACAAJ",
-    "compareStr": "title:one thousand and one nights+authors:richard francis burton",
-    "title": "One Thousand and One Nights",
-    "authors": ["Richard Francis burton"]
-  },
-  {
-    "googleId": "ggRaDwAAQBAJ",
-    "compareStr": "title:the sleepwalkers+authors:b. b. griffith",
-    "title": "The Sleepwalkers",
-    "authors": ["B. B. Griffith"]
-  },
-  {
-    "googleId": "5EIPAAAAQAAJ",
-    "compareStr": "title:a tale of two cities+authors:charles dickens",
-    "title": "A Tale of Two Cities",
-    "authors": ["Charles Dickens"]
-  },
-  {
-    "googleId": "r414AgAAQBAJ",
-    "compareStr": "title:20,000 leagues under the sea+authors:jules verne",
-    "title": "20,000 Leagues Under the Sea",
-    "authors": ["Jules Verne"]
-  },
-  {
-    "googleId": "qhQAywOYz10C",
-    "compareStr": "title:the odyssey+authors:homer",
-    "title": "The Odyssey",
-    "authors": ["Homer"]
-  },
-  {
-    "googleId": "I-b5vgEACAAJ",
-    "compareStr": "title:the diary of a nobody+authors:george grossmith",
-    "title": "The Diary of a Nobody",
-    "authors": ["George Grossmith"]
-  },
-  {
-    "googleId": "Oo-ODQAAQBAJ",
-    "compareStr": "title:revolutionary road+authors:richard yates",
-    "title": "Revolutionary Road",
-    "authors": ["Richard Yates"]
-  },
-  {
-    "googleId": "gJHATwtsjoAC",
-    "compareStr": "title:the heart of the matter+authors:bob edwards",
-    "title": "The Heart of the Matter",
-    "authors": ["Bob Edwards"]
-  },
-  {
-    "googleId": "IE5yW9MTML4C",
-    "compareStr": "title:native son+authors:richard wright",
-    "title": "Native Son",
-    "authors": ["Richard Wright"]
-  },
-  {
-    "googleId": "ACMYLqk_7GoC",
-    "compareStr": "title:and then there were none+authors:agatha christie",
-    "title": "And Then There Were None",
-    "authors": ["Agatha Christie"]
-  },
-  {
-    "googleId": "vwo4ngEACAAJ",
-    "compareStr": "title:the king in yellow+authors:robert w. chambers",
-    "title": "The King in Yellow",
-    "authors": ["Robert W. Chambers"]
-  },
-  {
-    "googleId": "nfdvDwAAQBAJ",
-    "compareStr": "title:pride and prejudice+authors:jane austen",
-    "title": "Pride and Prejudice",
-    "authors": ["Jane Austen"]
-  },
-  {
-    "googleId": "v3yqHR7keCcC",
-    "compareStr": "title:of mice and men+authors:john steinbeck",
-    "title": "Of Mice and Men",
-    "authors": ["John Steinbeck"]
-  },
-  {
-    "googleId": "tWPGAAAAIAAJ",
-    "compareStr": "title:the poems of dr. zhivago+authors:boris leonidovich pasternak",
-    "title": "The Poems of Dr. Zhivago",
-    "authors": ["Boris Leonidovich Pasternak"]
-  },
-  {
-    "googleId": "MugHAy_Atz4C",
-    "compareStr": "title:the prince+authors:niccolò machiavelli",
-    "title": "The Prince",
-    "authors": ["Niccolò Machiavelli"]
-  },
-  {
-    "googleId": "a0qJLvmPe5YC",
-    "compareStr": "title:madame bovary+authors:gustave flaubert,mark overstall",
-    "title": "Madame Bovary",
-    "authors": ["Gustave Flaubert", "Mark Overstall"]
-  },
-  {
-    "googleId": "x3ISEAAAQBAJ",
-    "compareStr": "title:the stand (movie tie-in edition)+authors:stephen king",
-    "title": "The Stand (Movie Tie-in Edition)",
-    "authors": ["Stephen King"]
-  },
-  {
-    "googleId": "vdAOAAAAIAAJ",
-    "compareStr": "title:the invisible man+authors:herbert george wells",
-    "title": "The Invisible Man",
-    "authors": ["Herbert George Wells"]
-  },
-  {
-    "googleId": "nm5YDwAAQBAJ",
-    "compareStr": "title:the magic mountain+authors:thomas mann",
-    "title": "The Magic Mountain",
-    "authors": ["Thomas Mann"]
-  },
-  {
-    "googleId": "qgpzEAAAQBAJ",
-    "compareStr": "title:1984+authors:george orwell",
-    "title": "1984",
-    "authors": ["George Orwell"]
-  },
-  {
-    "googleId": "dQqG0AEACAAJ",
-    "compareStr": "title:the strange case of dr. jekyll and mr. hyde+authors:robert louis stevenson",
-    "title": "The Strange Case of Dr. Jekyll and Mr. Hyde",
-    "authors": ["Robert Louis Stevenson"]
-  },
-  {
-    "googleId": "Zf_ozgEACAAJ",
-    "compareStr": "title:nineteen eighty four by george orwell+authors:george orwell",
-    "title": "Nineteen Eighty Four by George Orwell",
-    "authors": ["George Orwell"]
-  },
-  {
-    "googleId": "PP3SjwEACAAJ",
-    "compareStr": "title:the stranger (novel)+authors:albert camus",
-    "title": "The Stranger (Novel)",
-    "authors": ["Albert Camus"]
-  },
-  {
-    "googleId": "t5yFTpIJYhcC",
-    "compareStr": "title:the adventures of tom sawyer+authors:mark twain",
-    "title": "The Adventures of Tom Sawyer",
-    "authors": ["Mark Twain"]
-  },
-  {
-    "googleId": "ZDOZFjNSwAsC",
-    "compareStr": "title:james baldwin's go tell it on the mountain+authors:carol e. henderson",
-    "title": "James Baldwin's Go Tell it on the Mountain",
-    "authors": ["Carol E. Henderson"]
-  },
-  {
-    "googleId": "7mWHXbGlc6UC",
-    "compareStr": "title:the grapes of wrath+authors:john steinbeck",
-    "title": "The Grapes of Wrath",
-    "authors": ["John Steinbeck"]
-  },
-  {
-    "googleId": "tpRvswEACAAJ",
-    "compareStr": "title:the prime of miss jean brodie+authors:jay presson allen",
-    "title": "The Prime of Miss Jean Brodie",
-    "authors": ["Jay Presson Allen"]
-  },
-  {
-    "googleId": "PNRHQ96szrsC",
-    "compareStr": "title:the view from on the road+authors:omar swartz",
-    "title": "The View from On the Road",
-    "authors": ["Omar Swartz"]
-  },
-  {
-    "googleId": "ZW78DwAAQBAJ",
-    "compareStr": "title:my bondage and my freedom+authors:frederick douglass",
-    "title": "My Bondage and My Freedom",
-    "authors": ["Frederick Douglass"]
-  },
-  {
-    "googleId": "4ae1zgEACAAJ",
-    "compareStr": "title:josefine mutzenbacher or the story of a viennese wench, as told by herself+authors:josefine mutzenbacher",
-    "title": "Josefine Mutzenbacher Or The Story of a Viennese Wench, as Told by Herself",
-    "authors": ["Josefine Mutzenbacher"]
-  },
-  {
-    "googleId": "wPsbBgAAQBAJ",
-    "compareStr": "title:candide+authors:voltaire",
-    "title": "Candide",
-    "authors": ["Voltaire"]
-  },
-  {
-    "googleId": "Knx-xeDs72sC",
-    "compareStr": "title:charlotte's web (full color)+authors:e. b. white",
-    "title": "Charlotte's Web (full color)",
-    "authors": ["E. B. White"]
-  },
-  {
-    "googleId": "icVRJyTO43UC",
-    "compareStr": "title:emma by jane austen and clueless directed by amy heckerling+authors:lindsay green",
-    "title": "Emma by Jane Austen and Clueless Directed by Amy Heckerling",
-    "authors": ["Lindsay Green"]
-  },
-  {
-    "googleId": "Dv2x6WUuSuwC",
-    "compareStr": "title:a room with a view+authors:edward morgan forster",
-    "title": "A Room with a View",
-    "authors": ["Edward Morgan Forster"]
-  },
-  {
-    "googleId": "w03qnAAACAAJ",
-    "compareStr": "title:lord jim (1900). by: joseph conrad+authors:joseph conrad",
-    "title": "Lord Jim (1900). By: Joseph Conrad",
-    "authors": ["Joseph Conrad"]
-  },
-  {
-    "googleId": "g0pbAAAAMAAJ",
-    "compareStr": "title:the catcher in the rye+authors:jerome david salinger",
-    "title": "The Catcher in the Rye",
-    "authors": ["Jerome David Salinger"]
-  },
-  {
-    "googleId": "r119-dYq0mwC",
-    "compareStr": "title:a wrinkle in time+authors:madeleine l'engle",
-    "title": "A Wrinkle in Time",
-    "authors": ["Madeleine L'Engle"]
-  },
-  {
-    "googleId": "HfHfAgAAQBAJ",
-    "compareStr": "title:the prophet's handbook+authors:apostle raymond stansbury",
-    "title": "The Prophet's Handbook",
-    "authors": ["Apostle Raymond Stansbury"]
-  },
-  {
-    "googleId": "CQFwDwAAQBAJ",
-    "compareStr": "title:the metamorphosis+authors:franz kafka",
-    "title": "The Metamorphosis",
-    "authors": ["Franz Kafka"]
-  },
-  {
-    "googleId": "qiCO4XZ2K6IC",
-    "compareStr": "title:the complete book of les miserables+authors:edward behr",
-    "title": "The Complete Book of Les Miserables",
-    "authors": ["Edward Behr"]
-  },
-  {
-    "googleId": "8mRc0QEACAAJ",
-    "compareStr": "title:ruth fielding in alaska+authors:alice b emerson",
-    "title": "Ruth Fielding in Alaska",
-    "authors": ["Alice B Emerson"]
-  },
-  {
-    "googleId": "pCRvCfCyJ2EC",
-    "compareStr": "title:teaching the daode jing+authors:gary delaney deangelis,warren g. frisina",
-    "title": "Teaching the Daode Jing",
-    "authors": ["Gary Delaney DeAngelis", "Warren G. Frisina"]
-  },
-  {
-    "googleId": "MoyNhwhSVYAC",
-    "compareStr": "title:money and its use in medieval europe+authors:peter spufford",
-    "title": "Money and Its Use in Medieval Europe",
-    "authors": ["Peter Spufford"]
-  },
-  {
-    "googleId": "ZTSGDwAAQBAJ",
-    "compareStr": "title:the day of the locust+authors:nathanael west",
-    "title": "The Day of the Locust",
-    "authors": ["Nathanael West"]
-  },
-  {
-    "googleId": "xmwfNvLH0EEC",
-    "compareStr": "title:little women+authors:louisa may alcott",
-    "title": "Little Women",
-    "authors": ["Louisa May Alcott"]
-  },
-  {
-    "googleId": "K1cIZmFe7KoC",
-    "compareStr": "title:the old man and the sea+authors:ernest hemingway",
-    "title": "The old man and the sea",
-    "authors": ["Ernest Hemingway"]
+    "googleId": "9z_zCOU7fEkC",
+    "title": "The War of the Worlds",
+    "authors": ["Alex Lubertozzi", "Brian Holmsten"],
+    "thumbnail": "http://books.google.com/books/content?id=9z_zCOU7fEkC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the war of the worlds+authors:alex lubertozzi,brian holmsten"
   },
   {
     "googleId": "BphYDgAAQBAJ",
-    "compareStr": "title:crime and punishment+authors:fyodor dostoevsky",
     "title": "Crime and Punishment",
-    "authors": ["Fyodor Dostoevsky"]
+    "authors": ["Fyodor Dostoevsky"],
+    "thumbnail": "http://books.google.com/books/content?id=BphYDgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:crime and punishment+authors:fyodor dostoevsky"
   },
   {
-    "googleId": "CmlNxQEACAAJ",
-    "compareStr": "title:josefine mutzenbacher+authors:felix salten",
-    "title": "Josefine Mutzenbacher",
-    "authors": ["Felix Salten"]
+    "googleId": "xZHv4CWgWaEC",
+    "title": "Strange Case of Dr. Jekyll and Mr. Hyde",
+    "authors": ["Robert Louis Stevenson"],
+    "thumbnail": "http://books.google.com/books/content?id=xZHv4CWgWaEC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:strange case of dr. jekyll and mr. hyde+authors:robert louis stevenson"
   },
   {
-    "googleId": "YnRXfYHIMj4C",
-    "compareStr": "title:the prophet+authors:kahlil gibran",
-    "title": "The Prophet",
-    "authors": ["Kahlil Gibran"]
+    "googleId": "4HQcMQAACAAJ",
+    "title": "Nineteen Eighty-Four",
+    "authors": ["George Orwell"],
+    "thumbnail": "http://books.google.com/books/content?id=4HQcMQAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "compareStr": "title:nineteen eighty-four+authors:george orwell"
   },
   {
-    "googleId": "lcuGY9gkqGsC",
-    "compareStr": "title:plato's republic+authors:richard kraut",
-    "title": "Plato's Republic",
-    "authors": ["Richard Kraut"]
+    "googleId": "1e0LDUZNSEQC",
+    "title": "Foreign Consular Offices in the United States",
+    "authors": [],
+    "thumbnail": "http://books.google.com/books/content?id=1e0LDUZNSEQC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:foreign consular offices in the united states+authors:"
+  },
+  {
+    "googleId": "F1UVD-6MUAMC",
+    "title": "Pale Fire",
+    "authors": ["Vladimir Nabokov"],
+    "thumbnail": "http://books.google.com/books/content?id=F1UVD-6MUAMC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:pale fire+authors:vladimir nabokov"
+  },
+  {
+    "googleId": "a517KSzY0EwC",
+    "title": "Doctor Zhivago",
+    "authors": ["Борис Леонидович Пастернак"],
+    "thumbnail": "http://books.google.com/books/content?id=a517KSzY0EwC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:doctor zhivago+authors:борис леонидович пастернак"
+  },
+  {
+    "googleId": "1f36CwAAQBAJ",
+    "title": "The Divine Comedy",
+    "authors": ["Dante Alighieri"],
+    "thumbnail": "http://books.google.com/books/content?id=1f36CwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the divine comedy+authors:dante alighieri"
+  },
+  {
+    "googleId": "8t3lFuD906AC",
+    "title": "The Red and the Black",
+    "authors": ["Stendhal"],
+    "thumbnail": "http://books.google.com/books/content?id=8t3lFuD906AC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the red and the black+authors:stendhal"
+  },
+  {
+    "googleId": "pX6lBs7Q0MEC",
+    "title": "Atonement",
+    "authors": ["Ian McEwan"],
+    "thumbnail": "http://books.google.com/books/content?id=pX6lBs7Q0MEC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:atonement+authors:ian mcewan"
+  },
+  {
+    "googleId": "s-QzccStux4C",
+    "title": "Blood Meridian",
+    "authors": ["Cormac McCarthy"],
+    "thumbnail": "http://books.google.com/books/content?id=s-QzccStux4C&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:blood meridian+authors:cormac mccarthy"
+  },
+  {
+    "googleId": "TabfAAAAQBAJ",
+    "title": "The Naked and the Dead",
+    "authors": ["Norman Mailer"],
+    "thumbnail": "http://books.google.com/books/content?id=TabfAAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the naked and the dead+authors:norman mailer"
+  },
+  {
+    "googleId": "V8sfAQAAIAAJ",
+    "title": "The Adventures of Augie March",
+    "authors": ["Saul Bellow"],
+    "thumbnail": "http://books.google.com/books/content?id=V8sfAQAAIAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "compareStr": "title:the adventures of augie march+authors:saul bellow"
+  },
+  {
+    "googleId": "66JyBAAAQBAJ",
+    "title": "My Faith, My Life, Leader's Guide Revised Edition",
+    "authors": ["Jenifer Gamber"],
+    "thumbnail": "http://books.google.com/books/content?id=66JyBAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:my faith, my life, leader's guide revised edition+authors:jenifer gamber"
+  },
+  {
+    "googleId": "CPJDAQAAMAAJ",
+    "title": "The Call of the Wild",
+    "authors": ["Jack London"],
+    "thumbnail": "http://books.google.com/books/content?id=CPJDAQAAMAAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the call of the wild+authors:jack london"
+  },
+  {
+    "googleId": "2c2LCwAAQBAJ",
+    "title": "Anne of Green Gables",
+    "authors": ["Lucy Maud Montgomery"],
+    "thumbnail": "http://books.google.com/books/content?id=2c2LCwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:anne of green gables+authors:lucy maud montgomery"
+  },
+  {
+    "googleId": "CQFwDwAAQBAJ",
+    "title": "The Metamorphosis",
+    "authors": ["Franz Kafka"],
+    "thumbnail": "http://books.google.com/books/content?id=CQFwDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the metamorphosis+authors:franz kafka"
+  },
+  {
+    "googleId": "IR1QAQAAMAAJ",
+    "title": "Roscoe's Digest of the Law of Evidence on the Trial of Actions at Nisi Prius",
+    "authors": ["Henry Roscoe"],
+    "thumbnail": "http://books.google.com/books/content?id=IR1QAQAAMAAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:roscoe's digest of the law of evidence on the trial of actions at nisi prius+authors:henry roscoe"
+  },
+  {
+    "googleId": "XafcRGXoez4C",
+    "title": "One Flew Over the Cuckoo's Nest",
+    "authors": ["Ken Kesey"],
+    "thumbnail": "http://books.google.com/books/content?id=XafcRGXoez4C&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:one flew over the cuckoo's nest+authors:ken kesey"
+  },
+  {
+    "googleId": "Z9QNjrHXxT8C",
+    "title": "If on a Winter's Night a Traveler",
+    "authors": ["Italo Calvino"],
+    "thumbnail": "http://books.google.com/books/content?id=Z9QNjrHXxT8C&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "compareStr": "title:if on a winter's night a traveler+authors:italo calvino"
+  },
+  {
+    "googleId": "BE4pmIwxYnIC",
+    "title": "A Study in Scarlet",
+    "authors": ["Arthur Conan Doyle"],
+    "thumbnail": "http://books.google.com/books/content?id=BE4pmIwxYnIC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:a study in scarlet+authors:arthur conan doyle"
+  },
+  {
+    "googleId": "OlCHcjX0RT4C",
+    "title": "The Hobbit",
+    "authors": ["J.R.R. Tolkien"],
+    "thumbnail": "http://books.google.com/books/content?id=OlCHcjX0RT4C&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the hobbit+authors:j.r.r. tolkien"
+  },
+  {
+    "googleId": "Z0dH1DLiSTEC",
+    "title": "The Moviegoer",
+    "authors": ["Walker Percy"],
+    "thumbnail": "http://books.google.com/books/content?id=Z0dH1DLiSTEC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the moviegoer+authors:walker percy"
+  },
+  {
+    "googleId": "_S0GAQAAIAAJ",
+    "title": "Lolita",
+    "authors": ["Vladimir Vladimirovich Nabokov"],
+    "thumbnail": "http://books.google.com/books/content?id=_S0GAQAAIAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "compareStr": "title:lolita+authors:vladimir vladimirovich nabokov"
+  },
+  {
+    "googleId": "FDuyAAAACAAJ",
+    "title": "1919",
+    "authors": ["John Dos Passos"],
+    "compareStr": "title:1919+authors:john dos passos"
+  },
+  {
+    "googleId": "W_nwCywktaEC",
+    "title": "Tropic of Cancer",
+    "authors": ["Henry Miller"],
+    "thumbnail": "http://books.google.com/books/content?id=W_nwCywktaEC&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "compareStr": "title:tropic of cancer+authors:henry miller"
+  },
+  {
+    "googleId": "OKKWHSF5D4cC",
+    "title": "Toni Morrison's Beloved",
+    "authors": ["William L. Andrews", "Nellie Y. McKay"],
+    "thumbnail": "http://books.google.com/books/content?id=OKKWHSF5D4cC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:toni morrison's beloved+authors:nellie y. mckay,william l. andrews"
+  },
+  {
+    "googleId": "buc0AAAAMAAJ",
+    "title": "Adventures of Sherlock Holmes",
+    "authors": ["Sir Arthur Conan Doyle"],
+    "thumbnail": "http://books.google.com/books/content?id=buc0AAAAMAAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:adventures of sherlock holmes+authors:sir arthur conan doyle"
+  },
+  {
+    "googleId": "GF-KAQAACAAJ",
+    "title": "The Diary of a Nobody",
+    "authors": ["George Grossmith", "Weedon Grossmith"],
+    "thumbnail": "http://books.google.com/books/content?id=GF-KAQAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "compareStr": "title:the diary of a nobody+authors:george grossmith,weedon grossmith"
+  },
+  {
+    "googleId": "D3eTzK5fZcsC",
+    "title": "The Life and Opinions of Tristram Shandy, Gentleman",
+    "authors": ["Laurence Sterne"],
+    "thumbnail": "http://books.google.com/books/content?id=D3eTzK5fZcsC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the life and opinions of tristram shandy, gentleman+authors:laurence sterne"
+  },
+  {
+    "googleId": "s9q60rLUbRcC",
+    "title": "The Adventures of Huckleberry Finn",
+    "authors": ["Mark Twain"],
+    "thumbnail": "http://books.google.com/books/content?id=s9q60rLUbRcC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the adventures of huckleberry finn+authors:mark twain"
+  },
+  {
+    "googleId": "IyI0WR75yrwC",
+    "title": "The Way We Live Now",
+    "authors": ["Anthony Trollope"],
+    "thumbnail": "http://books.google.com/books/content?id=IyI0WR75yrwC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the way we live now+authors:anthony trollope"
+  },
+  {
+    "googleId": "FNyEDwAAQBAJ",
+    "title": "The Woman in White",
+    "authors": ["Wilkie Collins"],
+    "thumbnail": "http://books.google.com/books/content?id=FNyEDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the woman in white+authors:wilkie collins"
+  },
+  {
+    "googleId": "1C5pDwAAQBAJ",
+    "title": "A Bend in the River",
+    "authors": ["V. S. Naipaul"],
+    "thumbnail": "http://books.google.com/books/content?id=1C5pDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:a bend in the river+authors:v. s. naipaul"
+  },
+  {
+    "googleId": "8mRc0QEACAAJ",
+    "title": "Ruth Fielding in Alaska",
+    "authors": ["Alice B Emerson"],
+    "thumbnail": "http://books.google.com/books/content?id=8mRc0QEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "compareStr": "title:ruth fielding in alaska+authors:alice b emerson"
+  },
+  {
+    "googleId": "anJrbWGCdmAC",
+    "title": "The Old Man And The Sea",
+    "authors": ["Ernest Hemingway"],
+    "thumbnail": "http://books.google.com/books/content?id=anJrbWGCdmAC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the old man and the sea+authors:ernest hemingway"
+  },
+  {
+    "googleId": "0Ip_EAAAQBAJ",
+    "title": "The Heart Is a Lonely Hunter",
+    "authors": ["Carson McCullers"],
+    "thumbnail": "http://books.google.com/books/content?id=0Ip_EAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the heart is a lonely hunter+authors:carson mccullers"
+  },
+  {
+    "googleId": "v3yqHR7keCcC",
+    "title": "Of Mice and Men",
+    "authors": ["John Steinbeck"],
+    "thumbnail": "http://books.google.com/books/content?id=v3yqHR7keCcC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:of mice and men+authors:john steinbeck"
+  },
+  {
+    "googleId": "B1hSG45JCX4C",
+    "title": "Dune",
+    "authors": ["Frank Herbert"],
+    "thumbnail": "http://books.google.com/books/content?id=B1hSG45JCX4C&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:dune+authors:frank herbert"
+  },
+  {
+    "googleId": "giwLAQAAMAAJ",
+    "title": "The Brothers Karamazov",
+    "authors": ["Fyodor Dostoyevsky"],
+    "thumbnail": "http://books.google.com/books/content?id=giwLAQAAMAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "compareStr": "title:the brothers karamazov+authors:fyodor dostoyevsky"
+  },
+  {
+    "googleId": "ta1uaL7RF5gC",
+    "title": "Gulliver's Travels",
+    "authors": ["Jonathan Swift"],
+    "thumbnail": "http://books.google.com/books/content?id=ta1uaL7RF5gC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:gulliver's travels+authors:jonathan swift"
+  },
+  {
+    "googleId": "fkf1AwAAQBAJ",
+    "title": "Anna Karenina",
+    "authors": ["Leo Tolstoy"],
+    "thumbnail": "http://books.google.com/books/content?id=fkf1AwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:anna karenina+authors:leo tolstoy"
+  },
+  {
+    "googleId": "UTGnopblxt8C",
+    "title": "The Art of War",
+    "authors": ["Sun Tzu"],
+    "thumbnail": "http://books.google.com/books/content?id=UTGnopblxt8C&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the art of war+authors:sun tzu"
+  },
+  {
+    "googleId": "PNRHQ96szrsC",
+    "title": "The View from On the Road",
+    "authors": ["Omar Swartz"],
+    "thumbnail": "http://books.google.com/books/content?id=PNRHQ96szrsC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the view from on the road+authors:omar swartz"
+  },
+  {
+    "googleId": "m0oRCgAAQBAJ",
+    "title": "Underworld",
+    "authors": ["Don DeLillo"],
+    "thumbnail": "http://books.google.com/books/content?id=m0oRCgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:underworld+authors:don delillo"
+  },
+  {
+    "googleId": "etKwgoyK0YcC",
+    "title": "Peter Pan",
+    "authors": ["James Matthew Barrie"],
+    "thumbnail": "http://books.google.com/books/content?id=etKwgoyK0YcC&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "compareStr": "title:peter pan+authors:james matthew barrie"
+  },
+  {
+    "googleId": "EniPDQAAQBAJ",
+    "title": "His Dark Materials: The Golden Compass (Book 1)",
+    "authors": ["Philip Pullman"],
+    "thumbnail": "http://books.google.com/books/content?id=EniPDQAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:his dark materials: the golden compass (book 1)+authors:philip pullman"
+  },
+  {
+    "googleId": "y1o-DwAAQBAJ",
+    "title": "Carmilla",
+    "authors": ["Joseph Sheridan Le Fanu"],
+    "thumbnail": "http://books.google.com/books/content?id=y1o-DwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:carmilla+authors:joseph sheridan le fanu"
+  },
+  {
+    "googleId": "s4nbaPVkq1wC",
+    "title": "Wuthering Heights",
+    "authors": ["Emily Brontë"],
+    "thumbnail": "http://books.google.com/books/content?id=s4nbaPVkq1wC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:wuthering heights+authors:emily brontë"
+  },
+  {
+    "googleId": "r414AgAAQBAJ",
+    "title": "20,000 Leagues Under the Sea",
+    "authors": ["Jules Verne"],
+    "thumbnail": "http://books.google.com/books/content?id=r414AgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:20,000 leagues under the sea+authors:jules verne"
+  },
+  {
+    "googleId": "BFLMLH_XqngC",
+    "title": "The Prime of Miss Jean Brodie",
+    "authors": ["Muriel Spark"],
+    "thumbnail": "http://books.google.com/books/content?id=BFLMLH_XqngC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the prime of miss jean brodie+authors:muriel spark"
+  },
+  {
+    "googleId": "_luMDQAAQBAJ",
+    "title": "The Sound and the Fury",
+    "authors": ["William Faulkner"],
+    "thumbnail": "http://books.google.com/books/content?id=_luMDQAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the sound and the fury+authors:william faulkner"
+  },
+  {
+    "googleId": "RHwLqVrnXgIC",
+    "title": "Long Walk to Freedom",
+    "authors": ["Nelson Mandela"],
+    "thumbnail": "http://books.google.com/books/content?id=RHwLqVrnXgIC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:long walk to freedom+authors:nelson mandela"
+  },
+  {
+    "googleId": "DLFlAAAAMAAJ",
+    "title": "The Golden Bowl",
+    "authors": ["Henry James"],
+    "thumbnail": "http://books.google.com/books/content?id=DLFlAAAAMAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "compareStr": "title:the golden bowl+authors:henry james"
+  },
+  {
+    "googleId": "Uk0iDgAAQBAJ",
+    "title": "A Modest Proposal",
+    "authors": ["Jonathan Swift"],
+    "thumbnail": "http://books.google.com/books/content?id=Uk0iDgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:a modest proposal+authors:jonathan swift"
+  },
+  {
+    "googleId": "WoqNnWsFfvcC",
+    "title": "Oscar and Lucinda",
+    "authors": ["Peter Carey"],
+    "thumbnail": "http://books.google.com/books/content?id=WoqNnWsFfvcC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:oscar and lucinda+authors:peter carey"
+  },
+  {
+    "googleId": "x8MXzKzGCGUC",
+    "title": "The Hound of the Baskervilles",
+    "authors": ["Arthur Conan Doyle"],
+    "thumbnail": "http://books.google.com/books/content?id=x8MXzKzGCGUC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the hound of the baskervilles+authors:arthur conan doyle"
+  },
+  {
+    "googleId": "weSdpwAACAAJ",
+    "title": "The Black Sheep",
+    "authors": ["Jean Merrill"],
+    "compareStr": "title:the black sheep+authors:jean merrill"
+  },
+  {
+    "googleId": "XB7hAAAAMAAJ",
+    "title": "Winnie-the-Pooh",
+    "authors": ["Alan Alexander Milne"],
+    "thumbnail": "http://books.google.com/books/content?id=XB7hAAAAMAAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:winnie-the-pooh+authors:alan alexander milne"
+  },
+  {
+    "googleId": "Hy1LAAAAMAAJ",
+    "title": "Nostromo",
+    "authors": ["Joseph Conrad"],
+    "thumbnail": "http://books.google.com/books/content?id=Hy1LAAAAMAAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:nostromo+authors:joseph conrad"
+  },
+  {
+    "googleId": "-6HPXYDI7yYC",
+    "title": "Professional Management of Housekeeping Operations",
+    "authors": ["Thomas J. A. Jones"],
+    "thumbnail": "http://books.google.com/books/content?id=-6HPXYDI7yYC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:professional management of housekeeping operations+authors:thomas j. a. jones"
+  },
+  {
+    "googleId": "qhQAywOYz10C",
+    "title": "The Odyssey",
+    "authors": ["Homer"],
+    "thumbnail": "http://books.google.com/books/content?id=qhQAywOYz10C&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the odyssey+authors:homer"
+  },
+  {
+    "googleId": "zUloAAAAMAAJ",
+    "title": "The Master & Margarita",
+    "authors": ["Mikhail Bulgakov"],
+    "thumbnail": "http://books.google.com/books/content?id=zUloAAAAMAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "compareStr": "title:the master & margarita+authors:mikhail bulgakov"
+  },
+  {
+    "googleId": "1hmdBAAAQBAJ",
+    "title": "The Three Musketeers",
+    "authors": ["Alexandre Dumas"],
+    "thumbnail": "http://books.google.com/books/content?id=1hmdBAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the three musketeers+authors:alexandre dumas"
+  },
+  {
+    "googleId": "PP3SjwEACAAJ",
+    "title": "The Stranger (Novel)",
+    "authors": ["Albert Camus"],
+    "thumbnail": "http://books.google.com/books/content?id=PP3SjwEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "compareStr": "title:the stranger (novel)+authors:albert camus"
+  },
+  {
+    "googleId": "4o6rcQAACAAJ",
+    "title": "The Brief Wondrous Life of Oscar Wao",
+    "authors": ["Junot Diaz"],
+    "thumbnail": "http://books.google.com/books/content?id=4o6rcQAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "compareStr": "title:the brief wondrous life of oscar wao+authors:junot diaz"
+  },
+  {
+    "googleId": "lyTxUXv3jgwC",
+    "title": "Elizabeth Gaskell's Cranford",
+    "authors": ["Thomas Recchio"],
+    "thumbnail": "http://books.google.com/books/content?id=lyTxUXv3jgwC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:elizabeth gaskell's cranford+authors:thomas recchio"
+  },
+  {
+    "googleId": "Vm8kDwAAQBAJ",
+    "title": "Considering Watchmen: Poetics, Property, Politics",
+    "authors": ["Andrew Hoberek"],
+    "thumbnail": "http://books.google.com/books/content?id=Vm8kDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:considering watchmen: poetics, property, politics+authors:andrew hoberek"
+  },
+  {
+    "googleId": "WYK7AAAAQBAJ",
+    "title": "Paradise Lost",
+    "authors": ["John Milton"],
+    "thumbnail": "http://books.google.com/books/content?id=WYK7AAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:paradise lost+authors:john milton"
+  },
+  {
+    "googleId": "KLcnAQAAMAAJ",
+    "title": "Jude the obscure",
+    "authors": ["Thomas Hardy"],
+    "thumbnail": "http://books.google.com/books/content?id=KLcnAQAAMAAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:jude the obscure+authors:thomas hardy"
+  },
+  {
+    "googleId": "C0QoAQAAMAAJ",
+    "title": "Fahrenheit 451",
+    "authors": ["Ray Bradbury"],
+    "thumbnail": "http://books.google.com/books/content?id=C0QoAQAAMAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "compareStr": "title:fahrenheit 451+authors:ray bradbury"
+  },
+  {
+    "googleId": "x8xtwgEACAAJ",
+    "title": "The Alchemist",
+    "authors": ["Paulo Coelho"],
+    "thumbnail": "http://books.google.com/books/content?id=x8xtwgEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "compareStr": "title:the alchemist+authors:paulo coelho"
+  },
+  {
+    "googleId": "yT0yEQAAQBAJ",
+    "title": "The King in Yellow",
+    "authors": ["Robert W. Chambers"],
+    "thumbnail": "http://books.google.com/books/content?id=yT0yEQAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the king in yellow+authors:robert w. chambers"
+  },
+  {
+    "googleId": "FuIIyeGzffAC",
+    "title": "Lucky Jim",
+    "authors": ["Kingsley Amis"],
+    "thumbnail": "http://books.google.com/books/content?id=FuIIyeGzffAC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:lucky jim+authors:kingsley amis"
+  },
+  {
+    "googleId": "_r-qEAAAQBAJ",
+    "title": "Are You There God? It's Me, Margaret.",
+    "authors": ["Judy Blume"],
+    "thumbnail": "http://books.google.com/books/content?id=_r-qEAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:are you there god? it's me, margaret.+authors:judy blume"
+  },
+  {
+    "googleId": "9gT-Sde1pMoC",
+    "title": "The Catcher in the Rye",
+    "authors": ["Jerome David Salinger"],
+    "thumbnail": "http://books.google.com/books/content?id=9gT-Sde1pMoC&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "compareStr": "title:the catcher in the rye+authors:jerome david salinger"
+  },
+  {
+    "googleId": "iOBT0qN8DKUC",
+    "title": "A Brief History of Time",
+    "authors": ["Stephen Hawking"],
+    "thumbnail": "http://books.google.com/books/content?id=iOBT0qN8DKUC&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "compareStr": "title:a brief history of time+authors:stephen hawking"
+  },
+  {
+    "googleId": "dpmegh1uQWAC",
+    "title": "General and Synthetic Methods",
+    "authors": ["G. Pattenden"],
+    "thumbnail": "http://books.google.com/books/content?id=dpmegh1uQWAC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:general and synthetic methods+authors:g. pattenden"
+  },
+  {
+    "googleId": "Oo-ODQAAQBAJ",
+    "title": "Revolutionary Road",
+    "authors": ["Richard Yates"],
+    "thumbnail": "http://books.google.com/books/content?id=Oo-ODQAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:revolutionary road+authors:richard yates"
+  },
+  {
+    "googleId": "twNGAQAAMAAJ",
+    "title": "Sybil",
+    "authors": ["Benjamin Disraeli"],
+    "thumbnail": "http://books.google.com/books/content?id=twNGAQAAMAAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:sybil+authors:benjamin disraeli"
+  },
+  {
+    "googleId": "ewn8DwAAQBAJ",
+    "title": "L.A. Confidential",
+    "authors": ["Manohla Dargis"],
+    "thumbnail": "http://books.google.com/books/content?id=ewn8DwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:l.a. confidential+authors:manohla dargis"
+  },
+  {
+    "googleId": "iXn5U2IzVH0C",
+    "title": "The Great Gatsby",
+    "authors": ["F. Scott Fitzgerald"],
+    "thumbnail": "http://books.google.com/books/content?id=iXn5U2IzVH0C&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the great gatsby+authors:f. scott fitzgerald"
+  },
+  {
+    "googleId": "DXPtAQAAQBAJ",
+    "title": "Men Without Women",
+    "authors": ["Ernest Hemingway"],
+    "thumbnail": "http://books.google.com/books/content?id=DXPtAQAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:men without women+authors:ernest hemingway"
+  },
+  {
+    "googleId": "5fyuj9x9UZIC",
+    "title": "The Idiot",
+    "authors": ["Fyodor Dostoyevsky"],
+    "thumbnail": "http://books.google.com/books/content?id=5fyuj9x9UZIC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the idiot+authors:fyodor dostoyevsky"
+  },
+  {
+    "googleId": "U3s7PgAACAAJ",
+    "title": "The Good Soldier",
+    "authors": ["Ford Madox Ford"],
+    "thumbnail": "http://books.google.com/books/content?id=U3s7PgAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "compareStr": "title:the good soldier+authors:ford madox ford"
+  },
+  {
+    "googleId": "06lUDTcPQoQC",
+    "title": "American Pastoral",
+    "authors": ["Philip Roth"],
+    "thumbnail": "http://books.google.com/books/content?id=06lUDTcPQoQC&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "compareStr": "title:american pastoral+authors:philip roth"
+  },
+  {
+    "googleId": "IZX9AQAAQBAJ",
+    "title": "Swann's Way",
+    "authors": ["Marcel Proust"],
+    "thumbnail": "http://books.google.com/books/content?id=IZX9AQAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:swann's way+authors:marcel proust"
+  },
+  {
+    "googleId": "sS-cEAAAQBAJ",
+    "title": "The Complete Works of Edgar Allan Poe",
+    "authors": ["Edgar Allan Poe"],
+    "thumbnail": "http://books.google.com/books/content?id=sS-cEAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the complete works of edgar allan poe+authors:edgar allan poe"
   },
   {
     "googleId": "FodGfz5li5wC",
-    "compareStr": "title:the corrections+authors:jonathan franzen",
     "title": "The Corrections",
-    "authors": ["Jonathan Franzen"]
+    "authors": ["Jonathan Franzen"],
+    "thumbnail": "http://books.google.com/books/content?id=FodGfz5li5wC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the corrections+authors:jonathan franzen"
+  },
+  {
+    "googleId": "pWyLDQAAQBAJ",
+    "title": "Slaughterhouse-Five",
+    "authors": ["Kurt Vonnegut"],
+    "thumbnail": "http://books.google.com/books/content?id=pWyLDQAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:slaughterhouse-five+authors:kurt vonnegut"
+  },
+  {
+    "googleId": "ogpzEAAAQBAJ",
+    "title": "The Problems of Philosophy",
+    "authors": ["Bertrand Russell"],
+    "thumbnail": "http://books.google.com/books/content?id=ogpzEAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the problems of philosophy+authors:bertrand russell"
+  },
+  {
+    "googleId": "KAiXEQAAQBAJ",
+    "title": "Tom Jones Concerts, Videos and Songs from 1964 to 1979",
+    "authors": ["Marco Durzu"],
+    "thumbnail": "http://books.google.com/books/content?id=KAiXEQAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:tom jones concerts, videos and songs from 1964 to 1979+authors:marco durzu"
+  },
+  {
+    "googleId": "J1v5clEcasEC",
+    "title": "My Bondage and My Freedom",
+    "authors": ["Frederick Douglass"],
+    "thumbnail": "http://books.google.com/books/content?id=J1v5clEcasEC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:my bondage and my freedom+authors:frederick douglass"
+  },
+  {
+    "googleId": "mdnrlnf9IGwC",
+    "title": "Pride and Prejudice",
+    "authors": ["Jane Austen"],
+    "thumbnail": "http://books.google.com/books/content?id=mdnrlnf9IGwC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:pride and prejudice+authors:jane austen"
+  },
+  {
+    "googleId": "6JGCEAAAQBAJ",
+    "title": "The Day of the Locust",
+    "authors": ["Nathanael West"],
+    "thumbnail": "http://books.google.com/books/content?id=6JGCEAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the day of the locust+authors:nathanael west"
+  },
+  {
+    "googleId": "_It_EAAAQBAJ",
+    "title": "The Lion, the Witch and the Wardrobe",
+    "authors": ["C. S. Lewis"],
+    "thumbnail": "http://books.google.com/books/content?id=_It_EAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the lion, the witch and the wardrobe+authors:c. s. lewis"
+  },
+  {
+    "googleId": "lkVCDQAAQBAJ",
+    "title": "Heart of Darkness (Fifth Edition) (Norton Critical Editions)",
+    "authors": ["Joseph Conrad"],
+    "thumbnail": "http://books.google.com/books/content?id=lkVCDQAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:heart of darkness (fifth edition) (norton critical editions)+authors:joseph conrad"
+  },
+  {
+    "googleId": "Z8tsY1yiWs8C",
+    "title": "The Golden Notebook",
+    "authors": ["Doris Lessing"],
+    "thumbnail": "http://books.google.com/books/content?id=Z8tsY1yiWs8C&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "compareStr": "title:the golden notebook+authors:doris lessing"
+  },
+  {
+    "googleId": "sO9BfTuoGucC",
+    "title": "For Whom the Bell Tolls",
+    "authors": ["Ernest Hemingway"],
+    "thumbnail": "http://books.google.com/books/content?id=sO9BfTuoGucC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:for whom the bell tolls+authors:ernest hemingway"
+  },
+  {
+    "googleId": "icVRJyTO43UC",
+    "title": "Emma by Jane Austen and Clueless Directed by Amy Heckerling",
+    "authors": ["Lindsay Green"],
+    "thumbnail": "http://books.google.com/books/content?id=icVRJyTO43UC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:emma by jane austen and clueless directed by amy heckerling+authors:lindsay green"
+  },
+  {
+    "googleId": "iPLjUhiXAhYC",
+    "title": "Middlemarch",
+    "authors": ["George Eliot"],
+    "thumbnail": "http://books.google.com/books/content?id=iPLjUhiXAhYC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:middlemarch+authors:george eliot"
+  },
+  {
+    "googleId": "3PabEAAAQBAJ",
+    "title": "Brave New World",
+    "authors": ["Aldous Huxley"],
+    "thumbnail": "http://books.google.com/books/content?id=3PabEAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:brave new world+authors:aldous huxley"
+  },
+  {
+    "googleId": "u-QdEAAAQBAJ",
+    "title": "The Picture of Dorian Gray",
+    "authors": ["Oscar Wilde"],
+    "thumbnail": "http://books.google.com/books/content?id=u-QdEAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the picture of dorian gray+authors:oscar wilde"
+  },
+  {
+    "googleId": "ZDOZFjNSwAsC",
+    "title": "James Baldwin's Go Tell it on the Mountain",
+    "authors": ["Carol E. Henderson"],
+    "thumbnail": "http://books.google.com/books/content?id=ZDOZFjNSwAsC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:james baldwin's go tell it on the mountain+authors:carol e. henderson"
+  },
+  {
+    "googleId": "QYYQDAAAQBAJ",
+    "title": "The Pillars of the Earth",
+    "authors": ["Ken Follett"],
+    "thumbnail": "http://books.google.com/books/content?id=QYYQDAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the pillars of the earth+authors:ken follett"
+  },
+  {
+    "googleId": "YNz7EAAAQBAJ",
+    "title": "The Thousand and One Nights",
+    "authors": ["Muhsin S. Mahdi"],
+    "thumbnail": "http://books.google.com/books/content?id=YNz7EAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the thousand and one nights+authors:muhsin s. mahdi"
+  },
+  {
+    "googleId": "4baiNNYivoQC",
+    "title": "Nightmare Abbey",
+    "authors": ["Thomas Love Peacock"],
+    "thumbnail": "http://books.google.com/books/content?id=4baiNNYivoQC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:nightmare abbey+authors:thomas love peacock"
+  },
+  {
+    "googleId": "pCRvCfCyJ2EC",
+    "title": "Teaching the Daode Jing",
+    "authors": ["Gary Delaney DeAngelis", "Warren G. Frisina"],
+    "thumbnail": "http://books.google.com/books/content?id=pCRvCfCyJ2EC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:teaching the daode jing+authors:gary delaney deangelis,warren g. frisina"
+  },
+  {
+    "googleId": "78VLAQAAMAAJ",
+    "title": "Clarissa Harlowe",
+    "authors": ["Samuel Richardson"],
+    "thumbnail": "http://books.google.com/books/content?id=78VLAQAAMAAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:clarissa harlowe+authors:samuel richardson"
+  },
+  {
+    "googleId": "ayJpGQeyxgkC",
+    "title": "To Kill a Mockingbird 40th",
+    "authors": ["Harper Lee"],
+    "thumbnail": "http://books.google.com/books/content?id=ayJpGQeyxgkC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:to kill a mockingbird 40th+authors:harper lee"
+  },
+  {
+    "googleId": "JAzxznMKiq4C",
+    "title": "Never Let Me Go",
+    "authors": ["Kazuo Ishiguro"],
+    "thumbnail": "http://books.google.com/books/content?id=JAzxznMKiq4C&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:never let me go+authors:kazuo ishiguro"
+  },
+  {
+    "googleId": "gTycDAEACAAJ",
+    "title": "Life of Pi",
+    "authors": ["Yann Martel"],
+    "thumbnail": "http://books.google.com/books/content?id=gTycDAEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "compareStr": "title:life of pi+authors:yann martel"
+  },
+  {
+    "googleId": "Xfze51E7TEoC",
+    "title": "Catch-22",
+    "authors": ["Joseph Heller"],
+    "thumbnail": "http://books.google.com/books/content?id=Xfze51E7TEoC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:catch-22+authors:joseph heller"
+  },
+  {
+    "googleId": "XV8XAAAAYAAJ",
+    "title": "Moby Dick",
+    "authors": ["Herman Melville"],
+    "thumbnail": "http://books.google.com/books/content?id=XV8XAAAAYAAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:moby dick+authors:herman melville"
+  },
+  {
+    "googleId": "wPsbBgAAQBAJ",
+    "title": "Candide",
+    "authors": ["Voltaire"],
+    "thumbnail": "http://books.google.com/books/content?id=wPsbBgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:candide+authors:voltaire"
+  },
+  {
+    "googleId": "GuLZAAAAMAAJ",
+    "title": "The Lord of the Rings",
+    "authors": ["John Ronald Reuel Tolkien"],
+    "thumbnail": "http://books.google.com/books/content?id=GuLZAAAAMAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "compareStr": "title:the lord of the rings+authors:john ronald reuel tolkien"
+  },
+  {
+    "googleId": "MSurBex2xcUC",
+    "title": "The Remains of the Day",
+    "authors": ["Kazuo Ishiguro"],
+    "thumbnail": "http://books.google.com/books/content?id=MSurBex2xcUC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the remains of the day+authors:kazuo ishiguro"
+  },
+  {
+    "googleId": "G0KJzgEACAAJ",
+    "title": "Treasure Island",
+    "authors": ["Robert Louis Stevenson"],
+    "thumbnail": "http://books.google.com/books/content?id=G0KJzgEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "compareStr": "title:treasure island+authors:robert louis stevenson"
+  },
+  {
+    "googleId": "9xHCAgAAQBAJ",
+    "title": "Frankenstein",
+    "authors": ["Mary Shelley"],
+    "thumbnail": "http://books.google.com/books/content?id=9xHCAgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:frankenstein+authors:mary shelley"
+  },
+  {
+    "googleId": "MugHAy_Atz4C",
+    "title": "The Prince",
+    "authors": ["Niccolò Machiavelli"],
+    "thumbnail": "http://books.google.com/books/content?id=MugHAy_Atz4C&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the prince+authors:niccolò machiavelli"
+  },
+  {
+    "googleId": "CBtlCQAAQBAJ",
+    "title": "THE WIND IN THE WILLOWS",
+    "authors": ["KENNETH GRAHAME", "GRANDMA’S TREASURES"],
+    "thumbnail": "http://books.google.com/books/content?id=CBtlCQAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the wind in the willows+authors:grandma’s treasures,kenneth grahame"
+  },
+  {
+    "googleId": "5EIPAAAAQAAJ",
+    "title": "A Tale of Two Cities",
+    "authors": ["Charles Dickens"],
+    "thumbnail": "http://books.google.com/books/content?id=5EIPAAAAQAAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:a tale of two cities+authors:charles dickens"
+  },
+  {
+    "googleId": "iyfgqV5dxXQC",
+    "title": "Lord of the Flies",
+    "authors": ["William Golding"],
+    "thumbnail": "http://books.google.com/books/content?id=iyfgqV5dxXQC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:lord of the flies+authors:william golding"
+  },
+  {
+    "googleId": "oZJzi3ykKoYC",
+    "title": "Portnoy's Complaint",
+    "authors": ["Philip Roth"],
+    "thumbnail": "http://books.google.com/books/content?id=oZJzi3ykKoYC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:portnoy's complaint+authors:philip roth"
+  },
+  {
+    "googleId": "_Sbju4F0AVAC",
+    "title": "Faust",
+    "authors": ["Johann Wolfgang von Goethe"],
+    "thumbnail": "http://books.google.com/books/content?id=_Sbju4F0AVAC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:faust+authors:johann wolfgang von goethe"
+  },
+  {
+    "googleId": "WkqR7nM198QC",
+    "title": "Dubliners",
+    "authors": ["James Joyce"],
+    "thumbnail": "http://books.google.com/books/content?id=WkqR7nM198QC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:dubliners+authors:james joyce"
+  },
+  {
+    "googleId": "WYSLDQAAQBAJ",
+    "title": "Absalom, Absalom!",
+    "authors": ["William Faulkner"],
+    "thumbnail": "http://books.google.com/books/content?id=WYSLDQAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:absalom, absalom!+authors:william faulkner"
+  },
+  {
+    "googleId": "vdAOAAAAIAAJ",
+    "title": "The Invisible Man",
+    "authors": ["Herbert George Wells"],
+    "thumbnail": "http://books.google.com/books/content?id=vdAOAAAAIAAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the invisible man+authors:herbert george wells"
+  },
+  {
+    "googleId": "_BnPAAAAMAAJ",
+    "title": "Hamlet",
+    "authors": ["William Shakespeare"],
+    "thumbnail": "http://books.google.com/books/content?id=_BnPAAAAMAAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:hamlet+authors:william shakespeare"
+  },
+  {
+    "googleId": "AYQRAAAAMAAJ",
+    "title": "Dora",
+    "authors": ["Alfred Tennyson Baron Tennyson"],
+    "thumbnail": "http://books.google.com/books/content?id=AYQRAAAAMAAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:dora+authors:alfred tennyson baron tennyson"
+  },
+  {
+    "googleId": "Jnl8zwEACAAJ",
+    "title": "The Republic",
+    "authors": ["Plato"],
+    "compareStr": "title:the republic+authors:plato"
+  },
+  {
+    "googleId": "TpGWiBzrxhAC",
+    "title": "Charlie and the Chocolate Factory",
+    "authors": ["Roald Dahl"],
+    "thumbnail": "http://books.google.com/books/content?id=TpGWiBzrxhAC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:charlie and the chocolate factory+authors:roald dahl"
+  },
+  {
+    "googleId": "QqBiAAAAMAAJ",
+    "title": "Atlas Shrugged",
+    "authors": ["Ayn Rand"],
+    "thumbnail": "http://books.google.com/books/content?id=QqBiAAAAMAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "compareStr": "title:atlas shrugged+authors:ayn rand"
+  },
+  {
+    "googleId": "Ia785bbC57IC",
+    "title": "Tinker, Tailor, Soldier, Spy",
+    "authors": ["John le Carre"],
+    "thumbnail": "http://books.google.com/books/content?id=Ia785bbC57IC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:tinker, tailor, soldier, spy+authors:john le carre"
+  },
+  {
+    "googleId": "2IWXeXVRD34C",
+    "title": "The Ambassadors",
+    "authors": ["Henry James"],
+    "thumbnail": "http://books.google.com/books/content?id=2IWXeXVRD34C&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "compareStr": "title:the ambassadors+authors:henry james"
+  },
+  {
+    "googleId": "2BgPAAAAYAAJ",
+    "title": "Don Quixote",
+    "authors": ["Miguel de Cervantes Saavedra"],
+    "thumbnail": "http://books.google.com/books/content?id=2BgPAAAAYAAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:don quixote+authors:miguel de cervantes saavedra"
+  },
+  {
+    "googleId": "dZ6EOC1Ma6QC",
+    "title": "Robinson Crusoe",
+    "authors": ["Daniel Defoe"],
+    "thumbnail": "http://books.google.com/books/content?id=dZ6EOC1Ma6QC&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "compareStr": "title:robinson crusoe+authors:daniel defoe"
+  },
+  {
+    "googleId": "7-8CAAAAQAAJ",
+    "title": "Meditations for every week in the Christian year, by the compiler of 'Plain prayers'.",
+    "authors": ["William John Butler"],
+    "thumbnail": "http://books.google.com/books/content?id=7-8CAAAAQAAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:meditations for every week in the christian year, by the compiler of 'plain prayers'.+authors:william john butler"
+  },
+  {
+    "googleId": "AfB8EAAAQBAJ",
+    "title": "One Hundred Years of Solitude",
+    "authors": ["Gabriel García Márquez"],
+    "thumbnail": "http://books.google.com/books/content?id=AfB8EAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:one hundred years of solitude+authors:gabriel garcía márquez"
+  },
+  {
+    "googleId": "sos0paw_-cEC",
+    "title": "The Iliad",
+    "authors": ["Homer"],
+    "thumbnail": "http://books.google.com/books/content?id=sos0paw_-cEC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the iliad+authors:homer"
+  },
+  {
+    "googleId": "V8RdtQAACAAJ",
+    "title": "A Detailed Account of the Battle of Austerlitz",
+    "authors": ["Major-General Karl Von Stutterheim", "Major John Pine-Coffin"],
+    "thumbnail": "http://books.google.com/books/content?id=V8RdtQAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "compareStr": "title:a detailed account of the battle of austerlitz+authors:major john pine-coffin,major-general karl von stutterheim"
+  },
+  {
+    "googleId": "1BON3iwjlisC",
+    "title": "Herzog & de Meuron",
+    "authors": ["Herzog & de Meuron"],
+    "thumbnail": "http://books.google.com/books/content?id=1BON3iwjlisC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:herzog & de meuron+authors:herzog & de meuron"
+  },
+  {
+    "googleId": "ECuBswEACAAJ",
+    "title": "The Handmaid's Tale",
+    "authors": ["Margaret Atwood"],
+    "thumbnail": "http://books.google.com/books/content?id=ECuBswEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "compareStr": "title:the handmaid's tale+authors:margaret atwood"
+  },
+  {
+    "googleId": "Go9kAAAAMAAJ",
+    "title": "The Fountainhead",
+    "authors": ["Ayn Rand"],
+    "thumbnail": "http://books.google.com/books/content?id=Go9kAAAAMAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "compareStr": "title:the fountainhead+authors:ayn rand"
+  },
+  {
+    "googleId": "VYI3bNt2ssEC",
+    "title": "A Wrinkle in Time",
+    "authors": ["Madeleine L'Engle"],
+    "thumbnail": "http://books.google.com/books/content?id=VYI3bNt2ssEC&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "compareStr": "title:a wrinkle in time+authors:madeleine l'engle"
+  },
+  {
+    "googleId": "bgpJn-Oq22MC",
+    "title": "A Clockwork Orange",
+    "authors": ["Anthony Burgess"],
+    "thumbnail": "http://books.google.com/books/content?id=bgpJn-Oq22MC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:a clockwork orange+authors:anthony burgess"
+  },
+  {
+    "googleId": "uTCaEQAAQBAJ",
+    "title": "God's Covenant - The Rainbow's Side of the Story (Genesis 9:8-17)",
+    "authors": ["Twianie Roberts"],
+    "thumbnail": "http://books.google.com/books/content?id=uTCaEQAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:god's covenant - the rainbow's side of the story (genesis 9:8-17)+authors:twianie roberts"
+  },
+  {
+    "googleId": "rlDaAAAAIAAJ",
+    "title": "Uncle Tom's Cabin",
+    "authors": ["Harriet Beecher Stowe"],
+    "thumbnail": "http://books.google.com/books/content?id=rlDaAAAAIAAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:uncle tom's cabin+authors:harriet beecher stowe"
+  },
+  {
+    "googleId": "iGO1EAAAQBAJ",
+    "title": "Animal Farm",
+    "authors": ["George Orwell"],
+    "thumbnail": "http://books.google.com/books/content?id=iGO1EAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:animal farm+authors:george orwell"
+  },
+  {
+    "googleId": "VRPYEQAAQBAJ",
+    "title": "How to Produce ICE Cream Scoops",
+    "authors": ["Coffin Christena"],
+    "thumbnail": "http://books.google.com/books/content?id=VRPYEQAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:how to produce ice cream scoops+authors:coffin christena"
+  },
+  {
+    "googleId": "YnRXfYHIMj4C",
+    "title": "The Prophet",
+    "authors": ["Kahlil Gibran"],
+    "thumbnail": "http://books.google.com/books/content?id=YnRXfYHIMj4C&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "compareStr": "title:the prophet+authors:kahlil gibran"
+  },
+  {
+    "googleId": "hTy7QzxZSEUC",
+    "title": "The Color Purple",
+    "authors": ["Alice Walker"],
+    "thumbnail": "http://books.google.com/books/content?id=hTy7QzxZSEUC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the color purple+authors:alice walker"
+  },
+  {
+    "googleId": "pgvqsaYvgacC",
+    "title": "All Quiet on the Western Front",
+    "authors": ["Erich Maria Remarque"],
+    "thumbnail": "http://books.google.com/books/content?id=pgvqsaYvgacC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:all quiet on the western front+authors:erich maria remarque"
+  },
+  {
+    "googleId": "1pCbDwAAQBAJ",
+    "title": "A Confederacy of Dunces",
+    "authors": ["John Kennedy Toole"],
+    "thumbnail": "http://books.google.com/books/content?id=1pCbDwAAQBAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "compareStr": "title:a confederacy of dunces+authors:john kennedy toole"
+  },
+  {
+    "googleId": "FrvzlWm8x4kC",
+    "title": "A Great Expectations in Plain and Simple English (Includes Study Guide, Complete Unabridged Book, Historical Context, Biography",
+    "authors": ["Charles Dickens"],
+    "thumbnail": "http://books.google.com/books/content?id=FrvzlWm8x4kC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:a great expectations in plain and simple english (includes study guide, complete unabridged book, historical context, biography+authors:charles dickens"
+  },
+  {
+    "googleId": "w03qnAAACAAJ",
+    "title": "Lord Jim (1900). By: Joseph Conrad",
+    "authors": ["Joseph Conrad"],
+    "thumbnail": "http://books.google.com/books/content?id=w03qnAAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "compareStr": "title:lord jim (1900). by: joseph conrad+authors:joseph conrad"
+  },
+  {
+    "googleId": "VkPzAAAAMAAJ",
+    "title": "The Tin Drum",
+    "authors": ["Günter Grass"],
+    "thumbnail": "http://books.google.com/books/content?id=VkPzAAAAMAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "compareStr": "title:the tin drum+authors:günter grass"
+  },
+  {
+    "googleId": "wrOQLV6xB-wC",
+    "title": "Harry Potter and the Sorcerer's Stone",
+    "authors": ["J.K. Rowling"],
+    "thumbnail": "http://books.google.com/books/content?id=wrOQLV6xB-wC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:harry potter and the sorcerer's stone+authors:j.k. rowling"
+  },
+  {
+    "googleId": "TE0iZ4U2ZvUC",
+    "title": "The Sleepwalkers",
+    "authors": ["Christopher Clark"],
+    "thumbnail": "http://books.google.com/books/content?id=TE0iZ4U2ZvUC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the sleepwalkers+authors:christopher clark"
+  },
+  {
+    "googleId": "71NB5LcRaSIC",
+    "title": "The Waste Land",
+    "authors": ["Harold Bloom"],
+    "thumbnail": "http://books.google.com/books/content?id=71NB5LcRaSIC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the waste land+authors:harold bloom"
+  },
+  {
+    "googleId": "Knx-xeDs72sC",
+    "title": "Charlotte's Web (full color)",
+    "authors": ["E. B. White"],
+    "thumbnail": "http://books.google.com/books/content?id=Knx-xeDs72sC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:charlotte's web (full color)+authors:e. b. white"
+  },
+  {
+    "googleId": "7gwY7-UaqxUC",
+    "title": "Freakonomics",
+    "authors": ["Steven D. Levitt", "Stephen J. Dubner"],
+    "thumbnail": "http://books.google.com/books/content?id=7gwY7-UaqxUC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:freakonomics+authors:stephen j. dubner,steven d. levitt"
+  },
+  {
+    "googleId": "QKqzAtssOCMC",
+    "title": "A Treatise of the Plague",
+    "authors": ["Patrick Russell"],
+    "thumbnail": "http://books.google.com/books/content?id=QKqzAtssOCMC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:a treatise of the plague+authors:patrick russell"
+  },
+  {
+    "googleId": "CQYg20lTHtMC",
+    "title": "The Little Prince",
+    "authors": ["Antoine de Saint-Exupéry"],
+    "thumbnail": "http://books.google.com/books/content?id=CQYg20lTHtMC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the little prince+authors:antoine de saint-exupéry"
+  },
+  {
+    "googleId": "rmoIAQAAIAAJ",
+    "title": "A Clockwork Orange",
+    "authors": ["Anthony Burgess"],
+    "thumbnail": "http://books.google.com/books/content?id=rmoIAQAAIAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "compareStr": "title:a clockwork orange+authors:anthony burgess"
+  },
+  {
+    "googleId": "NQA9EAAAQBAJ",
+    "title": "On the Duty of Civil Disobedience",
+    "authors": ["Henry David Thoreau"],
+    "thumbnail": "http://books.google.com/books/content?id=NQA9EAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:on the duty of civil disobedience+authors:henry david thoreau"
+  },
+  {
+    "googleId": "yT9aAAAAMAAJ",
+    "title": "The Wonderful Wizard of Oz",
+    "authors": ["Lyman Frank Baum"],
+    "thumbnail": "http://books.google.com/books/content?id=yT9aAAAAMAAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the wonderful wizard of oz+authors:lyman frank baum"
+  },
+  {
+    "googleId": "ChINBAAAQBAJ",
+    "title": "Anna Karenina",
+    "authors": ["Leo Tolstoy"],
+    "thumbnail": "http://books.google.com/books/content?id=ChINBAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:anna karenina+authors:leo tolstoy"
+  },
+  {
+    "googleId": "7mWHXbGlc6UC",
+    "title": "The Grapes of Wrath",
+    "authors": ["John Steinbeck"],
+    "thumbnail": "http://books.google.com/books/content?id=7mWHXbGlc6UC&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "compareStr": "title:the grapes of wrath+authors:john steinbeck"
+  },
+  {
+    "googleId": "fbbREAAAQBAJ",
+    "title": "A Room With A View",
+    "authors": ["E. M. Forster"],
+    "thumbnail": "http://books.google.com/books/content?id=fbbREAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:a room with a view+authors:e. m. forster"
+  },
+  {
+    "googleId": "NGJubhmwqfoC",
+    "title": "In Cold Blood",
+    "authors": ["Truman Capote"],
+    "thumbnail": "http://books.google.com/books/content?id=NGJubhmwqfoC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:in cold blood+authors:truman capote"
+  },
+  {
+    "googleId": "pYIBIIyQGZ8C",
+    "title": "To the Lighthouse",
+    "authors": ["Virginia Woolf"],
+    "thumbnail": "http://books.google.com/books/content?id=pYIBIIyQGZ8C&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:to the lighthouse+authors:virginia woolf"
+  },
+  {
+    "googleId": "lmy-EAAAQBAJ",
+    "title": "The Count of Monte Cristo",
+    "authors": ["Alexandre Dumas"],
+    "thumbnail": "http://books.google.com/books/content?id=lmy-EAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the count of monte cristo+authors:alexandre dumas"
+  },
+  {
+    "googleId": "vGuQDwAAQBAJ",
+    "title": "The Pursuit of Love by Nancy Mitford (Book Analysis)",
+    "authors": ["Bright Summaries"],
+    "thumbnail": "http://books.google.com/books/content?id=vGuQDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the pursuit of love by nancy mitford (book analysis)+authors:bright summaries"
+  },
+  {
+    "googleId": "4ae1zgEACAAJ",
+    "title": "Josefine Mutzenbacher Or The Story of a Viennese Wench, as Told by Herself",
+    "authors": ["Josefine Mutzenbacher"],
+    "thumbnail": "http://books.google.com/books/content?id=4ae1zgEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "compareStr": "title:josefine mutzenbacher or the story of a viennese wench, as told by herself+authors:josefine mutzenbacher"
+  },
+  {
+    "googleId": "R-5VFSu9aIkC",
+    "title": "East of Eden",
+    "authors": ["John Steinbeck"],
+    "thumbnail": "http://books.google.com/books/content?id=R-5VFSu9aIkC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:east of eden+authors:john steinbeck"
+  },
+  {
+    "googleId": "KlloAwAAQBAJ",
+    "title": "Beyond Good and Evil",
+    "authors": ["Frederich Nietzche"],
+    "thumbnail": "http://books.google.com/books/content?id=KlloAwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:beyond good and evil+authors:frederich nietzche"
+  },
+  {
+    "googleId": "5JlGDwAAQBAJ",
+    "title": "Emotional Intelligence for IT Professionals",
+    "authors": ["Emilia M. Ludovino"],
+    "thumbnail": "http://books.google.com/books/content?id=5JlGDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:emotional intelligence for it professionals+authors:emilia m. ludovino"
+  },
+  {
+    "googleId": "zLNPEAAAQBAJ",
+    "title": "The Kite Runner (Essential Edition)",
+    "authors": ["Khaled Hosseini"],
+    "thumbnail": "http://books.google.com/books/content?id=zLNPEAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the kite runner (essential edition)+authors:khaled hosseini"
+  },
+  {
+    "googleId": "hU5Wk0o_iCoC",
+    "title": "Notes from Underground",
+    "authors": ["Fyodor Dostoevsky"],
+    "thumbnail": "http://books.google.com/books/content?id=hU5Wk0o_iCoC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:notes from underground+authors:fyodor dostoevsky"
+  },
+  {
+    "googleId": "3VcoAAAAYAAJ",
+    "title": "The Pickwick Papers",
+    "authors": ["Charles Dickens"],
+    "thumbnail": "http://books.google.com/books/content?id=3VcoAAAAYAAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the pickwick papers+authors:charles dickens"
+  },
+  {
+    "googleId": "T7OBEAAAQBAJ",
+    "title": "The Maltese Falcon",
+    "authors": ["Dashiell Hammett"],
+    "thumbnail": "http://books.google.com/books/content?id=T7OBEAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the maltese falcon+authors:dashiell hammett"
+  },
+  {
+    "googleId": "9JlADwAAQBAJ",
+    "title": "Dracula",
+    "authors": ["Bram Stoker"],
+    "thumbnail": "http://books.google.com/books/content?id=9JlADwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:dracula+authors:bram stoker"
+  },
+  {
+    "googleId": "jPe4DQAAQBAJ",
+    "title": "The Time Machine",
+    "authors": ["H. G. Wells"],
+    "thumbnail": "http://books.google.com/books/content?id=jPe4DQAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the time machine+authors:h. g. wells"
+  },
+  {
+    "googleId": "RlgJzgEACAAJ",
+    "title": "War and Peace by Leo Tolstoy",
+    "authors": ["Leo Tolstoy"],
+    "thumbnail": "http://books.google.com/books/content?id=RlgJzgEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "compareStr": "title:war and peace by leo tolstoy+authors:leo tolstoy"
+  },
+  {
+    "googleId": "MoyNhwhSVYAC",
+    "title": "Money and Its Use in Medieval Europe",
+    "authors": ["Peter Spufford"],
+    "thumbnail": "http://books.google.com/books/content?id=MoyNhwhSVYAC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:money and its use in medieval europe+authors:peter spufford"
+  },
+  {
+    "googleId": "QEHI-uN0tmgC",
+    "title": "Mrs Dalloway",
+    "authors": ["Virginia Woolf"],
+    "thumbnail": "http://books.google.com/books/content?id=QEHI-uN0tmgC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:mrs dalloway+authors:virginia woolf"
+  },
+  {
+    "googleId": "7UPkEAAAQBAJ",
+    "title": "A Doll’s House",
+    "authors": ["Henrik Ibsen"],
+    "thumbnail": "http://books.google.com/books/content?id=7UPkEAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:a doll’s house+authors:henrik ibsen"
+  },
+  {
+    "googleId": "ZTSGDwAAQBAJ",
+    "title": "The Day of the Locust",
+    "authors": ["Nathanael West"],
+    "thumbnail": "http://books.google.com/books/content?id=ZTSGDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the day of the locust+authors:nathanael west"
+  },
+  {
+    "googleId": "IE5yW9MTML4C",
+    "title": "Native Son",
+    "authors": ["Richard Wright"],
+    "thumbnail": "http://books.google.com/books/content?id=IE5yW9MTML4C&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:native son+authors:richard wright"
+  },
+  {
+    "googleId": "qiCO4XZ2K6IC",
+    "title": "The Complete Book of Les Miserables",
+    "authors": ["Edward Behr"],
+    "thumbnail": "http://books.google.com/books/content?id=qiCO4XZ2K6IC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the complete book of les miserables+authors:edward behr"
+  },
+  {
+    "googleId": "IT6vfrb5fNcC",
+    "title": "Midnight's Children",
+    "authors": ["Salman Rushdie"],
+    "thumbnail": "http://books.google.com/books/content?id=IT6vfrb5fNcC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:midnight's children+authors:salman rushdie"
+  },
+  {
+    "googleId": "8IqcEQAAQBAJ",
+    "title": "Passage to India",
+    "authors": ["E. M. Forster"],
+    "thumbnail": "http://books.google.com/books/content?id=8IqcEQAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:passage to india+authors:e. m. forster"
+  },
+  {
+    "googleId": "nAzVtjpDkjEC",
+    "title": "The Scarlet Letter",
+    "authors": ["Nathaniel Hawthorne"],
+    "thumbnail": "http://books.google.com/books/content?id=nAzVtjpDkjEC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the scarlet letter+authors:nathaniel hawthorne"
+  },
+  {
+    "googleId": "-YTCZE63RcwC",
+    "title": "A Handful of Dust",
+    "authors": ["Evelyn Waugh"],
+    "thumbnail": "http://books.google.com/books/content?id=-YTCZE63RcwC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:a handful of dust+authors:evelyn waugh"
+  },
+  {
+    "googleId": "ccCMJihqqEMC",
+    "title": "Selected Stories of Anton Chekhov",
+    "authors": ["Anton Chekhov"],
+    "thumbnail": "http://books.google.com/books/content?id=ccCMJihqqEMC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:selected stories of anton chekhov+authors:anton chekhov"
+  },
+  {
+    "googleId": "Eu9EvgAACAAJ",
+    "title": "Oliver Twist (Original Edition)",
+    "authors": ["Charles Dickens"],
+    "compareStr": "title:oliver twist (original edition)+authors:charles dickens"
+  },
+  {
+    "googleId": "g0pbAAAAMAAJ",
+    "title": "The Catcher in the Rye",
+    "authors": ["Jerome David Salinger"],
+    "thumbnail": "http://books.google.com/books/content?id=g0pbAAAAMAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "compareStr": "title:the catcher in the rye+authors:jerome david salinger"
+  },
+  {
+    "googleId": "xU9-SJXb2K8C",
+    "title": "Romeo and Juliet",
+    "authors": ["William Shakespeare"],
+    "thumbnail": "http://books.google.com/books/content?id=xU9-SJXb2K8C&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:romeo and juliet+authors:william shakespeare"
+  },
+  {
+    "googleId": "CmlNxQEACAAJ",
+    "title": "Josefine Mutzenbacher",
+    "authors": ["Felix Salten"],
+    "thumbnail": "http://books.google.com/books/content?id=CmlNxQEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "compareStr": "title:josefine mutzenbacher+authors:felix salten"
+  },
+  {
+    "googleId": "00TczwEACAAJ",
+    "title": "One Thousand and One Nights",
+    "authors": ["Richard Francis burton"],
+    "compareStr": "title:one thousand and one nights+authors:richard francis burton"
+  },
+  {
+    "googleId": "bwVDEQAAQBAJ",
+    "title": "The Blue Castle",
+    "authors": ["Lucy Maud Montgomery"],
+    "thumbnail": "http://books.google.com/books/content?id=bwVDEQAAQBAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "compareStr": "title:the blue castle+authors:lucy maud montgomery"
+  },
+  {
+    "googleId": "01KdDwAAQBAJ",
+    "title": "Gone with the Wind",
+    "authors": ["Margaret Mitchell"],
+    "thumbnail": "http://books.google.com/books/content?id=01KdDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:gone with the wind+authors:margaret mitchell"
+  },
+  {
+    "googleId": "lSMGAAAAQAAJ",
+    "title": "Jane Eyre",
+    "authors": ["Charlotte Brontë"],
+    "thumbnail": "http://books.google.com/books/content?id=lSMGAAAAQAAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:jane eyre+authors:charlotte brontë"
+  },
+  {
+    "googleId": "btIQAAAAYAAJ",
+    "title": "Alice's Adventures in Wonderland",
+    "authors": ["Lewis Carroll"],
+    "thumbnail": "http://books.google.com/books/content?id=btIQAAAAYAAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:alice's adventures in wonderland+authors:lewis carroll"
+  },
+  {
+    "googleId": "k31NFutTNRQC",
+    "title": "The Complete Grimm's Fairy Tales",
+    "authors": ["Brothers Grimm"],
+    "thumbnail": "http://books.google.com/books/content?id=k31NFutTNRQC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the complete grimm's fairy tales+authors:brothers grimm"
+  },
+  {
+    "googleId": "SxSJDwAAQBAJ",
+    "title": "On Nineteen Eighty-Four",
+    "authors": ["D.J. Taylor"],
+    "thumbnail": "http://books.google.com/books/content?id=SxSJDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:on nineteen eighty-four+authors:d.j. taylor"
+  },
+  {
+    "googleId": "5vopAAAAYAAJ",
+    "title": "Haydn's Dictionary of Dates and Universal Information Relating to All Ages and Nations",
+    "authors": ["Joseph Haydn"],
+    "thumbnail": "http://books.google.com/books/content?id=5vopAAAAYAAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:haydn's dictionary of dates and universal information relating to all ages and nations+authors:joseph haydn"
+  },
+  {
+    "googleId": "g4c9NZd4lPkC",
+    "title": "Malone Dies",
+    "authors": ["Samuel Beckett"],
+    "compareStr": "title:malone dies+authors:samuel beckett"
+  },
+  {
+    "googleId": "NoljDwAAQBAJ",
+    "title": "The Enchanted April",
+    "authors": ["Elizabeth Von Arnim"],
+    "thumbnail": "http://books.google.com/books/content?id=NoljDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the enchanted april+authors:elizabeth von arnim"
+  },
+  {
+    "googleId": "gJHATwtsjoAC",
+    "title": "The Heart of the Matter",
+    "authors": ["Bob Edwards"],
+    "thumbnail": "http://books.google.com/books/content?id=gJHATwtsjoAC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the heart of the matter+authors:bob edwards"
+  },
+  {
+    "googleId": "Yqg_DwAAQBAJ",
+    "title": "The Portrait of a Lady",
+    "authors": ["Henry James"],
+    "thumbnail": "http://books.google.com/books/content?id=Yqg_DwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the portrait of a lady+authors:henry james"
+  },
+  {
+    "googleId": "9JoRDgAAQBAJ",
+    "title": "The Thirty-Nine Steps",
+    "authors": ["John Buchan"],
+    "thumbnail": "http://books.google.com/books/content?id=9JoRDgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the thirty-nine steps+authors:john buchan"
+  },
+  {
+    "googleId": "bX1VNAAACAAJ",
+    "title": "Tom Jones",
+    "authors": ["Peter Jones"],
+    "compareStr": "title:tom jones+authors:peter jones"
+  },
+  {
+    "googleId": "9w9HuDs1FWoC",
+    "title": "Bleak House",
+    "authors": ["Charles Dickens"],
+    "thumbnail": "http://books.google.com/books/content?id=9w9HuDs1FWoC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:bleak house+authors:charles dickens"
+  },
+  {
+    "googleId": "Kpu1VY8KcYcC",
+    "title": "In Search of Lost Time, Volume 5",
+    "authors": ["Marcel Proust"],
+    "thumbnail": "http://books.google.com/books/content?id=Kpu1VY8KcYcC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:in search of lost time, volume 5+authors:marcel proust"
+  },
+  {
+    "googleId": "jKmOEAAAQBAJ",
+    "title": "Ulysses",
+    "authors": ["James Joyce"],
+    "thumbnail": "http://books.google.com/books/content?id=jKmOEAAAQBAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "compareStr": "title:ulysses+authors:james joyce"
+  },
+  {
+    "googleId": "cThZAAAAYAAJ",
+    "title": "The Adventures of Augie March",
+    "authors": ["Saul Bellow"],
+    "thumbnail": "http://books.google.com/books/content?id=cThZAAAAYAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "compareStr": "title:the adventures of augie march+authors:saul bellow"
+  },
+  {
+    "googleId": "EO-2vZseBf0C",
+    "title": "The Diary of a Young Girl",
+    "authors": ["Anne Frank"],
+    "thumbnail": "http://books.google.com/books/content?id=EO-2vZseBf0C&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the diary of a young girl+authors:anne frank"
+  },
+  {
+    "googleId": "8q4TAAAAYAAJ",
+    "title": "The Yellow Wall Paper",
+    "authors": ["Charlotte Perkins Gilman"],
+    "thumbnail": "http://books.google.com/books/content?id=8q4TAAAAYAAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the yellow wall paper+authors:charlotte perkins gilman"
+  },
+  {
+    "googleId": "5LlddZgi6iYC",
+    "title": "Madame Bovary",
+    "authors": ["Gustave Flaubert"],
+    "thumbnail": "http://books.google.com/books/content?id=5LlddZgi6iYC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:madame bovary+authors:gustave flaubert"
+  },
+  {
+    "googleId": "rLOZDwAAQBAJ",
+    "title": "Nightmare Abbey",
+    "authors": ["Thomas Love Peacock"],
+    "thumbnail": "http://books.google.com/books/content?id=rLOZDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:nightmare abbey+authors:thomas love peacock"
+  },
+  {
+    "googleId": "XNyEDwAAQBAJ",
+    "title": "I, Claudius",
+    "authors": ["Robert Graves"],
+    "thumbnail": "http://books.google.com/books/content?id=XNyEDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:i, claudius+authors:robert graves"
+  },
+  {
+    "googleId": "nm5YDwAAQBAJ",
+    "title": "The Magic Mountain",
+    "authors": ["Thomas Mann"],
+    "thumbnail": "http://books.google.com/books/content?id=nm5YDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the magic mountain+authors:thomas mann"
+  },
+  {
+    "googleId": "C_rPXanc_HAC",
+    "title": "A Portrait of the Artist as a Young Man",
+    "authors": ["James Joyce"],
+    "thumbnail": "http://books.google.com/books/content?id=C_rPXanc_HAC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:a portrait of the artist as a young man+authors:james joyce"
+  },
+  {
+    "googleId": "yz0GAQAAIAAJ",
+    "title": "Things Fall Apart",
+    "authors": ["Chinua Achebe"],
+    "thumbnail": "http://books.google.com/books/content?id=yz0GAQAAIAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "compareStr": "title:things fall apart+authors:chinua achebe"
+  },
+  {
+    "googleId": "ZW78DwAAQBAJ",
+    "title": "My Bondage and My Freedom",
+    "authors": ["Frederick Douglass"],
+    "thumbnail": "http://books.google.com/books/content?id=ZW78DwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:my bondage and my freedom+authors:frederick douglass"
+  },
+  {
+    "googleId": "yiQ3AAAAIAAJ",
+    "title": "Walden",
+    "authors": ["Henry David Thoreau"],
+    "thumbnail": "http://books.google.com/books/content?id=yiQ3AAAAIAAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:walden+authors:henry david thoreau"
+  },
+  {
+    "googleId": "Bd_UZAdvUDIC",
+    "title": "Neuromancer",
+    "authors": ["William Gibson"],
+    "thumbnail": "http://books.google.com/books/content?id=Bd_UZAdvUDIC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:neuromancer+authors:william gibson"
+  },
+  {
+    "googleId": "FrREAAAAYAAJ",
+    "title": "The Complete Works of Edgar Allan Poe: Biography [by James A. Harrison",
+    "authors": ["Edgar Allan Poe"],
+    "thumbnail": "http://books.google.com/books/content?id=FrREAAAAYAAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the complete works of edgar allan poe: biography [by james a. harrison+authors:edgar allan poe"
+  },
+  {
+    "googleId": "qkKVEAAAQBAJ",
+    "title": "An American Tragedy",
+    "authors": ["Theodore Dreiser"],
+    "thumbnail": "http://books.google.com/books/content?id=qkKVEAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:an american tragedy+authors:theodore dreiser"
+  },
+  {
+    "googleId": "UehmCj5rekMC",
+    "title": "Tess of the D'Urbervilles",
+    "authors": ["Thomas Hardy"],
+    "thumbnail": "http://books.google.com/books/content?id=UehmCj5rekMC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:tess of the d'urbervilles+authors:thomas hardy"
+  },
+  {
+    "googleId": "ioWrtAEACAAJ",
+    "title": "The Works of Edgar Allan Poe",
+    "authors": ["Edgar Allan Poe"],
+    "thumbnail": "http://books.google.com/books/content?id=ioWrtAEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "compareStr": "title:the works of edgar allan poe+authors:edgar allan poe"
+  },
+  {
+    "googleId": "ghKyLjIU4-QC",
+    "title": "The Sun Also Rises",
+    "authors": ["Ernest Hemingway"],
+    "thumbnail": "http://books.google.com/books/content?id=ghKyLjIU4-QC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the sun also rises+authors:ernest hemingway"
+  },
+  {
+    "googleId": "t5yFTpIJYhcC",
+    "title": "The Adventures of Tom Sawyer",
+    "authors": ["Mark Twain"],
+    "thumbnail": "http://books.google.com/books/content?id=t5yFTpIJYhcC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the adventures of tom sawyer+authors:mark twain"
+  },
+  {
+    "googleId": "1Z0iYAAACAAJ",
+    "title": "The Moviegoer",
+    "authors": ["Walker Percy"],
+    "thumbnail": "http://books.google.com/books/content?id=1Z0iYAAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "compareStr": "title:the moviegoer+authors:walker percy"
+  },
+  {
+    "googleId": "Bv0CAAAAQAAJ",
+    "title": "The pilgrim's progress",
+    "authors": ["John Bunyan"],
+    "thumbnail": "http://books.google.com/books/content?id=Bv0CAAAAQAAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the pilgrim's progress+authors:john bunyan"
+  },
+  {
+    "googleId": "hbi9MDvakKMC",
+    "title": "All The King's Men",
+    "authors": ["Robert Penn Warren", "Noel Polk"],
+    "thumbnail": "http://books.google.com/books/content?id=hbi9MDvakKMC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:all the king's men+authors:noel polk,robert penn warren"
+  },
+  {
+    "googleId": "cSI5tAEACAAJ",
+    "title": "Ulysses",
+    "authors": ["James Joyce"],
+    "compareStr": "title:ulysses+authors:james joyce"
+  },
+  {
+    "googleId": "V2-ChsYrvloC",
+    "title": "Don Quixote",
+    "authors": ["Miguel de Cervantes", "Edith Grossman"],
+    "thumbnail": "http://books.google.com/books/content?id=V2-ChsYrvloC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:don quixote+authors:edith grossman,miguel de cervantes"
+  },
+  {
+    "googleId": "emopvwCTzt8C",
+    "title": "The Auditory Outlook",
+    "authors": ["Josephine Baxter Timberlake"],
+    "thumbnail": "http://books.google.com/books/content?id=emopvwCTzt8C&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the auditory outlook+authors:josephine baxter timberlake"
+  },
+  {
+    "googleId": "UbnRihs6EfkC",
+    "title": "Peter Pan",
+    "authors": ["James Matthew Barrie"],
+    "thumbnail": "http://books.google.com/books/content?id=UbnRihs6EfkC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:peter pan+authors:james matthew barrie"
+  },
+  {
+    "googleId": "QM-HkaTDjg4C",
+    "title": "Rabbit, Run",
+    "authors": ["John Updike"],
+    "thumbnail": "http://books.google.com/books/content?id=QM-HkaTDjg4C&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:rabbit, run+authors:john updike"
+  },
+  {
+    "googleId": "jU1_EAAAQBAJ",
+    "title": "As I Lay Dying",
+    "authors": ["William Faulkner"],
+    "thumbnail": "http://books.google.com/books/content?id=jU1_EAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:as i lay dying+authors:william faulkner"
+  },
+  {
+    "googleId": "ggRaDwAAQBAJ",
+    "title": "The Sleepwalkers",
+    "authors": ["B. B. Griffith"],
+    "thumbnail": "http://books.google.com/books/content?id=ggRaDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the sleepwalkers+authors:b. b. griffith"
+  },
+  {
+    "googleId": "K86WBAAAQBAJ",
+    "title": "Considering Watchmen",
+    "authors": ["Andrew Hoberek"],
+    "thumbnail": "http://books.google.com/books/content?id=K86WBAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:considering watchmen+authors:andrew hoberek"
+  },
+  {
+    "googleId": "CSE2P06rVUoC",
+    "title": "Brideshead Revisited",
+    "authors": ["Evelyn Waugh"],
+    "thumbnail": "http://books.google.com/books/content?id=CSE2P06rVUoC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:brideshead revisited+authors:evelyn waugh"
+  },
+  {
+    "googleId": "0V5XAAAAYAAJ",
+    "title": "Leaves of Grass",
+    "authors": ["Walt Whitman"],
+    "thumbnail": "http://books.google.com/books/content?id=0V5XAAAAYAAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:leaves of grass+authors:walt whitman"
+  },
+  {
+    "googleId": "ZdKLDQAAQBAJ",
+    "title": "The Brief Wondrous Life of Oscar Wao (Pulitzer Prize Winner)",
+    "authors": ["Junot Díaz"],
+    "thumbnail": "http://books.google.com/books/content?id=ZdKLDQAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the brief wondrous life of oscar wao (pulitzer prize winner)+authors:junot díaz"
+  },
+  {
+    "googleId": "0rPlFEQS-zgC",
+    "title": "The Count of Monte-Cristo",
+    "authors": ["Alexandre Dumas"],
+    "thumbnail": "http://books.google.com/books/content?id=0rPlFEQS-zgC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the count of monte-cristo+authors:alexandre dumas"
+  },
+  {
+    "googleId": "8v8ejgEACAAJ",
+    "title": "The Complete Works of Edgar Allen Poe",
+    "authors": ["Edgar Allan Poe"],
+    "thumbnail": "http://books.google.com/books/content?id=8v8ejgEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "compareStr": "title:the complete works of edgar allen poe+authors:edgar allan poe"
+  },
+  {
+    "googleId": "vwo4ngEACAAJ",
+    "title": "The King in Yellow",
+    "authors": ["Robert W. Chambers"],
+    "thumbnail": "http://books.google.com/books/content?id=vwo4ngEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "compareStr": "title:the king in yellow+authors:robert w. chambers"
+  },
+  {
+    "googleId": "k1-deNvIm9UC",
+    "title": "Lord Jim",
+    "authors": ["Cedric Thomas Watts", "Robert Hampson"],
+    "thumbnail": "http://books.google.com/books/content?id=k1-deNvIm9UC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:lord jim+authors:cedric thomas watts,robert hampson"
+  },
+  {
+    "googleId": "iv0KAAAAYAAJ",
+    "title": "David Copperfield",
+    "authors": ["Charles Dickens"],
+    "thumbnail": "http://books.google.com/books/content?id=iv0KAAAAYAAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:david copperfield+authors:charles dickens"
+  },
+  {
+    "googleId": "2RzAEAAAQBAJ",
+    "title": "Vanity Fair 100 Years",
+    "authors": ["Graydon Carter"],
+    "thumbnail": "http://books.google.com/books/content?id=2RzAEAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:vanity fair 100 years+authors:graydon carter"
+  },
+  {
+    "googleId": "nAKHtAEACAAJ",
+    "title": "The Big Sleep",
+    "authors": ["Raymond Chandler"],
+    "thumbnail": "http://books.google.com/books/content?id=nAKHtAEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "compareStr": "title:the big sleep+authors:raymond chandler"
+  },
+  {
+    "googleId": "x3ISEAAAQBAJ",
+    "title": "The Stand (Movie Tie-in Edition)",
+    "authors": ["Stephen King"],
+    "thumbnail": "http://books.google.com/books/content?id=x3ISEAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the stand (movie tie-in edition)+authors:stephen king"
+  },
+  {
+    "googleId": "ACMYLqk_7GoC",
+    "title": "And Then There Were None",
+    "authors": ["Agatha Christie"],
+    "thumbnail": "http://books.google.com/books/content?id=ACMYLqk_7GoC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:and then there were none+authors:agatha christie"
+  },
+  {
+    "googleId": "oOjoGkmMWUMC",
+    "title": "Second Treatise of Government",
+    "authors": ["John Locke"],
+    "thumbnail": "http://books.google.com/books/content?id=oOjoGkmMWUMC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:second treatise of government+authors:john locke"
+  },
+  {
+    "googleId": "h4cwEAAAQBAJ",
+    "title": "The Canterbury Tales",
+    "authors": ["Geoffrey Chaucer"],
+    "thumbnail": "http://books.google.com/books/content?id=h4cwEAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the canterbury tales+authors:geoffrey chaucer"
+  },
+  {
+    "googleId": "nfdvDwAAQBAJ",
+    "title": "Pride and Prejudice",
+    "authors": ["Jane Austen"],
+    "thumbnail": "http://books.google.com/books/content?id=nfdvDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:pride and prejudice+authors:jane austen"
+  },
+  {
+    "googleId": "xmwfNvLH0EEC",
+    "title": "Little Women",
+    "authors": ["Louisa May Alcott"],
+    "thumbnail": "http://books.google.com/books/content?id=xmwfNvLH0EEC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:little women+authors:louisa may alcott"
+  },
+  {
+    "googleId": "tWPGAAAAIAAJ",
+    "title": "The Poems of Dr. Zhivago",
+    "authors": ["Boris Leonidovich Pasternak"],
+    "thumbnail": "http://books.google.com/books/content?id=tWPGAAAAIAAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the poems of dr. zhivago+authors:boris leonidovich pasternak"
+  },
+  {
+    "googleId": "wCP2qgXwXdUC",
+    "title": "One Flew Over the Cuckoo's Nest",
+    "authors": ["Ken Kesey"],
+    "thumbnail": "http://books.google.com/books/content?id=wCP2qgXwXdUC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:one flew over the cuckoo's nest+authors:ken kesey"
+  },
+  {
+    "googleId": "HfHfAgAAQBAJ",
+    "title": "The Prophet's Handbook",
+    "authors": ["Apostle Raymond Stansbury"],
+    "thumbnail": "http://books.google.com/books/content?id=HfHfAgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the prophet's handbook+authors:apostle raymond stansbury"
+  },
+  {
+    "googleId": "RAg_Pj_HYcMC",
+    "title": "The Strange Case of Dr. Jekyll and Mr. Hyde, and Other Stories",
+    "authors": ["Robert Louis Stevenson"],
+    "thumbnail": "http://books.google.com/books/content?id=RAg_Pj_HYcMC&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "compareStr": "title:the strange case of dr. jekyll and mr. hyde, and other stories+authors:robert louis stevenson"
+  },
+  {
+    "googleId": "lcuGY9gkqGsC",
+    "title": "Plato's Republic",
+    "authors": ["Richard Kraut"],
+    "thumbnail": "http://books.google.com/books/content?id=lcuGY9gkqGsC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:plato's republic+authors:richard kraut"
+  },
+  {
+    "googleId": "9UAMhMxslz8C",
+    "title": "Candide",
+    "authors": ["Francois Voltaire"],
+    "thumbnail": "http://books.google.com/books/content?id=9UAMhMxslz8C&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:candide+authors:francois voltaire"
+  },
+  {
+    "googleId": "5dinjwEACAAJ",
+    "title": "Grimms' Fairy Tales",
+    "authors": ["The Brothers Grimm"],
+    "thumbnail": "http://books.google.com/books/content?id=5dinjwEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "compareStr": "title:grimms' fairy tales+authors:the brothers grimm"
+  },
+  {
+    "googleId": "pNQiDQAAQBAJ",
+    "title": "Neuromancer",
+    "authors": ["William Gibson"],
+    "thumbnail": "http://books.google.com/books/content?id=pNQiDQAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:neuromancer+authors:william gibson"
+  },
+  {
+    "googleId": "YuxjEEYa9qcC",
+    "title": "David Copperfield",
+    "authors": ["Charles Dickens"],
+    "thumbnail": "http://books.google.com/books/content?id=YuxjEEYa9qcC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:david copperfield+authors:charles dickens"
+  },
+  {
+    "googleId": "dQqG0AEACAAJ",
+    "title": "The Strange Case of Dr. Jekyll and Mr. Hyde",
+    "authors": ["Robert Louis Stevenson"],
+    "compareStr": "title:the strange case of dr. jekyll and mr. hyde+authors:robert louis stevenson"
+  },
+  {
+    "googleId": "9YFNvgAACAAJ",
+    "title": "L. N. Tolstoy - War and Peace",
+    "authors": ["Leo Tolstoy"],
+    "compareStr": "title:l. n. tolstoy - war and peace+authors:leo tolstoy"
+  },
+  {
+    "googleId": "mXQVbIRkHegC",
+    "title": "Freakonomics",
+    "authors": ["Steven D. Levitt", "Stephen J. Dubner"],
+    "thumbnail": "http://books.google.com/books/content?id=mXQVbIRkHegC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:freakonomics+authors:stephen j. dubner,steven d. levitt"
+  },
+  {
+    "googleId": "Zf_ozgEACAAJ",
+    "title": "Nineteen Eighty Four by George Orwell",
+    "authors": ["George Orwell"],
+    "compareStr": "title:nineteen eighty four by george orwell+authors:george orwell"
+  },
+  {
+    "googleId": "qgpzEAAAQBAJ",
+    "title": "1984",
+    "authors": ["George Orwell"],
+    "thumbnail": "http://books.google.com/books/content?id=qgpzEAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:1984+authors:george orwell"
+  },
+  {
+    "googleId": "_Ns7PgAACAAJ",
+    "title": "Notes from the Underground",
+    "authors": ["Fyodor Dostoyevsky"],
+    "thumbnail": "http://books.google.com/books/content?id=_Ns7PgAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "compareStr": "title:notes from the underground+authors:fyodor dostoyevsky"
+  },
+  {
+    "googleId": "zTCo8y7tssUC",
+    "title": "The Wind in the Willows",
+    "authors": ["Kenneth Grahame"],
+    "thumbnail": "http://books.google.com/books/content?id=zTCo8y7tssUC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the wind in the willows+authors:kenneth grahame"
+  },
+  {
+    "googleId": "EeeeiUmD4hgC",
+    "title": "The Aeneid",
+    "authors": ["Virgil"],
+    "thumbnail": "http://books.google.com/books/content?id=EeeeiUmD4hgC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+    "compareStr": "title:the aeneid+authors:virgil"
   }
 ]

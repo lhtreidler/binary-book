@@ -218,6 +218,7 @@ export type UserWhereInput = {
   rankingSessions?: Prisma.RankingSessionListRelationFilter
   followers?: Prisma.FollowListRelationFilter
   followings?: Prisma.FollowListRelationFilter
+  bookmarks?: Prisma.BookmarkListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -234,6 +235,7 @@ export type UserOrderByWithRelationInput = {
   rankingSessions?: Prisma.RankingSessionOrderByRelationAggregateInput
   followers?: Prisma.FollowOrderByRelationAggregateInput
   followings?: Prisma.FollowOrderByRelationAggregateInput
+  bookmarks?: Prisma.BookmarkOrderByRelationAggregateInput
   _relevance?: Prisma.UserOrderByRelevanceInput
 }
 
@@ -254,6 +256,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   rankingSessions?: Prisma.RankingSessionListRelationFilter
   followers?: Prisma.FollowListRelationFilter
   followings?: Prisma.FollowListRelationFilter
+  bookmarks?: Prisma.BookmarkListRelationFilter
 }, "id" | "email" | "username">
 
 export type UserOrderByWithAggregationInput = {
@@ -300,6 +303,7 @@ export type UserCreateInput = {
   rankingSessions?: Prisma.RankingSessionCreateNestedManyWithoutUserInput
   followers?: Prisma.FollowCreateNestedManyWithoutToInput
   followings?: Prisma.FollowCreateNestedManyWithoutFromInput
+  bookmarks?: Prisma.BookmarkCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -316,6 +320,7 @@ export type UserUncheckedCreateInput = {
   rankingSessions?: Prisma.RankingSessionUncheckedCreateNestedManyWithoutUserInput
   followers?: Prisma.FollowUncheckedCreateNestedManyWithoutToInput
   followings?: Prisma.FollowUncheckedCreateNestedManyWithoutFromInput
+  bookmarks?: Prisma.BookmarkUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -332,6 +337,7 @@ export type UserUpdateInput = {
   rankingSessions?: Prisma.RankingSessionUpdateManyWithoutUserNestedInput
   followers?: Prisma.FollowUpdateManyWithoutToNestedInput
   followings?: Prisma.FollowUpdateManyWithoutFromNestedInput
+  bookmarks?: Prisma.BookmarkUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -348,6 +354,7 @@ export type UserUncheckedUpdateInput = {
   rankingSessions?: Prisma.RankingSessionUncheckedUpdateManyWithoutUserNestedInput
   followers?: Prisma.FollowUncheckedUpdateManyWithoutToNestedInput
   followings?: Prisma.FollowUncheckedUpdateManyWithoutFromNestedInput
+  bookmarks?: Prisma.BookmarkUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -487,6 +494,20 @@ export type UserUpdateOneRequiredWithoutRankingsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutRankingsInput, Prisma.UserUpdateWithoutRankingsInput>, Prisma.UserUncheckedUpdateWithoutRankingsInput>
 }
 
+export type UserCreateNestedOneWithoutBookmarksInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutBookmarksInput, Prisma.UserUncheckedCreateWithoutBookmarksInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutBookmarksInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutBookmarksNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutBookmarksInput, Prisma.UserUncheckedCreateWithoutBookmarksInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutBookmarksInput
+  upsert?: Prisma.UserUpsertWithoutBookmarksInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutBookmarksInput, Prisma.UserUpdateWithoutBookmarksInput>, Prisma.UserUncheckedUpdateWithoutBookmarksInput>
+}
+
 export type UserCreateNestedOneWithoutRankingSessionsInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutRankingSessionsInput, Prisma.UserUncheckedCreateWithoutRankingSessionsInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutRankingSessionsInput
@@ -514,6 +535,7 @@ export type UserCreateWithoutFollowingsInput = {
   rankings?: Prisma.RankingCreateNestedManyWithoutUserInput
   rankingSessions?: Prisma.RankingSessionCreateNestedManyWithoutUserInput
   followers?: Prisma.FollowCreateNestedManyWithoutToInput
+  bookmarks?: Prisma.BookmarkCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutFollowingsInput = {
@@ -529,6 +551,7 @@ export type UserUncheckedCreateWithoutFollowingsInput = {
   rankings?: Prisma.RankingUncheckedCreateNestedManyWithoutUserInput
   rankingSessions?: Prisma.RankingSessionUncheckedCreateNestedManyWithoutUserInput
   followers?: Prisma.FollowUncheckedCreateNestedManyWithoutToInput
+  bookmarks?: Prisma.BookmarkUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutFollowingsInput = {
@@ -549,6 +572,7 @@ export type UserCreateWithoutFollowersInput = {
   rankings?: Prisma.RankingCreateNestedManyWithoutUserInput
   rankingSessions?: Prisma.RankingSessionCreateNestedManyWithoutUserInput
   followings?: Prisma.FollowCreateNestedManyWithoutFromInput
+  bookmarks?: Prisma.BookmarkCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutFollowersInput = {
@@ -564,6 +588,7 @@ export type UserUncheckedCreateWithoutFollowersInput = {
   rankings?: Prisma.RankingUncheckedCreateNestedManyWithoutUserInput
   rankingSessions?: Prisma.RankingSessionUncheckedCreateNestedManyWithoutUserInput
   followings?: Prisma.FollowUncheckedCreateNestedManyWithoutFromInput
+  bookmarks?: Prisma.BookmarkUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutFollowersInput = {
@@ -595,6 +620,7 @@ export type UserUpdateWithoutFollowingsInput = {
   rankings?: Prisma.RankingUpdateManyWithoutUserNestedInput
   rankingSessions?: Prisma.RankingSessionUpdateManyWithoutUserNestedInput
   followers?: Prisma.FollowUpdateManyWithoutToNestedInput
+  bookmarks?: Prisma.BookmarkUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutFollowingsInput = {
@@ -610,6 +636,7 @@ export type UserUncheckedUpdateWithoutFollowingsInput = {
   rankings?: Prisma.RankingUncheckedUpdateManyWithoutUserNestedInput
   rankingSessions?: Prisma.RankingSessionUncheckedUpdateManyWithoutUserNestedInput
   followers?: Prisma.FollowUncheckedUpdateManyWithoutToNestedInput
+  bookmarks?: Prisma.BookmarkUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutFollowersInput = {
@@ -636,6 +663,7 @@ export type UserUpdateWithoutFollowersInput = {
   rankings?: Prisma.RankingUpdateManyWithoutUserNestedInput
   rankingSessions?: Prisma.RankingSessionUpdateManyWithoutUserNestedInput
   followings?: Prisma.FollowUpdateManyWithoutFromNestedInput
+  bookmarks?: Prisma.BookmarkUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutFollowersInput = {
@@ -651,6 +679,7 @@ export type UserUncheckedUpdateWithoutFollowersInput = {
   rankings?: Prisma.RankingUncheckedUpdateManyWithoutUserNestedInput
   rankingSessions?: Prisma.RankingSessionUncheckedUpdateManyWithoutUserNestedInput
   followings?: Prisma.FollowUncheckedUpdateManyWithoutFromNestedInput
+  bookmarks?: Prisma.BookmarkUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutRankingsInput = {
@@ -666,6 +695,7 @@ export type UserCreateWithoutRankingsInput = {
   rankingSessions?: Prisma.RankingSessionCreateNestedManyWithoutUserInput
   followers?: Prisma.FollowCreateNestedManyWithoutToInput
   followings?: Prisma.FollowCreateNestedManyWithoutFromInput
+  bookmarks?: Prisma.BookmarkCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutRankingsInput = {
@@ -681,6 +711,7 @@ export type UserUncheckedCreateWithoutRankingsInput = {
   rankingSessions?: Prisma.RankingSessionUncheckedCreateNestedManyWithoutUserInput
   followers?: Prisma.FollowUncheckedCreateNestedManyWithoutToInput
   followings?: Prisma.FollowUncheckedCreateNestedManyWithoutFromInput
+  bookmarks?: Prisma.BookmarkUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutRankingsInput = {
@@ -712,6 +743,7 @@ export type UserUpdateWithoutRankingsInput = {
   rankingSessions?: Prisma.RankingSessionUpdateManyWithoutUserNestedInput
   followers?: Prisma.FollowUpdateManyWithoutToNestedInput
   followings?: Prisma.FollowUpdateManyWithoutFromNestedInput
+  bookmarks?: Prisma.BookmarkUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRankingsInput = {
@@ -724,6 +756,87 @@ export type UserUncheckedUpdateWithoutRankingsInput = {
   profileImg?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  rankingSessions?: Prisma.RankingSessionUncheckedUpdateManyWithoutUserNestedInput
+  followers?: Prisma.FollowUncheckedUpdateManyWithoutToNestedInput
+  followings?: Prisma.FollowUncheckedUpdateManyWithoutFromNestedInput
+  bookmarks?: Prisma.BookmarkUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutBookmarksInput = {
+  id?: string
+  firstName?: string | null
+  lastName?: string | null
+  email: string
+  username?: string | null
+  passwordHash: string
+  profileImg?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  rankings?: Prisma.RankingCreateNestedManyWithoutUserInput
+  rankingSessions?: Prisma.RankingSessionCreateNestedManyWithoutUserInput
+  followers?: Prisma.FollowCreateNestedManyWithoutToInput
+  followings?: Prisma.FollowCreateNestedManyWithoutFromInput
+}
+
+export type UserUncheckedCreateWithoutBookmarksInput = {
+  id?: string
+  firstName?: string | null
+  lastName?: string | null
+  email: string
+  username?: string | null
+  passwordHash: string
+  profileImg?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  rankings?: Prisma.RankingUncheckedCreateNestedManyWithoutUserInput
+  rankingSessions?: Prisma.RankingSessionUncheckedCreateNestedManyWithoutUserInput
+  followers?: Prisma.FollowUncheckedCreateNestedManyWithoutToInput
+  followings?: Prisma.FollowUncheckedCreateNestedManyWithoutFromInput
+}
+
+export type UserCreateOrConnectWithoutBookmarksInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutBookmarksInput, Prisma.UserUncheckedCreateWithoutBookmarksInput>
+}
+
+export type UserUpsertWithoutBookmarksInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutBookmarksInput, Prisma.UserUncheckedUpdateWithoutBookmarksInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutBookmarksInput, Prisma.UserUncheckedCreateWithoutBookmarksInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutBookmarksInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutBookmarksInput, Prisma.UserUncheckedUpdateWithoutBookmarksInput>
+}
+
+export type UserUpdateWithoutBookmarksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  profileImg?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  rankings?: Prisma.RankingUpdateManyWithoutUserNestedInput
+  rankingSessions?: Prisma.RankingSessionUpdateManyWithoutUserNestedInput
+  followers?: Prisma.FollowUpdateManyWithoutToNestedInput
+  followings?: Prisma.FollowUpdateManyWithoutFromNestedInput
+}
+
+export type UserUncheckedUpdateWithoutBookmarksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  profileImg?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  rankings?: Prisma.RankingUncheckedUpdateManyWithoutUserNestedInput
   rankingSessions?: Prisma.RankingSessionUncheckedUpdateManyWithoutUserNestedInput
   followers?: Prisma.FollowUncheckedUpdateManyWithoutToNestedInput
   followings?: Prisma.FollowUncheckedUpdateManyWithoutFromNestedInput
@@ -742,6 +855,7 @@ export type UserCreateWithoutRankingSessionsInput = {
   rankings?: Prisma.RankingCreateNestedManyWithoutUserInput
   followers?: Prisma.FollowCreateNestedManyWithoutToInput
   followings?: Prisma.FollowCreateNestedManyWithoutFromInput
+  bookmarks?: Prisma.BookmarkCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutRankingSessionsInput = {
@@ -757,6 +871,7 @@ export type UserUncheckedCreateWithoutRankingSessionsInput = {
   rankings?: Prisma.RankingUncheckedCreateNestedManyWithoutUserInput
   followers?: Prisma.FollowUncheckedCreateNestedManyWithoutToInput
   followings?: Prisma.FollowUncheckedCreateNestedManyWithoutFromInput
+  bookmarks?: Prisma.BookmarkUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutRankingSessionsInput = {
@@ -788,6 +903,7 @@ export type UserUpdateWithoutRankingSessionsInput = {
   rankings?: Prisma.RankingUpdateManyWithoutUserNestedInput
   followers?: Prisma.FollowUpdateManyWithoutToNestedInput
   followings?: Prisma.FollowUpdateManyWithoutFromNestedInput
+  bookmarks?: Prisma.BookmarkUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRankingSessionsInput = {
@@ -803,6 +919,7 @@ export type UserUncheckedUpdateWithoutRankingSessionsInput = {
   rankings?: Prisma.RankingUncheckedUpdateManyWithoutUserNestedInput
   followers?: Prisma.FollowUncheckedUpdateManyWithoutToNestedInput
   followings?: Prisma.FollowUncheckedUpdateManyWithoutFromNestedInput
+  bookmarks?: Prisma.BookmarkUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -815,6 +932,7 @@ export type UserCountOutputType = {
   rankingSessions: number
   followers: number
   followings: number
+  bookmarks: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -822,6 +940,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   rankingSessions?: boolean | UserCountOutputTypeCountRankingSessionsArgs
   followers?: boolean | UserCountOutputTypeCountFollowersArgs
   followings?: boolean | UserCountOutputTypeCountFollowingsArgs
+  bookmarks?: boolean | UserCountOutputTypeCountBookmarksArgs
 }
 
 /**
@@ -862,6 +981,13 @@ export type UserCountOutputTypeCountFollowingsArgs<ExtArgs extends runtime.Types
   where?: Prisma.FollowWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountBookmarksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.BookmarkWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -877,6 +1003,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   rankingSessions?: boolean | Prisma.User$rankingSessionsArgs<ExtArgs>
   followers?: boolean | Prisma.User$followersArgs<ExtArgs>
   followings?: boolean | Prisma.User$followingsArgs<ExtArgs>
+  bookmarks?: boolean | Prisma.User$bookmarksArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -922,6 +1049,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   rankingSessions?: boolean | Prisma.User$rankingSessionsArgs<ExtArgs>
   followers?: boolean | Prisma.User$followersArgs<ExtArgs>
   followings?: boolean | Prisma.User$followingsArgs<ExtArgs>
+  bookmarks?: boolean | Prisma.User$bookmarksArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -934,6 +1062,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     rankingSessions: Prisma.$RankingSessionPayload<ExtArgs>[]
     followers: Prisma.$FollowPayload<ExtArgs>[]
     followings: Prisma.$FollowPayload<ExtArgs>[]
+    bookmarks: Prisma.$BookmarkPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1343,6 +1472,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   rankingSessions<T extends Prisma.User$rankingSessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$rankingSessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RankingSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   followers<T extends Prisma.User$followersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$followersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FollowPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   followings<T extends Prisma.User$followingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$followingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FollowPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  bookmarks<T extends Prisma.User$bookmarksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$bookmarksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BookmarkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1862,6 +1992,30 @@ export type User$followingsArgs<ExtArgs extends runtime.Types.Extensions.Interna
   take?: number
   skip?: number
   distinct?: Prisma.FollowScalarFieldEnum | Prisma.FollowScalarFieldEnum[]
+}
+
+/**
+ * User.bookmarks
+ */
+export type User$bookmarksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Bookmark
+   */
+  select?: Prisma.BookmarkSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Bookmark
+   */
+  omit?: Prisma.BookmarkOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BookmarkInclude<ExtArgs> | null
+  where?: Prisma.BookmarkWhereInput
+  orderBy?: Prisma.BookmarkOrderByWithRelationInput | Prisma.BookmarkOrderByWithRelationInput[]
+  cursor?: Prisma.BookmarkWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.BookmarkScalarFieldEnum | Prisma.BookmarkScalarFieldEnum[]
 }
 
 /**

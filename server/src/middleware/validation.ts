@@ -1,11 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { ZodSchema, ZodError, z } from "zod";
 
-// Custom Request type with validated body
-export interface ValidatedRequest<T> extends Request {
-  validatedBody: T;
-}
-
 /**
  * Generic middleware factory for validating request body against a Zod schema
  * Provides proper TypeScript typing for the validated body
@@ -14,8 +9,7 @@ export interface ValidatedRequest<T> extends Request {
 export function validateBody<T extends ZodSchema>(schema: T) {
   return (req: Request, res: Response, next: NextFunction): void => {
     try {
-      const validated = schema.parse(req.body);
-      (req as any).validatedBody = validated;
+      schema.parse(req.body);
       next();
     } catch (error) {
       if (error instanceof ZodError) {

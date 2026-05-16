@@ -2,6 +2,8 @@
  * API Response Types
  */
 
+export type Paginated<T extends object> = T & { nextPage: number | null };
+
 export interface User {
   email: string;
   firstName: string | null;
@@ -24,15 +26,17 @@ export interface CheckUsernameResponse {
   isTaken: boolean;
 }
 
-export type SearchByUsernameResponse = {
-  users: {
-    username: string;
-    firstName: string | null;
-    lastName: string | null;
-    profileImg: string | null;
-    id: string;
-  }[];
+export type UserSearchItem = {
+  username: string;
+  firstName: string | null;
+  lastName: string | null;
+  profileImg: string | null;
+  id: string;
+  isFollowedByYou: boolean;
+  isFollowingYou: boolean;
 };
+
+export type SearchByUsernameResponse = Paginated<{ users: UserSearchItem[] }>;
 
 type ProfileData = {
   firstName: string | null;
@@ -53,21 +57,19 @@ export type UseGetProfileResponse = ProfileData & {
 
 export interface Book {
   id: string;
-  googleId: string;
-  // Add other book fields as needed
 }
 
 export interface BookSearchItem {
-  key: string;
+  apiId: string;
+  id: string | null;
   title: string;
   authors: string[];
   thumbnail: string;
   isRanked: boolean;
+  bookmarkId: string | null;
 }
 
-export interface BookSearchResponse {
-  items: BookSearchItem[];
-}
+export type BookSearchResponse = Paginated<{ items: BookSearchItem[] }>;
 
 export interface BookListItem {
   bookId: string;
@@ -76,13 +78,10 @@ export interface BookListItem {
   score: number;
 }
 
-export interface BookListResponse {
-  list: BookListItem[];
-  nextPage: number | null;
-}
+export type BookListResponse = Paginated<{ list: BookListItem[] }>;
 
 export interface BookDetailResponse {
-  googleId: string;
+  apiId: string;
   title: string | null;
   authors: string[];
   thumbnail: string | null;
@@ -91,6 +90,7 @@ export interface BookDetailResponse {
   pageCount: number | null;
   categories: string[];
   userScore: number | null;
+  bookmarkId: string | null;
 }
 
 export interface Ranking {
@@ -140,9 +140,10 @@ export type FollowListUser = {
   profileImg: string | null;
   firstName: string | null;
   lastName: string | null;
+  /** Whether the current logged-in user follows this person */
+  isFollowedByYou: boolean;
+  /** Whether this person follows the current logged-in user */
+  isFollowingYou: boolean;
 };
 
-export type FollowListResponse = {
-  result: FollowListUser[];
-  nextPage: number | null;
-};
+export type FollowListResponse = Paginated<{ result: FollowListUser[] }>;

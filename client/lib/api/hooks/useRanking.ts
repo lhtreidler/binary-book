@@ -13,7 +13,7 @@ import {
 
 export interface StartRankingInput {
   rankingLevel: number;
-  gId: string;
+  apiId: string;
 }
 
 export type RankingSelection = "new" | "existing" | "skip";

@@ -1,6 +1,6 @@
-import { Ranking } from "../generated/prisma/client";
-import { prisma } from "../lib/prisma";
-import { handlePaginatedRequest } from "../utils/pagination";
+import { Ranking } from "../../generated/prisma/client";
+import { prisma } from "../../lib/prisma";
+import { handlePaginatedRequest } from "../../utils/pagination";
 
 type MinMax = { minRaw: number | null; maxRaw: number | null };
 type BaseRanking = Omit<Ranking, "updatedAt" | "createdAt" | "id">;
@@ -177,7 +177,14 @@ const getRankingCountByLevel = async ({
 };
 
 const createRankingAndGetScore = async (data: BaseRanking) => {
-  const ranking = await prisma.ranking.create({ data });
+  const { userId, bookId } = data;
+
+  const [ranking] = await prisma.$transaction([
+    prisma.ranking.create({ data }),
+    prisma.bookmark.deleteMany({
+      where: { userId, bookId },
+    }),
+  ]);
 
   const score = await getRankingScore(ranking);
 

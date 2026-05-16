@@ -8,20 +8,8 @@ import {
 import { getApiClient } from "../client";
 import { ApiError, FollowListResponse, FollowListUser } from "../types";
 
-type RawFollowUser = {
-  username: string | null;
-  profileImg: string | null;
-  firstName: string | null;
-  lastName: string | null;
-};
-
 type RawFollowListResponse = {
-  result: {
-    fromId: string;
-    toId: string;
-    from?: RawFollowUser;
-    to?: RawFollowUser;
-  }[];
+  result: FollowListUser[];
   nextPage: number | null;
 };
 
@@ -42,12 +30,8 @@ export function useFollowList({
       const { data } = await client.get<RawFollowListResponse>(url, {
         params: { page: pageParam },
       });
-      const isFollowers = type === "followers";
       return {
-        result: data.result.map((item) => ({
-          id: isFollowers ? item.fromId : item.toId,
-          ...(isFollowers ? item.from : item.to),
-        })) as FollowListUser[],
+        result: data.result,
         nextPage: data.nextPage,
       };
     },
@@ -65,7 +49,8 @@ export function useFollow(userId: string) {
       await client.post(`/follow/${userId}`);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["users", userId] });
+      queryClient.invalidateQueries({ queryKey: ["users", "profile", userId] });
+      queryClient.invalidateQueries({ queryKey: ["users", "me"] });
       queryClient.invalidateQueries({ queryKey: ["follow"] });
     },
   });
@@ -79,7 +64,8 @@ export function useUnfollow(userId: string) {
       await client.delete(`/follow/${userId}`);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["users", userId] });
+      queryClient.invalidateQueries({ queryKey: ["users", "profile", userId] });
+      queryClient.invalidateQueries({ queryKey: ["users", "me"] });
       queryClient.invalidateQueries({ queryKey: ["follow"] });
     },
   });

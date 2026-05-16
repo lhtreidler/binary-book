@@ -17,10 +17,11 @@ const TabIcon = ({ as, color }: { as: IconAs; color: string }) => (
 );
 
 const tabs = [
-  { name: "index", title: "Home", icon: StarIcon },
-  { name: "list", title: "List", icon: MenuIcon },
-  { name: "community", title: "Community", icon: FavouriteIcon },
-  { name: "profile/index", title: "Profile", icon: UserIcon },
+  { name: "index", options: { title: "Home", icon: StarIcon } },
+  { name: "list", options: { title: "List", icon: MenuIcon } },
+  { name: "community", options: { title: "Community", icon: FavouriteIcon } },
+  { name: "profile/index", options: { title: "Profile", icon: UserIcon } },
+  { name: "profile/[userId]", options: { href: null } },
 ] as const;
 
 export default function TabLayout() {
@@ -41,17 +42,22 @@ export default function TabLayout() {
             headerShown: false,
           }}
         >
-          {tabs.map(({ name, title, icon }) => (
+          {tabs.map(({ name, options }) => (
             <Tabs.Screen
               key={name}
               name={name}
               options={{
-                title,
-                tabBarIcon: ({ color }) => <TabIcon as={icon} color={color} />,
+                ...("icon" in options
+                  ? {
+                      tabBarIcon: ({ color }) => (
+                        <TabIcon as={options.icon} color={color} />
+                      ),
+                    }
+                  : {}),
+                ...options,
               }}
             />
           ))}
-          <Tabs.Screen name="profile/[userId]" options={{ href: null }} />
         </Tabs>
       </View>
     </View>

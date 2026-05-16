@@ -1,12 +1,15 @@
-import { User } from "../generated/prisma/client";
-import { prisma } from "../lib/prisma";
-import { formatEmail, formatUsername } from "../utils/format";
-import { OmitSystem, WithOptional } from "../utils/type-utils";
+import { User } from "../../generated/prisma/client";
+import { prisma } from "../../lib/prisma";
+import { formatEmail, formatUsername } from "../../utils/format";
+import { OmitSystem, WithOptional } from "../../utils/type-utils";
 import { followService } from "./followService";
 
 type BaseUser = OmitSystem<User>;
 
-type CreateUser = WithOptional<BaseUser, "firstName" | "lastName" | "username">;
+type CreateUser = WithOptional<
+  BaseUser,
+  "firstName" | "lastName" | "username" | "profileImg"
+>;
 
 const getByEmail = ({ email }: { email: string }) => {
   return prisma.user.findUnique({
@@ -116,24 +119,50 @@ const getByUsername = ({ username }: { username: string }) => {
   });
 };
 
-const searchByUsername = ({ username }: { username: string }) => {
-  return prisma.user.findMany({
-    orderBy: {
-      _relevance: {
-        fields: ["username"],
-        search: formatUsername(username),
-        sort: "desc",
+const searchByUsername = async ({
+  username,
+  viewerId,
+  skip,
+  take,
+}: {
+  username: string;
+  viewerId: string;
+  skip: number;
+  take: number;
+}) => {
+  const results = await prisma.user.findMany({
+    orderBy: [
+      {
+        _relevance: {
+          fields: ["username"],
+          search: formatUsername(username),
+          sort: "desc",
+        },
       },
-    },
-    take: 20,
+      { id: "asc" },
+    ],
+    skip,
+    take,
     select: {
       username: true,
       firstName: true,
       lastName: true,
       profileImg: true,
       id: true,
+      _count: {
+        select: {
+          followings: { where: { toId: viewerId } },
+          followers: { where: { fromId: viewerId } },
+        },
+      },
     },
   });
+
+  return results.map(({ _count, ...user }) => ({
+    ...user,
+    isFollowingYou: !!_count.followings,
+    isFollowedByYou: !!_count.followers,
+  }));
 };
 
 const update = ({

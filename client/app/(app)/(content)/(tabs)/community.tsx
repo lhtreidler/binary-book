@@ -5,9 +5,11 @@ import { VStack } from "@/components/ui/vstack";
 import { useSearchByUsername } from "@/lib/api/hooks/useUsers";
 import { useMemo, useState } from "react";
 import { View } from "react-native";
+import { Href, useRouter } from "expo-router";
 
 export default function Community() {
   const [usernameToSearch, setUsernameToSearch] = useState("");
+  const router = useRouter();
   const { isLoading, data } = useSearchByUsername({
     username: usernameToSearch,
   });
@@ -18,7 +20,7 @@ export default function Community() {
     return data.users.map(
       ({ id, username, profileImg, firstName, lastName }) =>
         ({
-          key: username,
+          id: username,
           label: username,
           avatarProps: {
             profileImg,
@@ -34,18 +36,25 @@ export default function Community() {
     onChange: (q: string) => setUsernameToSearch(q),
     isLoading,
     options,
+    fieldProps: {
+      placeholder: "Search for friends...",
+    },
   });
+
+  const onViewAll = () => {
+    if (usernameToSearch)
+      router.push(
+        `/search/users?q=${encodeURIComponent(usernameToSearch)}` as Href,
+      );
+  };
 
   return (
     <View>
-      <VStack className="p-4">
-        <Text bold>Friends</Text>
-        <Autocomplete
-          fieldProps={{
-            placeholder: "Search for friends...",
-          }}
-          {...autocompleteProps}
-        />
+      <VStack>
+        <Text bold className="p4">
+          Friends
+        </Text>
+        <Autocomplete {...autocompleteProps} onViewAll={onViewAll} />
       </VStack>
     </View>
   );

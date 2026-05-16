@@ -20,10 +20,11 @@ router.get("/following/:userId?", async (req: Request, res: Response) => {
     }
 
     const result = await handlePaginatedRequest({
-      page,
+      page: Number(page) || 1,
       callback: async (params) =>
         followService.getAllFollowing({
-          userId: userId || user.userId,
+          from: userId || user.userId,
+          viewerId: user.userId,
           ...params,
         }),
     });
@@ -48,10 +49,11 @@ router.get("/followers/:userId?", async (req: Request, res: Response) => {
     }
 
     const result = await handlePaginatedRequest({
-      page,
+      page: Number(page) || 1,
       callback: async (params) =>
         followService.getAllFollowers({
-          userId: userId || user.userId,
+          to: userId || user.userId,
+          viewerId: user.userId,
           ...params,
         }),
     });
@@ -75,7 +77,8 @@ router.post("/:friendId", async (req: Request, res: Response) => {
     await followService.create({ toId: friendId, fromId: user?.userId });
 
     res.send();
-  } catch {
+  } catch (err) {
+    console.error(err);
     res.status(500).send({ message: "Internal Server Error" });
   }
 });

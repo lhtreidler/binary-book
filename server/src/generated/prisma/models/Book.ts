@@ -29,6 +29,7 @@ export type BookMinAggregateOutputType = {
   googleId: string | null
   title: string | null
   compareStr: string | null
+  thumbnail: string | null
 }
 
 export type BookMaxAggregateOutputType = {
@@ -36,6 +37,7 @@ export type BookMaxAggregateOutputType = {
   googleId: string | null
   title: string | null
   compareStr: string | null
+  thumbnail: string | null
 }
 
 export type BookCountAggregateOutputType = {
@@ -44,6 +46,7 @@ export type BookCountAggregateOutputType = {
   title: number
   authors: number
   compareStr: number
+  thumbnail: number
   _all: number
 }
 
@@ -53,6 +56,7 @@ export type BookMinAggregateInputType = {
   googleId?: true
   title?: true
   compareStr?: true
+  thumbnail?: true
 }
 
 export type BookMaxAggregateInputType = {
@@ -60,6 +64,7 @@ export type BookMaxAggregateInputType = {
   googleId?: true
   title?: true
   compareStr?: true
+  thumbnail?: true
 }
 
 export type BookCountAggregateInputType = {
@@ -68,6 +73,7 @@ export type BookCountAggregateInputType = {
   title?: true
   authors?: true
   compareStr?: true
+  thumbnail?: true
   _all?: true
 }
 
@@ -149,6 +155,7 @@ export type BookGroupByOutputType = {
   title: string
   authors: string[]
   compareStr: string
+  thumbnail: string | null
   _count: BookCountAggregateOutputType | null
   _min: BookMinAggregateOutputType | null
   _max: BookMaxAggregateOutputType | null
@@ -178,7 +185,9 @@ export type BookWhereInput = {
   title?: Prisma.StringFilter<"Book"> | string
   authors?: Prisma.StringNullableListFilter<"Book">
   compareStr?: Prisma.StringFilter<"Book"> | string
+  thumbnail?: Prisma.StringNullableFilter<"Book"> | string | null
   rankings?: Prisma.RankingListRelationFilter
+  bookmarks?: Prisma.BookmarkListRelationFilter
   rankingSessions?: Prisma.RankingSessionListRelationFilter
 }
 
@@ -188,7 +197,9 @@ export type BookOrderByWithRelationInput = {
   title?: Prisma.SortOrder
   authors?: Prisma.SortOrder
   compareStr?: Prisma.SortOrder
+  thumbnail?: Prisma.SortOrderInput | Prisma.SortOrder
   rankings?: Prisma.RankingOrderByRelationAggregateInput
+  bookmarks?: Prisma.BookmarkOrderByRelationAggregateInput
   rankingSessions?: Prisma.RankingSessionOrderByRelationAggregateInput
   _relevance?: Prisma.BookOrderByRelevanceInput
 }
@@ -202,7 +213,9 @@ export type BookWhereUniqueInput = Prisma.AtLeast<{
   title?: Prisma.StringFilter<"Book"> | string
   authors?: Prisma.StringNullableListFilter<"Book">
   compareStr?: Prisma.StringFilter<"Book"> | string
+  thumbnail?: Prisma.StringNullableFilter<"Book"> | string | null
   rankings?: Prisma.RankingListRelationFilter
+  bookmarks?: Prisma.BookmarkListRelationFilter
   rankingSessions?: Prisma.RankingSessionListRelationFilter
 }, "id" | "googleId">
 
@@ -212,6 +225,7 @@ export type BookOrderByWithAggregationInput = {
   title?: Prisma.SortOrder
   authors?: Prisma.SortOrder
   compareStr?: Prisma.SortOrder
+  thumbnail?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.BookCountOrderByAggregateInput
   _max?: Prisma.BookMaxOrderByAggregateInput
   _min?: Prisma.BookMinOrderByAggregateInput
@@ -226,6 +240,7 @@ export type BookScalarWhereWithAggregatesInput = {
   title?: Prisma.StringWithAggregatesFilter<"Book"> | string
   authors?: Prisma.StringNullableListFilter<"Book">
   compareStr?: Prisma.StringWithAggregatesFilter<"Book"> | string
+  thumbnail?: Prisma.StringNullableWithAggregatesFilter<"Book"> | string | null
 }
 
 export type BookCreateInput = {
@@ -234,7 +249,9 @@ export type BookCreateInput = {
   title: string
   authors?: Prisma.BookCreateauthorsInput | string[]
   compareStr: string
+  thumbnail?: string | null
   rankings?: Prisma.RankingCreateNestedManyWithoutBookInput
+  bookmarks?: Prisma.BookmarkCreateNestedManyWithoutBookInput
   rankingSessions?: Prisma.RankingSessionCreateNestedManyWithoutBookInput
 }
 
@@ -244,7 +261,9 @@ export type BookUncheckedCreateInput = {
   title: string
   authors?: Prisma.BookCreateauthorsInput | string[]
   compareStr: string
+  thumbnail?: string | null
   rankings?: Prisma.RankingUncheckedCreateNestedManyWithoutBookInput
+  bookmarks?: Prisma.BookmarkUncheckedCreateNestedManyWithoutBookInput
   rankingSessions?: Prisma.RankingSessionUncheckedCreateNestedManyWithoutBookInput
 }
 
@@ -254,7 +273,9 @@ export type BookUpdateInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   authors?: Prisma.BookUpdateauthorsInput | string[]
   compareStr?: Prisma.StringFieldUpdateOperationsInput | string
+  thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rankings?: Prisma.RankingUpdateManyWithoutBookNestedInput
+  bookmarks?: Prisma.BookmarkUpdateManyWithoutBookNestedInput
   rankingSessions?: Prisma.RankingSessionUpdateManyWithoutBookNestedInput
 }
 
@@ -264,7 +285,9 @@ export type BookUncheckedUpdateInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   authors?: Prisma.BookUpdateauthorsInput | string[]
   compareStr?: Prisma.StringFieldUpdateOperationsInput | string
+  thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rankings?: Prisma.RankingUncheckedUpdateManyWithoutBookNestedInput
+  bookmarks?: Prisma.BookmarkUncheckedUpdateManyWithoutBookNestedInput
   rankingSessions?: Prisma.RankingSessionUncheckedUpdateManyWithoutBookNestedInput
 }
 
@@ -274,6 +297,7 @@ export type BookCreateManyInput = {
   title: string
   authors?: Prisma.BookCreateauthorsInput | string[]
   compareStr: string
+  thumbnail?: string | null
 }
 
 export type BookUpdateManyMutationInput = {
@@ -282,6 +306,7 @@ export type BookUpdateManyMutationInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   authors?: Prisma.BookUpdateauthorsInput | string[]
   compareStr?: Prisma.StringFieldUpdateOperationsInput | string
+  thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type BookUncheckedUpdateManyInput = {
@@ -290,6 +315,7 @@ export type BookUncheckedUpdateManyInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   authors?: Prisma.BookUpdateauthorsInput | string[]
   compareStr?: Prisma.StringFieldUpdateOperationsInput | string
+  thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type StringNullableListFilter<$PrismaModel = never> = {
@@ -312,6 +338,7 @@ export type BookCountOrderByAggregateInput = {
   title?: Prisma.SortOrder
   authors?: Prisma.SortOrder
   compareStr?: Prisma.SortOrder
+  thumbnail?: Prisma.SortOrder
 }
 
 export type BookMaxOrderByAggregateInput = {
@@ -319,6 +346,7 @@ export type BookMaxOrderByAggregateInput = {
   googleId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   compareStr?: Prisma.SortOrder
+  thumbnail?: Prisma.SortOrder
 }
 
 export type BookMinOrderByAggregateInput = {
@@ -326,6 +354,7 @@ export type BookMinOrderByAggregateInput = {
   googleId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   compareStr?: Prisma.SortOrder
+  thumbnail?: Prisma.SortOrder
 }
 
 export type BookScalarRelationFilter = {
@@ -356,6 +385,20 @@ export type BookUpdateOneRequiredWithoutRankingsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.BookUpdateToOneWithWhereWithoutRankingsInput, Prisma.BookUpdateWithoutRankingsInput>, Prisma.BookUncheckedUpdateWithoutRankingsInput>
 }
 
+export type BookCreateNestedOneWithoutBookmarksInput = {
+  create?: Prisma.XOR<Prisma.BookCreateWithoutBookmarksInput, Prisma.BookUncheckedCreateWithoutBookmarksInput>
+  connectOrCreate?: Prisma.BookCreateOrConnectWithoutBookmarksInput
+  connect?: Prisma.BookWhereUniqueInput
+}
+
+export type BookUpdateOneRequiredWithoutBookmarksNestedInput = {
+  create?: Prisma.XOR<Prisma.BookCreateWithoutBookmarksInput, Prisma.BookUncheckedCreateWithoutBookmarksInput>
+  connectOrCreate?: Prisma.BookCreateOrConnectWithoutBookmarksInput
+  upsert?: Prisma.BookUpsertWithoutBookmarksInput
+  connect?: Prisma.BookWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.BookUpdateToOneWithWhereWithoutBookmarksInput, Prisma.BookUpdateWithoutBookmarksInput>, Prisma.BookUncheckedUpdateWithoutBookmarksInput>
+}
+
 export type BookCreateNestedOneWithoutRankingSessionsInput = {
   create?: Prisma.XOR<Prisma.BookCreateWithoutRankingSessionsInput, Prisma.BookUncheckedCreateWithoutRankingSessionsInput>
   connectOrCreate?: Prisma.BookCreateOrConnectWithoutRankingSessionsInput
@@ -376,6 +419,8 @@ export type BookCreateWithoutRankingsInput = {
   title: string
   authors?: Prisma.BookCreateauthorsInput | string[]
   compareStr: string
+  thumbnail?: string | null
+  bookmarks?: Prisma.BookmarkCreateNestedManyWithoutBookInput
   rankingSessions?: Prisma.RankingSessionCreateNestedManyWithoutBookInput
 }
 
@@ -385,6 +430,8 @@ export type BookUncheckedCreateWithoutRankingsInput = {
   title: string
   authors?: Prisma.BookCreateauthorsInput | string[]
   compareStr: string
+  thumbnail?: string | null
+  bookmarks?: Prisma.BookmarkUncheckedCreateNestedManyWithoutBookInput
   rankingSessions?: Prisma.RankingSessionUncheckedCreateNestedManyWithoutBookInput
 }
 
@@ -410,6 +457,8 @@ export type BookUpdateWithoutRankingsInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   authors?: Prisma.BookUpdateauthorsInput | string[]
   compareStr?: Prisma.StringFieldUpdateOperationsInput | string
+  thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bookmarks?: Prisma.BookmarkUpdateManyWithoutBookNestedInput
   rankingSessions?: Prisma.RankingSessionUpdateManyWithoutBookNestedInput
 }
 
@@ -419,6 +468,68 @@ export type BookUncheckedUpdateWithoutRankingsInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   authors?: Prisma.BookUpdateauthorsInput | string[]
   compareStr?: Prisma.StringFieldUpdateOperationsInput | string
+  thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bookmarks?: Prisma.BookmarkUncheckedUpdateManyWithoutBookNestedInput
+  rankingSessions?: Prisma.RankingSessionUncheckedUpdateManyWithoutBookNestedInput
+}
+
+export type BookCreateWithoutBookmarksInput = {
+  id?: string
+  googleId: string
+  title: string
+  authors?: Prisma.BookCreateauthorsInput | string[]
+  compareStr: string
+  thumbnail?: string | null
+  rankings?: Prisma.RankingCreateNestedManyWithoutBookInput
+  rankingSessions?: Prisma.RankingSessionCreateNestedManyWithoutBookInput
+}
+
+export type BookUncheckedCreateWithoutBookmarksInput = {
+  id?: string
+  googleId: string
+  title: string
+  authors?: Prisma.BookCreateauthorsInput | string[]
+  compareStr: string
+  thumbnail?: string | null
+  rankings?: Prisma.RankingUncheckedCreateNestedManyWithoutBookInput
+  rankingSessions?: Prisma.RankingSessionUncheckedCreateNestedManyWithoutBookInput
+}
+
+export type BookCreateOrConnectWithoutBookmarksInput = {
+  where: Prisma.BookWhereUniqueInput
+  create: Prisma.XOR<Prisma.BookCreateWithoutBookmarksInput, Prisma.BookUncheckedCreateWithoutBookmarksInput>
+}
+
+export type BookUpsertWithoutBookmarksInput = {
+  update: Prisma.XOR<Prisma.BookUpdateWithoutBookmarksInput, Prisma.BookUncheckedUpdateWithoutBookmarksInput>
+  create: Prisma.XOR<Prisma.BookCreateWithoutBookmarksInput, Prisma.BookUncheckedCreateWithoutBookmarksInput>
+  where?: Prisma.BookWhereInput
+}
+
+export type BookUpdateToOneWithWhereWithoutBookmarksInput = {
+  where?: Prisma.BookWhereInput
+  data: Prisma.XOR<Prisma.BookUpdateWithoutBookmarksInput, Prisma.BookUncheckedUpdateWithoutBookmarksInput>
+}
+
+export type BookUpdateWithoutBookmarksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  googleId?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  authors?: Prisma.BookUpdateauthorsInput | string[]
+  compareStr?: Prisma.StringFieldUpdateOperationsInput | string
+  thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rankings?: Prisma.RankingUpdateManyWithoutBookNestedInput
+  rankingSessions?: Prisma.RankingSessionUpdateManyWithoutBookNestedInput
+}
+
+export type BookUncheckedUpdateWithoutBookmarksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  googleId?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  authors?: Prisma.BookUpdateauthorsInput | string[]
+  compareStr?: Prisma.StringFieldUpdateOperationsInput | string
+  thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rankings?: Prisma.RankingUncheckedUpdateManyWithoutBookNestedInput
   rankingSessions?: Prisma.RankingSessionUncheckedUpdateManyWithoutBookNestedInput
 }
 
@@ -428,7 +539,9 @@ export type BookCreateWithoutRankingSessionsInput = {
   title: string
   authors?: Prisma.BookCreateauthorsInput | string[]
   compareStr: string
+  thumbnail?: string | null
   rankings?: Prisma.RankingCreateNestedManyWithoutBookInput
+  bookmarks?: Prisma.BookmarkCreateNestedManyWithoutBookInput
 }
 
 export type BookUncheckedCreateWithoutRankingSessionsInput = {
@@ -437,7 +550,9 @@ export type BookUncheckedCreateWithoutRankingSessionsInput = {
   title: string
   authors?: Prisma.BookCreateauthorsInput | string[]
   compareStr: string
+  thumbnail?: string | null
   rankings?: Prisma.RankingUncheckedCreateNestedManyWithoutBookInput
+  bookmarks?: Prisma.BookmarkUncheckedCreateNestedManyWithoutBookInput
 }
 
 export type BookCreateOrConnectWithoutRankingSessionsInput = {
@@ -462,7 +577,9 @@ export type BookUpdateWithoutRankingSessionsInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   authors?: Prisma.BookUpdateauthorsInput | string[]
   compareStr?: Prisma.StringFieldUpdateOperationsInput | string
+  thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rankings?: Prisma.RankingUpdateManyWithoutBookNestedInput
+  bookmarks?: Prisma.BookmarkUpdateManyWithoutBookNestedInput
 }
 
 export type BookUncheckedUpdateWithoutRankingSessionsInput = {
@@ -471,7 +588,9 @@ export type BookUncheckedUpdateWithoutRankingSessionsInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   authors?: Prisma.BookUpdateauthorsInput | string[]
   compareStr?: Prisma.StringFieldUpdateOperationsInput | string
+  thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rankings?: Prisma.RankingUncheckedUpdateManyWithoutBookNestedInput
+  bookmarks?: Prisma.BookmarkUncheckedUpdateManyWithoutBookNestedInput
 }
 
 
@@ -481,11 +600,13 @@ export type BookUncheckedUpdateWithoutRankingSessionsInput = {
 
 export type BookCountOutputType = {
   rankings: number
+  bookmarks: number
   rankingSessions: number
 }
 
 export type BookCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   rankings?: boolean | BookCountOutputTypeCountRankingsArgs
+  bookmarks?: boolean | BookCountOutputTypeCountBookmarksArgs
   rankingSessions?: boolean | BookCountOutputTypeCountRankingSessionsArgs
 }
 
@@ -509,6 +630,13 @@ export type BookCountOutputTypeCountRankingsArgs<ExtArgs extends runtime.Types.E
 /**
  * BookCountOutputType without action
  */
+export type BookCountOutputTypeCountBookmarksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.BookmarkWhereInput
+}
+
+/**
+ * BookCountOutputType without action
+ */
 export type BookCountOutputTypeCountRankingSessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.RankingSessionWhereInput
 }
@@ -520,7 +648,9 @@ export type BookSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   title?: boolean
   authors?: boolean
   compareStr?: boolean
+  thumbnail?: boolean
   rankings?: boolean | Prisma.Book$rankingsArgs<ExtArgs>
+  bookmarks?: boolean | Prisma.Book$bookmarksArgs<ExtArgs>
   rankingSessions?: boolean | Prisma.Book$rankingSessionsArgs<ExtArgs>
   _count?: boolean | Prisma.BookCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["book"]>
@@ -531,6 +661,7 @@ export type BookSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   title?: boolean
   authors?: boolean
   compareStr?: boolean
+  thumbnail?: boolean
 }, ExtArgs["result"]["book"]>
 
 export type BookSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -539,6 +670,7 @@ export type BookSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   title?: boolean
   authors?: boolean
   compareStr?: boolean
+  thumbnail?: boolean
 }, ExtArgs["result"]["book"]>
 
 export type BookSelectScalar = {
@@ -547,11 +679,13 @@ export type BookSelectScalar = {
   title?: boolean
   authors?: boolean
   compareStr?: boolean
+  thumbnail?: boolean
 }
 
-export type BookOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "googleId" | "title" | "authors" | "compareStr", ExtArgs["result"]["book"]>
+export type BookOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "googleId" | "title" | "authors" | "compareStr" | "thumbnail", ExtArgs["result"]["book"]>
 export type BookInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   rankings?: boolean | Prisma.Book$rankingsArgs<ExtArgs>
+  bookmarks?: boolean | Prisma.Book$bookmarksArgs<ExtArgs>
   rankingSessions?: boolean | Prisma.Book$rankingSessionsArgs<ExtArgs>
   _count?: boolean | Prisma.BookCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -562,6 +696,7 @@ export type $BookPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   name: "Book"
   objects: {
     rankings: Prisma.$RankingPayload<ExtArgs>[]
+    bookmarks: Prisma.$BookmarkPayload<ExtArgs>[]
     rankingSessions: Prisma.$RankingSessionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -570,6 +705,7 @@ export type $BookPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     title: string
     authors: string[]
     compareStr: string
+    thumbnail: string | null
   }, ExtArgs["result"]["book"]>
   composites: {}
 }
@@ -965,6 +1101,7 @@ readonly fields: BookFieldRefs;
 export interface Prisma__BookClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   rankings<T extends Prisma.Book$rankingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Book$rankingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RankingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  bookmarks<T extends Prisma.Book$bookmarksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Book$bookmarksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BookmarkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   rankingSessions<T extends Prisma.Book$rankingSessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Book$rankingSessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RankingSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1000,6 +1137,7 @@ export interface BookFieldRefs {
   readonly title: Prisma.FieldRef<"Book", 'String'>
   readonly authors: Prisma.FieldRef<"Book", 'String[]'>
   readonly compareStr: Prisma.FieldRef<"Book", 'String'>
+  readonly thumbnail: Prisma.FieldRef<"Book", 'String'>
 }
     
 
@@ -1409,6 +1547,30 @@ export type Book$rankingsArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   take?: number
   skip?: number
   distinct?: Prisma.RankingScalarFieldEnum | Prisma.RankingScalarFieldEnum[]
+}
+
+/**
+ * Book.bookmarks
+ */
+export type Book$bookmarksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Bookmark
+   */
+  select?: Prisma.BookmarkSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Bookmark
+   */
+  omit?: Prisma.BookmarkOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BookmarkInclude<ExtArgs> | null
+  where?: Prisma.BookmarkWhereInput
+  orderBy?: Prisma.BookmarkOrderByWithRelationInput | Prisma.BookmarkOrderByWithRelationInput[]
+  cursor?: Prisma.BookmarkWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.BookmarkScalarFieldEnum | Prisma.BookmarkScalarFieldEnum[]
 }
 
 /**
