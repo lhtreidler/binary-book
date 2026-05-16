@@ -1,7 +1,7 @@
 import { Router, Request, Response } from "express";
-import { authenticateToken } from "../middleware/auth.js";
-import { googleBooksService, rankingService } from "../services";
-import { bookService } from "../services";
+import { authenticateToken } from "../../middleware/auth.js";
+import { googleBooksService, rankingService } from "../../services";
+import { bookService } from "../../services";
 
 const router = Router();
 router.use(authenticateToken);

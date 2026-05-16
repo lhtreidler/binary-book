@@ -24,4 +24,5 @@ export type {
   UserSearchItem,
 } from "./types";
 
+export type { RecommendedUser, FriendRecommendationsResponse } from "./types";
 export * from "./hooks";

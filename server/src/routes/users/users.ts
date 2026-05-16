@@ -1,7 +1,7 @@
 import { Router, Request, Response } from "express";
-import { authenticateToken } from "../middleware/auth";
-import { userService } from "../services";
-import { handlePaginatedRequest } from "../utils/pagination";
+import { authenticateToken } from "../../middleware/auth";
+import { userService } from "../../services";
+import { handlePaginatedRequest } from "../../utils/pagination";
 
 const router = Router();
 router.use(authenticateToken);

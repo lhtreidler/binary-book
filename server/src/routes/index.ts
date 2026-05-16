@@ -1,6 +1,13 @@
-export { default as authRoutes } from "./auth.js";
-export { default as rankingRoutes } from "./ranking.js";
-export { default as bookRoutes } from "./books.js";
-export { default as usersRoutes } from "./users.js";
-export { default as followsRoutes } from "./follows.js";
-export { default as bookmarksRoutes } from "./bookmarks.js";
+import { authRoutes, usersRoutes, followsRoutes } from "./users/index.js";
+import { bookRoutes, bookmarksRoutes } from "./books/index.js";
+import { rankingRoutes } from "./rankings/index.js";
+import type { Router } from "express";
+
+export const routes: [string, Router][] = [
+  ["/auth", authRoutes],
+  ["/ranking", rankingRoutes],
+  ["/books", bookRoutes],
+  ["/users", usersRoutes],
+  ["/follow", followsRoutes],
+  ["/bookmarks", bookmarksRoutes],
+];

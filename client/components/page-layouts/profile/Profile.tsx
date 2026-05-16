@@ -6,7 +6,7 @@ import { Button, ButtonText } from "@/components/ui/button";
 import { VStack } from "@/components/ui/vstack";
 import { HStack } from "@/components/ui/hstack";
 import { Pressable } from "@/components/ui/pressable";
-import { ProfileAvatar } from "@/components/elements";
+import { FriendRecommendationList, ProfileAvatar } from "@/components/elements";
 import { LoadingView } from "@/components/layout";
 import { ProfileProps } from "./types";
 import { Text } from "@/components/ui/text";
@@ -57,7 +57,10 @@ export function Profile(props: ProfileProps) {
                 pathname: "/follow/[type]",
                 params: {
                   type: "followers",
-                  ...(!props.isSelf && { userId: props.userId, username: data.username ?? undefined }),
+                  ...(!props.isSelf && {
+                    userId: props.userId,
+                    username: data.username ?? undefined,
+                  }),
                 },
               })
             }
@@ -73,7 +76,10 @@ export function Profile(props: ProfileProps) {
                 pathname: "/follow/[type]",
                 params: {
                   type: "following",
-                  ...(!props.isSelf && { userId: props.userId, username: data.username ?? undefined }),
+                  ...(!props.isSelf && {
+                    userId: props.userId,
+                    username: data.username ?? undefined,
+                  }),
                 },
               })
             }
@@ -89,6 +95,8 @@ export function Profile(props: ProfileProps) {
         {!props.isSelf && !!props.followError && (
           <Text>{props.followError}</Text>
         )}
+
+        {isSelf && <FriendRecommendationList />}
 
         {isSelf && (
           <Box>

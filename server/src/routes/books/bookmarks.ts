@@ -1,8 +1,8 @@
 import { Router, Request, Response } from "express";
-import { authenticateToken } from "../middleware/auth.js";
-import { validateBody } from "../middleware/validation.js";
-import { createBookmarkSchema, CreateBookmarkInput } from "../utils/schemas.js";
-import { bookmarkService } from "../services/books/bookmarkService.js";
+import { authenticateToken } from "../../middleware/auth.js";
+import { validateBody } from "../../middleware/validation.js";
+import { createBookmarkSchema, CreateBookmarkInput } from "../../utils/schemas.js";
+import { bookmarkService } from "../../services/books/bookmarkService.js";
 
 const router = Router();
 router.use(authenticateToken);

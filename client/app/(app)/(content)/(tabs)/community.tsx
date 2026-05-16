@@ -6,6 +6,7 @@ import { useSearchByUsername } from "@/lib/api/hooks/useUsers";
 import { useMemo, useState } from "react";
 import { View } from "react-native";
 import { Href, useRouter } from "expo-router";
+import { FriendRecommendationList } from "@/components/elements";
 
 export default function Community() {
   const [usernameToSearch, setUsernameToSearch] = useState("");
@@ -55,6 +56,7 @@ export default function Community() {
           Friends
         </Text>
         <Autocomplete {...autocompleteProps} onViewAll={onViewAll} />
+        <FriendRecommendationList />
       </VStack>
     </View>
   );
