@@ -13,7 +13,7 @@
   "dependencies": {
     "@cloudinary/react": "^1.14.4",
     "@cloudinary/url-gen": "^1.22.0",
-    "@expo/html-elements": "^0.10.1",
+    "@expo/html-elements": "^0.12.5",
     "@expo/vector-icons": "^15.0.3",
     "@gluestack-ui/core": "^3.0.19",
     "@gluestack-ui/utils": "^3.0.21",

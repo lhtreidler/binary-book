@@ -17,7 +17,7 @@ export const FriendRecommendationItem = ({ user }: Props) => {
   const fullName = [user.firstName, user.lastName].filter(Boolean).join(" ");
 
   return (
-    <Card size="sm">
+    <Card size="sm" className="max-w-50">
       <Pressable
         className="items-center justify-center py-2"
         onPress={() => router.push(`/profile/${user.id}`)}
@@ -44,6 +44,7 @@ export const FriendRecommendationItem = ({ user }: Props) => {
             size="sm"
             isDisabled={follow.isPending || follow.isSuccess}
             onPress={() => follow.mutate()}
+            className="mt-2"
           >
             <ButtonText>{follow.isSuccess ? "Following" : "Follow"}</ButtonText>
           </Button>

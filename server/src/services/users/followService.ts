@@ -141,14 +141,12 @@ const getRecommended = async ({
     },
   });
 
-  return users
-    .map((user) => {
-      return {
-        ...user,
-        mutualFollowers: countMap[user.id],
-      };
-    })
-    .sort((a, b) => b.mutualFollowers - a.mutualFollowers);
+  return users.map((user) => {
+    return {
+      ...user,
+      mutualFollowers: countMap[user.id],
+    };
+  });
 };
 
 export const followService = {

@@ -7,6 +7,16 @@ import { Carousel } from "@/components/elements/carousel";
 import { useFollowRecommendations } from "@/lib/api/hooks/useFollows";
 import { RecommendedUser } from "@/lib/api/types";
 import { FriendRecommendationItem } from "./FriendRecommendationItem";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionHeader,
+  AccordionIcon,
+  AccordionItem,
+  AccordionTitleText,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { ChevronDown } from "lucide-react-native";
 
 export const FriendRecommendationList = () => {
   const { data, isLoading, isError } = useFollowRecommendations();
@@ -31,7 +41,9 @@ export const FriendRecommendationList = () => {
   if (isError) {
     return (
       <Box className="items-center justify-center py-8">
-        <Text className="text-typography-500">Failed to load recommendations.</Text>
+        <Text className="text-typography-500">
+          Failed to load recommendations.
+        </Text>
       </Box>
     );
   }
@@ -39,10 +51,30 @@ export const FriendRecommendationList = () => {
   if (!items.length) return null;
 
   return (
-    <Carousel
-      items={items}
-      renderItem={renderItem}
-      keyExtractor={keyExtractor}
-    />
+    <Accordion
+      type="single"
+      variant="unfilled"
+      defaultValue={["recommendations"]}
+    >
+      <AccordionItem value="recommendations">
+        <AccordionHeader>
+          <AccordionTrigger>
+            <AccordionTitleText>People you may know</AccordionTitleText>
+            <AccordionIcon
+              as={ChevronDown}
+              className="data-[state=open]:rotate-180"
+            />
+          </AccordionTrigger>
+        </AccordionHeader>
+        <AccordionContent className="p-0">
+          <Carousel
+            items={items}
+            renderItem={renderItem}
+            keyExtractor={keyExtractor}
+            paddingLeft={12}
+          />
+        </AccordionContent>
+      </AccordionItem>
+    </Accordion>
   );
 };
