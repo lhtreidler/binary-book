@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { validateBody } from "../middleware/validation";
+import { validateBody } from "../../middleware/validation";
 import {
   ContinueRankingInput,
   continueRankingSchema,
@@ -7,15 +7,15 @@ import {
   quitRankingSchema,
   StartRankingInput,
   startRankingSchema,
-} from "../utils/schemas";
-import { authenticateToken } from "../middleware/auth";
+} from "../../utils/schemas";
+import { authenticateToken } from "../../middleware/auth";
 import {
   googleBooksService,
   rankingService,
   rankingSessionService,
   rankingAlgoService,
   STARTING_RAW_SCORE,
-} from "../services";
+} from "../../services";
 
 const router = Router();
 router.use(authenticateToken);

@@ -1,3 +1,7 @@
+import {
+  FollowFindManyArgs,
+  FollowGroupByArgs,
+} from "../../generated/prisma/models";
 import { prisma } from "../../lib/prisma";
 import _ from "lodash";
 
@@ -96,10 +100,60 @@ const getAllFollowers = async ({
   }));
 };
 
+const getRecommended = async ({
+  userId,
+  ...params
+}: { userId: string } & Pick<FollowGroupByArgs, "skip" | "take">) => {
+  const following = await prisma.follow.findMany({
+    where: { fromId: userId },
+    select: { toId: true },
+  });
+  const followingIds = following.map((f) => f.toId);
+
+  const recommendedUsers = await prisma.follow.groupBy({
+    by: ["toId"],
+    where: {
+      fromId: { in: followingIds },
+      toId: { notIn: [...followingIds, userId] },
+    },
+    _count: { toId: true },
+    orderBy: { _count: { toId: "desc" } },
+    take: 10,
+    ...params,
+  });
+
+  const countMap: Record<string, number> = {};
+  const idsToGet: string[] = [];
+
+  for (const { _count, toId } of recommendedUsers) {
+    countMap[toId] = _count.toId;
+    idsToGet.push(toId);
+  }
+
+  const users = await prisma.user.findMany({
+    where: { id: { in: idsToGet } },
+    select: {
+      id: true,
+      username: true,
+      profileImg: true,
+      firstName: true,
+      lastName: true,
+    },
+  });
+
+  return users.map((user) => {
+    return {
+      ...user,
+      mutualFollowers: countMap[user.id],
+    };
+  });
+};
+
 export const followService = {
   getFollowStatus,
   create,
   destroy,
   getAllFollowing,
   getAllFollowers,
+  getRecommended,
 };

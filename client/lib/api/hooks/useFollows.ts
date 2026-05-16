@@ -6,7 +6,7 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 import { getApiClient } from "../client";
-import { ApiError, FollowListResponse, FollowListUser } from "../types";
+import { ApiError, FollowListResponse, FollowListUser, FriendRecommendationsResponse } from "../types";
 
 type RawFollowListResponse = {
   result: FollowListUser[];
@@ -53,6 +53,21 @@ export function useFollow(userId: string) {
       queryClient.invalidateQueries({ queryKey: ["users", "me"] });
       queryClient.invalidateQueries({ queryKey: ["follow"] });
     },
+  });
+}
+
+export function useFollowRecommendations(): UseInfiniteQueryResult<InfiniteData<FriendRecommendationsResponse>, ApiError> {
+  return useInfiniteQuery({
+    queryKey: ["follow", "recommended"],
+    queryFn: async ({ pageParam }) => {
+      const client = await getApiClient();
+      const { data } = await client.get<FriendRecommendationsResponse>("/follow/recommended", {
+        params: { page: pageParam },
+      });
+      return data;
+    },
+    initialPageParam: 1,
+    getNextPageParam: (lastPage) => lastPage.nextPage,
   });
 }
 

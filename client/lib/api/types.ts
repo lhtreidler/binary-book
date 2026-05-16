@@ -147,3 +147,9 @@ export type FollowListUser = {
 };
 
 export type FollowListResponse = Paginated<{ result: FollowListUser[] }>;
+
+export type RecommendedUser = Omit<FollowListUser, "isFollowedByYou" | "isFollowingYou"> & {
+  mutualFollowers: number;
+};
+
+export type FriendRecommendationsResponse = Paginated<{ result: RecommendedUser[] }>;

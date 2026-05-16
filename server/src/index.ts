@@ -1,14 +1,7 @@
 import "dotenv/config";
 import express from "express";
 import cors from "cors";
-import {
-  authRoutes,
-  bookRoutes,
-  usersRoutes,
-  rankingRoutes,
-  followsRoutes,
-  bookmarksRoutes,
-} from "./routes";
+import { routes } from "./routes";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -18,12 +11,9 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
-app.use("/auth", authRoutes);
-app.use("/ranking", rankingRoutes);
-app.use("/books", bookRoutes);
-app.use("/users", usersRoutes);
-app.use("/follow", followsRoutes);
-app.use("/bookmarks", bookmarksRoutes);
+for (const [path, router] of routes) {
+  app.use(path, router);
+}
 
 // Health check
 app.get("/health", (_req, res) => {

@@ -6,11 +6,11 @@ import {
   signupSchema,
   UpdateUserInput,
   updateUserSchema,
-} from "../utils/schemas.js";
-import { validateBody } from "../middleware/validation.js";
-import { authService, userService } from "../services";
-import { formatEmail } from "../utils/format.js";
-import { authenticateToken } from "../middleware/auth.js";
+} from "../../utils/schemas.js";
+import { validateBody } from "../../middleware/validation.js";
+import { authService, userService } from "../../services";
+import { formatEmail } from "../../utils/format.js";
+import { authenticateToken } from "../../middleware/auth.js";
 
 const router = Router();
 

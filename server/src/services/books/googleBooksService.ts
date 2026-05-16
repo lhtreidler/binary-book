@@ -53,13 +53,16 @@ const fetchBooks = async (
 
     const books = (await response.json()) as GoogleBooksSearchResponse;
     return (books.items || []).map(
-      ({ id, volumeInfo: { title, authors = [], imageLinks } }) => ({
-        apiId: id,
-        title,
-        authors,
-        thumbnail: imageLinks?.thumbnail,
-        compareStr: createBookComparisonStr(title, authors),
-      }),
+      ({ id, volumeInfo: { title, authors = [], imageLinks } }) => {
+        const raw = imageLinks?.thumbnail;
+        return {
+          apiId: id,
+          title,
+          authors,
+          thumbnail: raw ? raw.replace(/^http:/, "https:") : undefined,
+          compareStr: createBookComparisonStr(title, authors),
+        };
+      }
     );
   }
 
