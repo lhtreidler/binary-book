@@ -1,4 +1,6 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import { useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
 import { HStack } from "@/components/ui/hstack";
@@ -6,6 +8,7 @@ import { Image } from "@/components/ui/image";
 import { Spinner } from "@/components/ui/spinner";
 import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
+import { RankingModal } from "@/components/ranking-modal/RankingModal";
 import {
   useBookDetail,
   useCreateBookmark,
@@ -25,6 +28,8 @@ export default function BookDetail() {
   const { data, isLoading, isError } = useBookDetail(bookId);
   const { mutate: createBookmark } = useCreateBookmark();
   const { mutate: deleteBookmark } = useDeleteBookmark();
+  const [isRankModalOpen, setIsRankModalOpen] = useState(false);
+  const queryClient = useQueryClient();
 
   if (isLoading) {
     return (
@@ -76,21 +81,31 @@ export default function BookDetail() {
               </Text>
             )}
             {data.userScore === null && (
-              <Button
-                size="sm"
-                variant="outline"
-                className="rounded-full self-start"
-                onPress={() =>
-                  data.bookmarkId
-                    ? deleteBookmark(data.bookmarkId)
-                    : createBookmark(data.apiId)
-                }
-              >
-                <FontAwesome
-                  name={data.bookmarkId ? "bookmark" : "bookmark-o"}
-                  size={16}
-                />
-              </Button>
+              <HStack space="sm">
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="rounded-full self-start"
+                  onPress={() =>
+                    data.bookmarkId
+                      ? deleteBookmark(data.bookmarkId)
+                      : createBookmark(data.apiId)
+                  }
+                >
+                  <FontAwesome
+                    name={data.bookmarkId ? "bookmark" : "bookmark-o"}
+                    size={16}
+                  />
+                </Button>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="rounded-full self-start"
+                  onPress={() => setIsRankModalOpen(true)}
+                >
+                  <FontAwesome name="plus" size={16} />
+                </Button>
+              </HStack>
             )}
           </VStack>
         </HStack>
@@ -110,12 +125,12 @@ export default function BookDetail() {
           </HStack>
         )}
 
-        {data.categories.length > 0 && (
+        {data.tags.length > 0 && (
           <HStack space="xs" className="flex-wrap">
-            {data.categories.map((c) => (
-              <Box key={c} className="rounded-full bg-background-100 px-3 py-1">
+            {data.tags.map((tag) => (
+              <Box key={tag} className="rounded-full bg-background-100 px-3 py-1">
                 <Text size="xs" className="text-typography-700">
-                  {c}
+                  {tag}
                 </Text>
               </Box>
             ))}
@@ -131,6 +146,22 @@ export default function BookDetail() {
           </VStack>
         )}
       </VStack>
+      <RankingModal
+        book={{
+          apiId: data.apiId,
+          id: null,
+          title: data.title ?? "Untitled",
+          authors: data.authors,
+          thumbnail: data.thumbnail ?? "",
+          isRanked: false,
+          bookmarkId: data.bookmarkId,
+        }}
+        isOpen={isRankModalOpen}
+        onClose={() => {
+          setIsRankModalOpen(false);
+          queryClient.invalidateQueries({ queryKey: ["books", "detail"] });
+        }}
+      />
     </ScrollView>
   );
 }

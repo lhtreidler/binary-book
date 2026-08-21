@@ -27,24 +27,29 @@ const getBookDetailsByIdOrGoogleId = async ({
           userId,
         },
       },
+      tags: true,
     },
   });
 
-  const details = await googleBooksService.getVolumeDetails(
-    book ? book.googleId : bookId,
-  );
-
-  console.log({ details });
+  const { categories: _categories, ...details } =
+    (await googleBooksService.getVolumeDetails(
+      book ? book.googleId : bookId,
+    )) || {};
 
   let userScore: number | null = null;
   if (book && book.rankings.length) {
     userScore = await rankingService.getRankingScore(book.rankings[0]);
   }
 
+  if (!details && !book) {
+    throw new Error("Unavailable");
+  }
+
   return {
     ...details,
     userScore,
     bookmarkId: (book && book.bookmarks[0]?.id) ?? null,
+    tags: book ? book.tags.map((tag) => tag.name) : [],
   };
 };
 

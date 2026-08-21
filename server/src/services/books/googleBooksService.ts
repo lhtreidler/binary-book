@@ -10,6 +10,7 @@ import { prisma } from "../../lib/prisma";
 import { searchCacheService } from "./searchCacheService";
 import { appendPath, appendSearchParams, buildUrl } from "../../utils/requests";
 import { handlePaginatedRequest } from "../../utils/pagination";
+import { tagService } from "./tagServices";
 
 const apiUrl = buildUrl("https://www.googleapis.com/books/v1/volumes", {
   key: process.env.GOOGLE_BOOKS_API_KEY,
@@ -223,7 +224,14 @@ const getOrCreateBookByGoogleId = async (googleId: string) => {
   }
 
   const {
-    volumeInfo: { title, authors = [], description, publishedDate, pageCount },
+    volumeInfo: {
+      title,
+      authors = [],
+      description,
+      publishedDate,
+      pageCount,
+      categories,
+    },
   } = book;
 
   const matching = await prisma.book.findFirst({
@@ -247,6 +255,8 @@ const getOrCreateBookByGoogleId = async (googleId: string) => {
     },
   });
 
+  await tagService.connectOrCreateTags({ bookId: createdBook.id, categories });
+
   return createdBook;
 };
 
@@ -261,13 +271,15 @@ export type VolumeDetails = {
   categories: string[];
 };
 
-const getVolumeDetails = async (volumeId: string): Promise<VolumeDetails> => {
+const getVolumeDetails = async (
+  volumeId: string,
+): Promise<VolumeDetails | null> => {
   const volume = (await fetch(createVolumeUrl(volumeId)).then((response) =>
     response.json(),
   )) as GoogleBooksVolume;
 
   if (!volume || !volume.id) {
-    throw new Error("Could not find book");
+    return null;
   }
 
   const { volumeInfo } = volume;

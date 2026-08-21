@@ -88,9 +88,9 @@ export interface BookDetailResponse {
   description: string | null;
   publishedDate: string | null;
   pageCount: number | null;
-  categories: string[];
   userScore: number | null;
   bookmarkId: string | null;
+  tags: string[];
 }
 
 export interface Ranking {
