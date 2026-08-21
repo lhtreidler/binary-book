@@ -1,2 +1,2 @@
-export * from "./Autocomplete";
+export * from "./autocomplete";
 export * from "./hooks";
