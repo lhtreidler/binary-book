@@ -16,6 +16,37 @@
       "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
       "console": "integratedTerminal",
       "restart": true
+    },
+    {
+      "name": "Migrate dev",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": [
+        "prisma",
+        "migrate",
+        "dev",
+        "--name",
+        "${input:migrationName}"
+      ],
+      "cwd": "${workspaceFolder}/server",
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "Migrate reset",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["prisma", "migrate", "reset"],
+      "cwd": "${workspaceFolder}/server",
+      "console": "integratedTerminal"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "migrationName",
+      "type": "promptString",
+      "description": "Migration name"
     }
   ]
 }

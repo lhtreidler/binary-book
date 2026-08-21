@@ -75,6 +75,10 @@ export type FormattedBookItem = {
   authors: string[];
   thumbnail?: string | null;
   compareStr: string;
+  pageCount: number;
+  publishedDate?: string | null;
+  categories: string[];
+  description?: string | null;
 };
 
 export type FormattedBookItems = FormattedBookItem[];

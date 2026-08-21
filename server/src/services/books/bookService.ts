@@ -12,50 +12,40 @@ const getBookDetailsByIdOrGoogleId = async ({
   userId: string;
   bookId: string;
 }) => {
-  try {
-    console.log({ userId, bookId });
-    const book = await prisma.book.findFirst({
-      // `id` is a Postgres uuid column, so it can only be queried when
-      // bookId looks like a UUID -- otherwise Postgres rejects the value
-      // before evaluating the OR.
-      where: UUID_REGEX.test(bookId)
-        ? { OR: [{ id: bookId }, { googleId: bookId }] }
-        : { googleId: bookId },
-      include: {
-        rankings: {
-          where: {
-            userId,
-          },
-        },
-        bookmarks: {
-          where: {
-            userId,
-          },
+  const book = await prisma.book.findFirst({
+    where: UUID_REGEX.test(bookId)
+      ? { OR: [{ id: bookId }, { googleId: bookId }] }
+      : { googleId: bookId },
+    include: {
+      rankings: {
+        where: {
+          userId,
         },
       },
-    });
+      bookmarks: {
+        where: {
+          userId,
+        },
+      },
+    },
+  });
 
-    console.log({ book });
+  const details = await googleBooksService.getVolumeDetails(
+    book ? book.googleId : bookId,
+  );
 
-    const details = await googleBooksService.getVolumeDetails(
-      book ? book.googleId : bookId,
-    );
+  console.log({ details });
 
-    console.log({ details });
-
-    let userScore: number | null = null;
-    if (book && book.rankings.length) {
-      userScore = await rankingService.getRankingScore(book.rankings[0]);
-    }
-
-    return {
-      ...details,
-      userScore,
-      bookmarkId: (book && book.bookmarks[0]?.id) ?? null,
-    };
-  } catch (err) {
-    console.log(err);
+  let userScore: number | null = null;
+  if (book && book.rankings.length) {
+    userScore = await rankingService.getRankingScore(book.rankings[0]);
   }
+
+  return {
+    ...details,
+    userScore,
+    bookmarkId: (book && book.bookmarks[0]?.id) ?? null,
+  };
 };
 
 const getByGoogleId = ({ googleId }: { googleId: string }) => {

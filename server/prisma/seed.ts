@@ -9,11 +9,11 @@ import {
   googleBooksService,
   STARTING_RAW_SCORE,
 } from "../src/services";
-import { formatUsername } from "../src/utils/format";
+import { formatUsername, splitTags } from "../src/utils/format";
 import bookData from "./data.json";
 import { parseArgs } from "node:util";
 import {
-  BookCreateManyArgs,
+  BookCreateInput,
   BookmarkCreateManyArgs,
   RankingCreateManyArgs,
 } from "../src/generated/prisma/models";
@@ -23,7 +23,7 @@ const RANKING_MIN = 10;
 
 const options = {
   userCount: { type: "string", default: "100" },
-  bookCount: { type: "string", default: "200" },
+  bookCount: { type: "string", default: "250" },
   useJsonData: { type: "string", default: "true" },
 } as const;
 
@@ -138,11 +138,36 @@ const createUser = (i: number) => {
   };
 };
 
+const createAllTags = async (hierarchialTags: Record<string, string[]>) => {
+  return Promise.all(
+    Object.entries(hierarchialTags).map((entry: [string, string[]]) => {
+      const [parent, children] = entry;
+
+      return prisma.tag.create({
+        data: {
+          name: parent,
+          ...(children.length
+            ? {
+                childTags: {
+                  connectOrCreate: children.map((n) => ({
+                    where: { name: n },
+                    create: { name: n },
+                  })),
+                },
+              }
+            : {}),
+        },
+      });
+    }),
+  );
+};
+
 const fetchBooks = async (bookCount: number) => {
   fs.accessSync(filePath);
 
   // get books from google data if bookData is not stored already
-  const books: BookCreateManyArgs["data"] = [];
+  const books: BookCreateInput[] = [];
+  const tags: Record<string, string[]> = {};
   const googleIds = new Set();
 
   const CHUNK_SIZE = 5;
@@ -157,9 +182,12 @@ const fetchBooks = async (bookCount: number) => {
 
     for (let chunk of chunks) {
       const results = await Promise.all(
-        chunk.map((title) => googleBooksService.fetchBooks(title)),
+        chunk.map((title) =>
+          googleBooksService.fetchBooks(title, 1, "full", 5),
+        ),
       );
 
+      const tagsToAdd: string[][] = [];
       const mappedResults = results
         .map((result, i) => {
           if (!result.length) return null;
@@ -170,23 +198,50 @@ const fetchBooks = async (bookCount: number) => {
 
           if (!googleIds.has(res.apiId)) {
             googleIds.add(res.apiId);
-            const { apiId, ...data } = res;
+            const { apiId, categories, ...data } = res;
+            const tagNames = (categories || []).map(splitTags);
+            tagsToAdd.push(...tagNames);
+
             return {
               googleId: apiId,
               ...data,
+              ...(tagNames
+                ? {
+                    tags: {
+                      connect: Array.from(new Set(tagNames.flat())).map(
+                        (n) => ({
+                          name: n,
+                        }),
+                      ),
+                    },
+                  }
+                : {}),
             };
           }
         })
         .filter((n) => !!n);
 
+      tagsToAdd.forEach((orderedTags) => {
+        orderedTags.forEach((tagName, i) => {
+          const childTags = orderedTags.slice(i + 1);
+          if (tags[tagName]) {
+            tags[tagName] = Array.from(
+              new Set([...tags[tagName], ...childTags]),
+            );
+          } else {
+            tags[tagName] = childTags;
+          }
+        });
+      });
+
       books.push(...mappedResults);
-      fs.writeFileSync(filePath, JSON.stringify(books));
+      fs.writeFileSync(filePath, JSON.stringify({ books, tags }));
     }
   }
 
-  fs.writeFileSync(filePath, JSON.stringify(books));
+  fs.writeFileSync(filePath, JSON.stringify({ books, tags }));
 
-  return books;
+  return { books, tags };
 };
 
 const createFollows = async (userIds: string[]) => {
@@ -221,7 +276,9 @@ async function main() {
     `Options: userCount = ${userCount}, bookCount = ${bookCount}, useJsonData = ${useJsonData}`,
   );
 
-  const booksToCreate = useJsonData ? bookData : await fetchBooks(bookCount);
+  const { books: booksToCreate, tags: tagsToCreate } = useJsonData
+    ? bookData
+    : await fetchBooks(bookCount);
 
   if (booksToCreate.length < RANKING_MIN) {
     throw new Error("Not enough books");
@@ -230,9 +287,10 @@ async function main() {
   const password = "Password123";
   const passwordHash = await authService.createPasswordHash(password);
 
-  const createdBooks = await prisma.book.createManyAndReturn({
-    data: booksToCreate,
-  });
+  await createAllTags(tagsToCreate);
+  const createdBooks = await Promise.all(
+    booksToCreate.map((book) => prisma.book.create({ data: book })),
+  );
   console.log(`Created ${createdBooks.length} books`);
 
   const createdUsers = await prisma.user.createManyAndReturn({

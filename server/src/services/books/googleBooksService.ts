@@ -15,12 +15,12 @@ const apiUrl = buildUrl("https://www.googleapis.com/books/v1/volumes", {
   key: process.env.GOOGLE_BOOKS_API_KEY,
 });
 
-const createQueryUrl = (q: string) =>
+const createQueryUrl = (q: string, projection = "lite", maxResults = 40) =>
   appendSearchParams(new URL(apiUrl), {
     q,
-    projection: "lite",
+    projection: projection,
     printType: "books",
-    maxResults: "40",
+    maxResults: maxResults.toString(),
   });
 
 const createVolumeUrl = (id: string) => appendPath(new URL(apiUrl), id);
@@ -28,9 +28,11 @@ const createVolumeUrl = (id: string) => appendPath(new URL(apiUrl), id);
 const fetchBooks = async (
   query: string,
   maxRetries = 1,
+  projection?: "lite" | "full",
+  maxResults?: number,
 ): Promise<FormattedBookItems> => {
   for (let attempt = 0; attempt <= maxRetries; attempt++) {
-    const response = await fetch(createQueryUrl(query));
+    const response = await fetch(createQueryUrl(query, projection, maxResults));
 
     if (response.status === 429) {
       if (attempt === maxRetries) {
@@ -52,8 +54,20 @@ const fetchBooks = async (
     }
 
     const books = (await response.json()) as GoogleBooksSearchResponse;
+
     return (books.items || []).map(
-      ({ id, volumeInfo: { title, authors = [], imageLinks } }) => {
+      ({
+        id,
+        volumeInfo: {
+          title,
+          authors = [],
+          imageLinks,
+          pageCount,
+          publishedDate,
+          categories,
+          description,
+        },
+      }) => {
         const raw = imageLinks?.thumbnail;
         return {
           apiId: id,
@@ -61,8 +75,13 @@ const fetchBooks = async (
           authors,
           thumbnail: raw ? raw.replace(/^http:/, "https:") : undefined,
           compareStr: createBookComparisonStr(title, authors),
+          pageCount,
+          publishedDate,
+          categories,
+          description:
+            typeof description === "string" ? stripHtml(description) : null,
         };
-      }
+      },
     );
   }
 
@@ -204,7 +223,7 @@ const getOrCreateBookByGoogleId = async (googleId: string) => {
   }
 
   const {
-    volumeInfo: { title, authors = [] },
+    volumeInfo: { title, authors = [], description, publishedDate, pageCount },
   } = book;
 
   const matching = await prisma.book.findFirst({
@@ -221,6 +240,10 @@ const getOrCreateBookByGoogleId = async (googleId: string) => {
       title,
       authors,
       compareStr: createBookComparisonStr(title, authors),
+      description:
+        typeof description === "string" ? stripHtml(description) : "",
+      publishedDate: publishedDate ?? "",
+      pageCount: typeof pageCount === "number" ? pageCount : 0,
     },
   });
 
@@ -250,7 +273,6 @@ const getVolumeDetails = async (volumeId: string): Promise<VolumeDetails> => {
   const { volumeInfo } = volume;
 
   const rawThumbnail = volumeInfo?.imageLinks?.thumbnail ?? null;
-
   return {
     apiId: volume.id,
     title: volumeInfo?.title ?? null,

@@ -45,11 +45,26 @@ model Book {
   googleId        String           @unique
   title           String
   authors         String[]
+  description     String?
+  publishedDate   String?
+  pageCount       Int?
   compareStr      String
   thumbnail       String?
   rankings        Ranking[]
   bookmarks       Bookmark[]
   rankingSessions RankingSession[]
+  tags            Tag[]
+}
+
+model Tag {
+  id              String     @id @default(uuid()) @db.Uuid
+  name            String     @unique
+  parentTagId     String?    @db.Uuid
+  parentTag          Tag?     @relation("TagHierarchy", fields: [parentTagId], references: [id])
+  childTags        Tag[]     @relation("TagHierarchy")
+  books           Book[]
+
+  @@index([name])
 }
 
 model Ranking {
