@@ -21,9 +21,9 @@ app.get("/health", (_req, res) => {
 });
 
 // // Error handling middleware
-// app.use((err: any, _req: express.Request, res: express.Response) => {
-//   console.error(err.stack);
-// });
+app.use((err: any, _req: express.Request, res: express.Response) => {
+  console.error(err.stack);
+});
 
 // Start server
 app.listen(PORT, () => {

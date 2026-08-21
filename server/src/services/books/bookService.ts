@@ -2,43 +2,60 @@ import { prisma } from "../../lib/prisma";
 import { googleBooksService } from "./googleBooksService";
 import { rankingService } from "../rankings/rankingService";
 
-const getBookDetails = async ({
+const UUID_REGEX =
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+const getBookDetailsByIdOrGoogleId = async ({
   userId,
   bookId,
 }: {
   userId: string;
   bookId: string;
 }) => {
-  const book = await prisma.book.findFirst({
-    where: {
-      id: bookId,
-    },
-    include: {
-      rankings: {
-        where: {
-          userId,
+  try {
+    console.log({ userId, bookId });
+    const book = await prisma.book.findFirst({
+      // `id` is a Postgres uuid column, so it can only be queried when
+      // bookId looks like a UUID -- otherwise Postgres rejects the value
+      // before evaluating the OR.
+      where: UUID_REGEX.test(bookId)
+        ? { OR: [{ id: bookId }, { googleId: bookId }] }
+        : { googleId: bookId },
+      include: {
+        rankings: {
+          where: {
+            userId,
+          },
+        },
+        bookmarks: {
+          where: {
+            userId,
+          },
         },
       },
-      bookmarks: {
-        where: {
-          userId,
-        },
-      },
-    },
-  });
+    });
 
-  if (!book) {
-    throw new Error("Book not found");
+    console.log({ book });
+
+    const details = await googleBooksService.getVolumeDetails(
+      book ? book.googleId : bookId,
+    );
+
+    console.log({ details });
+
+    let userScore: number | null = null;
+    if (book && book.rankings.length) {
+      userScore = await rankingService.getRankingScore(book.rankings[0]);
+    }
+
+    return {
+      ...details,
+      userScore,
+      bookmarkId: (book && book.bookmarks[0]?.id) ?? null,
+    };
+  } catch (err) {
+    console.log(err);
   }
-
-  const details = await googleBooksService.getVolumeDetails(book.googleId);
-
-  let userScore: number | null = null;
-  if (book.rankings.length) {
-    userScore = await rankingService.getRankingScore(book.rankings[0]);
-  }
-
-  return { ...details, userScore, bookmarkId: book.bookmarks[0]?.id ?? null };
 };
 
 const getByGoogleId = ({ googleId }: { googleId: string }) => {
@@ -48,6 +65,6 @@ const getByGoogleId = ({ googleId }: { googleId: string }) => {
 };
 
 export const bookService = {
-  getBookDetails,
+  getBookDetailsByIdOrGoogleId,
   getByGoogleId,
 };

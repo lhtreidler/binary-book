@@ -33,7 +33,7 @@ export const buildBookOptions = (
         hideAction: effectiveIsRanked,
         thumbnail,
         hasThumbnail: true,
-        href: id ? (`/book/${id}` as Href) : undefined,
+        href: `/book/${id || apiId}` as Href,
         rightActions: [
           {
             icon: "bookmark" as const,

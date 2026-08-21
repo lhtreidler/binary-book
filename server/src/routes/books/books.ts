@@ -103,7 +103,10 @@ router.get(
     }
 
     try {
-      const details = await bookService.getBookDetails({ userId, bookId });
+      const details = await bookService.getBookDetailsByIdOrGoogleId({
+        userId,
+        bookId,
+      });
 
       res.json(details);
     } catch (err) {
